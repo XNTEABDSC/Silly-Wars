@@ -1,0 +1,14 @@
+-- too weak
+VFS.Include("utils/to_make_op_things.lua")
+local utils=GG.to_make_op_things
+
+utils.set_morth_mul("striderdetriment","striderdetrimentwipf")
+utils.add_build("bigsillycon","striderdetrimentwipf")
+
+return utils.copy_tweak("striderdetriment","striderdetrimentwipf",function (ud)
+    GG.to_make_very_op_things.what_I_paid_for_2(ud)
+    --ud.metalCost=ud.metalCost*2
+    ud.name="What I Paid For "..ud.name
+    ud.description="What I Paid For "..ud.description
+    ud.customParams.def_scale=1.5
+end)
