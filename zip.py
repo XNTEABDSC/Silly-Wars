@@ -31,6 +31,9 @@ zip=zipfile.ZipFile(os.path.join(GameDirPath,outputfilename),"w")
 zip.write("_modinfo.lua","modinfo.lua")
 for abspath,dirname,filenames in os.walk(thisAbsPath):
     path=abspath.replace(thisAbsPath,"")
+    print(path)
+    if path.startswith("\\."):
+        continue
     for filename in filenames:
         if filename!="modinfo.lua" and filename!="_modinfo.lua" and filename!="settings.json" and (not filename.endswith(".blend")) and (not filename.endswith(".blend1")):
             zip.write(os.path.join(abspath,filename),os.path.join(path,filename))

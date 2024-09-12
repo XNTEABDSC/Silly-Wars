@@ -32,7 +32,7 @@ fleaUD.customParams.grey_goo_range = 120
 fleaUD.name="Lancy Flea"
 fleaUD.description="Ultralight beam artillery spider (Burrows)"
 fleaUD.sightDistance=780
-fleaUD.objectName="lancyFlea"
+--fleaUD.objectName="lancyFlea"
 
 utils.set_morth_mul("spiderscout","spiderlightarti",1)
 utils.add_build("sillycon","spiderlightarti")
