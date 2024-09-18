@@ -8,11 +8,10 @@ local lanceWD=lanceUD.weaponDefs.ATA--Spring.Utilities.CopyTable(lanceUD.weapond
 
 fleaUD.weaponDefs.LASER=lanceWD
 lanceWD.damage = {
-    default = 40,
-    planes  = 40
+    default = 50,
 }
 lanceWD.range=750
-lanceWD.reloadtime=25
+lanceWD.reloadtime=30
 lanceWD.laserFlareSize=3
 lanceWD.areaOfEffect=5
 lanceWD.beamTime=0.5

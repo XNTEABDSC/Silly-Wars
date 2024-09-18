@@ -46,3 +46,29 @@ build_time_to_cost("chicken_leaper")
 local drone_ud_cp=UnitDefs["chicken_drone"].customparams
 drone_ud_cp.morphcost_2=2500-60
 drone_ud_cp.morphcost_1=120-60
+
+do
+    -- from zerowar
+    local chixNewPrice={
+        chicken=60,
+        chicken_leaper=440,
+        chickens=90,
+        chickenwurm=400,
+        chicken_dodo=120,
+        chickena=440,
+        chickenc=800,
+        chicken_roc=1600,
+        chickenf=300,
+        chicken_blimpy=640,
+        chicken_spidermonkey=640,
+        chicken_sporeshooter=820,
+        chickenr=180,
+        chicken_shield=600,
+        chicken_tiamat=2000,
+        chickenblobber=2800,
+        chicken_dragon=7000
+    }
+    for key, value in pairs(chixNewPrice) do
+        UnitDefs[key].metalCost=value
+    end
+end

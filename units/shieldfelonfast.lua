@@ -9,17 +9,18 @@ return utils.copy_tweak("shieldfelon","shieldfelonfast",function (ud)
     local shwd=ud.weaponDefs.SHIELD
     local wd=ud.weaponDefs.SHIELDGUN
     ud.speed=90
-    shwd.shieldPower=3200
-    shwd.shieldPowerRegen=100
-    shwd.shieldPowerRegenEnergy=50
-    shwd.shieldRadius=200
+    shwd.shieldPower=2600
+    shwd.shieldPowerRegen=80
+    shwd.shieldPowerRegenEnergy=40
+    shwd.shieldRadius=150
     ud.health=800
-    ud.idleAutoHeal=8
+    ud.autoheal=8
 
     wd.range=250
     wd.customParams.shield_drain=50
     wd.reloadtime=0.1
     wd.rgbColor=[[1 0 0]]
-
+    wd.explodeAs="ESTOR_BUILDINGEX"
+    wd.selfDestructAs="ESTOR_BUILDINGEX"
     utils.set_ded_ATOMIC_BLAST(ud)
 end)

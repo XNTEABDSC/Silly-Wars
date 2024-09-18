@@ -6,7 +6,7 @@ utils.add_build("bigsillycon","bombersinguheavy")
 
 return utils.copy_tweak("bombersingu","bombersinguheavy",function (ud)
     ud.name="Singu Likho"
-    ud.description="Singu Likho"
+    ud.description="Throw Singu, 4000 stockpile cost"
     ud.metalCost=24000
     ud.health=20000
     ud.speed=ud.speed*0.85

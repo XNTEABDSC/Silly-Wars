@@ -7,8 +7,8 @@ return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud
     utils.do_tweak({
         name="Flak Nimbus",
         description="Flying Flak",
-        metalCost=3000,
-        health=3000,
+        metalCost=2500,
+        health=3500,
         speed=80,
     })(ud)
     local wd=ud.weaponDefs.EMG

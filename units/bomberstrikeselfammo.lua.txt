@@ -1,0 +1,17 @@
+VFS.Include("utils/to_make_op_things.lua")
+local utils=GG.to_make_op_things
+
+utils.set_morth_mul("bomberstrike","bomberstrikeselfammo")
+
+utils.add_build("sillycon","bomberstrikeselfammo")
+
+return utils.copy_tweak("bomberstrike","bomberstrikeselfammo",function (ud)
+    ud.metalCost=300
+    ud.health=1000
+    ud.customParams.reammoseconds=nil
+    ud.customParams.refuelturnradius=nil
+    ud.customParams.reallyabomber=nil
+    local wd=ud.weaponDefs.MISSILE
+    wd.customparams.reammoseconds=nil
+    wd.reloadtime=15
+end)

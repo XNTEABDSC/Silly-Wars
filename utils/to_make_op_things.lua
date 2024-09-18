@@ -25,6 +25,7 @@ if not GG.to_make_op_things then
                 morphtime=morphtime or 10
                 UnitDefs[srcname].customparams.morphto=copyedname
                 UnitDefs[srcname].customparams.morphtime=morphtime
+                UnitDefs[srcname].description=UnitDefs[srcname].description+"Can morth into " .. copyedname
             end
         )
     end
@@ -48,6 +49,7 @@ if not GG.to_make_op_things then
                     end
                     i=i+1
                 end
+                UnitDefs[srcname].description=UnitDefs[srcname].description .. "Can morth into " .. copyedname
             end)
     end
 
@@ -176,6 +178,86 @@ if not GG.to_make_op_things then
 
         end
         return str
+    end
+
+    function to_make_op_things.update_modoptions()
+        do
+            local modOptions = {}
+            local utils=to_make_op_things
+            if (Spring.GetModOptions) then
+                modOptions = Spring.GetModOptions()
+            end
+            local optionmult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
+            "team_1_econ","team_2_econ","team_3_econ","team_4_econ","team_5_econ","team_6_econ","team_7_econ","team_8_econ",
+            "wavesizemult","queenhealthmod","techtimemult"
+            } )
+            local optionaddwithdef={
+            }
+            local optionmultwithdef={
+                innatemetal=2,
+                innateenergy=2,
+                zombies_delay=10,
+                zombies_rezspeed=12
+            }
+            ---@type boolean|integer
+            local tweakdefs_count=false
+            ---@type boolean|integer
+            local tweakunits_count=false
+            local modsdir="gamedata/mods/"
+            local mods=modOptions["mods"]
+            if mods then
+                for mod in string.gmatch(mods,"%w+") do
+                    local moddir=modsdir .. mod .. ".json"
+                    if VFS.FileExists(moddir) then
+                        Spring.Echo("SW: Load mod " .. mod)
+                        local dataRaw=VFS.LoadFile(moddir)
+                        local moddata=VFS.Include("LuaRules/Utilities/json.lua").decode(dataRaw)--utils.strjson_to_obj(dataRaw)
+                        if moddata then
+                            local themodoptions=moddata.options
+                            if themodoptions then
+                                for key, value in pairs(themodoptions) do
+                                    if string.match(key,"^tweakunits") then
+                                        modOptions["tweakunits" .. (tweakunits_count or "")]=value
+                                        tweakunits_count=(tweakunits_count or 0)+1
+        
+                                    elseif string.match(key,"^tweakdefs") then
+                                        modOptions["tweakdefs" .. (tweakdefs_count or "")]=value
+                                        tweakdefs_count=(tweakdefs_count or 0)+1
+        
+                                    elseif  modOptions[key] then
+                                        if optionmult[key] then
+                                            modOptions[key]=modOptions[key]*value
+                                        elseif optionaddwithdef[key] then
+                                            modOptions[key]=modOptions[key]+value-optionaddwithdef[key]
+                                        elseif optionmultwithdef[key] then
+                                            modOptions[key]=modOptions[key]*value/optionmultwithdef[key]
+                                        elseif key=="disabledunits" then
+                                            modOptions[key]=modOptions[key] .. "+ " .. value
+                                        elseif key=="option_notes" then
+                                            modOptions[key]=modOptions[key] .. " " .. value
+                                        else
+                                            modOptions[key]=value
+                                        end
+                                    else
+                                        modOptions[key]=value
+                                    end
+                                end
+                            end
+                        else
+                            Spring.Echo("Warning: SW: failed to load mod " .. mod)
+                        end
+                    else
+                        Spring.Echo("Warning: SW: mod " .. mod .. " don't exist")
+                    end
+                end
+            end
+        
+            Spring.GetModOptions=function ()
+                return modOptions
+            end
+            Spring.Echo("modOptions result: ")
+            Spring.Utilities.TableEcho(modOptions,"modOptions")
+        end
     end
 end
 return GG.to_make_op_things

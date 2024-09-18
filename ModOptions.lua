@@ -107,6 +107,13 @@ local options = {
     type   = 'string',
     section= 'silly',
     def    = "",
+  },{
+    key    = 'no_tweaks',
+    name   = 'no tweaks',
+    desc   = "stop some tweaks (not done)",
+    type   = 'string',
+    section= 'silly',
+    def    = "",
   },
   {
     key    = 'zombies',

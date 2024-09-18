@@ -5,11 +5,11 @@ utils.set_morth_mul("shieldshield","shieldshieldpro")
 return utils.copy_tweak("shieldshield","shieldshieldpro",function (ud)
     ud.name = "Greater " .. ud.name
     ud.description = "Greater Shield to counter greater silly"
-    ud.metalCost=ud.metalCost*10
-    ud.health=ud.health*10
+    ud.metalCost=ud.metalCost*4
+    ud.health=ud.health*4
     local wd=ud.weaponDefs.COR_SHIELD_SMALL
-    wd.shieldPower=wd.shieldPower*9
-    wd.shieldPowerRegen=wd.shieldPowerRegen*9
-    wd.shieldPowerRegenEnergy=wd.shieldPowerRegenEnergy*9
-    wd.shieldRadius=wd.shieldRadius*2
+    wd.shieldPower=wd.shieldPower*3.5
+    wd.shieldPowerRegen=wd.shieldPowerRegen*3.5
+    wd.shieldPowerRegenEnergy=wd.shieldPowerRegenEnergy*3.5
+    wd.shieldRadius=wd.shieldRadius*1.5
 end)

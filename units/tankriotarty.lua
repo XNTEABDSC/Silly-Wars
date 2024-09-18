@@ -4,14 +4,14 @@ utils.set_morth_mul("tankriot","tankriotarty")
 utils.add_build("sillycon","tankriotarty")
 return utils.copy_tweak("tankriot","tankriotarty",utils.do_tweak({
     name="Ranged Orge",
-    description="Orge with just Adv. Targeting System (too expensive)",
+    description="Orge with just Adv. Targeting System (expensive)",
     weaponDefs={
         TAWF_BANISHER={
             range=1200
         }
     },
     metalCost=5000,
-    speed=45,
+    speed=38,
     customParams={
         def_scale=2
     },
