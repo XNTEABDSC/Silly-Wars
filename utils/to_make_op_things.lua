@@ -25,7 +25,7 @@ if not GG.to_make_op_things then
                 morphtime=morphtime or 10
                 UnitDefs[srcname].customparams.morphto=copyedname
                 UnitDefs[srcname].customparams.morphtime=morphtime
-                UnitDefs[srcname].description=UnitDefs[srcname].description+"Can morth into " .. copyedname
+                UnitDefs[srcname].description=UnitDefs[srcname].description .. "Can morth into " .. copyedname
             end
         )
     end
