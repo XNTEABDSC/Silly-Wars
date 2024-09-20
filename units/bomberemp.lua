@@ -7,7 +7,7 @@ utils.add_build("sillycon","bomberemp")
 
 return utils.copy_tweak("bomberdisarm","bomberemp",function (ud)
     utils.do_tweak({
-        name="EMPbird",
+        name="EMP Bird",
         description         = [[Paralyse Lightning Bomber]],
         WeaponDefs={
             ARMBOMBLIGHTNING={
@@ -27,6 +27,6 @@ return utils.copy_tweak("bomberdisarm","bomberemp",function (ud)
         
     })(ud)
     ud.metalCost=ud.metalCost*2.5
-    ud.health=ud.health*2
+    ud.health=ud.health*1.75
 
 end)

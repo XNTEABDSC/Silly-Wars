@@ -69,6 +69,6 @@ do
         chicken_dragon=7000
     }
     for key, value in pairs(chixNewPrice) do
-        UnitDefs[key].metalCost=value
+        UnitDefs[key].metalcost=value
     end
 end

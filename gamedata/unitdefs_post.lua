@@ -128,6 +128,14 @@ do
 	end
 end
 
+do
+	for _, ud in pairs(UnitDefs) do
+		if ud.customparams.def_scale then
+			utils.set_scale(ud,ud.customparams.def_scale)
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --

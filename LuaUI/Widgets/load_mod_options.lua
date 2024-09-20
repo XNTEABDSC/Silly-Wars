@@ -1,4 +1,4 @@
-function gadget:GetInfo()
+function widget:GetInfo()
     return {
       name      = "Change Custom Modoptions Info",
       desc      = "Change Custom Modoptions Info",
@@ -9,11 +9,11 @@ function gadget:GetInfo()
       enabled   = true  --  loaded by default?
     }
 end
+
+
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-function gadget:Initialize()
-  utils.update_modoptions()
+function widget:Initialize()
+    utils.update_modoptions()
 end
-
---Spring.Echo("did it")

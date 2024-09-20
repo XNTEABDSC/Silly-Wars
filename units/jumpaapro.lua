@@ -6,9 +6,9 @@ utils.add_build("bigsillycon","jumpaapro")
 
 return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
     ud.name="Pro Toad"
-    ud.description="Burst Beam AA"
-    ud.metalCost=5000
-    ud.health=25000
+    ud.description="AA Strider"
+    ud.metalCost=4000
+    ud.health=20000
     ud.speed=48
     ud.sightDistance=1200
     ud.customParams.def_scale=2.5
@@ -17,15 +17,15 @@ return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
         customParams={
             --script_burst_salvo_count=20,
             --script_burst_salvo_reload=0.5,
-            script_reload = [[10]],
-            script_burst = [[30]],
+            script_reload = [[15]],
+            script_burst = [[15]],
             timeslow_damagefactor = 2,
             timeslow_overslow_frames = 2*30,
             reaim_time=1,
         },
         damage                  = {
-            default = 15.01,
-            planes  = 150.1,
+            default = 30.01,
+            planes  = 300.1,
         },
         --reloadtime=0.1,
         --burst=20,
@@ -49,8 +49,8 @@ return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
         craterMult              = 0,
         cylinderTargeting       = 1,
         damage                  = {
-            default = 20.01,
-            planes = 200.1,
+            default = 13.21,
+            planes = 132.1,
         },
         edgeEffectiveness       = 0.5,
         explosionGenerator      = [[custom:flakplosion]],

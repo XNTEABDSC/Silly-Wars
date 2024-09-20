@@ -14,8 +14,10 @@ return utils.copy_tweak("vehheavyartyplus","vehtacmissile",function (ud)
     ud.speed=38
     ud.weaponDefs={}
     ud.weapons[1].name="subtacmissile_tacnuke"
-    ud.customParams.def_scale=2
     --ud.objectName="impalerWithEOS"
+    ud.customParams.def_scale=2
+    --[==[
+    utils.set_scale(ud,1.8)
     ud.collisionVolumeScales  = [[80 40 80]]
     ud.footprintX          = 3*2
     ud.footprintZ          = 3*2
@@ -23,5 +25,6 @@ return utils.copy_tweak("vehheavyartyplus","vehtacmissile",function (ud)
     ud.trackWidth          = 44*2
     ud.trackStrength       = 8*2
     ud.trackStretch        = 1*2
+    ]==]
     utils.set_ded_ATOMIC_BLAST(ud)
 end)

@@ -3,7 +3,7 @@ local utils=GG.to_make_op_things
 
 local ud=utils.get_unit_lua("bomberriot")
 ud.metalCost=3000
-ud.health=7500
+ud.health=6000
 ud.speed=ud.speed*0.9
 
 local wd=ud.weaponDefs.NAPALM

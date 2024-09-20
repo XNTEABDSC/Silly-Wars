@@ -19,6 +19,9 @@ return utils.copy_tweak("vehheavyarty","vehheavyartyplus",function (ud)
         damage={
             default=2500
         },
+        customParams={
+            def_scale=1.4
+        },
         range=1200,
         edgeEffectiveness       = 1,
         explosionGenerator      = [[custom:slam]],
@@ -41,7 +44,5 @@ return utils.copy_tweak("vehheavyarty","vehheavyartyplus",function (ud)
         commandfire             = true,
     })(wd)
     ud.speed=54
-    ud.customParams={
-        def_scale=1.4
-    }
+    --utils.set_scale(ud,1.4)
 end)

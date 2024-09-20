@@ -36,4 +36,5 @@ utils.add_build("sillycon","jumpartydrunk")
 return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
     GG.to_make_very_op_things.make_unit_drunk(ud)
     utils.set_ded_ATOMIC_BLAST(ud)
+    --ud.health=ud.health*0.6
 end)

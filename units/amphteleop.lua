@@ -12,6 +12,7 @@ do
     ud.customParams.teleporter_beacon_spawn_time=10
     ud.health=6000
     ud.speed=45
+    --utils.set_scale(ud,2)
     ud.customParams.def_scale=2
     utils.set_ded_ATOMIC_BLAST(ud)
 end

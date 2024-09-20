@@ -13,7 +13,7 @@ return utils.copy_tweak("shieldfelon","shieldfelonfast",function (ud)
     shwd.shieldPowerRegen=80
     shwd.shieldPowerRegenEnergy=40
     shwd.shieldRadius=150
-    ud.health=800
+    ud.health=1000
     ud.autoheal=8
 
     wd.range=250

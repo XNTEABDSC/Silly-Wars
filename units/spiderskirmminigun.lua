@@ -3,7 +3,7 @@ local utils=GG.to_make_op_things
 
 local ud=utils.get_unit_lua("spiderskirm")
 ud.metalCost=ud.metalCost*10
-ud.health=ud.health*10
+ud.health=ud.health*7
 
 local wd=ud.weaponDefs.ADV_ROCKET
 wd.burst=nil

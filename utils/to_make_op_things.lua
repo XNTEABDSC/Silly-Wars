@@ -1,7 +1,6 @@
 if not GG then
     GG={}
 end
-VFS.Include("utils/to_make_very_op_things.lua")
 
 if not GG.to_make_op_things then
     local to_make_op_things={}
@@ -211,6 +210,9 @@ if not GG.to_make_op_things then
                     if VFS.FileExists(moddir) then
                         Spring.Echo("SW: Load mod " .. mod)
                         local dataRaw=VFS.LoadFile(moddir)
+                        if not _G then
+                            _G=getfenv(2)
+                        end
                         local moddata=VFS.Include("LuaRules/Utilities/json.lua").decode(dataRaw)--utils.strjson_to_obj(dataRaw)
                         if moddata then
                             local themodoptions=moddata.options
@@ -259,5 +261,101 @@ if not GG.to_make_op_things then
             Spring.Utilities.TableEcho(modOptions,"modOptions")
         end
     end
+
+    function to_make_op_things.StrExplode(div, str)
+        if div == '' then
+            return nil
+        end
+        local pos, arr = 0, {}
+        -- for each divider found
+        for st, sp in function() return string.find(str, div, pos, true) end do
+            table.insert(arr, string.sub(str, pos, st - 1)) -- Attach chars left of current divider
+            pos = sp + 1 -- Jump past current divider
+        end
+        table.insert(arr,string.sub(str,pos)) -- Attach chars right of last divider
+        return arr
+    end
+    
+    function to_make_op_things.GetDimensions(scale)
+        if not scale then
+            return nil
+        end
+        local dimensionsStr = to_make_op_things.StrExplode(" ", scale)
+        -- string conversion (required for MediaWiki export)
+        if dimensionsStr then
+            local dimensions = {}
+            for i,v in pairs(dimensionsStr) do
+                dimensions[i] = tonumber(v)
+            end
+            local largest = (dimensions and dimensions[1] and tonumber(dimensions[1])) or 0
+            for i = 2, 3 do
+                largest = math.max(largest, (dimensions and dimensions[i] and tonumber(dimensions[i])) or 0)
+            end
+            return dimensions, largest
+        else
+            return nil
+            --error("Fail to GetDimensions on " .. scale)
+        end
+    end
+
+    function to_make_op_things.ToDimensions(v3)
+        return tostring(v3[1]) .. " " .. tostring(v3[2]) .. " " .. tostring(v3[3])
+    end
+
+    function to_make_op_things.set_scale(ud,scale)
+        local GetDimensions=to_make_op_things.GetDimensions
+        local ToDimensions=to_make_op_things.ToDimensions
+        --[=[
+        local udcp=ud.customParams or ud.customparams
+        if not udcp then
+            ud.customParams={}
+            udcp=ud.customParams
+        end
+        udcp.def_scale= (udcp.def_scale or 1)* scale
+        ]=]
+        local tryScales3={
+            "collisionVolumeOffsets",
+            "collisionVolumeScales",
+            "selectionVolumeOffsets",
+            "selectionVolumeScales"
+        }
+        for _, value in pairs(tryScales3) do
+            value=value:lower()
+            if ud[value] then
+                local ss=GetDimensions(ud[value])
+                if ss then
+                    for i = 1, 3 do
+                        ss[i]=ss[i]*scale
+                    end
+                    ud[value]=ToDimensions(ss)
+                end
+            end
+        end
+
+        local tryScale1={
+            "footprintX",
+            "footprintZ",
+            "trackOffset",
+            "trackWidth",
+            "trackStrength",
+            "trackStretch",
+        }
+        for _, value in pairs(tryScale1) do
+            value=value:lower()
+            if ud[value]then
+                ud[value]=ud[value]*scale
+            end
+        end
+
+        if ud.customparams.modelradius then
+            ud.customparams.modelradius=tonumber(ud.customparams.modelradius)*scale
+        end
+
+        if ud.customparams.modelheight then
+            ud.customparams.modelheight=tonumber(ud.customparams.modelheight)*scale
+        end
+        
+    end
 end
+VFS.Include("utils/to_make_very_op_things.lua")
 return GG.to_make_op_things

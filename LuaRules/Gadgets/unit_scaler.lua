@@ -80,7 +80,7 @@ function gadget:UnitDestroyed(unitID)
 end
 
 function gadget:Initialize()
-	Spring.Echo("I LOAD IT")
+	--Spring.Echo("I LOAD IT")
     GG.UnitScale = UnitScale
 end
 
