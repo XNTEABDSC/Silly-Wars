@@ -1,8 +1,8 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.set_morth_mul("jumpaa","jumpaapro")
-utils.add_build("bigsillycon","jumpaapro")
+utils.set_morth_mul("silly_morth","jumpaa","jumpaapro")
+utils.add_build("silly_build","bigsillycon","jumpaapro")
 
 return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
     ud.name="Pro Toad"

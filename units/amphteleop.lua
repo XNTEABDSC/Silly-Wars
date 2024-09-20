@@ -34,8 +34,8 @@ do
     ud.sightDistance=600
     ud.radarDistance=1200
 end
-utils.set_morth_mul("amphtele","amphteleop")
-utils.add_build("bigsillycon","amphteleop")
+utils.set_morth_mul("silly_morth","amphtele","amphteleop")
+utils.add_build("silly_build","bigsillycon","amphteleop")
 return{
     amphteleop=amphteleopud,
     amphteleopbeacon=amphteleopbeaconud,

@@ -1,8 +1,8 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.set_morth_mul("vehheavyartyplus","vehtacmissile")
-utils.add_build("bigsillycon","vehtacmissile")
+utils.set_morth_mul("silly_morth","vehheavyartyplus","vehtacmissile")
+utils.add_build("silly_build","bigsillycon","vehtacmissile")
 
 return utils.copy_tweak("vehheavyartyplus","vehtacmissile",function (ud)
     ud.metalCost=3000

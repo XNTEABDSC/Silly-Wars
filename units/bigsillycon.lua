@@ -10,7 +10,6 @@ ud.weapons={}
 ud.workertime=40
 
 
-utils.add_build("sillycon","bigsillycon")
 --[===[
 ud.buildoptions={
     "chicken_leaper",

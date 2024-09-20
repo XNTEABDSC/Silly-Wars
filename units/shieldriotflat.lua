@@ -13,7 +13,7 @@ utils.do_tweak({
     }}}
 })(ud)
 
-utils.set_morth_mul("shieldriot","shieldriotflat",5)
-utils.add_build("sillycon","shieldriotflat")
+utils.set_morth_mul("silly_morth","shieldriot","shieldriotflat",5)
+utils.add_build("silly_build","sillycon","shieldriotflat")
 
 return {["shieldriotflat"]=ud}

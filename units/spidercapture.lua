@@ -2,9 +2,9 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.set_morth_mul("spiderantiheavy","spidercapture")
+utils.set_morth_mul("silly_morth","spiderantiheavy","spidercapture")
 
-utils.add_build("sillycon","spidercapture")
+utils.add_build("silly_build","sillycon","spidercapture")
 
 return utils.copy_tweak("spiderantiheavy","spidercapture",function (ud)
     ud.metalCost=800

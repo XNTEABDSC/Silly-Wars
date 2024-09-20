@@ -1,7 +1,7 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.set_morth("striderartypuppy","striderartycerb")
+utils.set_morth("silly_morth","striderartypuppy","striderartycerb")
 --[=[
 local ud=utils.get_unit_lua("striderarty")
 

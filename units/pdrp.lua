@@ -86,6 +86,6 @@ for i = 1, 6 do
     ud.weaponDefs[spamer_wds[i].name]=spamer_wds[i]
     ud.weapons[i].def=spamer_wds[i].name
 end
-utils.set_morth_mul("raveparty","pdrp")
+utils.set_morth_mul("def_post","raveparty","pdrp")
 res["pdrp"]=ud
 return res

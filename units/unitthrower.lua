@@ -1,7 +1,7 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.add_build("bigsillycon","unitthrower")
+utils.add_build("silly_build","bigsillycon","unitthrower")
 
 return utils.copy_tweak("amphlaunch","unitthrower",function (ud)
     ud.name="Unit Thrower"

@@ -1,9 +1,9 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.set_morth_mul("bomberdisarm","bomberemp")
+utils.set_morth_mul("silly_morth","bomberdisarm","bomberemp")
 
-utils.add_build("sillycon","bomberemp")
+utils.add_build("silly_build","sillycon","bomberemp")
 
 return utils.copy_tweak("bomberdisarm","bomberemp",function (ud)
     utils.do_tweak({

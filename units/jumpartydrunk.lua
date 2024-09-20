@@ -31,8 +31,8 @@ return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
 end)
 ]=]
 
-utils.set_morth_mul("jumparty","jumpartydrunk")
-utils.add_build("sillycon","jumpartydrunk")
+utils.set_morth_mul("silly_morth","jumparty","jumpartydrunk")
+utils.add_build("silly_build","sillycon","jumpartydrunk")
 return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
     GG.to_make_very_op_things.make_unit_drunk(ud)
     utils.set_ded_ATOMIC_BLAST(ud)

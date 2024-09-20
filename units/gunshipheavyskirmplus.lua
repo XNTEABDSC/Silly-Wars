@@ -1,8 +1,8 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.set_morth_mul("gunshipheavyskirm","gunshipheavyskirmplus")
-utils.add_build("sillycon","gunshipheavyskirmplus")
+utils.set_morth_mul("silly_morth","gunshipheavyskirm","gunshipheavyskirmplus")
+utils.add_build("silly_build","sillycon","gunshipheavyskirmplus")
 return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud)
     utils.do_tweak({
         name="Flak Nimbus",

@@ -103,17 +103,10 @@ local options = {
   {
     key    = 'mods',
     name   = 'mods',
-    desc   = "Extra mods to use, use + for multiple mods, mods order matters, see source code for mods :3",
+    desc   = "Extra mods to use, use + for multiple mods, mods order matters, see source code for mods :3, in both gamedata/mods/ and gamedata/lua_mods/ ",
     type   = 'string',
     section= 'silly',
-    def    = "",
-  },{
-    key    = 'no_tweaks',
-    name   = 'no tweaks',
-    desc   = "stop some tweaks (not done)",
-    type   = 'string',
-    section= 'silly',
-    def    = "",
+    def    = "silly_tech + silly_build + silly_morth + more_build + add_chixs",
   },
   {
     key    = 'zombies',

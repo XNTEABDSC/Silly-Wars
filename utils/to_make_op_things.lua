@@ -6,16 +6,32 @@ if not GG.to_make_op_things then
     local to_make_op_things={}
     GG.to_make_op_things=to_make_op_things
     to_make_op_things.do_ud_post_fn_list={}
-    function to_make_op_things.add_do_ud_post_fn(key,fn)
-        to_make_op_things.do_ud_post_fn_list[key]=fn
+    function to_make_op_things.add_do_ud_post_fn(domain,key,fn)
+        if not to_make_op_things.do_ud_post_fn_list[domain] then
+            to_make_op_things.do_ud_post_fn_list[domain]={}
+        end
+        to_make_op_things.do_ud_post_fn_list[domain][key]=fn
     end
-    function to_make_op_things.do_ud_post()
-        for key, value in pairs(to_make_op_things.do_ud_post_fn_list) do
+    function to_make_op_things.do_ud_post(domain)
+        for key, value in pairs(to_make_op_things.do_ud_post_fn_list[domain] or {}) do
             value()
         end
     end
-    function to_make_op_things.set_morth(srcname,copyedname,morphtime)
-        to_make_op_things.add_do_ud_post_fn(
+    function to_make_op_things.copy_ud_post(domainfrom,domainto)
+        local l=to_make_op_things.do_ud_post_fn_list
+        if l[domainfrom] then
+            local lf=l[domainfrom]
+            if not l[domainto] then
+                l[domainto]={}
+            end
+            local lt=l[domainto]
+            for key, value in pairs(lf) do
+                lt[key]=value
+            end
+        end
+    end
+    function to_make_op_things.set_morth(domain,srcname,copyedname,morphtime)
+        to_make_op_things.add_do_ud_post_fn(domain,
             "set_morth(" .. srcname .. ", " .. copyedname .. ")",
             function ()
                 if not UnitDefs[srcname] then
@@ -28,8 +44,8 @@ if not GG.to_make_op_things then
             end
         )
     end
-    function to_make_op_things.set_morth_mul(srcname,copyedname,morphtime,morthprice)
-        to_make_op_things.add_do_ud_post_fn( 
+    function to_make_op_things.set_morth_mul(domain,srcname,copyedname,morphtime,morthprice)
+        to_make_op_things.add_do_ud_post_fn(domain,
             "set_morth_mul(" .. srcname .. ", " .. copyedname .. ")"
             ,function ()
                 if not UnitDefs[srcname] then
@@ -52,8 +68,8 @@ if not GG.to_make_op_things then
             end)
     end
 
-    function to_make_op_things.add_build(builer,building)
-        to_make_op_things.add_do_ud_post_fn(
+    function to_make_op_things.add_build(domain,builer,building)
+        to_make_op_things.add_do_ud_post_fn(domain,
             "add_build(" .. builer .. ", " .. building .. ")",
             function ()
                 if not UnitDefs[builer] then
@@ -110,6 +126,11 @@ if not GG.to_make_op_things then
         return {[toname]=ud}
     end
 
+    function to_make_op_things.set_ded(ud,ded)
+        ud.explodeAs              = ded
+        ud.selfDestructAs=ded
+    end
+
     function to_make_op_things.set_ded_BIG_UNIT(ud)
         ud.explodeAs              = [[BIG_UNIT]]
         ud.selfDestructAs=[[BIG_UNIT]]
@@ -120,37 +141,11 @@ if not GG.to_make_op_things then
         ud.selfDestructAs=[[ATOMIC_BLAST]]
     end
 
-
     function to_make_op_things.round_to_inv30(n)
         n = n*30
         n = math.ceil(n)
         n = n/30
         return n
-    end
-
-    -- from Spring.Utilities.CustomKeyToUsefulTable
-    function to_make_op_things.str_to_obj(dataRaw)
-        --Spring.Echo("return " .. dataRaw)
-        local dataFunc, err = loadstring("return " .. dataRaw)
-		if dataFunc then
-			local success, result = pcall(dataFunc)
-			if success then
-				if collectgarbage then
-					collectgarbage("collect")
-				end
-				return result
-			end
-		end
-		if err then
-			Spring.Echo("str_to_obj error: ", err)
-		end
-    end
-
-    function to_make_op_things.strjson_to_obj(dataRaw)
-        dataRaw=to_make_op_things.better_gsub(dataRaw,'"([%w_]+)" *:',function (n)
-            return n .. " ="
-        end)
-        return to_make_op_things.str_to_obj(dataRaw)
     end
 
     function to_make_op_things.list_to_set(list)
@@ -179,43 +174,50 @@ if not GG.to_make_op_things then
         return str
     end
 
-    function to_make_op_things.update_modoptions()
+    function to_make_op_things.update_modoptions(do_lua_mods)
+        do_lua_mods=do_lua_mods or false
         do
             local modOptions = {}
             local utils=to_make_op_things
             if (Spring.GetModOptions) then
                 modOptions = Spring.GetModOptions()
             end
-            local optionmult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
+            local option_mult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
             "team_1_econ","team_2_econ","team_3_econ","team_4_econ","team_5_econ","team_6_econ","team_7_econ","team_8_econ",
             "wavesizemult","queenhealthmod","techtimemult"
             } )
-            local optionaddwithdef={
+            local option_add_withdef={
             }
-            local optionmultwithdef={
+            local option_mult_withdef={
                 innatemetal=2,
                 innateenergy=2,
                 zombies_delay=10,
                 zombies_rezspeed=12
             }
+            local option_bindstr={
+                disabledunits="+ ",
+                option_notes=". ",
+            }
             ---@type boolean|integer
             local tweakdefs_count=false
             ---@type boolean|integer
             local tweakunits_count=false
-            local modsdir="gamedata/mods/"
+            local mods_dir="gamedata/mods/"
+            local lua_mods_dir="gamedata/lua_mods/"
             local mods=modOptions["mods"]
             if mods then
-                for mod in string.gmatch(mods,"%w+") do
-                    local moddir=modsdir .. mod .. ".json"
+                for mod in string.gmatch(mods,"[A-Za-z01-9_]+") do
+                    local moddir=mods_dir .. mod .. ".json"
+                    local mua_mod_dir=lua_mods_dir .. mod .. ".lua"
                     if VFS.FileExists(moddir) then
                         Spring.Echo("SW: Load mod " .. mod)
                         local dataRaw=VFS.LoadFile(moddir)
                         if not _G then
                             _G=getfenv(2)
                         end
-                        local moddata=VFS.Include("LuaRules/Utilities/json.lua").decode(dataRaw)--utils.strjson_to_obj(dataRaw)
-                        if moddata then
-                            local themodoptions=moddata.options
+                        local mod_data=VFS.Include("LuaRules/Utilities/json.lua").decode(dataRaw)--utils.strjson_to_obj(dataRaw)
+                        if mod_data then
+                            local themodoptions=mod_data.options
                             if themodoptions then
                                 for key, value in pairs(themodoptions) do
                                     if string.match(key,"^tweakunits") then
@@ -227,16 +229,14 @@ if not GG.to_make_op_things then
                                         tweakdefs_count=(tweakdefs_count or 0)+1
         
                                     elseif  modOptions[key] then
-                                        if optionmult[key] then
+                                        if option_mult[key] then
                                             modOptions[key]=modOptions[key]*value
-                                        elseif optionaddwithdef[key] then
-                                            modOptions[key]=modOptions[key]+value-optionaddwithdef[key]
-                                        elseif optionmultwithdef[key] then
-                                            modOptions[key]=modOptions[key]*value/optionmultwithdef[key]
-                                        elseif key=="disabledunits" then
-                                            modOptions[key]=modOptions[key] .. "+ " .. value
-                                        elseif key=="option_notes" then
-                                            modOptions[key]=modOptions[key] .. " " .. value
+                                        elseif option_add_withdef[key] then
+                                            modOptions[key]=modOptions[key]+value-option_add_withdef[key]
+                                        elseif option_mult_withdef[key] then
+                                            modOptions[key]=modOptions[key]*value/option_mult_withdef[key]
+                                        elseif option_bindstr[key] then
+                                            modOptions[key]=modOptions[key] .. option_bindstr[key] .. value
                                         else
                                             modOptions[key]=value
                                         end
@@ -247,6 +247,13 @@ if not GG.to_make_op_things then
                             end
                         else
                             Spring.Echo("Warning: SW: failed to load mod " .. mod)
+                        end
+                    elseif VFS.FileExists(mua_mod_dir) then
+                        if do_lua_mods then
+                            Spring.Echo("Run luamod " .. mod)
+                            VFS.Include(mua_mod_dir)
+                        else
+                            Spring.Echo("Find luamod " .. mod)
                         end
                     else
                         Spring.Echo("Warning: SW: mod " .. mod .. " don't exist")

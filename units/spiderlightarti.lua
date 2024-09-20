@@ -33,7 +33,7 @@ fleaUD.description="Ultralight beam artillery spider (Burrows)"
 fleaUD.sightDistance=780
 --fleaUD.objectName="lancyFlea"
 
-utils.set_morth_mul("spiderscout","spiderlightarti",1)
-utils.add_build("sillycon","spiderlightarti")
+utils.set_morth_mul("silly_morth","spiderscout","spiderlightarti",1)
+utils.add_build("silly_build","sillycon","spiderlightarti")
 
 return {["spiderlightarti"]=fleaUD}

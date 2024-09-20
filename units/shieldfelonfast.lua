@@ -1,7 +1,7 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
-utils.set_morth_mul("shieldfelon","shieldfelonfast")
-utils.add_build("bigsillycon","shieldfelonfast")
+utils.set_morth_mul("silly_morth","shieldfelon","shieldfelonfast")
+utils.add_build("silly_build","bigsillycon","shieldfelonfast")
 return utils.copy_tweak("shieldfelon","shieldfelonfast",function (ud)
     ud.name ="Rushing " .. ud.name
     ud.description="Heavy Shield Fast Attacker, use A LOT OF energy to charge"

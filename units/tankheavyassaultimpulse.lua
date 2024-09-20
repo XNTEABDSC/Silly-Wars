@@ -10,6 +10,6 @@ name="Impulse Cyclops",
 description="Very Heavy Tank Buster With Impulse",
 })(ud)
 
-utils.set_morth_mul(fname,tname,20)
-utils.add_build("sillycon",tname)
+utils.set_morth_mul("silly_morth",fname,tname,20)
+utils.add_build("silly_build","sillycon",tname)
 return {[tname]=ud}

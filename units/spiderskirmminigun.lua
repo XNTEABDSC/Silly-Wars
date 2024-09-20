@@ -13,6 +13,6 @@ ud.speed=ud.speed*0.9
 ud.name=ud.name .. " Minigun"
 ud.customParams.def_scale=2.5
 
-utils.set_morth_mul("spiderskirm","spiderskirmminigun")
-utils.add_build("sillycon","spiderskirmminigun")
+utils.set_morth_mul("silly_morth","spiderskirm","spiderskirmminigun")
+utils.add_build("silly_build","sillycon","spiderskirmminigun")
 return {spiderskirmminigun=ud}

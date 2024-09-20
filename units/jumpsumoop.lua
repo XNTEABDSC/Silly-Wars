@@ -1,8 +1,8 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 --utils.add_build("bigsillycon","jumpsumoop")
-utils.set_morth_mul("jumpsumo","jumpsumoop")
-utils.add_build("bigsillycon","jumpsumoop")
+utils.set_morth_mul("silly_morth","jumpsumo","jumpsumoop")
+utils.add_build("silly_build","bigsillycon","jumpsumoop")
 return utils.copy_tweak("jumpsumo","jumpsumoop",utils.do_tweak({
     customParams={
         jump_range=600,

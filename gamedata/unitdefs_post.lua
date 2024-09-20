@@ -78,7 +78,6 @@ do
 	end
 end
 
-GG.to_make_op_things.do_ud_post()
 
 function Tweak_units(tweaks)
 	for name, ud in pairs(UnitDefs) do
@@ -89,12 +88,11 @@ function Tweak_units(tweaks)
 	end
 end
 
-GG.to_make_op_things.update_modoptions()
+GG.to_make_op_things.update_modoptions(true)
+
+GG.to_make_op_things.do_ud_post("def")
 
 local modOptions=Spring.GetModOptions()
-
-
-
 
 do
 	local append = false
@@ -135,6 +133,8 @@ do
 		end
 	end
 end
+
+GG.to_make_op_things.do_ud_post("def_post")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

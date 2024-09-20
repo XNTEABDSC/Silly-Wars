@@ -1,7 +1,7 @@
 return {
 	name='Silly Wars dev',
 	description='Zero-K',
-	version='v0.3.4',
+	version='v0.3.5',
 	shortname='ZKSW',
 	mutator='1',
 	game='Zero-K',

@@ -1,8 +1,8 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.set_morth_mul("bomberheavy","bombersingu")
-utils.add_build("sillycon","bombersingu")
+utils.set_morth_mul("silly_morth","bomberheavy","bombersingu")
+utils.add_build("silly_build","sillycon","bombersingu")
 
 return utils.copy_tweak("bomberheavy","bombersingu",function (ud)
     ud.name="Impulse Likho"
