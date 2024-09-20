@@ -2,6 +2,7 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 utils.set_morth_mul("silly_morth","shieldshield","shieldshieldpro")
+utils.add_build("silly_build","bigsillycon","shieldshieldpro")
 return utils.copy_tweak("shieldshield","shieldshieldpro",function (ud)
     ud.name = "Greater " .. ud.name
     ud.description = "Greater Shield to counter greater silly"

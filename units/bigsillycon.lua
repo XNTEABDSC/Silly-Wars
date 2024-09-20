@@ -2,7 +2,7 @@ local ud=(VFS.Include("units/striderfunnelweb.lua").striderfunnelweb)
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-ud.name="Bigger Silly Con"
+ud.name="Big Silly Con"
 ud.metalcost=1000
 ud.health=3000
 ud.weapondefs={}

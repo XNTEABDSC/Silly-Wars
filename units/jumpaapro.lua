@@ -6,7 +6,7 @@ utils.add_build("silly_build","bigsillycon","jumpaapro")
 
 return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
     ud.name="Pro Toad"
-    ud.description="AA Strider"
+    ud.description="AA Strider, with burst slow beam and flak"
     ud.metalCost=4000
     ud.health=20000
     ud.speed=48

@@ -2,6 +2,7 @@ VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
 utils.set_morth("silly_morth","striderartypuppy","striderartycerb")
+utils.add_build("silly_build","verybigsillycon","striderartycerb")
 --[=[
 local ud=utils.get_unit_lua("striderarty")
 
@@ -19,6 +20,7 @@ return utils.copy_tweak("striderarty","striderartycerb",function (ud)
         name="Cerberus' Merlin",
         metalCost=16000,
         health=10000,
+        highTrajectory                = 2,
         customParams={
             def_scale=2.4
         },
@@ -42,7 +44,7 @@ return utils.copy_tweak("striderarty","striderartycerb",function (ud)
                 mygravity               = 0.1,
                 soundHit                = [[explosion/ex_large4]],
                 soundStart              = [[explosion/ex_large5]],
-                sprayangle              = 2048,
+                sprayangle              = 1024,
                 weaponType              = [[Cannon]],
                 weaponVelocity          = 400,
                 range                   = 1650,

@@ -13,3 +13,6 @@ add_build("bigsillycon","dronefighter")
 
 add_build("staticcon","staticcon")
 add_build("striderhub","nebula")
+
+
+return {option_notes="Can build nebula and cons"}

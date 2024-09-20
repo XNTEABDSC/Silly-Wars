@@ -2,7 +2,7 @@ VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
 utils.set_morth_mul("silly_morth","gunshipkrow","gunshiptff")
-utils.add_build("silly_build","bigsillycon","gunshiptff")
+utils.add_build("silly_build","verybigsillycon","gunshiptff")
 
 return utils.copy_tweak("gunshipkrow","gunshiptff",function (ud)
     for _,i in pairs({1,2,4})do

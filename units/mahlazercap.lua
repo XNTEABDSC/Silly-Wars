@@ -55,7 +55,9 @@ set_laser_capper(satelliteud.weaponDefs.NON_CUTTER)
 satelliteud.customParams.post_capture_reload=0
 ud.customParams.post_capture_reload=0
 
-utils.set_morth_mul("def_post","mahlazer","mahlazercap")
+utils.set_morth_mul("silly_morth","mahlazer","mahlazercap")
+
+utils.add_build("silly_build","verybigsillycon","mahlazercap")
 
 return{
     mahlazercap=ud,

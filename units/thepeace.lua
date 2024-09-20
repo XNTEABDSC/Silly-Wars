@@ -50,6 +50,8 @@ ud.weaponDefs.GRAVITY_NEG.rgbColor                = [[0.5 0 0]]
 ud.weaponDefs.GRAVITY_NEG.rgbColor2               = [[1 0 0]]
 ud.weaponDefs.GRAVITY_NEG.thickness=96
 ud.weaponDefs.GRAVITY_NEG.size=96
-utils.set_morth_mul("def_post","zenith","thepeace",30)
+utils.set_morth_mul("silly_morth","zenith","thepeace",30)
+
+utils.add_build("silly_build","verybigsillycon","thepeace")
 
 return {["thepeace"]=ud}

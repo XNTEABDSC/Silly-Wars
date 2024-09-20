@@ -6,7 +6,7 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.do_tweak
     name="Nuclear Cyclops",
     description="Shoot Nuclear Warhead (200 stockpile)",
     metalCost=8000,
-    health=32000,
+    health=40000,
     speed=51,
     weaponDefs={
         COR_GOL={
@@ -24,7 +24,7 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.do_tweak
             soundHit                = [[explosion/mini_nuke]],
             range=350,
             reloadtime              = 6,
-            weaponVelocity          = 200,
+            weaponVelocity          = 250,
         },
     },
     customParams={

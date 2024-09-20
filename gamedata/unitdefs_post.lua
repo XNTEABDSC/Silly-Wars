@@ -79,16 +79,13 @@ do
 end
 
 
-function Tweak_units(tweaks)
-	for name, ud in pairs(UnitDefs) do
-		if tweaks[name] then
-			Spring.Echo("Loading tweakunits for " .. name)
-			Spring.Utilities.OverwriteTableInplace(ud, lowerkeys(tweaks[name]), true)
-		end
-	end
-end
+local tweak_units=utils.tweak_units
 
-GG.to_make_op_things.update_modoptions(true)
+local tweak_defs=utils.tweak_defs
+
+GG.to_make_op_things.update_modoptions()
+
+GG.to_make_op_things.do_ud_post("def_pre")
 
 GG.to_make_op_things.do_ud_post("def")
 
@@ -99,13 +96,7 @@ do
 	local name = "tweakdefs"
 	while modOptions[name] and modOptions[name] ~= "" do
 		local postsFuncStr = Spring.Utilities.Base64Decode(modOptions[name])
-		local postfunc, err = loadstring(postsFuncStr)
-		Spring.Echo("Loading tweakdefs modoption", append or 0)
-		if postfunc then
-			postfunc()
-		else
-			Spring.Log("defs.lua", LOG.ERROR, name, err)
-		end
+		tweak_defs(postsFuncStr)
 		append = (append or 0) + 1
 		name = "tweakdefs" .. append
 	end
@@ -119,7 +110,7 @@ do
 	while modOptions[modoptName] and modOptions[modoptName] ~= "" do
 		local tweaks = Spring.Utilities.CustomKeyToUsefulTable(modOptions[modoptName])
 		if type(tweaks) == "table" then
-			Tweak_units(tweaks)
+			tweak_units(tweaks)
 		end
 		append = (append or 0) + 1
 		modoptName = "tweakunits" .. append

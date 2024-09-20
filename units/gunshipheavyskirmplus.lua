@@ -21,7 +21,7 @@ return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud
         craterMult              = 0,
         cylinderTargeting       = 1,
         damage                  = {
-            default = 132,
+            default = 132.1,
         },
         edgeEffectiveness       = 0.5,
         explosionGenerator      = [[custom:flakplosion]],
@@ -32,7 +32,7 @@ return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud
         reloadtime              = 0.5,
         soundHit                = [[weapon/flak_hit]],
         soundStart              = [[weapon/flak_fire]],
-        turret                  = true,
+        --turret                  = true,
         weaponType              = [[Cannon]],
         weaponVelocity          = 2000,
     })(wd)
