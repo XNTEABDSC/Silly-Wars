@@ -3,7 +3,7 @@ local utils=GG.to_make_op_things
 utils.set_morth_mul("silly_morth","tankriot","tankriotarty")
 utils.add_build("silly_build","bigsillycon","tankriotarty")
 return utils.copy_tweak("tankriot","tankriotarty",function (ud)
-    utils.do_tweak({
+    utils.table_replace({
         name="Ranged Orge",
         description="Orge with just Adv. Targeting System (expensive)",
         weaponDefs={

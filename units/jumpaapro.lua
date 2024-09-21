@@ -12,7 +12,7 @@ return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
     ud.speed=48
     ud.sightDistance=1200
     ud.customParams.def_scale=2.5
-    utils.do_tweak({
+    utils.table_replace({
         beamttl                 = 10,
         customParams={
             --script_burst_salvo_count=20,
@@ -41,7 +41,7 @@ return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
         range=950
     })(ud.weaponDefs.LASER)
     local gun=ud.weaponDefs.EMG
-    utils.do_tweak({
+    utils.table_replace({
         name                    = [[Flak Cannon]],
         areaOfEffect            = 128,
         cegTag                  = [[flak_trail]],

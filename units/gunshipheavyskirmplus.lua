@@ -4,7 +4,7 @@ local utils=GG.to_make_op_things
 utils.set_morth_mul("silly_morth","gunshipheavyskirm","gunshipheavyskirmplus")
 utils.add_build("silly_build","sillycon","gunshipheavyskirmplus")
 return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud)
-    utils.do_tweak({
+    utils.table_replace({
         name="Flak Nimbus",
         description="Flying Flak",
         metalCost=2500,
@@ -12,7 +12,7 @@ return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud
         speed=80,
     })(ud)
     local wd=ud.weaponDefs.EMG
-    utils.do_tweak({
+    utils.table_replace({
         name                    = [[Flak Cannon]],
         accuracy                = 500,
         areaOfEffect            = 128,

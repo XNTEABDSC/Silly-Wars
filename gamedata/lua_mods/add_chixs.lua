@@ -51,23 +51,25 @@ utils.add_do_ud_post_fn("def_pre","add_chixs",function ()
     do
         -- from zerowar rebalanced
         local chixNewPrice={
-            chicken=60,
+            chicken=40,
             chicken_leaper=440,
-            chickens=90,
-            chickenwurm=400,
-            chicken_dodo=120,
-            chickena=440,
-            chickenc=800,
-            chicken_roc=1600,
-            chickenf=300,
-            chicken_blimpy=640,
-            chicken_spidermonkey=640,
-            chicken_sporeshooter=820,
-            chickenr=180,
-            chicken_shield=600,
-            chicken_tiamat=2000,
-            chickenblobber=2800,
-            chicken_dragon=7000
+            chickens=135, -- spiker
+            chickenwurm=400, -- wurm
+            chicken_dodo=100, -- dodo
+            chickena=440, -- cockatrice
+            chickenc=600, -- basilisk,
+            chicken_roc=900, -- roc
+            chickenf=250, -- talon
+            chicken_blimpy=640, -- blimpy
+            chicken_spidermonkey=640, -- spidermonkey
+            chicken_sporeshooter=700,
+            chickenr=180, -- lobber
+            chicken_shield=1200, -- blooper
+            chicken_tiamat=1800, -- tiamat
+            chickenblobber=1600, --blobber
+            chicken_dragon=7000,
+            chickenlandqueen=60000,
+            chickenflyerqueen=60000
         }
         for key, value in pairs(chixNewPrice) do
             UnitDefs[key].metalcost=value
@@ -75,4 +77,4 @@ utils.add_do_ud_post_fn("def_pre","add_chixs",function ()
     end
 end)
 
-return {option_notes="You can make chickenbroodqueen by sillycon. Chickens are balanced (via zerowar)"}
+return {option_notes="You can make chickenbroodqueen by sillycon. Chickens are balanced "}

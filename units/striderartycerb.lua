@@ -16,7 +16,7 @@ utils.do_tweak({})(ud.weaponDefs.ROCKET)
 ]=]
 
 return utils.copy_tweak("striderarty","striderartycerb",function (ud)
-    utils.do_tweak({
+    utils.table_replace({
         name="Cerberus' Merlin",
         metalCost=16000,
         health=10000,

@@ -3,7 +3,7 @@ local utils=GG.to_make_op_things
 --utils.add_build("bigsillycon","jumpsumoop")
 utils.set_morth_mul("silly_morth","jumpsumo","jumpsumoop")
 utils.add_build("silly_build","bigsillycon","jumpsumoop")
-return utils.copy_tweak("jumpsumo","jumpsumoop",utils.do_tweak({
+return utils.copy_tweak("jumpsumo","jumpsumoop",utils.table_replace({
     customParams={
         jump_range=600,
         jump_height=3600,

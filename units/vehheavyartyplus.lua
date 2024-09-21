@@ -9,7 +9,7 @@ return utils.copy_tweak("vehheavyarty","vehheavyartyplus",function (ud)
     ud.name="S.L.A.M " .. ud.name
     ud.description="Throws S.L.A.M"
     local wd=ud.weaponDefs.CORTRUCK_ROCKET
-    utils.do_tweak({
+    utils.table_replace({
         name="S.L.A.M",
         areaOfEffect            = 160,
 	    cegTag                  = [[slam_trail]],

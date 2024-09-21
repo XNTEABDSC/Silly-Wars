@@ -3,7 +3,7 @@ local utils=GG.to_make_op_things
 local fname="tankheavyassault"
 local tname="tankheavyassaultimpulse"
 local ud=utils.get_unit_lua(fname)
-utils.do_tweak({
+utils.table_replace({
 weaponDefs={COR_GOL={impulseFactor=-2.5}},
 metalcost=UnitDefs["tankheavyassault"].metalcost+200,
 name="Impulse Cyclops",

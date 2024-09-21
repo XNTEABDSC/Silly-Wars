@@ -2,7 +2,7 @@ VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
 local function set_laser_capper(wd)
-    utils.do_tweak({
+    utils.table_replace({
         beamTime                = 1/30,
         beamttl                 = 3,
         --coreThickness           = 0,

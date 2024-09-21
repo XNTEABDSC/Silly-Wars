@@ -59,7 +59,7 @@ if not GG.to_make_op_things then
                 morphtime=morphtime or 10
                 UnitDefs[srcname].customparams.morphto=copyedname
                 UnitDefs[srcname].customparams.morphtime=morphtime
-                UnitDefs[srcname].description=UnitDefs[srcname].description .. "Can morth into " .. copyedname
+                UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
             end
         )
     end
@@ -83,7 +83,7 @@ if not GG.to_make_op_things then
                     end
                     i=i+1
                 end
-                UnitDefs[srcname].description=UnitDefs[srcname].description .. "Can morth into " .. copyedname
+                UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
             end)
     end
 
@@ -104,11 +104,25 @@ if not GG.to_make_op_things then
                 UnitDefs[builer].buildoptions[#UnitDefs[builer].buildoptions+1]=building
             end)
     end
+    to_make_op_things.table_replace_nil={}
 
-    function to_make_op_things.do_tweak(tweaks)
-        return function (t)
-            Spring.Utilities.OverwriteTableInplace(t, tweaks, true)
+    function to_make_op_things.table_replace(tweaks)
+        local function replace(t)
+            for k, v in pairs(tweaks) do
+                if v==to_make_op_things.table_replace_nil then
+                    t[k]=nil
+                elseif (type(v) == "table") then
+                    if t[k] and type(t[k]) == "table" then
+                        to_make_op_things.table_replace(v)(t[k])
+                    else
+                        t[k] = Spring.Utilities.CopyTable(v, true)
+                    end
+                else
+                    t[k] = v
+                end
+            end
         end
+        return replace
     end
     function to_make_op_things.set_free_unit(ud)
         ud.corpse=nil

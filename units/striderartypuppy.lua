@@ -25,7 +25,7 @@ default = 30.1,
 planes  = 30.1,
 }
 wd.areaOfEffect            = 40
-utils.do_tweak({
+utils.table_replace({
     damage_vs_shield = [[440.1]],
     damage_vs_feature = [[440.1]],
     force_ignore_ground = [[1]],
