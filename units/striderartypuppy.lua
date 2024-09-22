@@ -25,6 +25,7 @@ default = 30.1,
 planes  = 30.1,
 }
 wd.areaOfEffect            = 40
+wd.model                   = [[puppymissile.s3o]]
 utils.table_replace({
     damage_vs_shield = [[440.1]],
     damage_vs_feature = [[440.1]],
@@ -33,8 +34,8 @@ utils.table_replace({
     spawns_name = puppyudname,
     spawns_expire = 10,
     spawn_blocked_by_shield = 1,
-    
     light_radius = 0,
+    nofriendlyfire=1,
 })(wd.customParams)
 
 return{

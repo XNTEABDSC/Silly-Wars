@@ -5,6 +5,9 @@ end
 if not GG.to_make_op_things then
     local to_make_op_things={}
     GG.to_make_op_things=to_make_op_things
+
+    VFS.Include("LuaRules/Utilities/tablefunctions.lua")
+
     to_make_op_things.do_ud_post_fn_list={}
     function to_make_op_things.add_do_ud_post_fn(domain,key,fn)
         if domain=="now" then
@@ -233,7 +236,7 @@ if not GG.to_make_op_things then
     to_make_op_things.json=VFS.Include("LuaRules/Utilities/json.lua")
 
 
-    function to_make_op_things.update_modoptions()
+    function to_make_op_things.load_modoptions()
         --do_lua_mods=do_lua_mods or false
         do
             local modOptions = {}
@@ -241,6 +244,11 @@ if not GG.to_make_op_things then
             if (Spring.GetModOptions) then
                 modOptions = Spring.GetModOptions()
             end
+            if modOptions.did_load_mod then
+                Spring.Echo("modoptions already loaded")
+                return
+            end
+
             if not modOptions.mods then
                 modOptions.mods ="silly_tech + silly_build + silly_morth + more_build + add_chixs"
             end
@@ -258,7 +266,7 @@ if not GG.to_make_op_things then
             }
             local option_bindstr={
                 disabledunits="+ ",
-                option_notes="\n",
+                option_notes="\n---\n",
             }
             ---@type integer
             local tweakdefs_count=1
@@ -350,7 +358,7 @@ if not GG.to_make_op_things then
                     load_mod(mod)
                 end
             end
-        
+            modOptions.did_load_mod=true
             Spring.GetModOptions=function ()
                 return modOptions
             end

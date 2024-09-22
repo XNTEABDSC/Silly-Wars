@@ -83,7 +83,7 @@ local tweak_units=utils.tweak_units
 
 local tweak_defs=utils.tweak_defs
 
-GG.to_make_op_things.update_modoptions()
+GG.to_make_op_things.load_modoptions()
 
 GG.to_make_op_things.do_ud_post("def_pre")
 

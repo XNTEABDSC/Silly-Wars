@@ -4,7 +4,7 @@ local utils=GG.to_make_op_things
 utils.set_morth_mul("silly_morth","vehheavyarty","vehheavyartyplus")
 utils.add_build("silly_build","sillycon","vehheavyartyplus")
 return utils.copy_tweak("vehheavyarty","vehheavyartyplus",function (ud)
-    ud.metalCost=1800
+    ud.metalCost=2000
     ud.health=2000
     ud.name="S.L.A.M " .. ud.name
     ud.description="Throws S.L.A.M"

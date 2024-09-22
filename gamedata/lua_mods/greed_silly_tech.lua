@@ -1,8 +1,8 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 utils.add_do_ud_post_fn("def_pre","greed_silly_tech",function ()
-    utils.add_build("def_post","athena","sillycon")
-    utils.add_build("def_post","striderfunnelweb","bigsillycon")
+    utils.add_build("def_post","staticcon","sillycon")
+    utils.add_build("def_post","athena","bigsillycon")
     utils.add_build("def_post","striderhub","verybigsillycon")
     local super_list={
         "pdrp",
@@ -15,4 +15,4 @@ utils.add_do_ud_post_fn("def_pre","greed_silly_tech",function ()
     end
 end)
 
-return {option_notes="athena->sillycon, funnelweb->bigsillycon, striderhub->verybigsillycon"}
+return {option_notes="caretaker->sillycon, athena->bigsillycon, striderhub->verybigsillycon"}
