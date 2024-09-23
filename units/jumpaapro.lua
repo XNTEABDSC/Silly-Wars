@@ -79,4 +79,5 @@ return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
     udcp.jump_speed         = nil
     udcp.jump_reload        = nil
     udcp.jump_from_midair   = nil
+    udcp.tactical_ai_defs_copy="jumpaa"
 end)

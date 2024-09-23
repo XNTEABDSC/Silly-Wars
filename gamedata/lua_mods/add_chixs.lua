@@ -1,6 +1,6 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
-utils.add_do_ud_post_fn("def_pre","add_chixs",function ()
+utils.add_fn_to_fn_list("def_pre","add_chixs",function ()
     utils.add_build("def","sillycon","chickenbroodqueen")
     UnitDefs["chickenbroodqueen"].buildoptions={
         [[chicken_drone]],

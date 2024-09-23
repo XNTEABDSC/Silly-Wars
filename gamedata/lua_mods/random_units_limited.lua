@@ -1,7 +1,7 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
-utils.add_do_ud_post_fn("def_post","random_units_limited",function ()
+utils.add_fn_to_fn_list("def_post","random_units_limited",function ()
     local lowerkeys=utils.lowerkeys
     local rand_range=4
     local bias=1

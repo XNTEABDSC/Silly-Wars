@@ -11,6 +11,7 @@ ud.customParams.zenith_meteor_capacity=100
 
 local function make_meteor_into_NUKE(wd)
     utils.table_replace({
+        name="NUKE",
         areaOfEffect            = 1920,
         cegTag                  = [[NUCKLEARMINI]],
         craterBoost             = 6,

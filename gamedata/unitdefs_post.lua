@@ -85,9 +85,9 @@ local tweak_defs=utils.tweak_defs
 
 GG.to_make_op_things.load_modoptions()
 
-GG.to_make_op_things.do_ud_post("def_pre")
+GG.to_make_op_things.do_fn_list_fns("def_pre")
 
-GG.to_make_op_things.do_ud_post("def")
+GG.to_make_op_things.do_fn_list_fns("def")
 
 local modOptions=Spring.GetModOptions()
 
@@ -125,7 +125,7 @@ do
 	end
 end
 
-GG.to_make_op_things.do_ud_post("def_post")
+GG.to_make_op_things.do_fn_list_fns("def_post")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

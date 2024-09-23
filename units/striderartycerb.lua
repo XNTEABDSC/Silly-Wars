@@ -51,6 +51,7 @@ return utils.copy_tweak("striderarty","striderartycerb",function (ud)
             }
         }
     })(ud)
+    ud.speed=ud.speed*0.8
     local wd=ud.weaponDefs.ROCKET
     wd.model=nil
     wd.flightTime=nil

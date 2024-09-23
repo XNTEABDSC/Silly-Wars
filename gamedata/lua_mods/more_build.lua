@@ -15,4 +15,4 @@ add_build("staticcon","staticcon")
 add_build("striderhub","nebula")
 
 
-return {option_notes="Can build nebula and cons"}
+return {option_notes="Striderhub can build nebula and cons"}

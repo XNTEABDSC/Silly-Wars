@@ -327,65 +327,111 @@ if not GG.to_make_very_op_things then
         end
         do
             local wdvalues=lowerkeys({
-                areaOfEffect=0.5,range=0.5,
-                burstRate=1,reloadtime=1,sprayangle=0.5,accuracy=0.5,
-                weaponVelocity=0.5,startVelocity=0.5,
-                craterBoost=1,craterMult=1,mygravity=1,
-                shieldPower=1,shieldPowerRegen=1,shieldPowerRegenEnergy=1,shieldRadius=1,
-                laserFlareSize=0.5,thickness=0.5,tolerance=1,intensity=1,beamTime=0.5,beamttl=0.5,
-                turnRate=0.5,weaponAcceleration=0.5,wobble=0.5,
+                areaOfEffect={0.5,1},range={0.5,2},
+                burstRate={1,-1},reloadtime={1,-1},sprayangle={0.5,-0.2},accuracy={0.5,-0.2},
+                weaponVelocity={0.5,0.5},startVelocity={0.5,0.5},
+                craterBoost={1,0.2},craterMult={1,0.2},mygravity={0.5,0},
+                shieldPower={1,1},shieldPowerRegen={1,1},shieldPowerRegenEnergy={1,-1},shieldRadius={0.5,1},
+                laserFlareSize={0.5,0},thickness={0.5,0},tolerance={1,0},intensity={1,0},beamTime={0.5,0},beamttl={0.5,0},
+                turnRate={0.5,0.2},weaponAcceleration={0.5,0.2},wobble={0.5,-0.2},
             })
             local wdcpvalues=lowerkeys({
-                burntime=0.5,
-                post_capture_reload=0.5,
-                timeslow_damagefactor=1,
-                extra_damage=1,
+                burntime={0.5,2},
+                post_capture_reload={0.5,-2},
+                timeslow_damagefactor={1,1},
+                extra_damage={1,1},
             })
             local udvalues=lowerkeys({
-                acceleration=0.5,brakeRate=0.5,speed=0.5,turnRate=0.5,
-                health=1,
-                sightDistance=0.5,radarDistance=0.5,sonarDistance=0.5,minCloakDistance=0.5,radarDistanceJam=0.5,
+                acceleration={0.5,0.5},brakeRate={0.5,0.2},speed={0.5,1},turnRate={0.5,1},
+                health={1,1},
+                sightDistance={0.5,0.2},radarDistance={0.5,0.2},sonarDistance={0.5,0.2},minCloakDistance={0.5,0.2},radarDistanceJam={0.5,0.2},
             })
             local udcpvalues=lowerkeys({
-                jump_range=0.5,jump_speed=0.5,jump_reload=1,
-                area_cloak_radius=0.5,area_cloak_recloak_rate=1,area_cloak_upkeep=1,specialreloadtime=1,
+                jump_range={0.5,1},jump_speed={0.5,0.2},jump_reload={1,-1},
+                area_cloak_radius={0.5,0.2},area_cloak_recloak_rate={1,0.2},area_cloak_upkeep={1,-1},specialreloadtime={1,-1},
             })
-            function to_make_very_op_things.random_units_balanced_wip(get_rand_mult)
-                local function rand_gun(wd)
+            function to_make_very_op_things.random_units_balanced(get_rand_mult_given)
+                local function rand_gun(wd,get_rand_mult)
+                    if wd.customparams and wd.customparams.bogus then
+                        return;
+                    end
                     for key, value in pairs(wd) do
                         if wdvalues[key] then
-                            wd[key]=value*get_rand_mult()
+                            wd[key]=value*get_rand_mult(wdvalues[key])
                         end
                     end
                     if wd.damage then
+                        local dmgmut=get_rand_mult({1,1})
                         for dmgkey, dmgvalue in pairs(wd.damage) do
-                            wd.damage[dmgkey]=dmgvalue*get_rand_mult()
+                            wd.damage[dmgkey]=dmgvalue*dmgmut
                         end
                     end
                     if wd.customparams then
                         for key, value in pairs(wd.customparams) do
                             if wdcpvalues[key] then
-                                wd.customparams[key]= tonumber(value) * get_rand_mult()
+                                wd.customparams[key]= tonumber(value) * get_rand_mult(wdcpvalues[key])
                             end
                         end
                     end
                 end
                 for name, ud in pairs(UnitDefs) do
-                    if ud.weapondefs then
-                        for _, wd in pairs(ud.weapondefs) do
-                            rand_gun(wd)
+                    if ud.metalcost then
+                        local mybias=1--get_rand_mult_given()
+                        local function get_rand_mult(effect)
+                            local nextvalue=get_rand_mult_given()^effect[1]
+                            mybias=mybias*(nextvalue^effect[2])
+                            return nextvalue
                         end
-                    end
-                    for key, value in pairs(ud) do
-                        if udvalues[key] then
-                            ud[key]=value*get_rand_mult()
-                        end
-                    end
-                    if ud.customparams then
-                        for key, value in pairs(ud.customparams) do
-                            if udcpvalues[key] then
-                                ud.customparams[key]=value*get_rand_mult()
+                        if ud.weapondefs then
+                            for _, wd in pairs(ud.weapondefs) do
+                                rand_gun(wd,get_rand_mult)
                             end
+                        end
+                        for key, value in pairs(ud) do
+                            if udvalues[key] then
+                                ud[key]=value*get_rand_mult(udvalues[key])
+                            end
+                        end
+                        if ud.customparams then
+                            for key, value in pairs(ud.customparams) do
+                                if udcpvalues[key] then
+                                    ud.customparams[key]=value*get_rand_mult(udcpvalues[key])
+                                end
+                            end
+                        end
+                        ud.metalcost=ud.metalcost*mybias
+                    end
+                end
+            end
+        end
+        function to_make_very_op_things.modify_all(t,keys,modifyfn)
+            for _, value in pairs(t) do
+                for _, key in pairs(keys) do
+                    value[key]=modifyfn(key,value[key])
+                end
+            end
+        end
+        function to_make_very_op_things.modify_all_units(udkeys,udcpkeys,wdkeys,wdcpkeys,
+        udfn,udcpfn,wdfn,wdcpfn)
+            for _, ud in pairs(UnitDefs) do
+                for _, udkey in pairs(udkeys) do
+                    ud[udkey]=udfn(ud[udkey],udkey,ud)
+                end
+                ud.customparams=ud.customparams or {}
+                local udcp=ud.customparams
+                for _, udcpkey in pairs(udcpkeys) do
+                    udcp[udcpkey]=udcpfn(udcp[udcpkey],udcpkey,udcp)
+                end
+                if ud.weapondefs then
+                    local wds=ud.weapondefs
+                    for _, wd in pairs(wds) do
+                        for _, wdkey in pairs(wdkeys) do
+                            wd[wdkey]=wdfn(wd[wdkey],wdkey,wd)
+                        end
+                        wd.customparams=wd.customparams or {}
+                        local wdcp=wd.customparams
+                        for _, wdcpkey in pairs(wdcpkeys) do
+                            wdcp[wdcpkey]=wdcpfn(wdcp[wdcpkey],wdcpkey,wdcp)
                         end
                     end
                 end

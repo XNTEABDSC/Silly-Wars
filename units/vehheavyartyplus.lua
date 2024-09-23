@@ -43,6 +43,6 @@ return utils.copy_tweak("vehheavyarty","vehheavyartyplus",function (ud)
         weaponVelocity          = 1125,
         commandfire             = true,
     })(wd)
-    ud.speed=54
+    ud.speed=50
     --utils.set_scale(ud,1.4)
 end)

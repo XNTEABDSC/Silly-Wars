@@ -7,42 +7,55 @@ if not GG.to_make_op_things then
     GG.to_make_op_things=to_make_op_things
 
     VFS.Include("LuaRules/Utilities/tablefunctions.lua")
-
-    to_make_op_things.do_ud_post_fn_list={}
-    function to_make_op_things.add_do_ud_post_fn(domain,key,fn)
+    ---list of functions
+    ---
+    ---[domain] [key] = fn
+    ---
+    to_make_op_things.fn_list={}
+    ---add a function, at domain, with key
+    ---
+    ---multiple add with same key makes overlap
+    ---
+    ---order of fn to be called are stored when key assigned
+    ---
+    ---notes fn may needs to use lowerkeys 
+    ---@param domain string
+    ---@param key string
+    ---@param fn function
+    function to_make_op_things.add_fn_to_fn_list(domain,key,fn)
         if domain=="now" then
             fn()
             return
         end
-        if not to_make_op_things.do_ud_post_fn_list[domain] then
-            to_make_op_things.do_ud_post_fn_list[domain]={}
-            to_make_op_things.do_ud_post_fn_list[domain].order={}
+        if not to_make_op_things.fn_list[domain] then
+            to_make_op_things.fn_list[domain]={}
+            to_make_op_things.fn_list[domain].order={}
         end
-        local l=to_make_op_things.do_ud_post_fn_list[domain]
+        local l=to_make_op_things.fn_list[domain]
         if not l[key] then
             l.order[#l.order+1]=key
         end
         l[key]=fn
     end
-    function to_make_op_things.do_ud_post(domain)
-        if to_make_op_things.do_ud_post_fn_list[domain] then
-            local l=to_make_op_things.do_ud_post_fn_list[domain]
+    ---call all fns in domain
+    ---@param domain string
+    function to_make_op_things.do_fn_list_fns(domain)
+        if to_make_op_things.fn_list[domain] then
+            local l=to_make_op_things.fn_list[domain]
             for _, key  in pairs(l.order) do
                 l[key]()
             end
         end
-        
-        --[=[
-        for key, value in pairs(to_make_op_things.do_ud_post_fn_list[domain] or {}) do
-            value()
-        end]=]
     end
-    function to_make_op_things.copy_ud_post(domainfrom,domainto)
-        local l=to_make_op_things.do_ud_post_fn_list
+    ---copy all fns from domainfrom to domainto, by add_fn_to_fn_list
+    ---@param domainfrom string
+    ---@param domainto string
+    function to_make_op_things.copy_fn_lists(domainfrom,domainto)
+        local l=to_make_op_things.fn_list
         if l[domainfrom] then
             local lf=l[domainfrom]
             for _, key  in pairs(lf.order) do
-                to_make_op_things.add_do_ud_post_fn(domainto,key,lf[key])
+                to_make_op_things.add_fn_to_fn_list(domainto,key,lf[key])
             end
             --[=[
             if not l[domainto] then
@@ -53,7 +66,7 @@ if not GG.to_make_op_things then
         end
     end
     function to_make_op_things.set_morth(domain,srcname,copyedname,morphtime)
-        to_make_op_things.add_do_ud_post_fn(domain,
+        to_make_op_things.add_fn_to_fn_list(domain,
             "set_morth(" .. srcname .. ", " .. copyedname .. ")",
             function ()
                 if not UnitDefs[srcname] then
@@ -67,7 +80,7 @@ if not GG.to_make_op_things then
         )
     end
     function to_make_op_things.set_morth_mul(domain,srcname,copyedname,morphtime,morthprice)
-        to_make_op_things.add_do_ud_post_fn(domain,
+        to_make_op_things.add_fn_to_fn_list(domain,
             "set_morth_mul(" .. srcname .. ", " .. copyedname .. ")"
             ,function ()
                 if not UnitDefs[srcname] then
@@ -91,7 +104,7 @@ if not GG.to_make_op_things then
     end
 
     function to_make_op_things.add_build(domain,builer,building)
-        to_make_op_things.add_do_ud_post_fn(domain,
+        to_make_op_things.add_fn_to_fn_list(domain,
             "add_build(" .. builer .. ", " .. building .. ")",
             function ()
                 if not UnitDefs[builer] then
@@ -108,7 +121,7 @@ if not GG.to_make_op_things then
             end)
     end
     to_make_op_things.table_replace_nil={}
-
+    -- Spring.Utilities.OverwriteTableInplace, but allow to set nil by to_make_op_things.table_replace_nil
     function to_make_op_things.table_replace(tweaks)
         local function replace(t)
             for k, v in pairs(tweaks) do
@@ -127,13 +140,14 @@ if not GG.to_make_op_things then
         end
         return replace
     end
+    ---set unit to no metalcost, dontcount, and no wreck
     function to_make_op_things.set_free_unit(ud)
         ud.corpse=nil
         ud.buildTime=ud.metalCost
         ud.metalCost=0
         --ud.name = prename .. ud.name
-        ud.explodeAs=[[NOWEAPON]]
-        ud.selfDestructAs=[[NOWEAPON]]
+        --ud.explodeAs=[[NOWEAPON]]
+        --ud.selfDestructAs=[[NOWEAPON]]
         ud.customParams.dontcount = [[1]]
     end
     function to_make_op_things.lowerkeys(t)
@@ -153,10 +167,11 @@ if not GG.to_make_op_things then
         end
         return tn
     end
+    ---get lua table of unit defined by .lua file
     function to_make_op_things.get_unit_lua(udname)
         return VFS.Include("units/".. udname ..".lua")[udname]
     end
-
+    ---copy a unit, tweak it, and return {[toname]=ud}
     function to_make_op_things.copy_tweak(srcname,toname,fn)
         local ud=to_make_op_things.get_unit_lua(srcname)
         fn(ud)
@@ -177,7 +192,7 @@ if not GG.to_make_op_things then
         ud.explodeAs              = [[ATOMIC_BLAST]]
         ud.selfDestructAs=[[ATOMIC_BLAST]]
     end
-
+    ---set number to be a multiples of 30, needed for reloadtime
     function to_make_op_things.round_to_inv30(n)
         n = n*30
         n = math.ceil(n)
@@ -185,7 +200,10 @@ if not GG.to_make_op_things then
         return n
     end
 
-    function to_make_op_things.list_to_set(list)
+    function to_make_op_things.list_to_set(list,value)
+        if value==nil then
+            value=true
+        end
         local set={}
         for key, value in pairs(list) do
             set[value]=true
@@ -193,8 +211,7 @@ if not GG.to_make_op_things then
         return set
     end
 
-    function to_make_op_things.better_gsub(str,pattern,mapper)
-        
+    function to_make_op_things.better_gsub_rec(str,pattern,mapper)
         while true do
             local l,r=string.find(str,pattern)
             if not l then
@@ -211,6 +228,27 @@ if not GG.to_make_op_things then
         return str
     end
 
+    function to_make_op_things.better_gsub(str,pattern,mapper)
+        local done=""
+        local left=str
+        while true do
+            local l,r=string.find(left,pattern)
+            if not l then
+                break
+            else
+                local str1=string.sub(left,1,l-1)
+                --local str2=string.sub(str,l,r)
+                local str3=string.sub(left,r+1)
+                local str2transed=mapper(string.match(left,pattern))
+                done=done .. str1 .. str2transed
+                left=str3
+                --str = str1 .. str2transed .. str3
+            end
+
+        end
+        return str
+    end
+
     function to_make_op_things.tweak_units(tweaks)
         for name, ud in pairs(UnitDefs) do
             if tweaks[name] then
@@ -218,6 +256,25 @@ if not GG.to_make_op_things then
                 Spring.Utilities.OverwriteTableInplace(ud, to_make_op_things.lowerkeys(tweaks[name]), true)
             end
         end
+    end
+
+    function to_make_op_things.justloadstring(str)
+        local postfunc, err = loadstring(str)
+		if postfunc then
+			return postfunc()
+		else
+            error("failed to load string: " .. str)
+            --return nil
+		end
+    end
+
+    function to_make_op_things.eval(str,env)
+        local postfunc, err = loadstring("return " .. str,"chunk","bt",env)
+		if postfunc then
+			return postfunc()
+		else
+            return nil
+		end
     end
 
     function to_make_op_things.tweak_defs(postsFuncStr)
@@ -235,7 +292,7 @@ if not GG.to_make_op_things then
     
     to_make_op_things.json=VFS.Include("LuaRules/Utilities/json.lua")
 
-
+    --- load modOptions.mods \
     function to_make_op_things.load_modoptions()
         --do_lua_mods=do_lua_mods or false
         do
@@ -277,33 +334,52 @@ if not GG.to_make_op_things then
             local lua_mods_dir="gamedata/lua_mods/"
             local mods=modOptions["mods"]
             if mods then
+                local load_mod
                 local function load_modoption(themodoptions)
+                    local fns={}
+                    fns.tweakunits={}
+                    fns.tweakdefs={}
+                    fns.mods={}
+                    local function push_fn(key,fn)
+                        fns[key][#fns[key]+1] = fn
+                    end
+                    local function do_fns(key)
+                        for _, value in pairs(fns[key]) do
+                            value()
+                        end
+                    end
                     for key, value in pairs(themodoptions) do
-                        if key=="mods" then
-                            --[=[
-                            for mod2 in string.gmatch(value,"[A-Za-z01-9_]+") do
-                                update_mod(mod2)
-                            end]=]
-                        elseif key=="do_at_def_pre" then
-                            utils.add_do_ud_post_fn("def_pre","def_pre" .. do_at_def_pre_count,value)
+                        if key=="do_at_def_pre" then
+                            utils.add_fn_to_fn_list("def_pre","def_pre" .. do_at_def_pre_count,value)
                             do_at_def_pre_count=do_at_def_pre_count+1
                         elseif string.match(key,"^tweakunits") then
                             --[=[
                             modOptions["tweakunits" .. (tweakunits_count or "")]=value
                             ]=]
                             local tweakunitstable=Spring.Utilities.CustomKeyToUsefulTable(value)
-                            utils.add_do_ud_post_fn("def","tweakunits" .. tweakunits_count,function ()
-                                utils.tweak_units(tweakunitstable)
+                            push_fn("tweakunits",function ()
+                                utils.add_fn_to_fn_list("def","tweakunits" .. tweakunits_count,function ()
+                                    utils.tweak_units(tweakunitstable)
+                                end)
+                                tweakunits_count=tweakunits_count+1
                             end)
-                            tweakunits_count=tweakunits_count+1
                         elseif string.match(key,"^tweakdefs") then
                             --modOptions["tweakdefs" .. (tweakdefs_count or "")]=value
+                            
                             local codestr=Spring.Utilities.Base64Decode(value)
-                            utils.add_do_ud_post_fn("def","tweakdefs" .. tweakdefs_count,function ()
-                                utils.tweak_defs(codestr)
+                            push_fn("tweakdefs",function ()
+                                utils.add_fn_to_fn_list("def","tweakdefs" .. tweakdefs_count,function ()
+                                    utils.tweak_defs(codestr)
+                                end)
+                                tweakdefs_count=tweakdefs_count+1
                             end)
-                            tweakdefs_count=tweakdefs_count+1
-
+                            
+                        elseif key=="mods" then
+                            push_fn("mods",function ()
+                                for mod in string.gmatch(value,"[A-Za-z01-9_]+") do
+                                    load_mod(mod)
+                                end
+                            end)
                         elseif  modOptions[key] then
                             if option_mult[key] then
                                 modOptions[key]=modOptions[key]*value
@@ -319,7 +395,10 @@ if not GG.to_make_op_things then
                         else
                             modOptions[key]=value
                         end
-                    end
+                    end-- loaded at end
+                    do_fns("tweakdefs")
+                    do_fns("tweakunits")
+                    do_fns("mods")
                 end
                 --local update_mod;
                 local function load_json_mod(mod,moddir)
@@ -407,17 +486,10 @@ if not GG.to_make_op_things then
         return tostring(v3[1]) .. " " .. tostring(v3[2]) .. " " .. tostring(v3[3])
     end
 
+    --- did automatically via def_scale
     function to_make_op_things.set_scale(ud,scale)
         local GetDimensions=to_make_op_things.GetDimensions
         local ToDimensions=to_make_op_things.ToDimensions
-        --[=[
-        local udcp=ud.customParams or ud.customparams
-        if not udcp then
-            ud.customParams={}
-            udcp=ud.customParams
-        end
-        udcp.def_scale= (udcp.def_scale or 1)* scale
-        ]=]
         local tryScales3={
             "collisionVolumeOffsets",
             "collisionVolumeScales",
@@ -461,6 +533,7 @@ if not GG.to_make_op_things then
         end
         
     end
+
 end
 VFS.Include("utils/to_make_very_op_things.lua")
 return GG.to_make_op_things

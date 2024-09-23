@@ -1,0 +1,19 @@
+VFS.Include("utils/to_make_op_things.lua")
+local utils=GG.to_make_op_things
+
+
+utils.set_morth_mul("silly_morth","spidercrabe","spidercrabearty")
+
+utils.add_build("silly_build","bigsillycon","spidercrabearty")
+
+return utils.copy_tweak("spidercrabe","spidercrabearty",utils.table_replace(
+    {
+        speed=35,
+        metalCost=6400,
+        weaponDefs={
+            ARM_CRABE_GAUSS={
+                range=1200
+            }
+        },
+    }
+))

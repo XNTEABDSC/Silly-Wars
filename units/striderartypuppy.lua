@@ -28,7 +28,6 @@ wd.areaOfEffect            = 40
 wd.model                   = [[puppymissile.s3o]]
 utils.table_replace({
     damage_vs_shield = [[440.1]],
-    damage_vs_feature = [[440.1]],
     force_ignore_ground = [[1]],
 
     spawns_name = puppyudname,
@@ -37,6 +36,7 @@ utils.table_replace({
     light_radius = 0,
     nofriendlyfire=1,
 })(wd.customParams)
+ud.speed=ud.speed*0.9
 
 return{
     ["striderartypuppy"]=ud,

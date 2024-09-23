@@ -12,6 +12,7 @@ wd.reloadtime=0.1666
 ud.speed=ud.speed*0.9
 ud.name=ud.name .. " Minigun"
 ud.customParams.def_scale=2.5
+ud.customParams.tactical_ai_defs_copy="spiderskirm"
 
 utils.set_morth_mul("silly_morth","spiderskirm","spiderskirmminigun")
 utils.add_build("silly_build","sillycon","spiderskirmminigun")
