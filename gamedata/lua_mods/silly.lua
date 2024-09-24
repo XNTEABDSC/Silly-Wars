@@ -1,0 +1,1 @@
+return {mods="silly_tech + silly_build + silly_morth + more_build + add_chixs"}

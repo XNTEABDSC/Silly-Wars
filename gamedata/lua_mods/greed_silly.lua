@@ -1,0 +1,1 @@
+return {mods="silly_build + greed + greed_silly_tech"}

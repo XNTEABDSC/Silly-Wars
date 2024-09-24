@@ -2160,7 +2160,6 @@ for _, ud in pairs(UnitDefs) do
 				]=]..
 				"return" .. ud.customParams.tactical_ai_defs_behaviour_config
 			)
-			Spring.Echo("successfully loaded behaviourConfig of " .. ud.name)
 		end
 	end
 end

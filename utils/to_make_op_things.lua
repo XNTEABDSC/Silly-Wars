@@ -263,13 +263,13 @@ if not GG.to_make_op_things then
 		if postfunc then
 			return postfunc()
 		else
-            error("failed to load string: " .. str)
+            error("failed to load string: " .. str .. " with error: " .. tostring(err))
             --return nil
 		end
     end
 
     function to_make_op_things.eval(str,env)
-        local postfunc, err = loadstring("return " .. str,"chunk","bt",env)
+        local postfunc, err = loadstring("return " .. str,"chunk")
 		if postfunc then
 			return postfunc()
 		else
@@ -307,7 +307,7 @@ if not GG.to_make_op_things then
             end
 
             if not modOptions.mods then
-                modOptions.mods ="silly_tech + silly_build + silly_morth + more_build + add_chixs"
+                modOptions.mods ="silly"
             end
             local option_mult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
             "team_1_econ","team_2_econ","team_3_econ","team_4_econ","team_5_econ","team_6_econ","team_7_econ","team_8_econ",
@@ -332,7 +332,7 @@ if not GG.to_make_op_things then
             local do_at_def_pre_count=1
             local mods_dir="gamedata/mods/"
             local lua_mods_dir="gamedata/lua_mods/"
-            local mods=modOptions["mods"]
+            local mods=modOptions.mods
             if mods then
                 local load_mod
                 local function load_modoption(themodoptions)
@@ -420,7 +420,7 @@ if not GG.to_make_op_things then
                         load_modoption(themodoptions)
                     end
                 end
-                local function load_mod(mod)
+                function load_mod(mod)
                     local jsonmoddir=mods_dir .. mod .. ".json"
                     local lua_mod_dir=lua_mods_dir .. mod .. ".lua"
                     if VFS.FileExists(jsonmoddir) then

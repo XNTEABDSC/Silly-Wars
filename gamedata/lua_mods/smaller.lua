@@ -1,7 +1,7 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 utils.add_fn_to_fn_list("def_pre","smaller",function ()
-    local scale=0.1
+    local scale=0.25
     local udinto0p1=utils.lowerkeys({
         "brakerate","radarDistance","sightDistance","sonarDistance","speed","turnRadius",
         
