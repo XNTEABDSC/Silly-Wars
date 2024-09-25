@@ -1,18 +1,21 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
+local scale=0.25
 utils.add_fn_to_fn_list("def_pre","smaller",function ()
-    local scale=0.25
-    local udinto0p1=utils.lowerkeys({
-        "brakerate","radarDistance","sightDistance","sonarDistance","speed","turnRadius",
-        
+    local udtoscale=utils.lowervalues({
+        "brakerate","radarDistance","sightDistance","sonarDistance","speed",
+        "cruiseAltitude",
+        "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed"
     })
-    local udcpinto0p1=utils.lowerkeys({
-        "def_scale"
+    local udcptoscale=utils.lowervalues({
+        "def_scale",
+        "jump_range"
     })
-    local wdinto0p1=utils.lowerkeys({
-        "areaOfEffect","light_radius","range","weaponVelocity","startVelocity","shieldRadius"
+    local wdtoscale=utils.lowervalues({
+        "areaOfEffect","damageAreaOfEffect","light_radius","range","weaponVelocity","startVelocity","shieldRadius",
+        "myGravity"
     })
-    local wdcpinto0p1=utils.lowerkeys({
+    local wdcptoscale=utils.lowervalues({
         "area_damage_radius"
     })
     local function to01(v,key)
@@ -27,7 +30,8 @@ utils.add_fn_to_fn_list("def_pre","smaller",function ()
             return v
         end
     end
-    GG.to_make_very_op_things.modify_all_units(udinto0p1,udcpinto0p1,wdinto0p1,wdcpinto0p1,to01,to01,to01,to01)
+    GG.to_make_op_things.modify_all_units(udtoscale,udcptoscale,wdtoscale,wdcptoscale,to01,to01,to01,to01)
+
 end)
 
-return {option_notes="Everything is x0.1 size"}
+return {option_notes="Everything is x".. scale .." size"}

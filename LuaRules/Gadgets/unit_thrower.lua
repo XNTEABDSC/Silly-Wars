@@ -3,7 +3,7 @@ function gadget:GetInfo()
 	return {
 		name      = "Teleport Throw",
 		desc      = "Implements teleportation thrower unit",
-		author    = "Google Frog",
+		author    = "Google Frog, then XNTEABSC",
 		date      = "12 Janurary 2018",
 		license   = "GNU GPL, v2 or later",
 		layer     = -1,

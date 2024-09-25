@@ -404,13 +404,7 @@ if not GG.to_make_very_op_things then
                 end
             end
         end
-        function to_make_very_op_things.modify_all(t,keys,modifyfn)
-            for _, value in pairs(t) do
-                for _, key in pairs(keys) do
-                    value[key]=modifyfn(key,value[key])
-                end
-            end
-        end
+        
         function to_make_very_op_things.modify_all_units(udkeys,udcpkeys,wdkeys,wdcpkeys,
         udfn,udcpfn,wdfn,wdcpfn)
             for _, ud in pairs(UnitDefs) do

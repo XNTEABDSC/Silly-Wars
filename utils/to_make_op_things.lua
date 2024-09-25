@@ -149,6 +149,7 @@ if not GG.to_make_op_things then
         --ud.explodeAs=[[NOWEAPON]]
         --ud.selfDestructAs=[[NOWEAPON]]
         ud.customParams.dontcount = [[1]]
+        ud.featureDefs=nil
     end
     function to_make_op_things.lowerkeys(t)
         local tn = {}
@@ -166,6 +167,14 @@ if not GG.to_make_op_things then
             end
         end
         return tn
+    end
+    function to_make_op_things.lowervalues(t)
+        for key, value in pairs(t) do
+            if type(value)=="string" then
+                t[key]=value:lower()
+            end
+        end
+        return t
     end
     ---get lua table of unit defined by .lua file
     function to_make_op_things.get_unit_lua(udname)
@@ -205,8 +214,8 @@ if not GG.to_make_op_things then
             value=true
         end
         local set={}
-        for key, value in pairs(list) do
-            set[value]=true
+        for _, k in pairs(list) do
+            set[k]=value
         end
         return set
     end
@@ -247,6 +256,37 @@ if not GG.to_make_op_things then
 
         end
         return str
+    end
+
+    function to_make_op_things.modify_all(t,keys,modifyfn)
+        for _, key in pairs(keys) do
+            t[key]=modifyfn(t[key],key,t)
+        end
+    end
+
+    function to_make_op_things.modify_all_2(t,keys,modifyfn)
+        for key,value in pairs(keys) do
+            t[key]=modifyfn(t[key],value,key,t)
+        end
+    end
+
+    local modify_all=to_make_op_things.modify_all
+    local modify_all_2=to_make_op_things.modify_all_2
+
+    function to_make_op_things.modify_all_units(udkeys,udcpkeys,wdkeys,wdcpkeys,
+        udfn,udcpfn,wdfn,wdcpfn)
+        for _, ud in pairs(UnitDefs) do
+            modify_all(ud,udkeys,udfn)
+            modify_all(ud.customparams,udcpkeys,udcpfn)
+            if ud.weapondefs then
+                for _, wd in pairs(ud.weapondefs) do
+                    modify_all(wd,wdkeys,wdfn)
+                    if wd.customparams then
+                        modify_all(wd.customparams,wdcpkeys,wdcpfn)
+                    end
+                end
+            end
+        end
     end
 
     function to_make_op_things.tweak_units(tweaks)
@@ -460,22 +500,19 @@ if not GG.to_make_op_things then
         return arr
     end
     
-    function to_make_op_things.GetDimensions(scale)
-        if not scale then
+    function to_make_op_things.GetDimensions(str)
+        if not str then
             return nil
         end
-        local dimensionsStr = to_make_op_things.StrExplode(" ", scale)
+        local dimensionsStr = to_make_op_things.StrExplode(" ", str)
         -- string conversion (required for MediaWiki export)
         if dimensionsStr then
             local dimensions = {}
             for i,v in pairs(dimensionsStr) do
+
                 dimensions[i] = tonumber(v)
             end
-            local largest = (dimensions and dimensions[1] and tonumber(dimensions[1])) or 0
-            for i = 2, 3 do
-                largest = math.max(largest, (dimensions and dimensions[i] and tonumber(dimensions[i])) or 0)
-            end
-            return dimensions, largest
+            return dimensions
         else
             return nil
             --error("Fail to GetDimensions on " .. scale)
@@ -486,54 +523,81 @@ if not GG.to_make_op_things then
         return tostring(v3[1]) .. " " .. tostring(v3[2]) .. " " .. tostring(v3[3])
     end
 
-    --- did automatically via def_scale
-    function to_make_op_things.set_scale(ud,scale)
-        local GetDimensions=to_make_op_things.GetDimensions
-        local ToDimensions=to_make_op_things.ToDimensions
-        local tryScales3={
-            "collisionVolumeOffsets",
-            "collisionVolumeScales",
+    do
+        --- did automatically via def_scale
+        local udtryScales3=to_make_op_things.lowervalues({
+            --"collisionVolumeOffsets",
+            --"collisionVolumeScales",
             "selectionVolumeOffsets",
             "selectionVolumeScales"
-        }
-        for _, value in pairs(tryScales3) do
-            value=value:lower()
-            if ud[value] then
-                local ss=GetDimensions(ud[value])
-                if ss then
-                    for i = 1, 3 do
-                        ss[i]=ss[i]*scale
-                    end
-                    ud[value]=ToDimensions(ss)
-                end
-            end
-        end
-
-        local tryScale1={
+        })
+        local udtryScales1=to_make_op_things.lowervalues({
             "footprintX",
             "footprintZ",
             "trackOffset",
             "trackWidth",
             "trackStrength",
             "trackStretch",
-        }
-        for _, value in pairs(tryScale1) do
-            value=value:lower()
-            if ud[value]then
-                ud[value]=ud[value]*scale
+            "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed"
+        })
+        local udcptryScales3=to_make_op_things.lowervalues({
+            --"aimposoffset","midposoffset"
+        })
+        local udcptryScales1=to_make_op_things.lowervalues({
+            --"modelradius","modelheight"
+        })
+        local GetDimensions=to_make_op_things.GetDimensions
+        local ToDimensions=to_make_op_things.ToDimensions
+        local function scale3(scale)
+            return function(v)
+                if type(v)=="string" then
+                    local ss=GetDimensions(v)
+                    if ss then
+                        if #ss~=3 then
+                            Spring.Echo("Odd things find " .. v)
+                        end
+                        for i = 1, #ss do
+                            ss[i]=ss[i]*scale
+                        end
+                        return ToDimensions(ss)
+                    else
+                        return v
+                    end
+                else
+                    return v
+                end
             end
         end
-
-        if ud.customparams.modelradius then
-            ud.customparams.modelradius=tonumber(ud.customparams.modelradius)*scale
+        local function scale1(scale)
+            return function (v)
+                if type(v)=="number" then
+                    return v*scale
+                else
+                    return v
+                end
+            end
         end
-
-        if ud.customparams.modelheight then
-            ud.customparams.modelheight=tonumber(ud.customparams.modelheight)*scale
+        --local modify_all=to_make_op_things.modify_all
+        function to_make_op_things.set_scale(ud,scale)
+            modify_all(ud,udtryScales3,scale3(scale))
+            modify_all(ud,udtryScales1,scale1(scale))
+            if ud.customparams then
+                local udcp=ud.customparams
+                modify_all(udcp,udcptryScales3,scale3(scale))
+                modify_all(udcp,udcptryScales1,scale1(scale))
+                ud.customparams.dynamic_colvol=true
+            end
         end
-        
     end
-
+    
+    function to_make_op_things.string_a_b(str)
+        local l,r=string.find(str,"_")
+        if l then
+            return string.sub(str,1,l-1),string.sub(str,r+1)
+        else
+            return nil
+        end
+    end
 end
 VFS.Include("utils/to_make_very_op_things.lua")
 return GG.to_make_op_things

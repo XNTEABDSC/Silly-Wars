@@ -3,10 +3,9 @@ VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
 ud.name="THE PEACE"
-ud.destination="YOU LOVE PEACE RIGHT? I LOVE IT TOO"
-ud.metalCost=150 * 1000
+ud.description="YOU LOVE PEACE RIGHT? I LOVE IT TOO"
+ud.metalCost=100 * 1000
 ud.health=10000
---ud.customParams.is_nuke=true -- dk, don't let antinuke work 
 ud.customParams.zenith_meteor_capacity=100
 
 local function make_meteor_into_NUKE(wd)
@@ -32,6 +31,9 @@ local function make_meteor_into_NUKE(wd)
         reloadtime              = 5,
         soundHit                = [[explosion/ex_ultra8]],
         accuracy=1500,
+        targetable              = 1,
+        interceptSolo=true,
+        range                   = 72000,
     })(wd)
     wd.customParams.spawns_name=nil
     wd.customParams.spawns_feature=nil

@@ -1,7 +1,9 @@
 {
     "Lua.diagnostics.globals": [
         "VFS",
-        "UnitDefs"
+        "UnitDefs",
+        "UnitDefNames",
+        "FeatureDefs"
     ],
     "Lua.runtime.version": "Lua 5.1",
 }

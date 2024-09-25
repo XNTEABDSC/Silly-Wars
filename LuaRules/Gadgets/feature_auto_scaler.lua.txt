@@ -8,12 +8,12 @@ end
 
 function gadget:GetInfo()
 	return {
-		name      = "Size Changer (ULU)",
-		desc      = "Changes the sizes of units so their centre of mass may be seen.",
-		author    = "GoogleFrog",
-		date      = "10 April 2020",
+		name      = "Feature Size Changer",
+		desc      = "Changes the sizes of feature so their centre of mass may be seen.",
+		author    = "XNTEABDSC, GoogleFrog",
+		date      = "",
 		license   = "GNU GPL, v2 or later",
-		layer     = -math.huge,
+		layer     = -10000,
 		enabled   = true,  --  loaded by default?
 	}
 end
@@ -27,11 +27,16 @@ local origPieceTable = {}
 VFS.Include("LuaRules/Utilities/tablefunctions.lua")
 local suCopyTable = Spring.Utilities.CopyTable
 
+VFS.Include("utils/to_make_op_things.lua")
+local utils=GG.to_make_op_things
+
+local spGetFeatureDefID=Spring.GetFeatureDefID
+local spSetFeaturePieceMatrix=Spring.SetFeaturePieceMatrix -- don't exist
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local function SetScale(unitID, base, scale)
-	local pieceTable = suCopyTable(origPieceTable[unitID])
+local function SetScale(featureID,fdid, base, scale)
+	local pieceTable = suCopyTable(origPieceTable[fdid])
 
 	pieceTable[1] = pieceTable[1] * scale
 	pieceTable[2] = pieceTable[2] * scale
@@ -49,13 +54,14 @@ local function SetScale(unitID, base, scale)
 	pieceTable[14] = pieceTable[14] * scale
 	pieceTable[15] = pieceTable[15] * scale
 
-	Spring.SetUnitPieceMatrix(unitID, base, pieceTable)
+	spSetFeaturePieceMatrix(featureID, base, pieceTable)
 end
-
+local spGetFeaturePieceList=Spring.GetFeaturePieceList
+local spGetFeaturePieceInfo=Spring.GetFeaturePieceInfo
 local function FindBase(unitID)
-	local pieces = Spring.GetUnitPieceList(unitID)
+	local pieces = spGetFeaturePieceList(unitID)
 	for pieceNum = 1, #pieces do
-		if Spring.GetUnitPieceInfo(unitID, pieceNum).parent == NULL_PIECE then
+		if spGetFeaturePieceInfo(unitID, pieceNum).parent == NULL_PIECE then
 			return pieceNum
 		end
 	end
@@ -63,27 +69,42 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
-local function UnitScale(unitID, scale)
-    local base = FindBase(unitID)
+local spGetFeaturePieceMatrix=Spring.GetFeaturePieceMatrix
+local function FeatureScale(featureID,fdId, scale)
+    local base = FindBase(featureID)
     if base then
-		if not origPieceTable[unitID] then
-			origPieceTable[unitID] = {Spring.GetUnitPieceMatrix(unitID, base)}
+		if not origPieceTable[fdId] then
+			origPieceTable[fdId] = {spGetFeaturePieceMatrix(featureID, base)}
 		end
 
-        SetScale(unitID, base, scale)
+        SetScale(featureID,fdId, base, scale)
     end
 end
 
-function gadget:UnitDestroyed(unitID)
-	origPieceTable[unitID] = nil
-end
+local featureScaleInfo={}
 
 function gadget:Initialize()
 	--Spring.Echo("I LOAD IT")
-    GG.UnitScale = UnitScale
+    GG.FeatureScale = FeatureScale
+    for fdid, fd in pairs(FeatureDefs) do
+        local udname,_=utils.string_a_b( fd.name)
+        if udname and UnitDefNames[udname] then
+            local ud=UnitDefNames[udname]
+            if ud.customParams and ud.customParams.def_scale then
+                local scale=tonumber (ud.customParams.def_scale)
+                featureScaleInfo[fdid]={
+                    scale=scale
+                }
+            end
+        end
+    end
 end
 
-
+function gadget:FeatureCreated(featureID, allyTeamID)
+    local fdid=spGetFeatureDefID(featureID)
+    if featureScaleInfo[fdid] then
+        FeatureScale(featureID,fdid,featureScaleInfo[fdid].scale)
+    end
+end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
