@@ -12,3 +12,9 @@ lv 20 stinger -donel
 leggy radar
 puppy's merlin -done
 cerb's merlin -done
+
+support fortress, 5000m, range bp, slow wave, ?shield, high repair, ?eos, drones 
+
+goodBurstSalvo Locust / Rev
+
+Odin->Flying Cerberus

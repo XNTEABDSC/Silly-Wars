@@ -15,10 +15,11 @@ local SOURCE_RANGE = 4200 -- size of the box which the emit point can be randoml
 local SOURCE_HEIGHT = 9001
 
 local HOVER_RANGE = 1600
-local HOVER_HEIGHT = 2650
 
 
 local ud=UnitDefs[ Spring.GetUnitDefID(unitID) ]
+
+local HOVER_HEIGHT = tonumber(ud.customParams.zenith_hover_height) or 2650
 
 local udname=ud.name
 
@@ -34,7 +35,115 @@ local projectiles = {}
 local projectileCount = 0
 local oldestProjectile = 1 -- oldestProjectile is for when the projectile table is being cyclicly overridden.
 
-local tooltipProjectileCount = 0 -- a more correct but less useful count.
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetProjectileDefID=Spring.GetProjectileDefID
+local spGetUnitTeam=Spring.GetUnitTeam
+local spGetProjectileTeamID =Spring.GetProjectileTeamID
+local spGetProjectileOwnerID =Spring.GetProjectileOwnerID
+local spGetProjectileTarget=Spring.GetProjectileTarget
+
+
+local function projectilesAdd(projID)
+	projectileCount=projectileCount+1
+	projectiles[projectileCount]=projID
+end
+local function projectilesReplace(projID)
+	if projectileCount==0 then
+		return nil
+	end
+	local oldProjID=projectiles[oldestProjectile]
+	projectiles[oldestProjectile]=projID
+	if oldestProjectile==projectileCount then
+		oldestProjectile=1
+	else
+		oldestProjectile=oldestProjectile+1
+	end
+end
+local function projectilesPop()
+	if projectileCount==0 then
+		return nil
+	end
+	local oldProjID=projectiles[oldestProjectile]
+	if oldestProjectile==projectileCount then
+		oldestProjectile=1
+	else
+		projectiles[oldestProjectile]=projectiles[projectileCount]
+	end
+	projectileCount=projectileCount-1
+	return oldProjID
+end
+local function projectilesClear()
+	local list=projectiles
+	local count=projectileCount
+	local index=0
+	projectiles={}
+	projectileCount=0
+	oldestProjectile=1
+	return function ()
+		if index==count then
+			return nil
+		end
+		index=index+1
+		return list[index],index
+	end
+end
+
+local function projectilesHasNeeded(neededtype)
+	local loopcount=0
+	while projectileCount>loopcount do
+		local projID=projectiles[oldestProjectile]
+		local type = spGetProjectileDefID(projID)
+		if type==nil then
+			projectilesPop()
+		elseif not type==neededtype then
+			if oldestProjectile==projectileCount then
+				oldestProjectile=1
+			else
+				oldestProjectile=oldestProjectile+1
+			end
+			loopcount=loopcount+1
+		else
+			return projID
+		end
+	end
+	return false
+end
+local METEOR_CAPACITY =300
+local function projectilesAddOrReplace(projID)
+	if projectileCount<METEOR_CAPACITY then
+		projectilesAdd(projID)
+		return nil
+	else
+		return projectilesReplace(projID)
+	end
+end
+
+local function projectilesFilter(filter)
+	local index=1
+	while index<=projectileCount do
+		local res=filter(projectiles[index],index)
+		if res then
+			projectiles[index]=res
+			index=index+1
+		else
+			projectiles[index]=projectiles[projectileCount]
+			projectileCount=projectileCount-1
+		end
+	end
+	if projectileCount>0 then
+		while oldestProjectile>projectileCount do
+			oldestProjectile=oldestProjectile- projectileCount
+		end
+	else
+		oldestProjectile=1
+	end
+end
+
+--local tooltipProjectileCount = 0 -- a more correct but less useful count.
 
 local gravityWeaponDefID    = WeaponDefNames[udname.."_gravity_neg"].id
 local floatWeaponDefID      = WeaponDefNames[udname.."_meteor_float"].id
@@ -46,7 +155,6 @@ local uncontrolWeaponDefID  = WeaponDefNames[udname.."_meteor_uncontrolled"].id
 local SPAWN_PERIOD = WeaponDefNames[udname.."_meteor"].reload  * 1000 -- in milliseconds
 local light_period=WeaponDefNames[udname.."_gravity_neg"].reload*1000
 
-local METEOR_CAPACITY =300
 do
 	local cpcap=ud.customParams.zenith_meteor_capacity
 	if cpcap then
@@ -70,11 +178,9 @@ local gravityDefs = {
 	[uncontrolWeaponDefID] = -0.12, -- Gravity increases speed of fall and reduced size of drop impact zone.
 }
 
-local spGetUnitIsStunned = Spring.GetUnitIsStunned
-local spGetUnitRulesParam = Spring.GetUnitRulesParam
-local spSetUnitRulesParam = Spring.SetUnitRulesParam
-local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
 local CMD_ATTACK = CMD.ATTACK
+local CMD_DGUN=CMD.DGUN
+local CMD_REMOVE=CMD.REMOVE
 local gaiaTeam = Spring.GetGaiaTeamID()
 
 local launchInProgress = false
@@ -132,42 +238,41 @@ end
 local function DropSingleMeteor(index)
 	local proID = projectiles[index]
 	-- Check that the projectile ID is still valid
-	if Spring.GetProjectileDefID(proID) == floatWeaponDefID then
+	if spGetProjectileDefID(proID) == floatWeaponDefID then
 		TransformMeteor(uncontrolWeaponDefID, proID, gaiaTeam, nil)
 	end
 end
 
 local function LoseControlOfMeteors()
-	tooltipProjectileCount = 0
-	for i = 1, projectileCount do
-		local proID = projectiles[i]
-		-- Check that the projectile ID is still valid
-		if Spring.GetProjectileDefID(proID) == floatWeaponDefID then
-			tooltipProjectileCount = tooltipProjectileCount + 1
-			projectiles[i] = TransformMeteor(uncontrolWeaponDefID, proID, gaiaTeam, nil)
+
+	projectilesFilter(function (proID)
+		if spGetProjectileDefID(proID) == floatWeaponDefID then
+			return TransformMeteor(uncontrolWeaponDefID, proID, gaiaTeam, nil)
+		else
+			return proID
 		end
-	end
+	end)
 	Spring.SetUnitRulesParam(unitID, "meteorsControlled", 0, INLOS_ACCESS)
 end
 
 local function RegainControlOfMeteors()
-	tooltipProjectileCount = 0
-	for i = 1, projectileCount do
-		local proID = projectiles[i]
-		-- Check that the projectile ID is still valid
-		if Spring.GetProjectileDefID(proID) == uncontrolWeaponDefID then
-			local ttl = Spring.GetProjectileTimeToLive(projectiles[i])
+	local zenithTeamID = spGetUnitTeam(unitID)
+	projectilesFilter(function (proID)
+		if spGetProjectileDefID(proID) == uncontrolWeaponDefID then
+			local ttl = Spring.GetProjectileTimeToLive(proID)
 			if ttl > 0 then
-				tooltipProjectileCount = tooltipProjectileCount + 1
 				local hoverPos = Vector.PolarToCart(HOVER_RANGE*math.random()^2, 2*math.pi*math.random())
-				projectiles[i] = TransformMeteor(floatWeaponDefID, proID, gaiaTeam, nil, ux + hoverPos[1], uy + HOVER_HEIGHT, uz + hoverPos[2])
+				return TransformMeteor(floatWeaponDefID, proID, zenithTeamID, nil, ux + hoverPos[1], uy + HOVER_HEIGHT, uz + hoverPos[2])
 			end
+		else
+			return nil
 		end
-	end
-	Spring.SetUnitRulesParam(unitID, "meteorsControlled", tooltipProjectileCount, INLOS_ACCESS)
+	end)
+	Spring.SetUnitRulesParam(unitID, "meteorsControlled", projectileCount, INLOS_ACCESS)
 end
 
 local function SpawnMeteor()
+	local zenithTeamID = spGetUnitTeam(unitID)
 	local sourcePos = Vector.PolarToCart(SOURCE_RANGE*(1 - math.random()^2), 2*math.pi*math.random())
 	local hoverPos = Vector.PolarToCart(HOVER_RANGE*math.random()^2, 2*math.pi*math.random())
 	local proID = Spring.SpawnProjectile(floatWeaponDefID, {
@@ -175,24 +280,38 @@ local function SpawnMeteor()
 		tracking = true,
 		speed = {0, -5, 0},
 		ttl = 18000, -- 18000 = 10 minutes
-		team = gaiaTeam,
+		team = zenithTeamID,
 	})
 	Spring.SetProjectileTarget(proID, ux + hoverPos[1], uy + HOVER_HEIGHT, uz + hoverPos[2])
 	
 	-- Drop meteor if there are too many. It is more fun this way.
-	if projectileCount >= METEOR_CAPACITY then
-		DropSingleMeteor(oldestProjectile)
-		projectiles[oldestProjectile] = proID
-		oldestProjectile = oldestProjectile + 1
-		if oldestProjectile > projectileCount then
-			oldestProjectile = 1
-		end
+	local maydrop=projectilesAddOrReplace(proID)
+	if maydrop then
+		DropSingleMeteor(maydrop)
 	else
-		projectileCount = projectileCount + 1
-		projectiles[projectileCount] = proID
-		
-		tooltipProjectileCount = tooltipProjectileCount + 1
-		Spring.SetUnitRulesParam(unitID, "meteorsControlled", tooltipProjectileCount, INLOS_ACCESS)
+		Spring.SetUnitRulesParam(unitID, "meteorsControlled", projectileCount, INLOS_ACCESS)
+	end
+end
+
+local CheckMeteorTeam
+local function CheckMeteorAvaliableThread()
+	local zenithTeamID = spGetUnitTeam(unitID)
+	if not CheckMeteorTeam==zenithTeamID then
+		projectilesFilter(function (projID)
+			local projTeam=spGetProjectileTeamID(projID)
+			if projTeam==nil then
+				return nil
+			elseif projTeam==CheckMeteorTeam then
+				local projDef=spGetProjectileDefID(projID)
+				local projOwner=spGetProjectileOwnerID(projID)
+				local _,x,y,z=spGetProjectileTarget(projID) -- should be
+				return TransformMeteor(projDef,projID,zenithTeamID,projOwner,x,y,z)
+			else
+				return projID
+			end
+		end)
+		CheckMeteorTeam=zenithTeamID
+		Spring.SetUnitRulesParam(unitID, "meteorsControlled", projectileCount, INLOS_ACCESS)
 	end
 end
 
@@ -226,6 +345,7 @@ local function SpawnProjectileThread()
 	GG.zenith_spawnBlocked = GG.zenith_spawnBlocked or {}
 	SetSignalMask(SIG_SPAWN)
 	StartThread(EmitPrettyLight)
+	StartThread(CheckMeteorAvaliableThread)
 	while true do
 		--Spring.SpawnProjectile(gravityWeaponDefID, {
 		--	pos = {1000,1000,1000},
@@ -267,7 +387,7 @@ local function LaunchAll(x, z)
 	end
 	
 	launchInProgress = true
-	local zenithTeamID = Spring.GetUnitTeam(unitID)
+	local zenithTeamID = spGetUnitTeam(unitID)
 	
 	-- Make the aiming projectiles. These projectiles have high turnRate
 	-- so are able to rotate the wobbly float projectiles in the right
@@ -276,10 +396,9 @@ local function LaunchAll(x, z)
 	local aimDist = {}
 	local aimCount = 0
 	
-	for i = 1, projectileCount do
-		local proID = projectiles[i]
+	for proID in projectilesClear() do
 		-- Check that the projectile ID is still valid
-		if Spring.GetProjectileDefID(proID) == floatWeaponDefID then
+		if spGetProjectileDefID(proID) == floatWeaponDefID then
 			
 			--// Shoot gravity beams at the new aim projectiles. Did not look great.
 			--local px, py, pz = Spring.GetProjectilePosition(proID)
@@ -302,14 +421,7 @@ local function LaunchAll(x, z)
 			aimDist[aimCount] = dist
 		end
 	end
-	
-	-- All projectiles were launched so there are none left.
-	projectiles = {}
-	projectileCount = 0
-	oldestProjectile = 1
-	
-	tooltipProjectileCount = 0
-	Spring.SetUnitRulesParam(unitID, "meteorsControlled", tooltipProjectileCount, INLOS_ACCESS)
+	Spring.SetUnitRulesParam(unitID, "meteorsControlled", projectileCount, INLOS_ACCESS)
 	
 	-- Raw projectile manipulation doesn't create an event (needed for stuff like Fire Once)
 	if aimCount > 0 then
@@ -324,7 +436,7 @@ local function LaunchAll(x, z)
 	for i = 1, aimCount do
 		local proID = aim[i]
 		-- Check that the projectile ID is still valid
-		if Spring.GetProjectileDefID(proID) == aimWeaponDefID then
+		if spGetProjectileDefID(proID) == aimWeaponDefID then
 			-- Projectile is valid, launch!
 			local aimOff = Vector.PolarToCart(aimDist[i]*SPREAD_PER_DIST*math.random(), 2*math.pi*math.random())
 			TransformMeteor(fireWeaponDefID, proID, zenithTeamID, unitID, x + aimOff[1], y, z + aimOff[2])
@@ -335,6 +447,63 @@ local function LaunchAll(x, z)
 	launchInProgress = false
 end
 
+function LaunchOne(x,z)
+	if projectileCount==0 then
+		return
+	end
+	-- Sanitize input
+	x, z = Spring.Utilities.ClampPosition(x, z)
+	local y = math.max(0, Spring.GetGroundHeight(x,z))
+	
+	if Vector.AbsVal(ux - x, uz - z) > fireRange then
+		return
+	end
+	launchInProgress = true
+	
+	local zenithTeamID = spGetUnitTeam(unitID)
+	
+	-- Make the aiming projectiles. These projectiles have high turnRate
+	-- so are able to rotate the wobbly float projectiles in the right
+	-- direction.
+	local aim
+	local aimDist
+
+	local proID = projectilesPop()
+		-- Check that the projectile ID is still valid
+	if proID and spGetProjectileDefID(proID) == floatWeaponDefID then
+		
+		-- Projectile is valid, launch!
+		local id, px, py, pz = TransformMeteor(aimWeaponDefID, proID, zenithTeamID, unitID, x, y, z)
+		local dist = Vector.Dist3D(x, y, z, px, py, pz)
+		
+		aim = id
+		aimDist = dist
+	end
+	
+	Spring.SetUnitRulesParam(unitID, "meteorsControlled", projectileCount, INLOS_ACCESS)
+	
+	-- Raw projectile manipulation doesn't create an event (needed for stuff like Fire Once)
+	script.EndBurst(1)
+	Sleep(30)
+	launchInProgress = false
+	-- Sleep to give time for the aim projectiles to turn
+	Sleep(1400)
+	
+	-- Destroy the aim projectiles and create the speedy, low turnRate
+	-- projectiles.
+	do
+		local proID = aim
+		-- Check that the projectile ID is still valid
+		if spGetProjectileDefID(proID) == aimWeaponDefID then
+			-- Projectile is valid, launch!
+			local aimOff = Vector.PolarToCart(aimDist*SPREAD_PER_DIST*math.random(), 2*math.pi*math.random())
+			TransformMeteor(fireWeaponDefID, proID, zenithTeamID, unitID, x + aimOff[1], y, z + aimOff[2])
+			--Spring.MarkerAddPoint(x + aimOff[1], y, z + aimOff[2], math.floor(aimDist[i]*SPREAD_PER_DIST))
+		end
+	end
+	
+end
+
 function OnLoadGame()
 	local meteorCount = Spring.GetUnitRulesParam(unitID, "meteorsControlled") or 0
 	for i = 1, meteorCount do
@@ -343,6 +512,7 @@ function OnLoadGame()
 end
 
 function script.Create()
+	CheckMeteorTeam=spGetUnitTeam(unitID)
 	spSetUnitRulesParam(unitID, "meteorSpawnBlocked", 0)
 	Spring.SetUnitRulesParam(unitID, "meteorsControlled", 0, INLOS_ACCESS)
 	spSetUnitRulesParam(unitID, "meteorsControlledMax", METEOR_CAPACITY, INLOS_ACCESS)
@@ -375,11 +545,11 @@ function script.AimFromWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
-	return (num ~= 2) --and (spGetUnitRulesParam(unitID, "lowpower") == 0)
+	return num==1 or num==3 --and (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
 function script.BlockShot(num, targetID)
-	if launchInProgress then
+	if not projectilesHasNeeded(floatWeaponDefID) then
 		return true
 	end
 	
@@ -387,34 +557,51 @@ function script.BlockShot(num, targetID)
 		return true
 	end
 
-	local cmdID, _, _, cmdParam1, cmdParam2, cmdParam3 = spGetUnitCurrentCommand(unitID)
-	if cmdID == CMD_ATTACK then
+	if projectileCount==0 then
+		return true
+	end
+
+	local cmdID, _, cmdTag, cmdParam1, cmdParam2, cmdParam3 = spGetUnitCurrentCommand(unitID)
+	if cmdID == CMD_ATTACK or cmdID==CMD_DGUN then
+
+		local LaunchWay
+		local doblock
+		if num==3 then
+			LaunchWay=LaunchOne
+			doblock=true
+			spGiveOrderToUnit(unitID,CMD_REMOVE,{cmdTag},{})
+		else
+			LaunchWay=LaunchAll
+			doblock=true
+		end
+
 		if cmdParam3 then
-			StartThread(LaunchAll, cmdParam1, cmdParam3)
-			return true
+			StartThread(LaunchWay, cmdParam1, cmdParam3)
+			return doblock
 		elseif not cmdParam2 then
 			targetID = cmdParam1
 		end
-	end
-	
-	if targetID then
-		local x,y,z = Spring.GetUnitPosition(targetID)
-		if x then
-			local vx,_,vz = Spring.GetUnitVelocity(targetID)
-			if vx then
-				local dist = Vector.AbsVal(ux - x, uy + HOVER_HEIGHT - y, uz - z)
-				-- Weapon speed is 53 elmos/frame but it has some acceleration.
-				-- Add 22 frames for the aim time. It takes about 40 frames for every meteor
-				-- to face the right way so an average meteor should take 20 frames.
-				-- That was the reasoning, the final equation is just experimentation though.
-				local travelTime = dist/80 + 10 -- in frames
-				x = x + vx*travelTime
-				z = z + vz*travelTime
+		if targetID then
+			local x,y,z = Spring.GetUnitPosition(targetID)
+			if x then
+				local vx,_,vz = Spring.GetUnitVelocity(targetID)
+				if vx then
+					local dist = Vector.AbsVal(ux - x, uy + HOVER_HEIGHT - y, uz - z)
+					-- Weapon speed is 53 elmos/frame but it has some acceleration.
+					-- Add 22 frames for the aim time. It takes about 40 frames for every meteor
+					-- to face the right way so an average meteor should take 20 frames.
+					-- That was the reasoning, the final equation is just experimentation though.
+					local travelTime = dist/80 + 10 -- in frames
+					x = x + vx*travelTime
+					z = z + vz*travelTime
+				end
+				x, z = x + vx*50, z + vz*50
+				StartThread(LaunchWay, x, z)
+				return doblock
 			end
-			x, z = x + vx*50, z + vz*50
-			StartThread(LaunchAll, x, z)
 		end
 	end
+	
 	return true
 end
 

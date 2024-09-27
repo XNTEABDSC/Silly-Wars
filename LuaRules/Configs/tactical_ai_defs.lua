@@ -2126,7 +2126,6 @@ local AllGlobals=Union(
 	},
 	AllArrays
 )
-G_tactical_ai_defs_Cpenv=AllGlobals
 for _, ud in pairs(UnitDefs) do
 	if ud.customParams then
 		local udcp=ud.customParams
@@ -2152,18 +2151,12 @@ for _, ud in pairs(UnitDefs) do
 		end
 		if udcp.tactical_ai_defs_behaviour_config then
 			behaviourConfig[#behaviourConfig+1] = utils.justloadstring(
-				[=[
-				_G=_G or {}
-				for k,v in pairs(G_tactical_ai_defs_Cpenv) do
-					_G[k]=v
-				end
-				]=]..
-				"return" .. ud.customParams.tactical_ai_defs_behaviour_config
+				"return" .. ud.customParams.tactical_ai_defs_behaviour_config,
+				AllGlobals
 			)
 		end
 	end
 end
-G_tactical_ai_defs_Cpenv=nil
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Load Ai behaviour

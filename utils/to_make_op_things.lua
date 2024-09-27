@@ -103,21 +103,40 @@ if not GG.to_make_op_things then
             end)
     end
 
-    function to_make_op_things.add_build(domain,builer,building)
+    function to_make_op_things.add_build(domain,builer,buildee)
         to_make_op_things.add_fn_to_fn_list(domain,
-            "add_build(" .. builer .. ", " .. building .. ")",
+            "add_build(" .. builer .. ", " .. buildee .. ")",
             function ()
                 if not UnitDefs[builer] then
-                    error("add_build(" .. builer .. ", " .. building .. "): unit " .. builer .. " do not exist")
+                    error("add_build(" .. builer .. ", " .. buildee .. "): unit " .. builer .. " do not exist")
                 end
-                if not UnitDefs[building] then
-                    Spring.Echo("warning: ".. "add_build(" .. builer .. ", " .. building .. "): unit " .. building .. "do not exist")
+                if not UnitDefs[buildee] then
+                    Spring.Echo("warning: ".. "add_build(" .. builer .. ", " .. buildee .. "): unit " .. buildee .. "do not exist")
                 end
                 if not UnitDefs[builer].buildoptions then
                     UnitDefs[builer].buildoptions={}
                 end
-                Spring.Echo("add_build(" .. builer .. ", " .. building .. ")")
-                UnitDefs[builer].buildoptions[#UnitDefs[builer].buildoptions+1]=building
+                Spring.Echo("add_build(" .. builer .. ", " .. buildee .. ")")
+                UnitDefs[builer].buildoptions[#UnitDefs[builer].buildoptions+1]=buildee
+            end)
+    end
+
+    function to_make_op_things.add_build_front(domain,builer,buildee)
+        to_make_op_things.add_fn_to_fn_list(domain,
+            "add_build(" .. builer .. ", " .. buildee .. ")",
+            function ()
+                if not UnitDefs[builer] then
+                    error("add_build(" .. builer .. ", " .. buildee .. "): unit " .. builer .. " do not exist")
+                end
+                if not UnitDefs[buildee] then
+                    Spring.Echo("warning: ".. "add_build(" .. builer .. ", " .. buildee .. "): unit " .. buildee .. "do not exist")
+                end
+                if not UnitDefs[builer].buildoptions then
+                    UnitDefs[builer].buildoptions={}
+                end
+                Spring.Echo("add_build(" .. builer .. ", " .. buildee .. ")")
+                table.insert(UnitDefs[builer].buildoptions,1,buildee)
+                --UnitDefs[builer].buildoptions[#UnitDefs[builer].buildoptions+1]=building
             end)
     end
     to_make_op_things.table_replace_nil={}
@@ -298,9 +317,41 @@ if not GG.to_make_op_things then
         end
     end
 
-    function to_make_op_things.justloadstring(str)
+    do
+        function to_make_op_things.meta_union(a,b)
+            setmetatable(a,{__index=b})
+            return a
+        end
+    end
+
+    function to_make_op_things.justloadstring(str,_gextra,_glevel)
+        _glevel=_glevel or 1
         local postfunc, err = loadstring(str)
 		if postfunc then
+            local _gr=getfenv(_glevel)
+            if _gextra then
+                setfenv(postfunc,to_make_op_things.meta_union(_gextra,_gr))
+            else
+                setfenv(postfunc,_gr)
+            end
+			return postfunc()
+		else
+            error("failed to load string: " .. str .. " with error: " .. tostring(err))
+            --return nil
+		end
+    end
+
+    function to_make_op_things.justeval(str,_gextra,_glevel)
+        str="return " .. str
+        _glevel=_glevel or 1
+        local postfunc, err = loadstring(str)
+		if postfunc then
+            local _gr=getfenv(_glevel)
+            if _gextra then
+                setfenv(postfunc,to_make_op_things.meta_union(_gextra,_gr))
+            else
+                setfenv(postfunc,_gr)
+            end
 			return postfunc()
 		else
             error("failed to load string: " .. str .. " with error: " .. tostring(err))

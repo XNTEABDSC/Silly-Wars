@@ -1,0 +1,30 @@
+-- odd
+VFS.Include("utils/to_make_op_things.lua")
+local utils=GG.to_make_op_things
+--utils.add_build("bigsillycon","jumpsumoop")
+utils.set_morth_mul("silly_morth","jumpsumo","jumpsumoop")
+utils.add_build("silly_build","bigsillycon","jumpsumoop")
+return utils.copy_tweak("jumpsumo","jumpsumoop",utils.table_replace({
+    customParams={
+        jump_range=600,
+        jump_height=3600,
+        jump_speed=100,
+        jump_reload=30,
+        def_scale=2.2
+    },
+    weaponDefs={LANDING={
+        damage = {
+            default = 6000,
+            planes  = 6000,
+        },
+        areaOfEffect=600,
+        impulseFactor=2,
+    
+    }},
+    metalCost=6000,
+    health=50000,
+    name="The Flying " .. UnitDefs["jumpsumo"].name,
+    description=UnitDefs["jumpsumo"].description .. ", Land like Meteor",
+    speed=60,
+})
+)

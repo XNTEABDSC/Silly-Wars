@@ -28,6 +28,8 @@ return utils.copy_tweak("striderarty","striderartycerb",function (ud)
             ROCKET={
                 name                    = [[Long-Range Plasma Battery]],
                 areaOfEffect            = 192,
+                craterBoost             = 1,
+                craterMult              = 2,
                 customParams            = {
                     light_color = [[1.4 0.8 0.3]],
                 },
@@ -44,7 +46,7 @@ return utils.copy_tweak("striderarty","striderartycerb",function (ud)
                 mygravity               = 0.1,
                 soundHit                = [[explosion/ex_large4]],
                 soundStart              = [[explosion/ex_large5]],
-                sprayangle              = 1024,
+                sprayangle              = 2048,
                 weaponType              = [[Cannon]],
                 weaponVelocity          = 400,
                 range                   = 1650,

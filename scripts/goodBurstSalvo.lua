@@ -1,6 +1,8 @@
 if not GG.goodBurstSalvo then
     local goodBurstSalvo={}
     GG.goodBurstSalvo=goodBurstSalvo
+    local ALLY_ACCESS = {allied = true}
+	local spGetGameFrame         = Spring.GetGameFrame
     function goodBurstSalvo.newBurstWeapon(salvoCapacity,salvoReloadSecond)
         local o={}
         local count=salvoCapacity
@@ -22,13 +24,23 @@ if not GG.goodBurstSalvo then
         function o.ReloadThread()
             while active do
                 if count<salvoCapacity then
-                    if reloadingTimeLeft<0 then
-                        reloadingTimeLeft=reloadingTimeLeft+salvoReloadSecond
+                    if reloadingTimeLeft>=salvoReloadSecond then
+                        reloadingTimeLeft=reloadingTimeLeft-salvoReloadSecond
                         count=count+1
                     end
                     local stunnedOrInbuild = Spring.GetUnitIsStunned(unitID)
 		            local reloadMult = (stunnedOrInbuild and 0) or (Spring.GetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1)
-                    reloadingTimeLeft=reloadingTimeLeft-reloadMult*0.1
+                    reloadingTimeLeft=reloadingTimeLeft+reloadMult*0.1
+                    local scriptReloadFrame=spGetGameFrame()+(salvoReloadSecond*(salvoCapacity-count)-reloadingTimeLeft)*30
+                    local scriptReloadPercentage=(count+reloadingTimeLeft/salvoReloadSecond)/salvoCapacity
+                    Spring.SetUnitRulesParam(unitID, "scriptLoaded", count, ALLY_ACCESS)
+                    Spring.SetUnitRulesParam(unitID, "scriptReloadFrame", scriptReloadFrame, ALLY_ACCESS)
+                    --Spring.SetUnitRulesParam(unitID, "scriptReloadPercentage", scriptReloadPercentage, ALLY_ACCESS)
+                else
+                    Spring.SetUnitRulesParam(unitID, "scriptLoaded", count, ALLY_ACCESS)
+                    Spring.SetUnitRulesParam(unitID, "scriptReloadFrame", nil, ALLY_ACCESS)
+                    --Spring.SetUnitRulesParam(unitID, "scriptReloadPercentage", nil, ALLY_ACCESS)
+
                 end
                 Sleep(100)
             end

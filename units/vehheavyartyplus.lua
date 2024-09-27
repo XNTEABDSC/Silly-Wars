@@ -8,6 +8,7 @@ return utils.copy_tweak("vehheavyarty","vehheavyartyplus",function (ud)
     ud.health=2000
     ud.name="S.L.A.M " .. ud.name
     ud.description="Throws S.L.A.M"
+    ud.fireState =0
     local wd=ud.weaponDefs.CORTRUCK_ROCKET
     utils.table_replace({
         name="S.L.A.M",

@@ -10,7 +10,10 @@ utils.table_replace({
     weaponDefs={BLAST={customParams={
         smoothradius     = [[140]],
         smoothmult       = [[0.1]],
-    }}}
+    }}},
+    customParams={
+        tactical_ai_defs_copy="shieldriot"
+    }
 })(ud)
 
 utils.set_morth_mul("silly_morth","shieldriot","shieldriotflat",5)

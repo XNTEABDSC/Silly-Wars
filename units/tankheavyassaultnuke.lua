@@ -8,6 +8,7 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
     metalCost=8000,
     health=40000,
     speed=51,
+    fireState=0,
     weaponDefs={
         COR_GOL={
             name                    = [[Nukey Cannon]],
@@ -30,7 +31,7 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
     customParams={
         stockpiletime  = [[15]],
         stockpilecost  = [[200]],
-        priority_misc  = 1,
+        priority_misc  = 2,
         def_scale=2
     },
     explodeAs="ATOMIC_BLAST",

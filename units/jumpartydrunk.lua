@@ -38,5 +38,6 @@ return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
     utils.set_ded_ATOMIC_BLAST(ud)
     ud.weaponDefs.NAPALM_SPRAYER.weaponVelocity=290
     ud.customParams.tactical_ai_defs_copy="jumparty"
+    ud.fireState=0
     --ud.health=ud.health*0.6
 end)

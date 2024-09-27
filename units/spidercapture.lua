@@ -23,6 +23,6 @@ return utils.copy_tweak("spiderantiheavy","spidercapture",function (ud)
     --wd.impactOnly=true
     wd.paralyzeTime=nil
     ud.customParams.def_scale=1.5
-    ud.name="Hacker"
+    ud.name="Hacker Widow"
     ud.description="Hack enemy. WARNING: You need deal unitHealth+1000 of capture damage to cap it e.g. 1025 cap dmg to capture flea"
 end)

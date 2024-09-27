@@ -20,7 +20,8 @@ return utils.copy_tweak("shieldfelon","shieldfelonfast",function (ud)
     wd.customParams.shield_drain=50
     wd.reloadtime=0.1
     wd.rgbColor=[[1 0 0]]
-    wd.explodeAs="ESTOR_BUILDINGEX"
-    wd.selfDestructAs="ESTOR_BUILDINGEX"
-    utils.set_ded_ATOMIC_BLAST(ud)
+    utils.set_ded(ud,"BIG_UNIT")
+    --ud.explodeAs="ESTOR_BUILDINGEX"
+    --ud.selfDestructAs="ESTOR_BUILDINGEX"
+    --utils.set_ded_ATOMIC_BLAST(ud)
 end)
