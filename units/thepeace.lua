@@ -64,10 +64,10 @@ ud.weaponDefs.GRAVITY_NEG.rgbColor2               = [[1 0 0]]
 ud.weaponDefs.GRAVITY_NEG.thickness=96
 ud.weaponDefs.GRAVITY_NEG.size=96
 ud.weaponDefs.METEOR_AIM.accuracy=3000
-ud.customParams.manualfire_desc="Throw a single NUKE"
+ud.customParams.manualfire_desc="Throw a single nuke"
 --ud.weaponDefs.METEOR_FLOAT.startVelocity=1500
 ud.weaponDefs.METEOR_FLOAT.weaponVelocity=300
-ud.weaponDefs.METEOR_FLOAT.targetable=nil
+--ud.weaponDefs.METEOR_FLOAT.targetable=nil
 do
     ud.weaponDefs.METEOR_TARGETER=Spring.Utilities.CopyTable(ud.weaponDefs.METEOR,true)
     local TARGETER=ud.weaponDefs.METEOR_TARGETER

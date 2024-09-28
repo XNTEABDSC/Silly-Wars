@@ -7,6 +7,7 @@ local drp_wd_base={
     craterBoost             = 0,
     craterMult              = 0,
     avoidFriendly           = false,
+    highTrajectory                = 1,
     customParams            = {
         nofriendlyfire=1,
         force_ignore_ground = [[1]],

@@ -77,4 +77,4 @@ utils.add_fn_to_fn_list("def_pre","add_chixs",function ()
     end
 end)
 
-return {option_notes="You can make chickenbroodqueen by sillycon. Chickens are balanced "}
+return {option_notes="You can make Chicken Blood Queen by silly con. Chickens are balanced "}

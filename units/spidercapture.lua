@@ -7,13 +7,13 @@ utils.set_morth_mul("silly_morth","spiderantiheavy","spidercapture")
 utils.add_build("silly_build","sillycon","spidercapture")
 
 return utils.copy_tweak("spiderantiheavy","spidercapture",function (ud)
-    ud.metalCost=800
-    ud.health=3200
+    ud.metalCost=1200
+    ud.health=3600
     ud.speed=45
     ud.minCloakDistance=100
     ud.customParams.post_capture_reload=360
     local wd=ud.weaponDefs.spy
-    wd.damage.default=4000.1
+    wd.damage.default=5000.1
     wd.customParams.capture_scaling = 1
     wd.customParams.is_capture = 1
     wd.customParams.post_capture_reload=360
