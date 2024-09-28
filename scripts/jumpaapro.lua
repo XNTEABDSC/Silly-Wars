@@ -19,10 +19,9 @@ local smokePiece = {torso}
 
 local gun_1 = 0
 local ud=UnitDefs[ Spring.GetUnitDefID(unitID) ]
-local udname=ud.name
 local wd1 = WeaponDefs[ud.weapons[1].weaponDef ]
 include("goodBurstSalvo.lua")
-local gun1Salvo=GG.goodBurstSalvo.newBurstWeaponFromWD(wd1)
+local gun1Salvo=GG.goodBurstSalvo.newBurstWeaponFromWD(unitID,wd1)
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 

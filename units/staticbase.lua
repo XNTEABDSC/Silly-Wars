@@ -5,7 +5,7 @@ utils.add_build("silly_build","bigsillycon","staticbase")
 
 return { staticbase = {
   name                          = [[Frontline Base]],
-  description                   = [[Strong support for frontline, Provides drone, bp, shield, sight, cloak, grid, and slow blast]],
+  description                   = [[Provides hp, longrange bp and resurrect, radar and los, radar jam and cloak, drones, shield, pylon, and disruptor pulse]],
   activateWhenBuilt             = true,
   buildPic                      = [[pw_hq.png]],
   category                      = [[FLOAT UNARMED]],

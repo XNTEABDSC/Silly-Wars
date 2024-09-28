@@ -25,7 +25,7 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
             soundHit                = [[explosion/mini_nuke]],
             range=350,
             reloadtime              = 6,
-            weaponVelocity          = 250,
+            weaponVelocity          = 300,
         },
     },
     customParams={
