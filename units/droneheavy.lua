@@ -10,6 +10,7 @@ return utils.copy_tweak("droneheavyslow","droneheavy",utils.table_replace(
                 customParams={
                     timeslow_damagefactor=trnil,
                     light_color = [[0.25 1 0.25]],
+                    drone_defs_is_drone=1
                 },
                 damage={
                     default=100,

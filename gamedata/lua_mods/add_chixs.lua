@@ -77,4 +77,4 @@ utils.add_fn_to_fn_list("def_pre","add_chixs",function ()
     end
 end)
 
-return {option_notes="Allows Silly Con to build Chicken Blood Queen, change price of chickens for balance, White Dragon can morth to Chicken Queen"}
+return {option_notes="Silly Con can build Chicken Blood Queen\n chickens are balanced\n White Dragon can morth to Chicken Queen"}

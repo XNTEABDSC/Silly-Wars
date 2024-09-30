@@ -13,6 +13,7 @@ return utils.copy_tweak("dronelight","dronelightslow",utils.table_replace(
                 name="Light Disruptor Beam",
                 customParams={
                     timeslow_damagefactor = 1.5,
+                    drone_defs_is_drone=1
                 },
                 damage                  = {
                     default = 85,
