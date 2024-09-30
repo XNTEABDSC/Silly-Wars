@@ -5,7 +5,7 @@ utils.add_build("silly_build","sillycon","turretdrone")
 
 return { turretdrone = {
   name                          = [[Small Drone Maker]],
-  description                   = [[Make 2 FireFly]],
+  description                   = [[Make 2 Viper]],
   activateWhenBuilt             = true,
   buildPic                      = [[pw_hq.png]],
   category                      = [[FLOAT UNARMED]],
@@ -18,8 +18,8 @@ return { turretdrone = {
       {
         spawnPieces = {"drone"},
         {
-          drone = UnitDefNames.droneheavyslow.id,
-          reloadTime = 5,
+          drone = UnitDefNames.dronelightslow.id,
+          reloadTime = 1,
           maxDrones = 2,
           spawnSize = 1,
           range = 900,
@@ -39,7 +39,7 @@ return { turretdrone = {
   health                        = 450,
   iconType                      = [[pw_assault]],
   maxSlope                      = 18,
-  metalCost                     = 175,
+  metalCost                     = 150,
   objectName                    = [[pw_hq.s3o]],
   script                        = [[pw_hq.lua]],
   selfDestructAs                = [[BIG_UNIT]],

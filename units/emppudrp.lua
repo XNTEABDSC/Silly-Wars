@@ -3,7 +3,7 @@ local utils=GG.to_make_op_things
 local drp_wd_base={
     --name                    = [[Light Mine Artillery]],
     accuracy                = 1,
-    areaOfEffect            = 96,
+    areaOfEffect            = 48,
     craterBoost             = 0,
     craterMult              = 0,
     avoidFriendly           = false,
@@ -13,16 +13,17 @@ local drp_wd_base={
         force_ignore_ground = [[1]],
         spawn_blocked_by_shield = 1,
         light_radius = 0,
+        damage_vs_shield=9000,
     },
     
     damage                  = {
-        default = 20,
+        default = 35,
     },
 
     explosionGenerator      = [[custom:dirt]],
     impulseBoost            = 0,
     impulseFactor           = 0.4,
-    interceptedByShieldType = 0,
+    interceptedByShieldType = 1,
     --model                   = [[clawshell.s3o]],
     myGravity               = 0.1,
     noSelfDamage            = true,
@@ -81,6 +82,8 @@ ud.name="Disco Rave Party Ex Max Plus Pro Ultra"
 ud.description=ud.description.." Ex Max Plus Pro Ultra"
 ud.metalCost=ud.metalCost*1.8
 ud.health=ud.health*1.2
+ud.fireState=0
+ud.highTrajectory                = 1
 local spamer_wds={}
 for i = 1, 6 do
     spamer_wds[i]=make_wd_spam(spamed_list[i][1],spamed_list[i][2])

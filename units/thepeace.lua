@@ -68,6 +68,7 @@ ud.customParams.manualfire_desc="Throw a single nuke"
 --ud.weaponDefs.METEOR_FLOAT.startVelocity=1500
 ud.weaponDefs.METEOR_FLOAT.weaponVelocity=300
 --ud.weaponDefs.METEOR_FLOAT.targetable=nil
+ud.fireState=0
 do
     ud.weaponDefs.METEOR_TARGETER=Spring.Utilities.CopyTable(ud.weaponDefs.METEOR,true)
     local TARGETER=ud.weaponDefs.METEOR_TARGETER

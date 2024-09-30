@@ -11,12 +11,14 @@ return utils.copy_tweak("spiderantiheavy","spidercapture",function (ud)
     ud.health=3600
     ud.speed=40
     ud.minCloakDistance=100
-    ud.customParams.post_capture_reload=360
+    ud.cloakCost              = 5
+    ud.cloakCostMoving        = 15
     local wd=ud.weaponDefs.spy
     wd.damage.default=4000.1
     wd.customParams.capture_scaling = 1
     wd.customParams.is_capture = 1
-    wd.customParams.post_capture_reload=360
+    ud.customParams.post_capture_reload=wd.reloadtime*30
+    wd.customParams.post_capture_reload=wd.reloadtime*30
     wd.rgbColor                = [[0 0.8 0.2]]
     --wd.customParams.extra_damage = 4000
     wd.paralyzer=nil

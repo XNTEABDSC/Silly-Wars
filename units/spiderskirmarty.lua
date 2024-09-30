@@ -10,8 +10,8 @@ return utils.copy_tweak("spiderskirm","spiderskirmarty",function (ud)
     ud.name="Ranged " .. ud.name
     ud.description="Ranged " .. ud.description
     ud.speed=ud.speed*0.8
-    ud.metalCost=ud.metalCost*3.5
-    ud.health=ud.health*1.75
+    ud.metalCost=ud.metalCost*4
+    ud.health=ud.health*2
     ud.weaponDefs.ADV_ROCKET.range=1200
     ud.customParams.def_scale=(ud.customParams.def_scale or 1)*2
     ud.customParams.tactical_ai_defs_copy="veharty"

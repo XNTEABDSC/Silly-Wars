@@ -12,16 +12,17 @@ local drp_wd_base={
         force_ignore_ground = [[1]],
         spawn_blocked_by_shield = 1,
         light_radius = 0,
+        damage_vs_shield=3500,
     },
     
     damage                  = {
-        default = 20,
+        default = 35,
     },
 
     explosionGenerator      = [[custom:dirt]],
     impulseBoost            = 0,
     impulseFactor           = 0.4,
-    interceptedByShieldType = 0,
+    interceptedByShieldType = 1,
     --model                   = [[clawshell.s3o]],
     myGravity               = 0.1,
     noSelfDamage            = true,
@@ -80,6 +81,8 @@ ud.name="Pro " .. ud.name
 ud.description="Turret Thrower"
 ud.metalCost=ud.metalCost*1.2
 ud.health=ud.health*1.2
+ud.fireState=0
+ud.highTrajectory                = 1
 local spamer_wds={}
 for i = 1, 6 do
     spamer_wds[i]=make_wd_spam(spamed_list[i][1],spamed_list[i][2])

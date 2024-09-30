@@ -1,0 +1,25 @@
+VFS.Include("utils/to_make_op_things.lua")
+local utils=GG.to_make_op_things
+local trnil=utils.table_replace_nil
+return utils.copy_tweak("dronelight","dronelightslow",utils.table_replace(
+    {
+        name="Disruptor Firefly",
+        description="Disruptor Drone",
+        metalCost=30,
+        health              = 270,
+        acceleration        = 0.6,
+        weaponDefs={
+            LASER={
+                name="Light Disruptor Beam",
+                customParams={
+                    timeslow_damagefactor = 1.5,
+                },
+                damage                  = {
+                    default = 100,
+                },
+                range                   = 200,
+                reloadtime              = 1.5,
+            }
+        }
+    }
+))
