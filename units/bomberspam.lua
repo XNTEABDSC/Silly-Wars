@@ -33,7 +33,7 @@ wd.soundStart              = [[weapon/cannon/badger_fire]]
 
 utils.set_morth_mul("silly_morth","bomberriot","bomberspam")
 utils.add_build("silly_build","sillycon","bomberspam")
-ud.name="Galives' " .. ud.name
+ud.name="Glaives' " .. ud.name
 ud.description="Drop 18 Glaives, " .. 65*19 .. " stockpile"
 ud.fireState=0
 

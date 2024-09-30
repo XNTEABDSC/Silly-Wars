@@ -6,7 +6,7 @@ return utils.copy_tweak("dronelight","dronelightslow",utils.table_replace(
         name="Disruptor Firefly",
         description="Disruptor Drone",
         metalCost=30,
-        health              = 270,
+        health              = 300,
         acceleration        = 0.6,
         weaponDefs={
             LASER={
@@ -15,10 +15,10 @@ return utils.copy_tweak("dronelight","dronelightslow",utils.table_replace(
                     timeslow_damagefactor = 1.5,
                 },
                 damage                  = {
-                    default = 100,
+                    default = 85,
                 },
                 range                   = 200,
-                reloadtime              = 1.5,
+                reloadtime              = 1,
             }
         }
     }

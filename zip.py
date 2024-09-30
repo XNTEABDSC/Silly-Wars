@@ -21,8 +21,16 @@ with open("modinfo.lua","r") as filer:
                 matches=None
             else:
                 filew.write(linestr)
+def listToDict(list,v=True):
+    dc={}
+    for i in list:
+        dc[i]=v
+    return dc
 
-
+ignoreFileNames=listToDict({
+    "modinfo.lua","_modinfo.lua","settings.json","zip.bat","zip.py","LICENSE","README.md"
+})
+ignoreFileEnds={".blend",".blend1",".txt"}
 
 GameDirPath=os.path.split(thisAbsPath)[0]
 outputfilename=thisModName+" "+thisModVersion+".sdz"
@@ -31,11 +39,17 @@ zip=zipfile.ZipFile(os.path.join(GameDirPath,outputfilename),"w")
 zip.write("_modinfo.lua","modinfo.lua")
 for abspath,dirname,filenames in os.walk(thisAbsPath):
     path=abspath.replace(thisAbsPath,"")
-    print(path)
+    # print(path)
     if path.startswith("\\."):
         continue
     for filename in filenames:
-        if filename!="modinfo.lua" and filename!="_modinfo.lua" and filename!="settings.json" and (not filename.endswith(".blend")) and (not filename.endswith(".blend1")):
-            zip.write(os.path.join(abspath,filename),os.path.join(path,filename))
+        if (not ignoreFileNames.get(filename,False)):
+            Pass=True
+            for i in ignoreFileEnds:
+                if filename.endswith(i):
+                    Pass=False
+                    break
+            if Pass:
+                zip.write(os.path.join(abspath,filename),os.path.join(path,filename))
 zip.close()
 
