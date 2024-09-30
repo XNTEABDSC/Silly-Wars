@@ -15,4 +15,4 @@ utils.add_fn_to_fn_list("def_pre","greed_silly_tech",function ()
     end
 end)
 
-return {option_notes="caretaker->sillycon, athena->bigsillycon, striderhub->verybigsillycon"}
+return {option_notes="Caretaker -> Silly Con; Athena -> Big Silly Con; Strider Hub -> Very Big Silly Con"}

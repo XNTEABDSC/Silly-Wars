@@ -31,6 +31,7 @@ do
     ud.minCloakDistance       = 210
     ud.customParams.teleporter_throughput=500
     ud.customParams.teleporter_beacon_spawn_time=10
+    ud.customParams.bait_level_default=2
     ud.sightDistance=600
     ud.radarDistance=1200
 end

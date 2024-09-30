@@ -64,8 +64,8 @@ utils.add_fn_to_fn_list("def_pre","add_chixs",function ()
             chicken_spidermonkey=640, -- spidermonkey
             chicken_sporeshooter=700,
             chickenr=180, -- lobber
-            chicken_shield=1200, -- blooper
-            chicken_tiamat=1800, -- tiamat
+            chicken_shield=900, -- blooper
+            chicken_tiamat=1200, -- tiamat
             chickenblobber=1600, --blobber
             chicken_dragon=7000,
             chickenlandqueen=60000,
@@ -77,4 +77,4 @@ utils.add_fn_to_fn_list("def_pre","add_chixs",function ()
     end
 end)
 
-return {option_notes="You can make Chicken Blood Queen by silly con. Chickens are balanced "}
+return {option_notes="Allows Silly Con to build Chicken Blood Queen, change price of chickens for balance, White Dragon can morth to Chicken Queen"}

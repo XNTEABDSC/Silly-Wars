@@ -8,10 +8,9 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
     metalCost=8000,
     health=40000,
     speed=51,
-    fireState=0,
     weaponDefs={
         COR_GOL={
-            name                    = [[Nukey Cannon]],
+            name                    = [[Nuclear Cannon]],
             areaOfEffect            = 192,
             damage                  = {
                 default = 3502.4,
@@ -24,7 +23,7 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
             stockpileTime           = 10^5,
             soundHit                = [[explosion/mini_nuke]],
             range=350,
-            reloadtime              = 6,
+            reloadtime              = 5,
             weaponVelocity          = 300,
         },
     },
@@ -32,7 +31,8 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
         stockpiletime  = [[15]],
         stockpilecost  = [[200]],
         priority_misc  = 2,
-        def_scale=2
+        def_scale=2,
+        bait_level_default=3,
     },
     explodeAs="ATOMIC_BLAST",
     selfDestructAs="ATOMIC_BLAST"

@@ -36,7 +36,7 @@ utils.add_build("silly_build","bigsillycon","jumpartydrunk")
 return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
     GG.to_make_very_op_things.make_unit_drunk(ud)
     utils.set_ded_ATOMIC_BLAST(ud)
-    ud.weaponDefs.NAPALM_SPRAYER.weaponVelocity=290
+    ud.weaponDefs.NAPALM_SPRAYER.weaponVelocity=295
     ud.customParams.tactical_ai_defs_copy="jumparty"
     ud.fireState=0
     --ud.health=ud.health*0.6
