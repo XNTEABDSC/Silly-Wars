@@ -1,11 +1,11 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
-utils.set_morth("silly_morth","turretmissile","turretdrone")
-utils.add_build("silly_build","sillycon","turretdrone")
+utils.set_morth("silly_morth","turretmissile","turretdronelight")
+utils.add_build("silly_build","sillycon","turretdronelight")
 
-return { turretdrone = {
+return { turretdronelight = {
   name                          = [[Small Drone Maker]],
-  description                   = [[Make 2 Viper]],
+  description                   = [[Make 2 Drones]],
   activateWhenBuilt             = true,
   buildPic                      = [[pw_hq.png]],
   category                      = [[FLOAT UNARMED]],

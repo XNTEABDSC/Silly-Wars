@@ -1,6 +1,6 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
-utils.set_morth("silly_morth","turretdrone","staticbase")
+utils.set_morth("silly_morth","turretdronelight","staticbase")
 utils.add_build("silly_build","bigsillycon","staticbase")
 
 return { staticbase = {

@@ -7,5 +7,5 @@ return utils.copy_tweak("turretheavylaser","turretheavylaserlv20",function (ud)
     op.units_level_up(ud,op.units_level_up_table,20)
     ud.name=ud.name .. " Lv 20"
     ud.description = "Lv 20 " .. ud.description
-    ud.metalCost=3500
+    ud.metalCost=4250
 end)

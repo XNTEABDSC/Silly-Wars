@@ -15,4 +15,4 @@ add_build("staticcon","staticcon")
 add_build("striderhub","nebula")
 
 
-return {option_notes="Strider Hub -> Commanders (include campaign comm) and Nebula\n Big Silly Con-> Leaper and Spicula (Nebula's Drone)"}
+return {option_notes="Strider Hub -> Commanders , Nebula\n Big Silly Con-> Leaper , Spicula"}

@@ -8,18 +8,21 @@ return utils.copy_tweak("dronelight","dronelightslow",utils.table_replace(
         metalCost=30,
         health              = 300,
         acceleration        = 0.6,
+        customParams={
+            drone_defs_is_drone=1,
+        },
         weaponDefs={
             LASER={
                 name="Light Disruptor Beam",
                 customParams={
                     timeslow_damagefactor = 1.5,
-                    drone_defs_is_drone=1
                 },
                 damage                  = {
                     default = 85,
                 },
                 range                   = 200,
                 reloadtime              = 1,
+                rgbColor                = [[0.3 0 0.4]],
             }
         }
     }
