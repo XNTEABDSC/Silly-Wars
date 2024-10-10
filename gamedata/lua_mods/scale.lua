@@ -1,7 +1,7 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 scale=scale or 0.25
-utils.add_fn_to_fn_list("def_pre","smaller",function ()
+utils.add_fn_to_fn_list("def_pre","scale",function ()
     local udtoscale=utils.lowervalues({
         "brakerate","radarDistance","sightDistance","sonarDistance","speed",
         "cruiseAltitude",
