@@ -7,6 +7,18 @@ if not GG.to_make_op_things then
     GG.to_make_op_things=to_make_op_things
 
     VFS.Include("LuaRules/Utilities/tablefunctions.lua")
+
+
+    --[==[
+    local utils={
+        "fn_list"
+    }
+    local utilsPath="utils/to_make_op_things/"
+    for _, value in pairs(utils) do
+        VFS.Include(utilsPath .. value)
+    end
+    ]==]
+
     ---list of functions
     ---
     ---[domain] [key] = fn
@@ -65,6 +77,8 @@ if not GG.to_make_op_things then
             ]=]
         end
     end
+
+
     function to_make_op_things.set_morth(domain,srcname,copyedname,morphtime)
         to_make_op_things.add_fn_to_fn_list(domain,
             "set_morth(" .. srcname .. ", " .. copyedname .. ")",
@@ -139,6 +153,7 @@ if not GG.to_make_op_things then
                 --UnitDefs[builer].buildoptions[#UnitDefs[builer].buildoptions+1]=building
             end)
     end
+
     to_make_op_things.table_replace_nil={}
     -- Spring.Utilities.OverwriteTableInplace, but allow to set nil by to_make_op_things.table_replace_nil
     function to_make_op_things.table_replace(tweaks)
@@ -272,7 +287,6 @@ if not GG.to_make_op_things then
                 left=str3
                 --str = str1 .. str2transed .. str3
             end
-
         end
         return str
     end
@@ -386,155 +400,190 @@ if not GG.to_make_op_things then
     --- load modOptions.mods \
     function to_make_op_things.load_modoptions()
         --do_lua_mods=do_lua_mods or false
-        do
-            local modOptions = {}
-            local utils=to_make_op_things
-            if (Spring.GetModOptions) then
-                modOptions = Spring.GetModOptions()
-            end
-            if modOptions.did_load_mod then
-                Spring.Echo("modoptions already loaded")
-                return
-            end
-
-            if not modOptions.mods then
-                modOptions.mods ="silly"
-            end
-            local option_mult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
-            "team_1_econ","team_2_econ","team_3_econ","team_4_econ","team_5_econ","team_6_econ","team_7_econ","team_8_econ",
-            "wavesizemult","queenhealthmod","techtimemult"
-            } )
-            local option_add_withdef={
-            }
-            local option_mult_withdef={
-                innatemetal=2,
-                innateenergy=2,
-                zombies_delay=10,
-                zombies_rezspeed=12
-            }
-            local option_bindstr={
-                disabledunits="+ ",
-                option_notes="\n---\n",
-            }
-            ---@type integer
-            local tweakdefs_count=1
-            ---@type integer
-            local tweakunits_count=1
-            local do_at_def_pre_count=1
-            local mods_dir="gamedata/mods/"
-            local lua_mods_dir="gamedata/lua_mods/"
-            local mods=modOptions.mods
-            if mods then
-                local load_mod
-                local function load_modoption(themodoptions)
-                    local fns={}
-                    fns.tweakunits={}
-                    fns.tweakdefs={}
-                    fns.mods={}
-                    local function push_fn(key,fn)
-                        fns[key][#fns[key]+1] = fn
-                    end
-                    local function do_fns(key)
-                        for _, value in pairs(fns[key]) do
-                            value()
-                        end
-                    end
-                    for key, value in pairs(themodoptions) do
-                        if key=="do_at_def_pre" then
-                            utils.add_fn_to_fn_list("def_pre","def_pre" .. do_at_def_pre_count,value)
-                            do_at_def_pre_count=do_at_def_pre_count+1
-                        elseif string.match(key,"^tweakunits") then
-                            --[=[
-                            modOptions["tweakunits" .. (tweakunits_count or "")]=value
-                            ]=]
-                            local tweakunitstable=Spring.Utilities.CustomKeyToUsefulTable(value)
-                            push_fn("tweakunits",function ()
-                                utils.add_fn_to_fn_list("def","tweakunits" .. tweakunits_count,function ()
-                                    utils.tweak_units(tweakunitstable)
-                                end)
-                                tweakunits_count=tweakunits_count+1
-                            end)
-                        elseif string.match(key,"^tweakdefs") then
-                            --modOptions["tweakdefs" .. (tweakdefs_count or "")]=value
-                            
-                            local codestr=Spring.Utilities.Base64Decode(value)
-                            push_fn("tweakdefs",function ()
-                                utils.add_fn_to_fn_list("def","tweakdefs" .. tweakdefs_count,function ()
-                                    utils.tweak_defs(codestr)
-                                end)
-                                tweakdefs_count=tweakdefs_count+1
-                            end)
-                            
-                        elseif key=="mods" then
-                            push_fn("mods",function ()
-                                for mod in string.gmatch(value,"[A-Za-z01-9_]+") do
-                                    load_mod(mod)
-                                end
-                            end)
-                        elseif  modOptions[key] then
-                            if option_mult[key] then
-                                modOptions[key]=modOptions[key]*value
-                            elseif option_add_withdef[key] then
-                                modOptions[key]=modOptions[key]+value-option_add_withdef[key]
-                            elseif option_mult_withdef[key] then
-                                modOptions[key]=modOptions[key]*value/option_mult_withdef[key]
-                            elseif option_bindstr[key] then
-                                modOptions[key]=modOptions[key] .. option_bindstr[key] .. value
-                            else
-                                modOptions[key]=value
-                            end
-                        else
-                            modOptions[key]=value
-                        end
-                    end-- loaded at end
-                    do_fns("tweakdefs")
-                    do_fns("tweakunits")
-                    do_fns("mods")
-                end
-                --local update_mod;
-                local function load_json_mod(mod,moddir)
-                    Spring.Echo("SW: Load mod " .. mod)
-                    local dataRaw=VFS.LoadFile(moddir)
-                    local mod_data=to_make_op_things.json.decode(dataRaw)
-                    if mod_data then
-                        local themodoptions=mod_data.options
-                        if themodoptions then
-                            load_modoption(themodoptions)
-                        end
-                    else
-                        Spring.Echo("Warning: SW: failed to load mod " .. mod)
-                    end
-                end
-                local function load_lua_mod(mod,moddir)
-                    local themodoptions=VFS.Include(moddir)
-                    if themodoptions then
-                        load_modoption(themodoptions)
-                    end
-                end
-                function load_mod(mod)
-                    local jsonmoddir=mods_dir .. mod .. ".json"
-                    local lua_mod_dir=lua_mods_dir .. mod .. ".lua"
-                    if VFS.FileExists(jsonmoddir) then
-                        load_json_mod(mod,jsonmoddir)
-                    elseif VFS.FileExists(lua_mod_dir) then
-                        Spring.Echo("SW: Run luamod " .. mod)
-                        load_lua_mod(mod,lua_mod_dir)
-                    else
-                        Spring.Echo("Warning: SW: mod " .. mod .. " don't exist")
-                    end
-                end
-
-                for mod in string.gmatch(mods,"[A-Za-z01-9_]+") do
-                    load_mod(mod)
-                end
-            end
-            modOptions.did_load_mod=true
-            Spring.GetModOptions=function ()
-                return modOptions
-            end
-            Spring.Echo("modOptions result: ")
-            Spring.Utilities.TableEcho(modOptions,"modOptions")
+        local modOptions = {}
+        local utils=to_make_op_things
+        if (Spring.GetModOptions) then
+            modOptions = Spring.GetModOptions()
         end
+        if modOptions.did_load_mod then
+            Spring.Echo("modoptions already loaded")
+            return
+        end
+
+        if not modOptions.mods then
+            modOptions.mods ="silly"
+        end
+        local option_mult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
+        "team_1_econ","team_2_econ","team_3_econ","team_4_econ","team_5_econ","team_6_econ","team_7_econ","team_8_econ",
+        "wavesizemult","queenhealthmod","techtimemult"
+        } )
+        local option_add_withdef={
+        }
+        local option_mult_withdef={
+            innatemetal=2,
+            innateenergy=2,
+            zombies_delay=10,
+            zombies_rezspeed=12
+        }
+        local option_bindstr={
+            disabledunits="+ ",
+            option_notes="\n---\n",
+        }
+        ---@type integer
+        local tweakdefs_count=1
+        ---@type integer
+        local tweakunits_count=1
+        local do_at_def_pre_count=1
+        local json_mods_dir="gamedata/mods/"
+        local lua_mods_dir="gamedata/lua_mods/"
+        local mods=modOptions.mods
+        
+
+        local load_mod
+        local function load_modoption(themodoptions)
+            local fns={}
+            fns.tweakunits={}
+            fns.tweakdefs={}
+            fns.mods={}
+            local function push_fn(key,fn)
+                fns[key][#fns[key]+1] = fn
+            end
+            local function do_fns(key)
+                for _, value in pairs(fns[key]) do
+                    value()
+                end
+            end
+            for key, value in pairs(themodoptions) do
+                if key=="do_at_def_pre" then
+                    utils.add_fn_to_fn_list("def_pre","def_pre" .. do_at_def_pre_count,value)
+                    do_at_def_pre_count=do_at_def_pre_count+1
+                elseif string.match(key,"^tweakunits") then
+                    --[=[
+                    modOptions["tweakunits" .. (tweakunits_count or "")]=value
+                    ]=]
+                    local tweakunitstable=Spring.Utilities.CustomKeyToUsefulTable(value)
+                    push_fn("tweakunits",function ()
+                        utils.add_fn_to_fn_list("def","tweakunits" .. tweakunits_count,function ()
+                            utils.tweak_units(tweakunitstable)
+                        end)
+                        tweakunits_count=tweakunits_count+1
+                    end)
+                elseif string.match(key,"^tweakdefs") then
+                    --modOptions["tweakdefs" .. (tweakdefs_count or "")]=value
+                    
+                    local codestr=Spring.Utilities.Base64Decode(value)
+                    push_fn("tweakdefs",function ()
+                        utils.add_fn_to_fn_list("def","tweakdefs" .. tweakdefs_count,function ()
+                            utils.tweak_defs(codestr)
+                        end)
+                        tweakdefs_count=tweakdefs_count+1
+                    end)
+                    
+                elseif key=="mods" then
+                    local modstr=value
+                    push_fn("mods",function ()
+                        load_mod(modstr)
+                    end)
+                elseif  modOptions[key] then
+                    if option_mult[key] then
+                        modOptions[key]=modOptions[key]*value
+                    elseif option_add_withdef[key] then
+                        modOptions[key]=modOptions[key]+value-option_add_withdef[key]
+                    elseif option_mult_withdef[key] then
+                        modOptions[key]=modOptions[key]*value/option_mult_withdef[key]
+                    elseif option_bindstr[key] then
+                        modOptions[key]=modOptions[key] .. option_bindstr[key] .. value
+                    else
+                        modOptions[key]=value
+                    end
+                else
+                    modOptions[key]=value
+                end
+            end-- loaded at end
+            do_fns("tweakdefs")
+            do_fns("tweakunits")
+            do_fns("mods")
+        end
+        --local update_mod;
+        local function load_json_mod(mod,moddir)
+            Spring.Echo("SW: Load mod " .. mod)
+            local dataRaw=VFS.LoadFile(moddir)
+            local mod_data=to_make_op_things.json.decode(dataRaw)
+            if mod_data then
+                local themodoptions=mod_data.options
+                if themodoptions then
+                    load_modoption(themodoptions)
+                end
+            else
+                Spring.Echo("Warning: SW: failed to load mod " .. mod)
+            end
+        end
+        local function load_lua_mod(mod,moddir,env)
+            Spring.Echo("SW: Run luamod " .. mod)
+            local themodoptions=VFS.Include(moddir,env)
+            if themodoptions then
+                load_modoption(themodoptions)
+            end
+        end
+        
+        local load_mod_env={}
+        --[==[
+        local load_mod_env_mt={__index=function (table,key)
+            
+            local mod=key
+            local jsonmoddir=mods_dir .. mod .. ".json"
+            local lua_mod_dir=lua_mods_dir .. mod .. ".lua"
+            if VFS.FileExists(jsonmoddir) then
+                return function ()
+                    load_json_mod(mod,jsonmoddir)
+                end
+            elseif VFS.FileExists(lua_mod_dir) then
+                return function (env)
+                    env=to_make_op_things.meta_union(env,getfenv(0))
+                    load_lua_mod(mod,lua_mod_dir,env)
+                end
+            else
+                Spring.Echo("Warning: SW: mod " .. mod .. " don't exist")
+                return function ()
+                    return nil
+                end
+            end
+        end}
+        setmetatable(load_mod_env,load_mod_env_mt)]==]
+        for key, value in pairs(VFS.DirList(lua_mods_dir)) do
+            local mod=string.match(value,[[([a-zA-Z_]+)%.lua]])
+            Spring.Echo("find luamod: " .. value .. " modname: " .. tostring( mod))
+            if mod then
+                load_mod_env[mod]=function (env)
+                    env=env or {}
+                    env=to_make_op_things.meta_union(env,getfenv(0))
+                    load_lua_mod(mod,value,env)
+                end
+            end
+        end
+
+        for key, value in pairs(VFS.DirList(json_mods_dir)) do
+            local mod=string.match(value,[[([a-zA-Z_]+)%.json]])
+            Spring.Echo("find jsonmod: " .. value .. " modname: " .. tostring( mod))
+            if mod then
+                load_mod_env[mod]=function ()
+                    load_json_mod(mod,value)
+                end
+            end
+        end
+
+        load_mod=function(modstr)
+            to_make_op_things.justloadstring(modstr,load_mod_env)
+        end
+
+        load_mod(mods)
+
+        modOptions.did_load_mod=true
+        Spring.GetModOptions=function ()
+            return modOptions
+        end
+        Spring.Echo("modOptions result: ")
+        Spring.Utilities.TableEcho(modOptions,"modOptions")
     end
 
     function to_make_op_things.StrExplode(div, str)
