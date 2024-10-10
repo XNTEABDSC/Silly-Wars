@@ -1,3 +1,4 @@
+---@class list<t> : {[integer]:t}
 if not GG then
     GG={}
 end
@@ -291,14 +292,24 @@ if not GG.to_make_op_things then
         return str
     end
 
+    ---t[key]=modifyfn(t[key],key,t)
+    ---@param t table
+    ---@param keys list<string>
+    ---@param modifyfn fun(value:any,key:string,t:table):any
     function to_make_op_things.modify_all(t,keys,modifyfn)
-        for _, key in pairs(keys) do
-            t[key]=modifyfn(t[key],key,t)
+        if keys then
+            for _, key in pairs(keys) do
+                t[key]=modifyfn(t[key],key,t)
+            end
         end
     end
-
-    function to_make_op_things.modify_all_2(t,keys,modifyfn)
-        for key,value in pairs(keys) do
+    
+    ---t[key]=modifyfn(t[key],value,key,t)
+    ---@param t table
+    ---@param tochange {[string]:any}
+    ---@param modifyfn fun(value:any,tochange:any,key:string,t:table):any
+    function to_make_op_things.modify_all_2(t,tochange,modifyfn)
+        for key,value in pairs(tochange) do
             t[key]=modifyfn(t[key],value,key,t)
         end
     end
@@ -306,16 +317,24 @@ if not GG.to_make_op_things then
     local modify_all=to_make_op_things.modify_all
     local modify_all_2=to_make_op_things.modify_all_2
 
-    function to_make_op_things.modify_all_units(udkeys,udcpkeys,wdkeys,wdcpkeys,
-        udfn,udcpfn,wdfn,wdcpfn)
+    ---@param params {udkeys:list<string>,udcpkeys:list<string>,wdkeys:list<string>,wdcpkeys:list<string>,udfn:(fun(value:any,key:string,t:table):any),udcpfn:(fun(value:any,key:string,t:table):any),wdfn:(fun(value:any,key:string,t:table):any),wdcpfn:(fun(value:any,key:string,t:table):any),modifycondition:(fun(ud):boolean)}
+    function to_make_op_things.modify_all_units(params)
+        local udkeys,udcpkeys,wdkeys,wdcpkeys,
+        udfn,udcpfn,wdfn,wdcpfn,modifycondition=params.udkeys,params.udcpkeys,params.wdkeys,params.wdcpkeys,
+        params.udfn,params.udcpfn,params.wdfn,params.wdcpfn,params.modifycondition
+        modifycondition=modifycondition or function ()
+            return true
+        end
         for _, ud in pairs(UnitDefs) do
-            modify_all(ud,udkeys,udfn)
-            modify_all(ud.customparams,udcpkeys,udcpfn)
-            if ud.weapondefs then
-                for _, wd in pairs(ud.weapondefs) do
-                    modify_all(wd,wdkeys,wdfn)
-                    if wd.customparams then
-                        modify_all(wd.customparams,wdcpkeys,wdcpfn)
+            if modifycondition(ud) then
+                modify_all(ud,udkeys,udfn)
+                modify_all(ud.customparams,udcpkeys,udcpfn)
+                if ud.weapondefs then
+                    for _, wd in pairs(ud.weapondefs) do
+                        modify_all(wd,wdkeys,wdfn)
+                        if wd.customparams then
+                            modify_all(wd.customparams,wdcpkeys,wdcpfn)
+                        end
                     end
                 end
             end
@@ -411,7 +430,7 @@ if not GG.to_make_op_things then
         end
 
         if not modOptions.mods then
-            modOptions.mods ="silly"
+            modOptions.mods ="silly()"
         end
         local option_mult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
         "team_1_econ","team_2_econ","team_3_econ","team_4_econ","team_5_econ","team_6_econ","team_7_econ","team_8_econ",

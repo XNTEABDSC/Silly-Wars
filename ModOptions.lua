@@ -106,7 +106,7 @@ local options = {
     desc   = "Extra mods to use, use + for multiple mods, mods order matters, see source code for mods :3, in both gamedata/mods/ and gamedata/lua_mods/ ",
     type   = 'string',
     section= 'silly',
-    def    = "silly",
+    def    = "silly()",
   },
   {
     key    = 'zombies',

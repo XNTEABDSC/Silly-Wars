@@ -1,10 +1,10 @@
 VFS.Include("utils/to_make_op_things.lua")
 local utils=GG.to_make_op_things
 
+local variance=variance or 2
+local bias=bias or 1
+
 utils.add_fn_to_fn_list("def_post","random_units_unlimited",function ()
-    local lowerkeys=utils.lowerkeys
-    local rand_range=2
-    local bias=1
     local function atanh(x)
         return 1/2*math.log ((1+x)/(1-x))
     end
@@ -22,7 +22,7 @@ utils.add_fn_to_fn_list("def_post","random_units_unlimited",function ()
     end
     local to_get_op_value=normalrandom
     local function get_rand_mult()
-        return bias*rand_range^(to_get_op_value() )
+        return bias*variance^(to_get_op_value() )
     end
     GG.to_make_very_op_things.random_units(get_rand_mult)
 end)
