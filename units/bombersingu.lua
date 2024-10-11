@@ -6,7 +6,7 @@ utils.add_build("silly_build","sillycon","bombersingu")
 
 return utils.copy_tweak("bomberheavy","bombersingu",function (ud)
     ud.name="Impulse Likho"
-    ud.description="Impulse Likho"
+    ud.description="Impulse Bomber"
     ud.metalCost=3000
     ud.health=3000
     local wd=ud.weaponDefs.ARM_PIDR

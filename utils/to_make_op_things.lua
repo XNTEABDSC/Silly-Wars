@@ -222,6 +222,12 @@ if not GG.to_make_op_things then
         return {[toname]=ud}
     end
 
+    function to_make_op_things.copy_tweak_silly_build_morth(srcname,toname,builder,fn)
+        to_make_op_things.add_build("silly_build",builder,toname)
+        to_make_op_things.set_morth("silly_morth",srcname,toname)
+        return to_make_op_things.copy_tweak(srcname,toname,fn)
+    end
+
     function to_make_op_things.set_ded(ud,ded)
         ud.explodeAs              = ded
         ud.selfDestructAs=ded
@@ -716,6 +722,27 @@ if not GG.to_make_op_things then
         else
             return nil
         end
+    end
+
+
+    function to_make_op_things.loop_until_finish_all(values,fn)
+        local values_unfinished={}
+        while #values>0 do
+            for _, value in pairs(values) do
+                if fn(value) then
+
+                else
+                    values_unfinished[#values_unfinished+1]=value
+                end
+            end
+            if #values==#values_unfinished then
+                return values_unfinished
+            else
+                values=values_unfinished
+                values_unfinished={}
+            end
+        end
+        return nil
     end
 end
 VFS.Include("utils/to_make_very_op_things.lua")

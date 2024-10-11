@@ -20,8 +20,8 @@ local amphteleopbeaconud=utils.get_unit_lua("amphtele")
 do
     local ud=amphteleopbeaconud
     utils.set_free_unit(ud)
-    ud.name="OP Beacon"
-    ud.description="The Djinn"
+    ud.name="OP Lamp"
+    ud.description="Djinn"
     ud.speed=25
     ud.customParams.area_cloak = 1
     ud.customParams.area_cloak_upkeep = 15
