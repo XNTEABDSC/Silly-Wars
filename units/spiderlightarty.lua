@@ -30,7 +30,7 @@ fleaUD.customParams.grey_goo_cost = 25
 fleaUD.customParams.grey_goo_range = 120
 fleaUD.name="Lancing Flea"
 fleaUD.description="Ultralight beam artillery spider (Burrows)"
-fleaUD.sightDistance=780
+fleaUD.sightDistance=810
 fleaUD.customParams.tactical_ai_defs_copy="cloakarty"
 --fleaUD.objectName="lancyFlea"
 

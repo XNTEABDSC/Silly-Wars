@@ -7,6 +7,7 @@ ud.health=6000
 ud.speed=ud.speed*0.9
 
 local wd=ud.weaponDefs.NAPALM
+wd.name="Glaives"
 wd.areaOfEffect=0
 wd.stockpile               = true
 wd.stockpileTime           = 10^5

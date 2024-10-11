@@ -11,9 +11,10 @@ return utils.copy_tweak("spiderantiheavy","spidercapture",function (ud)
     ud.health=3600
     ud.speed=40
     ud.minCloakDistance=100
-    ud.cloakCost              = 5
-    ud.cloakCostMoving        = 15
+    ud.cloakCost              = 10
+    ud.cloakCostMoving        = 30
     local wd=ud.weaponDefs.spy
+    wd.name="Hack Lightning"
     wd.damage.default=4000.1
     wd.customParams.capture_scaling = 1
     wd.customParams.is_capture = 1

@@ -8,7 +8,7 @@ return
             metalCost=5000,
             health=15000,
             workertime=100,
-            name="Very Big Silly Con",
+            name="Very Very Silly Con",
             customParams={
                 def_scale=2
             }
