@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 
 utils.set_morth_mul("silly_morth","bombersingu","bombersinguheavy")
 utils.add_build("silly_build","verybigsillycon","bombersinguheavy")

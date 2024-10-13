@@ -1,6 +1,6 @@
 
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 local ud=utils.get_unit_lua("shieldriot")
 
 utils.table_replace({

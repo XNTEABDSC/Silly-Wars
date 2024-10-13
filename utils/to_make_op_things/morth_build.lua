@@ -1,4 +1,4 @@
-local to_make_op_things=GG.to_make_op_things
+local to_make_op_things=Spring.Utilities.to_make_op_things
 function to_make_op_things.set_morth(domain,srcname,copyedname,morphtime)
     to_make_op_things.add_fn_to_fn_list(domain,
         "set_morth(" .. srcname .. ", " .. copyedname .. ")",

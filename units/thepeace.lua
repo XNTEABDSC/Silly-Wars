@@ -1,13 +1,14 @@
 local ud=(VFS.Include("units/zenith.lua").zenith)
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 
 ud.name="THE PEACE"
-ud.description="YOU LOVE PEACE RIGHT? I LOVE PEACE TOO (can be intercepted by antinuke) (Use D to drop a single NUKE)"
+ud.description="A simple way to bring peace to the world (can be intercepted by antinuke) (Use D to drop a single NUKE)"
 ud.metalCost=100 * 1000
 ud.health=10000
 ud.customParams.zenith_meteor_capacity=100
 ud.customParams.zenith_hover_height=3200
+ud.customParams.custom_tooltip_simple="FOR THE PEACE (%[meteorsControlled|0]/%[meteorsControlledMax|100] nuke)"
 
 local nuketable={
     name="NUKE",
@@ -24,6 +25,7 @@ local nuketable={
         smoothradius     = utils.table_replace_nil,
         smoothmult       = utils.table_replace_nil,
         movestructures   = utils.table_replace_nil,
+        
     },
     damage                  = {
         default = 11501.1,

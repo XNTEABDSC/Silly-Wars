@@ -1,7 +1,7 @@
 -- reloadTime is in seconds
 -- offsets = {x,y,z} , where x is left(-)/right(+), y is up(+)/down(-), z is forward(+)/backward(-)
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 
 local DRONES_COST_RESOURCES = false
 

@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 
 local variance=variance or 2
 local bias=bias or 1
@@ -24,7 +24,7 @@ utils.add_fn_to_fn_list("def_post","random_units_unlimited",function ()
     local function get_rand_mult()
         return bias*variance^(to_get_op_value() )
     end
-    GG.to_make_very_op_things.random_units(get_rand_mult)
+    Spring.Utilities.to_make_very_op_things.random_units(get_rand_mult)
 end)
 
 return {option_notes="RANDOM UNITS VALUES, UNLIMITED! "}

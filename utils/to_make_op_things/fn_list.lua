@@ -1,4 +1,4 @@
-local to_make_op_things=GG.to_make_op_things
+local to_make_op_things=Spring.Utilities.to_make_op_things
 to_make_op_things.fn_list={}
 ---add a function, at domain, with key
 ---

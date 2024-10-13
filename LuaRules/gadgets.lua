@@ -20,8 +20,8 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 ---
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 utils.load_modoptions()
 
 local HANDLER_BASENAME = "gadgets.lua"

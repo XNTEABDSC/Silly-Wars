@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 
 local function set_laser_capper(wd)
     utils.table_replace({

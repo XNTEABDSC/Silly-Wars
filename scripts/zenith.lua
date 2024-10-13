@@ -112,6 +112,7 @@ local function projectilesHasNeeded(neededtype)
 	end
 	return false
 end
+---@type number
 local METEOR_CAPACITY =300
 local function projectilesAddOrReplace(projID)
 	if projectileCount<METEOR_CAPACITY then
@@ -156,9 +157,9 @@ local SPAWN_PERIOD = WeaponDefNames[udname.."_meteor"].reload  * 1000 -- in mill
 local light_period=WeaponDefNames[udname.."_gravity_neg"].reload*1000
 
 do
-	local cpcap=ud.customParams.zenith_meteor_capacity
+	local cpcap=tonumber(ud.customParams.zenith_meteor_capacity)
 	if cpcap then
-		METEOR_CAPACITY=tonumber(cpcap)
+		METEOR_CAPACITY=cpcap
 	end
 end
 
@@ -514,7 +515,7 @@ end
 function script.Create()
 	CheckMeteorTeam=spGetUnitTeam(unitID)
 	spSetUnitRulesParam(unitID, "meteorSpawnBlocked", 0)
-	Spring.SetUnitRulesParam(unitID, "meteorsControlled", 0, INLOS_ACCESS)
+	spSetUnitRulesParam(unitID, "meteorsControlled", 0, INLOS_ACCESS)
 	spSetUnitRulesParam(unitID, "meteorsControlledMax", METEOR_CAPACITY, INLOS_ACCESS)
 	local x, _, z = Spring.GetUnitPosition(unitID)
 	ux, uy, uz = x, Spring.GetGroundHeight(x, z), z

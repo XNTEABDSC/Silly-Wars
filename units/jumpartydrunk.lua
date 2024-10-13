@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 --[=[
 local function make_drunk(wd)
     if wd.range then
@@ -34,7 +34,7 @@ end)
 utils.set_morth_mul("silly_morth","jumparty","jumpartydrunk")
 utils.add_build("silly_build","bigsillycon","jumpartydrunk")
 return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
-    GG.to_make_very_op_things.make_unit_drunk(ud)
+    Spring.Utilities.to_make_very_op_things.make_unit_drunk(ud)
     utils.set_ded_ATOMIC_BLAST(ud)
     ud.weaponDefs.NAPALM_SPRAYER.weaponVelocity=295
     ud.customParams.tactical_ai_defs_copy="jumparty"

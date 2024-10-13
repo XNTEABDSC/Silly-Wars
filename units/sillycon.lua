@@ -1,6 +1,6 @@
 local ud=(VFS.Include("units/vehcon.lua").vehcon)
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 ud.name="Silly Con"
 ud.description="To Make Silly Things"
 ud.metalCost=500

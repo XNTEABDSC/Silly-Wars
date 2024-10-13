@@ -1,7 +1,7 @@
 --amphlaunch
 
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 utils.add_build("silly_build","bigsillycon","amphlaunchpro")
 utils.set_morth("silly_morth","amphlaunch","amphlaunchpro")
 

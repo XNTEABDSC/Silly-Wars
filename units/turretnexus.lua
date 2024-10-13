@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 utils.set_morth("silly_morth","turretheavylaserlv20","turretnexus")
 utils.add_build("silly_build","bigsillycon","turretnexus")
 return {turretnexus={

@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 local trnil=utils.table_replace_nil
 return utils.copy_tweak("dronelight","dronelightslow",utils.table_replace(
     {

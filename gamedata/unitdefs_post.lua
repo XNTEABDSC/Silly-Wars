@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 
 Spring.Echo("Loading UnitDefs_posts")
 
@@ -83,11 +83,11 @@ local tweak_units=utils.tweak_units
 
 local tweak_defs=utils.tweak_defs
 
-GG.to_make_op_things.load_modoptions()
+Spring.Utilities.to_make_op_things.load_modoptions()
 
-GG.to_make_op_things.do_fn_list_fns("def_pre")
+Spring.Utilities.to_make_op_things.do_fn_list_fns("def_pre")
 
-GG.to_make_op_things.do_fn_list_fns("def")
+Spring.Utilities.to_make_op_things.do_fn_list_fns("def")
 
 local modOptions=Spring.GetModOptions()
 
@@ -125,7 +125,7 @@ do
 	end
 end
 
-GG.to_make_op_things.do_fn_list_fns("def_post")
+Spring.Utilities.to_make_op_things.do_fn_list_fns("def_post")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

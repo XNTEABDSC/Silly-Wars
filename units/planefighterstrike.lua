@@ -1,6 +1,6 @@
 --planefighter
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 return utils.copy_tweak_silly_build_morth("planefighter","planefighterstrike","sillycon",function (ud)
 
     utils.table_replace({

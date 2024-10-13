@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 scale=scale or 0.25
 utils.add_fn_to_fn_list("def_pre","scale",function ()
     local udtoscale=utils.lowervalues({
@@ -32,7 +32,7 @@ utils.add_fn_to_fn_list("def_pre","scale",function ()
             return v
         end
     end
-    GG.to_make_op_things.modify_all_units({
+    Spring.Utilities.to_make_op_things.modify_all_units({
         udkeys=udtoscale,
         udcpkeys=udcptoscale,
         wdkeys=wdtoscale,

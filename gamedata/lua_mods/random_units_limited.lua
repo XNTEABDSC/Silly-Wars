@@ -1,5 +1,5 @@
-VFS.Include("utils/to_make_op_things.lua")
-local utils=GG.to_make_op_things
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
 
 utils.add_fn_to_fn_list("def_post","random_units_limited",function ()
     local lowerkeys=utils.lowerkeys
@@ -16,7 +16,7 @@ utils.add_fn_to_fn_list("def_post","random_units_limited",function ()
     local function get_rand_mult()
         return bias*rand_range^(to_get_op_value() )
     end
-    GG.to_make_very_op_things.random_units(get_rand_mult)
+    Spring.Utilities.to_make_very_op_things.random_units(get_rand_mult)
 end)
 
 return {option_notes="Random Units Values! "}
