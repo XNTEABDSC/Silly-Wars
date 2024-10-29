@@ -8,4 +8,5 @@ return utils.copy_tweak("turretheavylaser","turretheavylaserlv20",function (ud)
     ud.name=ud.name .. " Lv 20"
     ud.description = "Lv 20 " .. ud.description
     ud.metalCost=4250
+    ud.iconType="turretheavylaserlv20"
 end)

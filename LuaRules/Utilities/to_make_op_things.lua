@@ -93,7 +93,7 @@ if not Spring.Utilities.to_make_op_things then
                 morphtime=morphtime or 10
                 UnitDefs[srcname].customparams.morphto=copyedname
                 UnitDefs[srcname].customparams.morphtime=morphtime
-                UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
+                --UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
             end
         )
     end
@@ -104,8 +104,16 @@ if not Spring.Utilities.to_make_op_things then
                 if not UnitDefs[srcname] then
                     error("unit " .. srcname .. "do not exist")
                 end
-                morthprice=morthprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
                 local ud_cp=UnitDefs[srcname].customparams
+                if ud_cp.morphto then
+                    ud_cp.morphto_1=ud_cp.morphto
+                    ud_cp.morphto=nil
+                    ud_cp.morphtime_1=ud_cp.morphtime
+                    ud_cp.morphtime=nil
+                    ud_cp.morphcost_1=ud_cp.morphcost
+                    ud_cp.morphcost=nil
+                end
+                morthprice=morthprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
                 local i=1
                 morphtime=morphtime or 10
                 while true do
@@ -117,7 +125,7 @@ if not Spring.Utilities.to_make_op_things then
                     end
                     i=i+1
                 end
-                UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
+                --UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
             end)
     end
 
@@ -181,8 +189,8 @@ if not Spring.Utilities.to_make_op_things then
     ---set unit to no metalcost, dontcount, and no wreck
     function to_make_op_things.set_free_unit(ud)
         ud.corpse=nil
-        ud.buildTime=ud.metalCost
-        ud.metalCost=0
+        --ud.buildTime=ud.metalCost
+        --ud.metalCost=0
         --ud.name = prename .. ud.name
         --ud.explodeAs=[[NOWEAPON]]
         --ud.selfDestructAs=[[NOWEAPON]]
@@ -227,7 +235,7 @@ if not Spring.Utilities.to_make_op_things then
 
     function to_make_op_things.copy_tweak_silly_build_morth(srcname,toname,builder,fn)
         to_make_op_things.add_build("silly_build",builder,toname)
-        to_make_op_things.set_morth("silly_morth",srcname,toname)
+        to_make_op_things.set_morth_mul("silly_morth",srcname,toname)
         return to_make_op_things.copy_tweak(srcname,toname,fn)
     end
 
@@ -655,13 +663,15 @@ if not Spring.Utilities.to_make_op_things then
             "selectionVolumeScales"
         })
         local udtryScales1=to_make_op_things.lowervalues({
-            "footprintX",
-            "footprintZ",
             "trackOffset",
             "trackWidth",
             "trackStrength",
             "trackStretch",
             "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed"
+        })
+        local udtryScales1round=to_make_op_things.lowervalues({
+            "footprintX",
+            "footprintZ",
         })
         local udcptryScales3=to_make_op_things.lowervalues({
             --"aimposoffset","midposoffset"
@@ -700,10 +710,25 @@ if not Spring.Utilities.to_make_op_things then
                 end
             end
         end
+        local function scale1round(scale)
+            return function (v)
+                if type(v)=="number" then
+                    v=v*scale
+                    v=math.floor(v+0.5)
+                    if v<1 then
+                        v=1
+                    end
+                    return v
+                else
+                    return v
+                end
+            end
+        end
         --local modify_all=to_make_op_things.modify_all
         function to_make_op_things.set_scale(ud,scale)
             modify_all(ud,udtryScales3,scale3(scale))
             modify_all(ud,udtryScales1,scale1(scale))
+            modify_all(ud,udtryScales1round,scale1round(scale))
             if ud.customparams then
                 local udcp=ud.customparams
                 modify_all(udcp,udcptryScales3,scale3(scale))

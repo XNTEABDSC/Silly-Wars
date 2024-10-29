@@ -1385,7 +1385,24 @@ local icontypes = {
   spiderskirmarty={
     bitmap='icons/spiderarty.dds',
     size=2
-  }
+  },
+  nebulanebula = {
+    bitmap='icons/nebula.dds',
+    size=4*3,
+  },
+  spiderlightarty={
+    bitmap="icons/spiderarty.dds",
+    distance=0.75,
+    size=1.7,
+  },
+  turretdronelight = {
+    bitmap='icons/pw_assault.png',
+    size = 1.0,
+  },
+  turretheavylaserlv20 = {
+    bitmap='icons/defenseheavy.dds',
+    size=2.0*1.025^20,
+  },
 }
 --[===[
 --UnitDefs==nil
