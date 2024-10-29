@@ -1,5 +1,6 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils=Spring.Utilities.to_make_op_things
+utils.gamedata_UnitDefs=UnitDefs
 
 Spring.Echo("Loading UnitDefs_posts")
 

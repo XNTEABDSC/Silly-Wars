@@ -8,7 +8,7 @@ return utils.copy_tweak("shieldfelon","shieldfelonfast",function (ud)
     ud.metalCost=1200
     local shwd=ud.weaponDefs.SHIELD
     local wd=ud.weaponDefs.SHIELDGUN
-    ud.speed=90
+    ud.speed=81
     shwd.shieldPower=2400
     shwd.shieldPowerRegen=80
     shwd.shieldPowerRegenEnergy=40

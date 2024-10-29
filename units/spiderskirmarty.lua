@@ -15,5 +15,8 @@ return utils.copy_tweak("spiderskirm","spiderskirmarty",function (ud)
     ud.weaponDefs.ADV_ROCKET.range=1200
     ud.customParams.def_scale=(ud.customParams.def_scale or 1)*2
     ud.customParams.tactical_ai_defs_copy="veharty"
+    --ud.movementClass="TKBOT4"
+    ud.footprintX=4
+    ud.footprintZ=4
     utils.set_ded_BIG_UNIT(ud)
 end)

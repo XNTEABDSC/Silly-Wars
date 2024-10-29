@@ -14,10 +14,16 @@ return utils.copy_tweak("tankriot","tankriotarty",function (ud)
         metalCost=5000,
         speed=38,
         customParams={
-            def_scale=2
+            def_scale=2,
+            tactical_ai_defs_copy="veharty",
+            --icontypes_this=1,
+            --icontypes_this_copy_ud="tankarty",
+            --icontypes_this_copy_scale=2,
         },
         explodeAs="ATOMIC_BLAST",
         selfDestructAs="ATOMIC_BLAST",
+        --movementClass = [[TANK8]],
+        iconType="tankriotarty",
     }
     )(ud)
     --utils.set_scale(ud,2)

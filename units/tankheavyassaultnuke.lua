@@ -7,7 +7,7 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
     description="Shoot Nuclear Warhead (200 stockpile)",
     metalCost=8000,
     health=40000,
-    speed=51,
+    speed=45,
     weaponDefs={
         COR_GOL={
             name                    = [[Nuclear Cannon]],
@@ -26,12 +26,18 @@ return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_re
             reloadtime              = 5,
             weaponVelocity          = 300,
         },
+        SLOWBEAM={
+            range=620,
+            damage={
+                default=3500,
+            }
+        }
     },
     customParams={
         stockpiletime  = [[15]],
         stockpilecost  = [[200]],
         priority_misc  = 2,
-        def_scale=2,
+        def_scale=1.7,
         bait_level_default=3,
     },
     explodeAs="ATOMIC_BLAST",

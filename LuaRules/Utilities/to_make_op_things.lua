@@ -710,6 +710,18 @@ if not Spring.Utilities.to_make_op_things then
                 modify_all(udcp,udcptryScales1,scale1(scale))
                 ud.customparams.dynamic_colvol=true
             end
+            if ud.movementclass then
+                local b,s,p=to_make_op_things.MoveDef_CanGen(ud.movementclass)
+                if b then
+                    s=s*scale
+                    s=math.floor(s+0.5)
+                    if s<1 then
+                        s=1
+                    end
+                    Spring.Echo("Change unit " .. ud.name .. "'s movementclass to: " ..p .. b .. tostring(s))
+                    ud.movementclass=p .. b .. tostring(s)
+                end
+            end
         end
     end
     
@@ -722,7 +734,10 @@ if not Spring.Utilities.to_make_op_things then
         end
     end
 
-
+    ---loop call fn(value), return false then fn(value) will be done later
+    ---@param values any
+    ---@param fn any
+    ---@return table|nil
     function to_make_op_things.loop_until_finish_all(values,fn)
         local values_unfinished={}
         while #values>0 do
@@ -741,6 +756,124 @@ if not Spring.Utilities.to_make_op_things then
             end
         end
         return nil
+    end
+    do
+        local common_depthmodparams = {
+            quadraticCoeff = 0.0027,
+            linearCoeff = 0.02,
+        }
+        local function selectless(t,size)
+            return ((size<=#t) and t[size]) or t[#t]
+        end
+        local crushstrengthGen=function (size)
+            return selectless({5,50,150,500,5000} ,size)
+        end
+        local minwaterdepthGenBoat
+        local BaseGen={
+            KBOT=function (size)
+                return {
+                    footprintx = size,
+                    footprintz = size,
+                    maxwaterdepth = selectless({16,22,22,22,123} ,size),
+                    maxslope = 36,
+                    crushstrength = crushstrengthGen(size),
+                    depthmodparams = common_depthmodparams,
+                }
+            end,
+            TANK=function (size)
+                return {
+                    footprintx = size,
+                    footprintz = size,
+                    slopemod = 20,
+                    maxwaterdepth = selectless({22,22,22,22,123} ,size),
+                    maxslope = 18,
+                    crushstrength = crushstrengthGen(size),
+                    depthmodparams = common_depthmodparams,
+                }
+            end,
+            HOVER=function (size)
+                return {
+                    footprintx = size,
+                    footprintz = size,
+                    maxslope = 18,
+                    maxwaterdepth = 5000,
+                    slopemod = 30,
+                    crushstrength = crushstrengthGen(size),
+                }
+            end,
+            BOAT5 = function(size)
+                return {
+                    footprintx = size,
+                    footprintz = size,
+                    minwaterdepth = selectless({5,5,5,5,15} ,size),
+                    crushstrength = 5000,
+                }
+            end
+        }
+        local PrefixDo={
+            A=function (t)
+                t.maxwaterdepth = 5000
+                t.depthmod = 0
+                t.depthmodparams=nil
+            end,
+            T=function (t)
+                t.maxslope = 70
+            end,
+            U=function (t)
+                t.subMarine=1
+            end,
+            B=function (t,b,s)
+                if b=="HOVER" then
+                    t.maxslope = 36
+                end
+            end,
+            S=function (t)
+                t.maxwaterdepth=t.maxwaterdepth/2
+                t.crushstrength=t.crushstrength/4
+            end
+        }
+        function to_make_op_things.MoveDef_CanGen(md)
+            Spring.Echo("MoveDefGen Evaluating " .. md)
+            local basetyl,basetyr
+            for key, _ in pairs(BaseGen) do
+                basetyl,basetyr=string.find(md,key)
+                if basetyl then
+                    break
+                end
+            end
+            if basetyl and basetyr then
+                local prefixs=string.sub(md,1,basetyl-1)
+                local baset=string.sub(md,basetyl,basetyr)
+                local size=string.sub(md,basetyr+1)
+                size=tonumber(size)
+                if not size then
+                    Spring.Echo("MoveDefGen Evaluate no size")
+                    return false
+                end
+                for i=1,string.len(prefixs) do
+                    local prefix=string.sub(prefixs,i,i)--prefixs[i]
+                    if prefix==nil then
+                        Spring.Echo("MoveDefGen Evaluate odd nil prefix " .. tostring( prefix) .. " from " .. tostring( prefixs) .. " at " .. i)
+                    elseif not PrefixDo[prefix] then
+                        Spring.Echo("MoveDefGen Evaluate bad prefix " .. prefix)
+                        return nil
+                    end
+                end
+                Spring.Echo("MoveDefGen Evaluate Result: ".. baset , size,prefixs)
+                return baset,size,prefixs
+            else
+                Spring.Echo("MoveDefGen Evaluate no base")
+            end
+            return nil
+        end
+        function to_make_op_things.MoveDef_TryGen(baset,size,prefixs)
+            local movedef=BaseGen[baset](size)
+            for i=1,string.len(prefixs) do
+                local prefix=string.sub(prefixs,i,i)
+                PrefixDo[prefix](movedef,baset,size)
+            end
+            return movedef
+        end
     end
 end
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
