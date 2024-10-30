@@ -29,12 +29,12 @@ local carrierDefNames = {
 		spawnPieces = {"pad1", "pad2", "pad3", "pad4"},
 		{
 			drone = UnitDefNames.dronefighter.id,
-			reloadTime = 15,
+			reloadTime = 3,
 			maxDrones = 8,
 			spawnSize = 2,
 			range = 1000,
 			maxChaseRange = 1500,
-			buildTime = 3,
+			buildTime = 15,
 			maxBuild = 4,
 			offsets = {0, 8, 15, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
 		},
@@ -189,6 +189,14 @@ for id, ud in pairs(UnitDefs) do
 end
 
 for id, ud in pairs(UnitDefs) do
+	if ud.customParams and ud.customParams.drone_defs_carrier_def then
+		local drones=ud.customParams.drone_defs_carrier_def
+		carrierDefs[id]=Spring.Utilities.MergeTable(carrierDefs[id] or {},utils.justeval(drones,Globals))
+		Spring.Echo("Loaded carrier " .. ud.name)
+	end
+end
+
+for id, ud in pairs(UnitDefs) do
 	if ud.customParams then
 		if ud.customParams.drones then
 			local droneFunc = loadstring("return "..ud.customParams.drones)
@@ -212,13 +220,6 @@ for name, data in pairs(carrierDefNames) do
 end
 
 
-for id, ud in pairs(UnitDefs) do
-	if ud.customParams and ud.customParams.drone_defs_has_drones then
-		local drones=ud.customParams.drone_defs_has_drones
-		carrierDefs[id]=Spring.Utilities.MergeTable(carrierDefs[id] or {},utils.justeval(drones,Globals))
-		Spring.Echo("Loaded carrier " .. ud.name)
-	end
-end
 
 
 local function ProcessCarrierDef(carrierData)

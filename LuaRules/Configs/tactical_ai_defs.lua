@@ -2149,6 +2149,12 @@ for _, ud in pairs(UnitDefs) do
 				end
 			end
 		end
+		if udcp.tactical_ai_defs_belongs_to then
+			for _, value in pairs(utils.justeval(udcp.tactical_ai_defs_belongs_to)) do
+				local l=AllArrays[value]
+				l[#l+1] = ud.name
+			end
+		end
 		if udcp.tactical_ai_defs_behaviour_config then
 			behaviourConfig[#behaviourConfig+1] = utils.justloadstring(
 				"return" .. ud.customParams.tactical_ai_defs_behaviour_config,

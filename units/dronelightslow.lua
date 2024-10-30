@@ -6,7 +6,7 @@ return utils.copy_tweak("dronelight","dronelightslow",utils.table_replace(
         name="Disruptor Firefly",
         description="Disruptor Drone",
         metalCost=30,
-        health              = 300,
+        health              = 330,
         acceleration        = 0.6,
         customParams={
             drone_defs_is_drone=1,

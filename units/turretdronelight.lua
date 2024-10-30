@@ -14,7 +14,7 @@ return { turretdronelight = {
   customParams                  = {
     soundselect = "building_select1",
     def_scale=0.4,
-    drone_defs_has_drones=[=[
+    drone_defs_carrier_def=[=[
       {
         spawnPieces = {"drone"},
         {
@@ -24,7 +24,7 @@ return { turretdronelight = {
           spawnSize = 1,
           range = 900,
           maxChaseRange = 1200,
-          buildTime = 15,
+          buildTime = 12,
           maxBuild = 1,
           offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
         },

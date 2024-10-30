@@ -5,7 +5,7 @@ utils.add_build("silly_build","bigsillycon","staticbase")
 
 return { staticbase = {
   name                          = [[Frontline Base]],
-  description                   = [[Provides hp, longrange bp and resurrect, radar and los, radar jam and cloak, drones, shield, pylon, and disruptor pulse]],
+  description                   = [[Provides hp, bp, radar, los, radar jam, cloak, drones, shield, pylon, and disruptor pulse]],
   activateWhenBuilt             = true,
   buildPic                      = [[pw_hq.png]],
   category                      = [[FLOAT UNARMED]],
@@ -19,7 +19,7 @@ return { staticbase = {
   canSelfRepair =true,
   customParams                  = {
     soundselect = "building_select1",
-    drone_defs_has_drones=[=[
+    drone_defs_carrier_def=[=[
       {
         spawnPieces = {"drone","drone","drone","drone"},
         {
@@ -64,7 +64,7 @@ return { staticbase = {
   useBuildingGroundDecal        = false,
   workerTime                    = 50,
   buildDistance                 = 900,
-  resurrectSpeed=25,
+  --resurrectSpeed=25,
   showNanoSpray       = false,
 
   --yardMap                       = [[oooooooooooooooooooo]],

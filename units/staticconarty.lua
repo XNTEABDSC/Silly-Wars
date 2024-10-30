@@ -5,9 +5,9 @@ return utils.copy_tweak_silly_build_morth("staticcontanky","staticconarty","bigs
     name                          = [[Long-Range Caretaker]],
     description                   = [[Long-Range Construction Assistant]],
     health=3000,
-    metalCost=5000,
+    metalCost=6000,
     buildDistance=5600,
-    workerTime                    = 150,
+    workerTime                    = 80,
 
     explodeAs                     = [[ATOMIC_BLAST]],
     selfDestructAs                = [[ATOMIC_BLAST]],
