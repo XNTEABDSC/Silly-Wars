@@ -128,7 +128,9 @@ local function EmitDust()
 		if not (isLanded or Spring.GetUnitIsStunned(unitID) or Spring.GetUnitIsCloaked(unitID)) then
 			local x, _, z = GetUnitPosition(unitID)
 			local y = GetGroundHeight(x, z) + 30
-			SpawnCEG("krowdust", x, y, z, 0, 0, 0, 1, 1)
+			SpawnCEG("krowdust", x, y, z, 0, 0, 0, 2, 1)
+			SpawnCEG("krowdust", x, y, z, 0, 0, 0, 2, 1)
+			SpawnCEG("krowdust", x, y, z, 0, 0, 0, 2, 1)
 		end
 		Sleep(33)
 	end

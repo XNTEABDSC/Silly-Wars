@@ -9,9 +9,12 @@ return utils.copy_tweak("gunshipkrow","gunshiptff",function (ud)
         ud.weapons[i].def=nil
         ud.weapons[i].name="turretheavy_plasma"
     end
+    ud.weaponDefs.KROWLASER=nil
+    ud.weapons[3].def=nil
+    ud.weapons[3].name="NOWEAPON"
+    --[===[
     ud.weaponDefs.CLUSTERBOMB=utils.get_unit_lua("gunshipskirm").weaponDefs.VTOL_ROCKET
     local missilewd=ud.weaponDefs.CLUSTERBOMB
-    ud.weaponDefs.KROWLASER=nil
     
     missilewd.range=600
     missilewd.reloadtime=3
@@ -20,10 +23,10 @@ return utils.copy_tweak("gunshipkrow","gunshiptff",function (ud)
     }
     missilewd.size=2
     missilewd.weaponVelocity=500
-    missilewd.flightTime=5
+    missilewd.flightTime=5]===]
     ud.script=[[gunshiptff.lua]]
     ud.metalCost=17500
-    ud.health=45000
+    ud.health=48000
     ud.speed=80
     ud.name="The Flying Fortress"
     ud.description="The Flying Fortress"
