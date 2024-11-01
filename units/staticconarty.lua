@@ -7,7 +7,7 @@ return utils.copy_tweak_silly_build_morth("staticcontanky","staticconarty","bigs
     health=3000,
     metalCost=6000,
     buildDistance=5600,
-    workerTime                    = 80,
+    workerTime                    = 60,
 
     explodeAs                     = [[ATOMIC_BLAST]],
     selfDestructAs                = [[ATOMIC_BLAST]],

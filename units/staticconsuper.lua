@@ -7,7 +7,7 @@ return utils.copy_tweak_silly_build_morth("staticconarty","staticconsuper","very
     health=4000,
     metalCost=20000,
     buildDistance=10000,
-    workerTime                    = 300,
+    workerTime                    = 200,
     customParams={
         def_scale=5
     },

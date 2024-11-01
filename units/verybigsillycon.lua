@@ -5,9 +5,9 @@ local utils=Spring.Utilities.to_make_op_things
 return
     utils.copy_tweak("bigsillycon","verybigsillycon",utils.table_replace(
         {
-            metalCost=5000,
-            health=15000,
-            workertime=100,
+            metalCost=4000,
+            health=12000,
+            workertime=80,
             name="Very Very Silly Con",
             customParams={
                 def_scale=2
