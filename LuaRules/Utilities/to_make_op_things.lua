@@ -177,7 +177,7 @@ if not Spring.Utilities.to_make_op_things then
                     if t[k] and type(t[k]) == "table" then
                         to_make_op_things.table_replace(v)(t[k])
                     else
-                        t[k] = Spring.Utilities.CopyTable(v, true)
+                        t[k] = v--Spring.Utilities.CopyTable(v, true)
                     end
                 else
                     t[k] = v
@@ -186,7 +186,7 @@ if not Spring.Utilities.to_make_op_things then
         end
         return replace
     end
-    ---set unit to no metalcost, dontcount, and no wreck
+    ---set unit to dontcount, and no wreck
     function to_make_op_things.set_free_unit(ud)
         ud.corpse=nil
         --ud.buildTime=ud.metalCost
@@ -392,6 +392,9 @@ if not Spring.Utilities.to_make_op_things then
     end
 
     function to_make_op_things.justeval(str,_gextra,_glevel)
+        if type(str)~="string" then
+            return str
+        end
         str="return " .. str
         _glevel=_glevel or 1
         local postfunc, err = loadstring(str)

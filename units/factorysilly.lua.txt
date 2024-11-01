@@ -1,0 +1,94 @@
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils=Spring.Utilities.to_make_op_things
+
+
+
+
+-- builder-related stuff
+
+
+return { factorysilly = {
+    name                          = [[Silly Factory]],
+    description                   = [[Produces Silly Things]],
+    buildDistance                 = Shared.FACTORY_PLATE_RANGE,
+    builder                       = true,
+  
+    buildoptions                  = {
+        "sillycon",
+        "planefighterstrike",
+        "spidercon",
+    },
+  
+    buildPic                      = [[pw_dropfac.png]],
+    canMove                       = true,
+    canPatrol                     = true,
+    category                      = [[SINK UNARMED]],
+    collisionVolumeOffsets        = [[0 0 0]],
+    collisionVolumeScales         = [[275 120 215]],
+    collisionVolumeType           = [[Box]],
+    selectionVolumeOffsets        = [[0 0 0]],
+    selectionVolumeScales         = [[285 130 225]],
+    selectionVolumeType           = [[Box]],
+    corpse                        = [[DEAD]],
+  
+    customParams                  = {
+      ploppable = 1,
+      sortName            = [[1]],
+      factorytab          = 1,
+      shared_energy_gen   = 1,
+      --parent_of_plate     = [[plateshield]],
+  
+      stats_show_death_explosion = 1,
+      soundselect = "building_select1",
+      landflystate = [[0]],
+      factory_land_state = 0,
+      def_scale=0.5,
+      is_default_buildoption=1,
+      integral_menu_be_in_tab=[==[
+      {
+        tab="FACTORY",
+        pos= {order = 14, row = 3, col = 1},
+      }
+      ]==],
+      integral_menu_factory_AddBuildQueue=1,
+      solid_factory = [[6]],
+      --isfakefactory=true,
+      
+    },
+  
+    explodeAs                     = [[LARGE_BUILDINGEX]],
+    footprintx = 20,
+    footprintz = 16,
+    health                        = 4000,
+    iconType                      = [[pw_dropfac]],
+    maxSlope                      = 15,
+    maxWaterDepth                 = 0,
+    metalCost                     = Shared.FACTORY_COST,
+    moveState                     = 1,
+    noAutoFire                    = false,
+    objectName                    = [[pw_dropfac.dae]],
+    script                        = "pw_dropfac.lua",
+    selfDestructAs                = [[LARGE_BUILDINGEX]],
+    showNanoSpray                 = false,
+    sightDistance                 = 273,
+    useBuildingGroundDecal        = true,
+    workerTime                    = Shared.FACTORY_BUILDPOWER,
+    featureDefs                   = {
+  
+      DEAD  = {
+        blocking         = true,
+        featureDead      = [[HEAP]],
+        object           = [[pw_dropfac_dead.dae]],
+      },
+  
+      HEAP  = {
+        blocking         = false,
+        object           = [[debris8x8b.s3o]],
+      },
+  
+    },
+    isFactory=true, -- W T F IS THIS
+  
+  } }
+  
+

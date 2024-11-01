@@ -127,7 +127,11 @@ do
 end
 
 Spring.Utilities.to_make_op_things.do_fn_list_fns("def_post")
-
+--[==[
+W T F IS THIS
+UnitDefs.factorysilly.isFactory=true
+UnitDefs.factorysilly.isfactory=true
+]==]
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --

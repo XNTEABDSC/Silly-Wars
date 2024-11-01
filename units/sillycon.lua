@@ -5,4 +5,5 @@ ud.name="Silly Con"
 ud.description="To Make Silly Things"
 ud.metalCost=400
 ud.speed=90
+ud.customParams=ud.customParams or {}
 return {["sillycon"]=ud}
