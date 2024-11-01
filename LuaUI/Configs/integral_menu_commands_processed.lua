@@ -1,5 +1,5 @@
 local cmdPosDef, factoryUnitPosDef, factory_commands, econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands.lua")
-Spring.Echo("my integral_menu_commands_processed.lua get included")
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Panel Configuration Loading
