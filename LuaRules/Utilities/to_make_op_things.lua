@@ -113,7 +113,7 @@ if not Spring.Utilities.to_make_op_things then
                     ud_cp.morphcost_1=ud_cp.morphcost
                     ud_cp.morphcost=nil
                 end
-                morthprice=morthprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
+                --morthprice=morthprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
                 local i=1
                 morphtime=morphtime or 10
                 while true do

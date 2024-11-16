@@ -43,10 +43,8 @@ utils.add_fn_to_fn_list("def_pre","add_chixs",function ()
     utils.set_morth("def","chickenlandqueen","chickenflyerqueen",6)
     UnitDefs["chicken_dragon"].description=UnitDefs["chicken_dragon"].description .. ", can morth into queen"
     build_time_to_cost("chicken_leaper")
-
-    local drone_ud_cp=UnitDefs["chicken_drone"].customparams
-    drone_ud_cp.morphcost_2=2500-60
-    drone_ud_cp.morphcost_1=120-60
+    build_time_to_cost("chickenspire")
+    build_time_to_cost("chickend")
 
     do
         -- from zerowar rebalanced
@@ -69,11 +67,18 @@ utils.add_fn_to_fn_list("def_pre","add_chixs",function ()
             chickenblobber=1600, --blobber
             chicken_dragon=7000,
             chickenlandqueen=60000,
-            chickenflyerqueen=60000
+            chickenflyerqueen=60000,
+            chickenspire=5000,
         }
         for key, value in pairs(chixNewPrice) do
             UnitDefs[key].metalcost=value
         end
+        UnitDefs.chickenspire.health=3000--.weapondefs.slamspore.projectiles=nil
+    end
+    do
+        local drone_ud_cp=UnitDefs["chicken_drone"].customparams
+        drone_ud_cp.morphcost_2=nil--=UnitDefs["chickenspire"].metalcost-UnitDefs["chicken_drone"].metalcost
+        drone_ud_cp.morphcost_1=nil--=UnitDefs["chickend"].metalcost-UnitDefs["chicken_drone"].metalcost
     end
 end)
 
