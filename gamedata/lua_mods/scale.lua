@@ -1,6 +1,6 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils=Spring.Utilities.to_make_op_things
-scale=scale or 0.25
+Scale=Scale or 0.25
 utils.add_fn_to_fn_list("def_pre","scale",function ()
     local udtoscale=utils.lowervalues({
         "brakerate","radarDistance","sightDistance","sonarDistance","speed","radarDistanceJam","buildDistance",
@@ -22,12 +22,12 @@ utils.add_fn_to_fn_list("def_pre","scale",function ()
     })
     local function to01(v,key)
         if key=="def_scale" then
-            return (tonumber(v) or 1)*scale
+            return (tonumber(v) or 1)*Scale
         end
         if type(v)=="number"then
-            return v*scale
+            return v*Scale
         elseif type(v)=="string" then
-            return tonumber(v)*scale
+            return tonumber(v)*Scale
         else
             return v
         end
@@ -52,4 +52,4 @@ utils.add_fn_to_fn_list("def_pre","scale",function ()
 
 end)
 
-return {option_notes="Everything is x".. scale .." size, except commanders"}
+return {option_notes="Everything is x".. Scale .." size, except commanders"}
