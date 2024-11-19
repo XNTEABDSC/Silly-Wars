@@ -19,10 +19,11 @@
 --
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
----
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils=Spring.Utilities.to_make_op_things
 utils.load_modoptions()
+
+
 
 local HANDLER_BASENAME = "gadgets.lua"
 local isMission = VFS.FileExists("mission.lua")	-- or Game.gameName:find("Scenario Editor")
@@ -44,7 +45,6 @@ VFS.Include(HANDLER_DIR .. 'setupdefs.lua', nil, VFSMODE)
 VFS.Include(HANDLER_DIR .. 'system.lua',    nil, VFSMODE)
 VFS.Include(HANDLER_DIR .. 'callins.lua',   nil, VFSMODE)
 VFS.Include(SCRIPT_DIR .. 'utilities.lua', nil, VFSMODE)
-
 
 local actionHandler = VFS.Include(HANDLER_DIR .. 'actions.lua', nil, VFSMODE)
 
@@ -106,6 +106,9 @@ local callInLists = {
 	"GotChatMsg",
 	"RecvLuaMsg",
 
+	-- Custom from gadgets themselves
+	"UnitCreatedByMechanic",
+	
 	-- Unit CallIns
 	"UnitCreated",
 	"UnitFinished",
@@ -528,6 +531,12 @@ function gadgetHandler:NewGadget()
     end
     gh.RemoveSyncAction = function(_, cmd)
       return actionHandler.RemoveSyncAction(gadget, cmd)
+    end
+  end
+  
+  if IsSyncedCode() then
+    gh.NotifyUnitCreatedByMechanic = function(_, unitID, parentID, mechanicName, extraData)
+      self:UnitCreatedByMechanic(unitID, parentID, mechanicName, extraData)
     end
   end
 
@@ -1396,6 +1405,12 @@ end
 --
 --  Unit call-ins
 --
+
+function gadgetHandler:UnitCreatedByMechanic(unitID, parentID, mechanicName, extraData)
+  for _,g in r_ipairs(self.UnitCreatedByMechanicList) do
+    g:UnitCreatedByMechanic(unitID, parentID, mechanicName, extraData)
+  end
+end
 
 local inCreated = false
 local finishedDuringCreated = false -- assumes non-recursive create

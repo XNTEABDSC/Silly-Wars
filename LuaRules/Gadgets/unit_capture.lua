@@ -73,7 +73,7 @@ local capturedUnits = {}
 local controllers = {}
 local reloading = {}
 
-local FULL_OVERWRITE_TIME=180*30
+local FULL_OVERWRITE_TIME=5*60*30
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Utilities
