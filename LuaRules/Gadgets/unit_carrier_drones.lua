@@ -419,7 +419,7 @@ function SitOnPad(unitID, carrierID, padPieceID, offsets)
 		local droneType = droneList[unitID].set
 		local droneInfo = carrierList[carrierID].droneSets[droneType] --may persist even after "carrierList[carrierID]" is emptied
 		local build_step = droneInfo.config.buildStep
-		local build_step_health = droneInfo.config.buildStepHealth * (GG.att_HealthMult[unitID] or 1)
+		local build_step_health = droneInfo.config.buildStepHealth * (GG.att_HealthMult and GG.att_HealthMult[unitID] or 1)
 		
 		local buildStepCost = droneInfo.config.buildStepCost
 		local perSecondCost = droneInfo.config.perSecondCost
