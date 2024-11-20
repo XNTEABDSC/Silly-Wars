@@ -10,7 +10,7 @@ function gadget:GetInfo()
 	return {
 		name      = "Carrier Drones",
 		desc      = "Spawns drones for aircraft carriers",
-		author    = "TheFatConroller, modified by KingRaptor, then XNTEABSC",
+		author    = "TheFatConroller, modified by KingRaptor",
 		date      = "12.01.2008",
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,

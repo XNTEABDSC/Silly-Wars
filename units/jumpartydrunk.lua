@@ -40,5 +40,6 @@ return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
     ud.customParams.tactical_ai_defs_copy="jumparty"
     ud.fireState=0
     ud.highTrajectory=2
+    ud.iconType="jumpartydrunk"
     --ud.health=ud.health*0.6
 end)

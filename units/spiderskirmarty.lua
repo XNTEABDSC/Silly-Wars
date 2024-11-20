@@ -18,5 +18,6 @@ return utils.copy_tweak("spiderskirm","spiderskirmarty",function (ud)
     --ud.movementClass="TKBOT4"
     ud.footprintX=4
     ud.footprintZ=4
+    ud.iconType="spiderskirmarty"
     utils.set_ded_BIG_UNIT(ud)
 end)

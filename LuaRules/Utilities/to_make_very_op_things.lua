@@ -433,7 +433,7 @@ if not Spring.Utilities.to_make_very_op_things then
             })
             local udToChange=({
                 acceleration=speed_scale,brakeRate=speed_scale,speed=speed_scale,turnRate=speed_scale,
-                health=hp_scale,idleAutoHeal=hp_scale,idleTime=reload_scale,autoHeal=hp_scale,
+                health=hp_scale,idleAutoHeal=hp_scale-reload_scale,idleTime=reload_scale,autoHeal=hp_scale-reload_scale,
                 sightDistance=range_scale,radarDistance=range_scale,sonarDistance=range_scale,minCloakDistance=range_scale,radarDistanceJam=util_range,
                 metalCost=1,
             })

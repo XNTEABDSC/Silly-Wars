@@ -32,6 +32,7 @@ fleaUD.name="Lancing Flea"
 fleaUD.description="Ultralight beam artillery spider (Burrows)"
 fleaUD.sightDistance=810
 fleaUD.customParams.tactical_ai_defs_copy="cloakarty"
+fleaUD.iconType="spiderlightarty"
 --fleaUD.objectName="lancyFlea"
 
 utils.set_morth_mul("silly_morth","spiderscout","spiderlightarty",1)

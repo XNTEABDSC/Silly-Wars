@@ -1376,7 +1376,7 @@ local icontypes = {
   },
   tankriotarty = {
     bitmap='icons/tankarty.dds',
-    size=4.0,
+    size=3,
   },
   gunshiptff={
     bitmap='icons/supergunship.dds',
@@ -1393,7 +1393,7 @@ local icontypes = {
   spiderlightarty={
     bitmap="icons/spiderarty.dds",
     distance=0.75,
-    size=1.7,
+    size=1.8,
   },
   turretdronelight = {
     bitmap='icons/pw_assault.png',
@@ -1403,9 +1403,22 @@ local icontypes = {
     bitmap='icons/defenseheavy.dds',
     size=2.0*1.025^20,
   },
+  cloakraidepic = {
+    bitmap='icons/kbotraider.dds',
+    size=1.8*100^(1/6),
+  },
+  jumpaapro = {
+    bitmap='icons/jumpjetaa.dds',
+    size=1.8*2.5,
+  },
+  jumpartydrunk = {
+    bitmap='icons/fatbotarty.png',
+    size=2.1*2,
+  },
 }
+
 --[===[
---UnitDefs==nil
+--UnitDefs==nil :(
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils=Spring.Utilities.to_make_op_things
 local UnitDefs=UnitDefs or (DEFS and DEFS.unitDefs)  or nil
