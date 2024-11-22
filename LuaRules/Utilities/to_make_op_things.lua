@@ -7,13 +7,27 @@ if Spring.Utilities==nil then
 end
 
 if not Spring.Utilities.to_make_op_things then
+    VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+    local wacky_utils=Spring.Utilities.wacky_utils
+    VFS.Include("LuaRules/Utilities/ordered_list.lua")
+
     local to_make_op_things={}
     Spring.Utilities.to_make_op_things=to_make_op_things
 
-    VFS.Include("LuaRules/Utilities/tablefunctions.lua")
+    local unit_defs_tweak_fns=Spring.Utilities.OrderedList.New()
+    to_make_op_things.unit_defs_tweak_fns=unit_defs_tweak_fns
 
-    
+    local function AddFnToUnitDefsTweakFns(key,fn,befores,afters)
+        unit_defs_tweak_fns.Add({k=key,v=fn,b=befores,a=afters})
+    end
+    to_make_op_things.AddFnToUnitDefsTweakFns=AddFnToUnitDefsTweakFns
 
+    local function RunUnitDefsTweakFns()
+        for key, value in pairs(unit_defs_tweak_fns.GenList()) do
+            value()
+        end
+    end
+    to_make_op_things.RunUnitDefsTweakFns=RunUnitDefsTweakFns
     --[==[
     local utils={
         "fn_list"
@@ -167,26 +181,7 @@ if not Spring.Utilities.to_make_op_things then
             end)
     end
 
-    to_make_op_things.table_replace_nil={}
-    -- Spring.Utilities.OverwriteTableInplace, but allow to set nil by to_make_op_things.table_replace_nil
-    function to_make_op_things.table_replace(tweaks)
-        local function replace(t)
-            for k, v in pairs(tweaks) do
-                if v==to_make_op_things.table_replace_nil then
-                    t[k]=nil
-                elseif (type(v) == "table") then
-                    if t[k] and type(t[k]) == "table" then
-                        to_make_op_things.table_replace(v)(t[k])
-                    else
-                        t[k] = v--Spring.Utilities.CopyTable(v, true)
-                    end
-                else
-                    t[k] = v
-                end
-            end
-        end
-        return replace
-    end
+    
     ---set unit to dontcount, and no wreck
     function to_make_op_things.set_free_unit(ud)
         ud.corpse=nil
@@ -198,31 +193,7 @@ if not Spring.Utilities.to_make_op_things then
         ud.customParams.dontcount = [[1]]
         ud.featureDefs=nil
     end
-    function to_make_op_things.lowerkeys(t)
-        local tn = {}
-        if type(t) == "table" then
-            for i,v in pairs(t) do
-                local typ = type(i)
-                if type(v)=="table" then
-                    v = to_make_op_things.lowerkeys(v)
-                end
-                if typ=="string" then
-                    tn[i:lower()] = v
-                else
-                    tn[i] = v
-                end
-            end
-        end
-        return tn
-    end
-    function to_make_op_things.lowervalues(t)
-        for key, value in pairs(t) do
-            if type(value)=="string" then
-                t[key]=value:lower()
-            end
-        end
-        return t
-    end
+    
     ---get lua table of unit defined by .lua file
     function to_make_op_things.get_unit_lua(udname)
         return VFS.Include("units/".. udname ..".lua")[udname]
@@ -255,60 +226,9 @@ if not Spring.Utilities.to_make_op_things then
         ud.selfDestructAs=[[ATOMIC_BLAST]]
     end
     ---set number to be a multiples of 1/30, needed for reloadtime
-    function to_make_op_things.round_to_inv30(n)
-        n = n*30
-        n = math.ceil(n)
-        n = n/30
-        return n
-    end
+    
 
-    function to_make_op_things.list_to_set(list,value)
-        if value==nil then
-            value=true
-        end
-        local set={}
-        for _, k in pairs(list) do
-            set[k]=value
-        end
-        return set
-    end
-
-    function to_make_op_things.better_gsub_rec(str,pattern,mapper)
-        while true do
-            local l,r=string.find(str,pattern)
-            if not l then
-                break
-            else
-                local str1=string.sub(str,1,l-1)
-                --local str2=string.sub(str,l,r)
-                local str3=string.sub(str,r+1)
-                local str2transed=mapper(string.match(str,pattern))
-                str = str1 .. str2transed .. str3
-            end
-
-        end
-        return str
-    end
-
-    function to_make_op_things.better_gsub(str,pattern,mapper)
-        local done=""
-        local left=str
-        while true do
-            local l,r=string.find(left,pattern)
-            if not l then
-                break
-            else
-                local str1=string.sub(left,1,l-1)
-                --local str2=string.sub(str,l,r)
-                local str3=string.sub(left,r+1)
-                local str2transed=mapper({string.match(left,pattern)})
-                done=done .. str1 .. str2transed
-                left=str3
-                --str = str1 .. str2transed .. str3
-            end
-        end
-        return done .. left
-    end
+    
 
     ---t[key]=modifyfn(t[key],key,t)
     ---@param t table
@@ -422,59 +342,8 @@ if not Spring.Utilities.to_make_op_things then
         end
     end
 
-    do
-        function to_make_op_things.meta_union(a,b)
-            setmetatable(a,{__index=b})
-            return a
-        end
-    end
-
-    function to_make_op_things.justloadstring(str,_gextra,_glevel)
-        _glevel=_glevel or 1
-        local postfunc, err = loadstring(str)
-		if postfunc then
-            local _gr=getfenv(_glevel)
-            if _gextra then
-                setfenv(postfunc,to_make_op_things.meta_union(_gextra,_gr))
-            else
-                setfenv(postfunc,_gr)
-            end
-			return postfunc()
-		else
-            error("failed to load string: " .. str .. " with error: " .. tostring(err))
-            --return nil
-		end
-    end
-
-    function to_make_op_things.justeval(str,_gextra,_glevel)
-        if type(str)~="string" then
-            return str
-        end
-        str="return " .. str
-        _glevel=_glevel or 1
-        local postfunc, err = loadstring(str)
-		if postfunc then
-            local _gr=getfenv(_glevel)
-            if _gextra then
-                setfenv(postfunc,to_make_op_things.meta_union(_gextra,_gr))
-            else
-                setfenv(postfunc,_gr)
-            end
-			return postfunc()
-		else
-            error("failed to load string: " .. str .. " with error: " .. tostring(err))
-            --return nil
-		end
-    end
-
-    function to_make_op_things.eval(str,env)
-        local postfunc, err = loadstring("return " .. str,"chunk")
-		if postfunc then
-			return postfunc()
-		else
-            return nil
-		end
-    end
+    
+    
 
     function to_make_op_things.tweak_defs(postsFuncStr)
         local postfunc, err = loadstring(postsFuncStr)
@@ -821,44 +690,7 @@ if not Spring.Utilities.to_make_op_things then
     ---@param values any
     ---@param fn any
     ---@return table|nil
-    function to_make_op_things.loop_until_finish_all_list(values,fn)
-        local values_unfinished={}
-        while #values>0 do
-            local c=#values
-            local c2=0
-            for i=1,c do
-                local value=values[i]
-                if fn(value) then
-
-                else
-                    c2=c2+1
-                    values_unfinished[c2]=value
-                end
-            end
-            if #values==#values_unfinished then
-                return values_unfinished
-            else
-                values=values_unfinished
-                values_unfinished={}
-            end
-        end
-        return nil
-    end
-    function to_make_op_things.loop_until_finish_all_table(values,fn)
-        local values_unfinished={}
-        while #values>0 do
-            for key,value in pairs(values) do
-                values_unfinished[key]=fn(key,value)
-            end
-            if #values==#values_unfinished then
-                return values_unfinished
-            else
-                values=values_unfinished
-                values_unfinished={}
-            end
-        end
-        return nil
-    end
+    
     do
         local common_depthmodparams = {
             quadraticCoeff = 0.0027,

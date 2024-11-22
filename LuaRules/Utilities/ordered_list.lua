@@ -1,9 +1,17 @@
+if Spring==nil then
+    Spring={}
+end
+if Spring.Utilities==nil then
+    Spring.Utilities={}
+end
 if not Spring.Utilities.OrderedList then
-    VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-    local loop_until_finish_all_table=Spring.Utilities.to_make_op_things.loop_until_finish_all_table
+    VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+    
+    --VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+    local LoopUntilFinishAllTable=Spring.Utilities.wacky_utils.loop_until_finish_all_table
     local empty={}
     local OrderedList={}
-    function OrderedList.new()
+    function OrderedList.New()
         local self={}
         local kvlist={}
         self.kvlist=kvlist
@@ -53,7 +61,7 @@ if not Spring.Utilities.OrderedList then
             for key, value in pairs(kvlist) do
                 before_count[key]=#value.befores
             end
-            local unfinished= loop_until_finish_all_table(kvlist,function (k,v)
+            local unfinished= LoopUntilFinishAllTable(kvlist,function (k,v)
                 if before_count[k]==0 then
                     if v.value then
                         count=count+1
