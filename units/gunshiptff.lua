@@ -25,7 +25,7 @@ return utils.copy_tweak("gunshipkrow","gunshiptff",function (ud)
     missilewd.weaponVelocity=500
     missilewd.flightTime=5]===]
     ud.script=[[gunshiptff.lua]]
-    ud.metalCost=17500
+    ud.metalCost=16000
     ud.health=48000
     ud.speed=80
     ud.name="The Flying Fortress"

@@ -19,6 +19,6 @@ return utils.copy_tweak("bomberheavy","bombersingu",function (ud)
     wd.impulseFactor=-40
     wd.explosionSpeed=280*4
     wd.edgeEffectiveness=0.5
-    
+    ud.fireState=0
 end)
 

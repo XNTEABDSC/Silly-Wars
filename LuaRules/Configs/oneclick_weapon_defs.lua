@@ -92,7 +92,7 @@ for udid, ud in pairs(UnitDefs) do
 end
 
 do
-	local defcopys_unfinished=utils.loop_until_finish_all(defcopys,function (item)
+	local defcopys_unfinished=utils.loop_until_finish_all_list(defcopys,function (item)
 		local src=item[2]
 		local into=item[1]
 		if oneClickWepDefs[src] then

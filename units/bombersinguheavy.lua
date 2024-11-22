@@ -11,7 +11,7 @@ return utils.copy_tweak("bombersingu","bombersinguheavy",function (ud)
     ud.health=20000
     ud.speed=ud.speed*0.85
     local wd=ud.weaponDefs.ARM_PIDR
-
+    ud.fireState=0
     Spring.Utilities.CopyTable(utils.get_unit_lua("energysingu").weaponDefs.SINGULARITY,true,wd)
     wd.stockpile               = true
     wd.stockpileTime           = 10^5
