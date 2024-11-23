@@ -16,7 +16,7 @@ local uds=utils_op.CopyTweakSillyBuildMorph("nebula","nebulanebula",function (ud
 		spawnPieces = {"pad1", "pad2", "pad3", "pad4"},
 		{
 			drone = UnitDefNames.nebuladrone.id,
-			reloadTime = 19,
+			reloadTime = 29,
 			maxDrones = 8,
 			spawnSize = 1,
 			range = 1800,

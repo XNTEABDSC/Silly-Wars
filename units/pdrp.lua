@@ -56,12 +56,12 @@ local spamed_list={
     {"tankcon",3}
 }
 
-local function make_wd_spam(spamed,burst,expire,model)
-    expire=expire or 60
+local function make_wd_spam(spamed,burst,model)
+    --expire=expire or 60
     model=model or utils_op.GetUnitLua(spamed).objectName
     local wd=Spring.Utilities.CopyTable(drp_wd_base,true)
     wd.customParams.spawns_name = "pdrp" .. spamed
-    wd.customParams.spawns_expire = expire
+    --wd.customParams.spawns_expire = expire
     wd.model=model
     wd.name=(spamed .. "_spamer"):lower()
     wd.projectiles=burst
@@ -76,8 +76,13 @@ end
 
 for i=1,6 do
     local newname="pdrp" .. spamed_list[i][1]
-    res[newname]=utils_op.GetUnitLua(spamed_list[i][1])
+    local newud=utils_op.GetUnitLua(spamed_list[i][1])
+    res[newname]=newud
     utils_op.set_free_unit(res[newname])
+    newud.idleTime=0
+    newud.idleAutoHeal=-newud.health/60
+    newud.repairable=false
+    newud.reclaimable=false
     --do_copy_tweak_unit(make_copy_tweak(spamed_list[i][1],"pdrp" .. spamed_list[i][1],set_dummy_unit))
     --spamed_list[i][1]=newname
 end

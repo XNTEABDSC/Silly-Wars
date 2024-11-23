@@ -39,4 +39,5 @@ return utils_op.CopyTweak("gunshipkrow","gunshiptff",function (ud)
     ud.customParams={
         def_scale=2
     }
+    ud.sightDistance=800
 end)

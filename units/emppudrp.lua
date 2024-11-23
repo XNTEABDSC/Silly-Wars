@@ -77,8 +77,13 @@ end
 
 for i=1,6 do
     local newname="emppudrp" .. spamed_list[i][1]
-    res[newname]=utils_op.GetUnitLua(spamed_list[i][1])
+    local newud=utils_op.GetUnitLua(spamed_list[i][1])
+    res[newname]=newud
     utils_op.set_free_unit(res[newname])
+    newud.idleTime=0
+    newud.idleAutoHeal=-newud.health/60
+    newud.repairable=false
+    newud.reclaimable=false
     --do_copy_tweak_unit(make_copy_tweak(spamed_list[i][1],"pdrp" .. spamed_list[i][1],set_dummy_unit))
     --spamed_list[i][1]=newname
 end

@@ -253,7 +253,7 @@ if not Spring.Utilities.to_make_op_things then
             if not sillyConsInfo.currentUD then
                 Spring.Echo("????? empry currentUD info: " .. sillyConsInfo.name)
             end
-            if #sillyConsInfo.currentUD.buildoptions>maxBuildPer then
+            if #sillyConsInfo.currentUD.buildoptions>=maxBuildPer then
                 NextBuilder(sillyConsInfo)
             end
             sillyConsInfo.currentUD.buildoptions[#sillyConsInfo.currentUD.buildoptions+1]=unitname
@@ -263,7 +263,10 @@ if not Spring.Utilities.to_make_op_things then
             for key, value in pairs(silly_build_units) do
                 local lastudname=value.currentName
                 local firstudname=value.name
-                SetMorphMut(lastudname,firstudname)
+                if firstudname~=lastudname then
+                    SetMorphMut(lastudname,firstudname,1)
+                    
+                end
             end
         end
 
@@ -330,6 +333,7 @@ if not Spring.Utilities.to_make_op_things then
         --ud.selfDestructAs=[[NOWEAPON]]
         ud.customParams.dontcount = [[1]]
         ud.featureDefs=nil
+        ud.reclaimable=false
     end
     
     ---get lua table of unit defined by .lua file

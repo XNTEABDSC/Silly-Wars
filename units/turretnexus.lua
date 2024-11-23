@@ -6,7 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-utils_op.MakeSetSillyMorph("turretheavylaserlv20","turretnexus")
+utils_op.MakeSetSillyMorph("turretheavy","turretnexus")
 utils_op.MakeAddSillyBuild("turretnexus")
 return {turretnexus={
     name = [[Nexus Turret]],
