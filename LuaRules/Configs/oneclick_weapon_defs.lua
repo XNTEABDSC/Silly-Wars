@@ -73,8 +73,11 @@ for name, data in pairs(oneClickWepDefNames) do
 	end
 end
 
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 
 local defcopys={}
 for udid, ud in pairs(UnitDefs) do

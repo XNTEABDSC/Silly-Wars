@@ -12,6 +12,9 @@ if not Spring.Utilities.OrderedList then
     local empty={}
     local OrderedList={}
     function OrderedList.New()
+        ---@class ValueAndOrder<T>:{k:string,v:T|nil,b:list<string>|nil,a:list<string>|nil}
+
+        ---@class OrderedList
         local self={}
         local kvlist={}
         self.kvlist=kvlist
@@ -20,7 +23,7 @@ if not Spring.Utilities.OrderedList then
 
         local function RawGet(key)
             if not kvlist[key] then
-                Add({key=key})
+                Add({k=key})
             end
             return kvlist[key]
         end
@@ -36,11 +39,16 @@ if not Spring.Utilities.OrderedList then
 
         Add=function (order)
             local key,value,befores,afters=order.k,order.v,order.b,order.a
-            kvlist[key]={
-                value=value,
-                before_count=0,
-                afters={}
-            }
+            if not kvlist[key] then
+                kvlist[key]={
+                    value=value,
+                    before_count=0,
+                    afters={}
+                }
+            end
+            if value then
+                kvlist[key].value=value
+            end
             if befores then
                 for _, before in pairs(befores) do
                     AddOrder(before,key)
@@ -54,19 +62,14 @@ if not Spring.Utilities.OrderedList then
         end
         self.Add=Add
 
-        local function GenList()
-            local l={}
-            local count=0
+        local function ForEach(fn)
             local before_count={}
             for key, value in pairs(kvlist) do
-                before_count[key]=#value.befores
+                before_count[key]=value.before_count
             end
             local unfinished= LoopUntilFinishAllTable(kvlist,function (k,v)
                 if before_count[k]==0 then
-                    if v.value then
-                        count=count+1
-                        l[count]=v.value
-                    end
+                    fn(v.value,k)
                     for _, key in pairs(v.afters) do
                         before_count[key]=before_count[key]-1
                     end
@@ -74,12 +77,22 @@ if not Spring.Utilities.OrderedList then
                 end
                 return v
             end)
-            if unfinished then
-                
-            end
-            return l
+
+            return unfinished
         end
 
+        local function GenList()
+            local l={}
+            local count=0
+            ForEach(function (v,k)
+                if v~=nil then
+                    count=count+1
+                    l[count]=v
+                end
+            end)
+            return l
+        end
+        self.ForEach=ForEach
         self.GenList=GenList
 
         return self

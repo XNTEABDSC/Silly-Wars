@@ -1,9 +1,15 @@
-VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
-utils.set_morth_mul("silly_morth","gunshipheavyskirm","gunshipheavyskirmplus")
-utils.add_build("silly_build","sillycon","gunshipheavyskirmplus")
-return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud)
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+
+utils_op.MakeSetSillyMorph("gunshipheavyskirm","gunshipheavyskirmplus")
+utils_op.MakeAddSillyBuild("gunshipheavyskirmplus")
+return utils_op.CopyTweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud)
     utils.table_replace({
         name="Flak Nimbus",
         description="Flying Flak",
@@ -44,5 +50,5 @@ return utils.copy_tweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud
     ud.customParams.def_scale=2
     ud.airStrafe              = 0
     
-    utils.set_ded_ATOMIC_BLAST(ud)
+    utils_op.set_ded_ATOMIC_BLAST(ud)
 end)

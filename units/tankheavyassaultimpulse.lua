@@ -1,8 +1,14 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 local fname="tankheavyassault"
 local tname="tankheavyassaultimpulse"
-local ud=utils.get_unit_lua(fname)
+local ud=utils_op.GetUnitLua(fname)
 utils.table_replace({
 weaponDefs={COR_GOL={impulseFactor=-2.5}},
 metalcost=UnitDefs["tankheavyassault"].metalcost+200,
@@ -10,6 +16,6 @@ name="Impulse Cyclops",
 description="Very Heavy Tank Buster With Impulse",
 })(ud)
 
-utils.set_morth_mul("silly_morth",fname,tname,20)
-utils.add_build("silly_build","sillycon",tname)
+utils_op.MakeSetSillyMorph(fname,tname,20)
+utils_op.MakeAddSillyBuild(tname)
 return {[tname]=ud}

@@ -1,7 +1,13 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-utils.set_morth("silly_morth","turretheavylaserlv20","turretnexus")
-utils.add_build("silly_build","bigsillycon","turretnexus")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+utils_op.MakeSetSillyMorph("turretheavylaserlv20","turretnexus")
+utils_op.MakeAddSillyBuild("turretnexus")
 return {turretnexus={
     name = [[Nexus Turret]],
     description = [[Nexus Turret, from Zero Wars]],

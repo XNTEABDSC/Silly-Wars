@@ -1,8 +1,14 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-utils.set_morth_mul("silly_morth","shieldfelon","shieldfelonfast")
-utils.add_build("silly_build","bigsillycon","shieldfelonfast")
-return utils.copy_tweak("shieldfelon","shieldfelonfast",function (ud)
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+utils_op.MakeSetSillyMorph("shieldfelon","shieldfelonfast")
+utils_op.MakeAddSillyBuild("shieldfelonfast")
+return utils_op.CopyTweak("shieldfelon","shieldfelonfast",function (ud)
     ud.name ="Rushing " .. ud.name
     ud.description="Heavy Shield Fast Attacker, use A LOT OF energy to charge"
     ud.metalCost=1200
@@ -20,7 +26,7 @@ return utils.copy_tweak("shieldfelon","shieldfelonfast",function (ud)
     wd.customParams.shield_drain=50
     wd.reloadtime=0.1
     wd.rgbColor=[[1 0 0]]
-    utils.set_ded(ud,"BIG_UNIT")
+    utils_op.set_ded(ud,"BIG_UNIT")
     --ud.explodeAs="ESTOR_BUILDINGEX"
     --ud.selfDestructAs="ESTOR_BUILDINGEX"
     --utils.set_ded_ATOMIC_BLAST(ud)

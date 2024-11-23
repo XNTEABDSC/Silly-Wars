@@ -1,10 +1,10 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 
-utils.set_morth_mul("silly_morth","bombersingu","bombersinguheavy")
-utils.add_build("silly_build","verybigsillycon","bombersinguheavy")
-
-return utils.copy_tweak("bombersingu","bombersinguheavy",function (ud)
+return utils_op.CopyTweakSillyBuildMorph("bombersingu","bombersinguheavy",function (ud)
     ud.name="Singu Likho"
     ud.description="Throw SINGULARITY, 4000 stockpile cost"
     ud.metalCost=24000
@@ -12,7 +12,7 @@ return utils.copy_tweak("bombersingu","bombersinguheavy",function (ud)
     ud.speed=ud.speed*0.85
     local wd=ud.weaponDefs.ARM_PIDR
     ud.fireState=0
-    Spring.Utilities.CopyTable(utils.get_unit_lua("energysingu").weaponDefs.SINGULARITY,true,wd)
+    Spring.Utilities.CopyTable(utils_op.GetUnitLua("energysingu").weaponDefs.SINGULARITY,true,wd)
     wd.stockpile               = true
     wd.stockpileTime           = 10^5
 

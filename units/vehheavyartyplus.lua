@@ -1,9 +1,15 @@
-VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
-utils.set_morth_mul("silly_morth","vehheavyarty","vehheavyartyplus")
-utils.add_build("silly_build","sillycon","vehheavyartyplus")
-return utils.copy_tweak("vehheavyarty","vehheavyartyplus",function (ud)
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+
+utils_op.MakeSetSillyMorph("vehheavyarty","vehheavyartyplus")
+utils_op.MakeAddSillyBuild("vehheavyartyplus")
+return utils_op.CopyTweak("vehheavyarty","vehheavyartyplus",function (ud)
     ud.metalCost=2000
     ud.health=2000
     ud.name="S.L.A.M " .. ud.name

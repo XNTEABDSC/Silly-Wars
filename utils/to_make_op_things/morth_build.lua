@@ -1,7 +1,7 @@
 local to_make_op_things=Spring.Utilities.to_make_op_things
-function to_make_op_things.set_morth(domain,srcname,copyedname,morphtime)
+function to_make_op_things.set_morph(domain,srcname,copyedname,morphtime)
     to_make_op_things.add_fn_to_fn_list(domain,
-        "set_morth(" .. srcname .. ", " .. copyedname .. ")",
+        "set_morph(" .. srcname .. ", " .. copyedname .. ")",
         function ()
             if not UnitDefs[srcname] then
                 error("unit " .. srcname .. "do not exist")
@@ -9,18 +9,18 @@ function to_make_op_things.set_morth(domain,srcname,copyedname,morphtime)
             morphtime=morphtime or 10
             UnitDefs[srcname].customparams.morphto=copyedname
             UnitDefs[srcname].customparams.morphtime=morphtime
-            UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
+            UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morph into " .. copyedname
         end
     )
 end
-function to_make_op_things.set_morth_mul(domain,srcname,copyedname,morphtime,morthprice)
+function to_make_op_things.set_morph_mul(domain,srcname,copyedname,morphtime,morphprice)
     to_make_op_things.add_fn_to_fn_list(domain,
-        "set_morth_mul(" .. srcname .. ", " .. copyedname .. ")"
+        "set_morph_mul(" .. srcname .. ", " .. copyedname .. ")"
         ,function ()
             if not UnitDefs[srcname] then
                 error("unit " .. srcname .. "do not exist")
             end
-            morthprice=morthprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
+            morphprice=morphprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
             local ud_cp=UnitDefs[srcname].customparams
             local i=1
             morphtime=morphtime or 10
@@ -28,12 +28,12 @@ function to_make_op_things.set_morth_mul(domain,srcname,copyedname,morphtime,mor
                 if not ud_cp["morphto_" .. i] then
                     ud_cp["morphto_" .. i]=copyedname
                     ud_cp["morphtime_" .. i]=morphtime
-                    ud_cp["morphcost_" .. i]=morthprice
+                    ud_cp["morphcost_" .. i]=morphprice
                     break
                 end
                 i=i+1
             end
-            UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
+            UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morph into " .. copyedname
         end)
 end
 

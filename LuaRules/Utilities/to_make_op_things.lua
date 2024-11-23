@@ -7,6 +7,7 @@ if Spring.Utilities==nil then
 end
 
 if not Spring.Utilities.to_make_op_things then
+    VFS.Include("LuaRules/Utilities/tablefunctions.lua")
     VFS.Include("LuaRules/Utilities/wacky_utils.lua")
     local wacky_utils=Spring.Utilities.wacky_utils
     VFS.Include("LuaRules/Utilities/ordered_list.lua")
@@ -14,20 +15,64 @@ if not Spring.Utilities.to_make_op_things then
     local to_make_op_things={}
     Spring.Utilities.to_make_op_things=to_make_op_things
 
-    local unit_defs_tweak_fns=Spring.Utilities.OrderedList.New()
-    to_make_op_things.unit_defs_tweak_fns=unit_defs_tweak_fns
+    local UnitDefsTweakFns=Spring.Utilities.OrderedList.New()
+    to_make_op_things.unit_defs_tweak_fns=UnitDefsTweakFns
 
-    local function AddFnToUnitDefsTweakFns(key,fn,befores,afters)
-        unit_defs_tweak_fns.Add({k=key,v=fn,b=befores,a=afters})
+    local function AddFnToUnitDefsTweakFns(ordered)
+        UnitDefsTweakFns.Add(ordered)
     end
     to_make_op_things.AddFnToUnitDefsTweakFns=AddFnToUnitDefsTweakFns
 
-    local function RunUnitDefsTweakFns()
-        for key, value in pairs(unit_defs_tweak_fns.GenList()) do
-            value()
+    local function AddFnToUnitDefsTweakFnsMut(ordered)
+        local append=0
+        local key=ordered.k
+        while UnitDefsTweakFns.kvlist[key] do
+            append=append+1
+            key=ordered.k .. append
+        end
+        ordered.k=key
+        UnitDefsTweakFns.Add(ordered)
+
+    end
+    to_make_op_things.AddFnToUnitDefsTweakFnsMut=AddFnToUnitDefsTweakFnsMut
+
+    local function RunOrderedList(OList)
+        return function ()
+            local res=OList.ForEach(function (v,k)
+                Spring.Echo("Run Task: " .. k)
+                if v then
+                    v()
+                end
+            end)
+            if res then
+                for key, value in pairs(res) do
+                    Spring.Echo("Warning: Not Done Task " .. key .. ", after:")
+                    for _, k2 in pairs(value.afters) do
+                        Spring.Echo(k2)
+                    end
+                end
+                
+            end
         end
     end
-    to_make_op_things.RunUnitDefsTweakFns=RunUnitDefsTweakFns
+    to_make_op_things.RunOrderedList=RunOrderedList
+    to_make_op_things.RunUnitDefsTweakFns=RunOrderedList(UnitDefsTweakFns)
+
+    do
+        local fns=UnitDefsTweakFns
+        fns.Add({k="pre_set_values"})
+        fns.Add({k="default_add_build_begin",a={"default_add_build_end"}})
+        fns.Add({k="default_add_build_end"})
+        fns.Add({k="default_set_morph_begin",a={"default_set_morph_end"}})
+        fns.Add({k="default_set_morph_end"})
+        fns.Add({k="default_modify_value_begin",a={"default_modify_value_end"},b={"pre_set_values"}})
+        fns.Add({k="default_modify_value_end",a={"post_set_values"}})
+        fns.Add({k="default_modify_cost_begin",a={"default_modify_cost_end"},b={"pre_set_values"}})
+        fns.Add({k="default_modify_cost_end",a={"post_set_values"}})
+        fns.Add({k="default_modify_feature_begin",a={"default_modify_feature_end"},b={"pre_set_values"}})
+        fns.Add({k="default_modify_feature_end",a={"post_set_values"}})
+        fns.Add({k="post_set_values"})
+    end
     --[==[
     local utils={
         "fn_list"
@@ -38,116 +83,84 @@ if not Spring.Utilities.to_make_op_things then
     end
     ]==]
 
-    ---list of functions
-    ---
-    ---[domain] [key] = fn
-    ---
-    to_make_op_things.fn_list={}
-    ---add a function, at domain, with key
-    ---
-    ---multiple add with same key makes overlap
-    ---
-    ---order of fn to be called are stored when key assigned
+    --- Optional Fns that may be done
+    local OptionalUnitDefsTweakFns={}
+    --- Optional Fns that may be done
+    to_make_op_things.OptionalUnitDefsTweakFns=OptionalUnitDefsTweakFns
+    ---add a function at domain
     ---
     ---notes fn may needs to use lowerkeys 
     ---@param domain string
-    ---@param key string
-    ---@param fn function
-    function to_make_op_things.add_fn_to_fn_list(domain,key,fn)
-        if domain=="now" then
-            fn()
-            return
+    ---@param ordered ValueAndOrder<fun()>
+    local function AddFnToOptionalUnitDefsTweakFns(domain,ordered)
+        
+        if not OptionalUnitDefsTweakFns[domain] then
+            OptionalUnitDefsTweakFns[domain]={}
         end
-        if not to_make_op_things.fn_list[domain] then
-            to_make_op_things.fn_list[domain]={}
-            to_make_op_things.fn_list[domain].order={}
-        end
-        local l=to_make_op_things.fn_list[domain]
-        if not l[key] then
-            l.order[#l.order+1]=key
-        end
-        l[key]=fn
+        local l=OptionalUnitDefsTweakFns[domain]
+        l[ordered.k]=ordered
     end
-    ---call all fns in domain
+    to_make_op_things.AddFnToOptionalUnitDefsTweakFns=AddFnToOptionalUnitDefsTweakFns
+    
+    ---put fns in domain into 
     ---@param domain string
-    function to_make_op_things.do_fn_list_fns(domain)
-        if to_make_op_things.fn_list[domain] then
-            local l=to_make_op_things.fn_list[domain]
-            for _, key  in pairs(l.order) do
-                l[key]()
+    local function PushOptionalUnitDefsTweakFns(domain)
+        if OptionalUnitDefsTweakFns[domain] then
+            local lf=OptionalUnitDefsTweakFns[domain]
+            for _, value in pairs(lf) do
+                AddFnToUnitDefsTweakFns(value)
             end
         end
     end
-    ---copy all fns from domainfrom to domainto, by add_fn_to_fn_list
-    ---@param domainfrom string
-    ---@param domainto string
-    function to_make_op_things.copy_fn_lists(domainfrom,domainto)
-        local l=to_make_op_things.fn_list
-        if l[domainfrom] then
-            local lf=l[domainfrom]
-            for _, key  in pairs(lf.order) do
-                to_make_op_things.add_fn_to_fn_list(domainto,key,lf[key])
+    to_make_op_things.PushOptionalUnitDefsTweakFns=PushOptionalUnitDefsTweakFns
+
+    local function SetMorphMut(srcname,copyedname,morphtime,morphprice)
+        if not UnitDefs[srcname] then
+            error("unit " .. srcname .. "do not exist")
+        end
+        local ud_cp=UnitDefs[srcname].customparams
+        if ud_cp.morphto then
+            ud_cp.morphto_1=ud_cp.morphto
+            ud_cp.morphto=nil
+            ud_cp.morphtime_1=ud_cp.morphtime
+            ud_cp.morphtime=nil
+            ud_cp.morphcost_1=ud_cp.morphcost
+            ud_cp.morphcost=nil
+        end
+        --morphprice=morphprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
+        local i=1
+        morphtime=morphtime or 10
+        while true do
+            if not ud_cp["morphto_" .. i] then
+                ud_cp["morphto_" .. i]=copyedname
+                ud_cp["morphtime_" .. i]=morphtime
+                ud_cp["morphcost_" .. i]=morphprice
+                break
             end
-            --[=[
-            if not l[domainto] then
-                l[domainto]={}
-            end
-            local lt=l[domainto]
-            ]=]
+            i=i+1
         end
     end
+    to_make_op_things.SetMorphMut=SetMorphMut
 
-
-    function to_make_op_things.set_morth(domain,srcname,copyedname,morphtime)
-        to_make_op_things.add_fn_to_fn_list(domain,
-            "set_morth(" .. srcname .. ", " .. copyedname .. ")",
-            function ()
-                if not UnitDefs[srcname] then
-                    error("unit " .. srcname .. "do not exist")
-                end
-                morphtime=morphtime or 10
-                UnitDefs[srcname].customparams.morphto=copyedname
-                UnitDefs[srcname].customparams.morphtime=morphtime
-                --UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
+    local function MakeSetMorphMutValueWithOrder(srcname,copyedname,morphtime,morphprice)
+        return{
+            k=("set_morph_mul(" .. srcname .. ", " .. copyedname .. ")"),
+            b={"default_set_morph_begin"},
+            a={"default_set_morph_end"},
+            v=function ()
+                SetMorphMut(srcname,copyedname,morphtime,morphprice)
+                --UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morph into " .. copyedname
             end
-        )
+        }
     end
-    function to_make_op_things.set_morth_mul(domain,srcname,copyedname,morphtime,morthprice)
-        to_make_op_things.add_fn_to_fn_list(domain,
-            "set_morth_mul(" .. srcname .. ", " .. copyedname .. ")"
-            ,function ()
-                if not UnitDefs[srcname] then
-                    error("unit " .. srcname .. "do not exist")
-                end
-                local ud_cp=UnitDefs[srcname].customparams
-                if ud_cp.morphto then
-                    ud_cp.morphto_1=ud_cp.morphto
-                    ud_cp.morphto=nil
-                    ud_cp.morphtime_1=ud_cp.morphtime
-                    ud_cp.morphtime=nil
-                    ud_cp.morphcost_1=ud_cp.morphcost
-                    ud_cp.morphcost=nil
-                end
-                --morthprice=morthprice or UnitDefs[copyedname].metalcost-UnitDefs[srcname].metalcost
-                local i=1
-                morphtime=morphtime or 10
-                while true do
-                    if not ud_cp["morphto_" .. i] then
-                        ud_cp["morphto_" .. i]=copyedname
-                        ud_cp["morphtime_" .. i]=morphtime
-                        ud_cp["morphcost_" .. i]=morthprice
-                        break
-                    end
-                    i=i+1
-                end
-                --UnitDefs[srcname].description=UnitDefs[srcname].description .. "  Can morth into " .. copyedname
-            end)
-    end
+    to_make_op_things.MakeSetMorphMutValueWithOrder=MakeSetMorphMutValueWithOrder
 
-    function to_make_op_things.add_build(domain,builer,buildee)
-        to_make_op_things.add_fn_to_fn_list(domain,
-            "add_build(" .. builer .. ", " .. buildee .. ")",
-            function ()
+    local function MakeAddBuildValueWithOrder(builer,buildee)
+        return{
+            k="add_build(" .. builer .. ", " .. buildee .. ")",
+            b={"default_add_build_begin"},
+            a={"default_add_build_end"},
+            v=function ()
                 if not UnitDefs[builer] then
                     error("add_build(" .. builer .. ", " .. buildee .. "): unit " .. builer .. " do not exist")
                 end
@@ -159,13 +172,136 @@ if not Spring.Utilities.to_make_op_things then
                 end
                 Spring.Echo("add_build(" .. builer .. ", " .. buildee .. ")")
                 UnitDefs[builer].buildoptions[#UnitDefs[builer].buildoptions+1]=buildee
-            end)
+            end
+        }
     end
 
-    function to_make_op_things.add_build_front(domain,builer,buildee)
-        to_make_op_things.add_fn_to_fn_list(domain,
-            "add_build(" .. builer .. ", " .. buildee .. ")",
-            function ()
+    to_make_op_things.MakeAddBuildValueWithOrder=MakeAddBuildValueWithOrder
+
+    local function ModifyTableMBLowkey(tb,key,fn)
+        local v=tb[key]
+        if not v then
+            local key2=string.lower(key)
+            v=tb[key2]
+            if v then
+                key=key2
+            end
+        end
+        v[key]=fn(v)
+    end
+    to_make_op_things.ModifyTableMBLowkey=ModifyTableMBLowkey
+
+    do
+        local maxBuildPer=18
+        local silly_build_units={
+            {name="sillycon",range={0,2000}},
+            {name="sillyconvery",range={2000,10000}},
+            {name="sillyconveryvery",range={10000,100000}}
+        }
+
+        local function Init()
+            for key, value in pairs(silly_build_units) do
+                value.builderCount=1
+                local ud=UnitDefs[value.name]
+                if not ud then
+                    Spring.Echo("unit " .. value.name .. "don't exist")
+                end
+                value.currentUD=ud
+                value.currentName=value.name
+                value.HumanName=ud.name
+                value.HumanDesc=ud.description
+                ud.buildoptions=ud.buildoptions or {}
+                ud.name=ud.name .. " Vol.1"
+                ud.description=ud.description .. ", Vol.1"
+            end
+        end
+
+        local function NextBuilder(sillyConsInfo)
+            sillyConsInfo.builderCount=sillyConsInfo.builderCount+1
+            local oldname=sillyConsInfo.currentName
+
+            local newname=sillyConsInfo.name .. sillyConsInfo.builderCount
+            local copyUD=Spring.Utilities.CopyTable(sillyConsInfo.currentUD,true)
+            copyUD.name=sillyConsInfo.HumanName .. " Vol." .. sillyConsInfo.builderCount
+            copyUD.description=sillyConsInfo.HumanDesc .. ", Vol." .. sillyConsInfo.builderCount
+            copyUD.buildoptions={}
+
+            SetMorphMut(sillyConsInfo.currentName,newname)
+
+            UnitDefs[newname]=copyUD
+            sillyConsInfo.currentUD=copyUD
+            sillyConsInfo.currentName=newname
+        end
+
+        local function AddSillyBuild(unitname,sillyOption)
+            local ud=UnitDefs[unitname]
+            local metalcost=ud.metalcost
+            local sillyConsInfo
+            for i = 1, #silly_build_units do
+                sillyConsInfo=silly_build_units[i]
+                if sillyOption then
+                    if sillyConsInfo.name==sillyOption then
+                        break
+                    end
+                else
+                    if sillyConsInfo.range[1]<=metalcost and metalcost<= sillyConsInfo.range[2] then
+                        break
+                    end
+                end
+                
+            end
+            if not sillyConsInfo.currentUD then
+                Spring.Echo("????? empry currentUD info: " .. sillyConsInfo.name)
+            end
+            if #sillyConsInfo.currentUD.buildoptions>maxBuildPer then
+                NextBuilder(sillyConsInfo)
+            end
+            sillyConsInfo.currentUD.buildoptions[#sillyConsInfo.currentUD.buildoptions+1]=unitname
+        end
+        
+        local function End()
+            for key, value in pairs(silly_build_units) do
+                local lastudname=value.currentName
+                local firstudname=value.name
+                SetMorphMut(lastudname,firstudname)
+            end
+        end
+
+        local function MakeAddSillyBuildValueWithOrder(unitname,con)
+            return{
+                k="add_silly_build(" .. unitname .. ")",
+                b={"default_add_silly_build_begin"},
+                a={"default_add_silly_build_end"},
+                v=function ()
+                    AddSillyBuild(unitname,con)
+                end
+            }
+        end
+        AddFnToUnitDefsTweakFns({
+            k="default_add_silly_build_begin",
+            v=function ()
+                Init()
+            end,
+            b={"default_add_build_begin"}
+        })
+        AddFnToUnitDefsTweakFns({
+            k="default_add_silly_build_end",
+            v=function ()
+                End()
+            end,
+            b={"default_add_silly_build_begin"},
+            a={"default_add_build_end"}
+        })
+        to_make_op_things.MakeAddSillyBuildValueWithOrder=MakeAddSillyBuildValueWithOrder
+        --to_make_op_things.AddSillyBuild=AddSillyBuild
+    end
+
+    local function MakeAddBuildFrontValueWithOrder(builer,buildee)
+        return{
+            k="add_build(" .. builer .. ", " .. buildee .. ")",
+            b={"default_add_build_begin"},
+            a={"default_add_build_end"},
+            v=function ()
                 if not UnitDefs[builer] then
                     error("add_build(" .. builer .. ", " .. buildee .. "): unit " .. builer .. " do not exist")
                 end
@@ -175,12 +311,14 @@ if not Spring.Utilities.to_make_op_things then
                 if not UnitDefs[builer].buildoptions then
                     UnitDefs[builer].buildoptions={}
                 end
-                Spring.Echo("add_build(" .. builer .. ", " .. buildee .. ")")
+                --Spring.Echo("add_build(" .. builer .. ", " .. buildee .. ")")
                 table.insert(UnitDefs[builer].buildoptions,1,buildee)
                 --UnitDefs[builer].buildoptions[#UnitDefs[builer].buildoptions+1]=building
-            end)
+            end
+        }
     end
 
+    to_make_op_things.MakeAddBuildFrontValueWithOrder=MakeAddBuildFrontValueWithOrder
     
     ---set unit to dontcount, and no wreck
     function to_make_op_things.set_free_unit(ud)
@@ -195,20 +333,32 @@ if not Spring.Utilities.to_make_op_things then
     end
     
     ---get lua table of unit defined by .lua file
-    function to_make_op_things.get_unit_lua(udname)
+    local function GetUnitLua(udname)
         return VFS.Include("units/".. udname ..".lua")[udname]
     end
+    to_make_op_things.GetUnitLua=GetUnitLua
     ---copy a unit, tweak it, and return {[toname]=ud}
-    function to_make_op_things.copy_tweak(srcname,toname,fn)
-        local ud=to_make_op_things.get_unit_lua(srcname)
+    function to_make_op_things.CopyTweak(srcname,toname,fn)
+        local ud=GetUnitLua(srcname)
         fn(ud)
         return {[toname]=ud}
     end
+    
+    local function MakeSetSillyMorph(srcname,toname,morphtime,morphprice)
+        AddFnToOptionalUnitDefsTweakFns("silly_morph",MakeSetMorphMutValueWithOrder(srcname,toname,morphtime,morphprice))
+    end
 
-    function to_make_op_things.copy_tweak_silly_build_morth(srcname,toname,builder,fn)
-        to_make_op_things.add_build("silly_build",builder,toname)
-        to_make_op_things.set_morth_mul("silly_morth",srcname,toname)
-        return to_make_op_things.copy_tweak(srcname,toname,fn)
+    local function MakeAddSillyBuild(name,con)
+        AddFnToOptionalUnitDefsTweakFns("silly_build",to_make_op_things.MakeAddSillyBuildValueWithOrder(name,con))
+    end
+    to_make_op_things.MakeSetSillyMorph=MakeSetSillyMorph
+    to_make_op_things.MakeAddSillyBuild=MakeAddSillyBuild
+    function to_make_op_things.CopyTweakSillyBuildMorph(srcname,toname,fn)
+        MakeSetSillyMorph(srcname,toname)
+        MakeAddSillyBuild(toname)
+        --to_make_op_things.add_build("silly_build",builder,toname)
+        --to_make_op_things.set_morph_mul("silly_morph",srcname,toname)
+        return to_make_op_things.CopyTweak(srcname,toname,fn)
     end
 
     function to_make_op_things.set_ded(ud,ded)
@@ -355,11 +505,11 @@ if not Spring.Utilities.to_make_op_things then
     end
     
 
-    --- load modOptions.mods \
+    --- load modOptions
     function to_make_op_things.load_modoptions()
         --do_lua_mods=do_lua_mods or false
         local modOptions = {}
-        local utils=to_make_op_things
+        local utils=wacky_utils
         if (Spring.GetModOptions) then
             modOptions = Spring.GetModOptions()
         end
@@ -398,54 +548,15 @@ if not Spring.Utilities.to_make_op_things then
         local json_mods_dir="gamedata/mods/"
         local lua_mods_dir="gamedata/lua_mods/"
         local mods=modOptions.mods
+
+        local mod_count=0
+        local last_order="load_modoptions_begin"
         
 
         local load_mod
         local function load_modoption(themodoptions)
-            local fns={}
-            fns.tweakunits={}
-            fns.tweakdefs={}
-            fns.mods={}
-            local function push_fn(key,fn)
-                fns[key][#fns[key]+1] = fn
-            end
-            local function do_fns(key)
-                for _, value in pairs(fns[key]) do
-                    value()
-                end
-            end
             for key, value in pairs(themodoptions) do
-                if key=="do_at_def_pre" then
-                    utils.add_fn_to_fn_list("def_pre","def_pre" .. do_at_def_pre_count,value)
-                    do_at_def_pre_count=do_at_def_pre_count+1
-                elseif string.match(key,"^tweakunits") then
-                    --[=[
-                    modOptions["tweakunits" .. (tweakunits_count or "")]=value
-                    ]=]
-                    local tweakunitstable=Spring.Utilities.CustomKeyToUsefulTable(value)
-                    push_fn("tweakunits",function ()
-                        utils.add_fn_to_fn_list("def","tweakunits" .. tweakunits_count,function ()
-                            utils.tweak_units(tweakunitstable)
-                        end)
-                        tweakunits_count=tweakunits_count+1
-                    end)
-                elseif string.match(key,"^tweakdefs") then
-                    --modOptions["tweakdefs" .. (tweakdefs_count or "")]=value
-                    
-                    local codestr=Spring.Utilities.Base64Decode(value)
-                    push_fn("tweakdefs",function ()
-                        utils.add_fn_to_fn_list("def","tweakdefs" .. tweakdefs_count,function ()
-                            utils.tweak_defs(codestr)
-                        end)
-                        tweakdefs_count=tweakdefs_count+1
-                    end)
-                    
-                elseif key=="mods" then
-                    local modstr=value
-                    push_fn("mods",function ()
-                        load_mod(modstr)
-                    end)
-                elseif  modOptions[key] then
+                if  modOptions[key] then
                     if option_mult[key] then
                         modOptions[key]=modOptions[key]*value
                     elseif option_add_withdef[key] then
@@ -461,9 +572,60 @@ if not Spring.Utilities.to_make_op_things then
                     modOptions[key]=value
                 end
             end-- loaded at end
+
+            AddFnToUnitDefsTweakFns({
+                v=function ()
+                    local append = false
+                    local name = "tweakdefs"
+                    while modOptions[name] and modOptions[name] ~= "" do
+                        local postsFuncStr = Spring.Utilities.Base64Decode(modOptions[name])
+                        local postfunc, err = loadstring(postsFuncStr)
+                        Spring.Echo("Loading tweakdefs modoption", append or 0)
+                        if postfunc then
+                            postfunc()
+                        else
+                            Spring.Log("defs.lua", LOG.ERROR, name, err)
+                        end
+                        append = (append or 0) + 1
+                        name = "tweakdefs" .. append
+                    end
+                end,
+                k="modoption " .. mod_count .. " tweakdefs",
+                b={last_order}
+            })
+            AddFnToUnitDefsTweakFns({
+                v=function ()
+                    local append = false
+                    local modoptName = "tweakunits"
+                    while modOptions[modoptName] and modOptions[modoptName] ~= "" do
+                        local tweaks = Spring.Utilities.CustomKeyToUsefulTable(modOptions[modoptName])
+                        if type(tweaks) == "table" then
+                            Spring.Echo("Loading tweakunits modoption", append or 0)
+                            for name, ud in pairs(UnitDefs) do
+                                if tweaks[name] then
+                                    Spring.Echo("Loading tweakunits for " .. name)
+                                    Spring.Utilities.OverwriteTableInplace(ud, utils.lowerkeys(tweaks[name]), true)
+                                end
+                            end
+                        end
+                        append = (append or 0) + 1
+                        modoptName = "tweakunits" .. append
+                    end
+                end,
+                k="modoption " .. mod_count .. " tweakunits",
+                b={"modoption " .. mod_count .. " tweakdefs"}
+            })
+            last_order="modoption " .. mod_count .. " tweakunits"
+            mod_count=mod_count+1
+            if themodoptions.mods then
+                load_mod(themodoptions.mods)
+            end
+            
+            --[==[
             do_fns("tweakdefs")
             do_fns("tweakunits")
             do_fns("mods")
+            ]==]
         end
         --local update_mod;
         local function load_json_mod(mod,moddir)
@@ -517,7 +679,7 @@ if not Spring.Utilities.to_make_op_things then
             if mod then
                 load_mod_env[mod]=function (env)
                     env=env or {}
-                    env=to_make_op_things.meta_union(env,getfenv(0))
+                    env=utils.mt_union(env,getfenv(0))
                     load_lua_mod(mod,value,env)
                 end
             end
@@ -533,11 +695,16 @@ if not Spring.Utilities.to_make_op_things then
             end
         end
 
+        
         load_mod=function(modstr)
-            to_make_op_things.justloadstring(modstr,load_mod_env)
+            wacky_utils.justloadstring(modstr,load_mod_env)
         end
 
-        load_mod(mods)
+        --load_mod(mods)
+
+        load_modoption(modOptions)
+
+        UnitDefsTweakFns.AddOrder(last_order,"load_modoptions_end")
 
         modOptions.did_load_mod=true
         Spring.Echo("modOptions result: ")
@@ -582,28 +749,29 @@ if not Spring.Utilities.to_make_op_things then
     end
 
     do
+        local lowervalues=wacky_utils.lowervalues
         --- did automatically via def_scale
-        local udtryScales3=to_make_op_things.lowervalues({
+        local udtryScales3=lowervalues({
             --"collisionVolumeOffsets",
             --"collisionVolumeScales",
             "selectionVolumeOffsets",
             "selectionVolumeScales"
         })
-        local udtryScales1=to_make_op_things.lowervalues({
+        local udtryScales1=lowervalues({
             "trackOffset",
             "trackWidth",
             "trackStrength",
             "trackStretch",
             "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed"
         })
-        local udtryScales1round=to_make_op_things.lowervalues({
+        local udtryScales1round=lowervalues({
             "footprintX",
             "footprintZ",
         })
-        local udcptryScales3=to_make_op_things.lowervalues({
+        local udcptryScales3=lowervalues({
             --"aimposoffset","midposoffset"
         })
-        local udcptryScales1=to_make_op_things.lowervalues({
+        local udcptryScales1=lowervalues({
             --"modelradius","modelheight"
         })
         local GetDimensions=to_make_op_things.GetDimensions
@@ -670,7 +838,7 @@ if not Spring.Utilities.to_make_op_things then
                     if s<1 then
                         s=1
                     end
-                    Spring.Echo("Change unit " .. ud.name .. "'s movementclass to: " ..p .. b .. tostring(s))
+                    --Spring.Echo("Change unit " .. ud.name .. "'s movementclass to: " ..p .. b .. tostring(s))
                     ud.movementclass=p .. b .. tostring(s)
                 end
             end
@@ -810,5 +978,4 @@ if not Spring.Utilities.to_make_op_things then
         end
     end
 end
-VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 return Spring.Utilities.to_make_op_things

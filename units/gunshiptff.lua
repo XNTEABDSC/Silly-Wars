@@ -1,10 +1,16 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 
-utils.set_morth_mul("silly_morth","gunshipkrow","gunshiptff")
-utils.add_build("silly_build","verybigsillycon","gunshiptff")
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-return utils.copy_tweak("gunshipkrow","gunshiptff",function (ud)
+utils_op.MakeSetSillyMorph("gunshipkrow","gunshiptff")
+utils_op.MakeAddSillyBuild("gunshiptff")
+
+return utils_op.CopyTweak("gunshipkrow","gunshiptff",function (ud)
     for _,i in pairs({1,2,4})do
         ud.weapons[i].def=nil
         ud.weapons[i].name="turretheavy_plasma"

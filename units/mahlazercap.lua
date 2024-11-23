@@ -1,5 +1,11 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 local function set_laser_capper(wd)
     utils.table_replace({
@@ -40,7 +46,7 @@ local function set_laser_capper(wd)
 
 end
 
-local ud=utils.get_unit_lua("mahlazer")
+local ud=utils_op.GetUnitLua("mahlazer")
 ud.name="Babel"
 ud.description="Only My Will"
 ud.metalCost=80*1000
@@ -48,16 +54,16 @@ ud.customParams.mahlazer_satellite="mahlazercap_satellite";
 set_laser_capper(ud.weaponDefs.RELAYLAZER)
 set_laser_capper(ud.weaponDefs.RELAYCUTTER)
 
-local satelliteud=utils.get_unit_lua("starlight_satellite")
+local satelliteud=utils_op.GetUnitLua("starlight_satellite")
 set_laser_capper(satelliteud.weaponDefs.LAZER)
 set_laser_capper(satelliteud.weaponDefs.CUTTER)
 set_laser_capper(satelliteud.weaponDefs.NON_CUTTER)
 satelliteud.customParams.post_capture_reload=0
 ud.customParams.post_capture_reload=0
 
-utils.set_morth_mul("silly_morth","mahlazer","mahlazercap")
+utils_op.MakeSetSillyMorph("mahlazer","mahlazercap")
 
-utils.add_build("silly_build","verybigsillycon","mahlazercap")
+utils_op.MakeAddSillyBuild("mahlazercap")
 
 return{
     mahlazercap=ud,

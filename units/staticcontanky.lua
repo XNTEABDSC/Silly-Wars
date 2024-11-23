@@ -1,7 +1,13 @@
-VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
-return utils.copy_tweak_silly_build_morth("staticcon","staticcontanky","sillycon",utils.table_replace({
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+
+return utils_op.CopyTweakSillyBuildMorph("staticcon","staticcontanky",utils.table_replace({
     name                          = [[Tanky Caretaker]],
     description                   = [[Tanky Construction Assistant]],
     health=1750,
@@ -36,6 +42,16 @@ return utils.copy_tweak_silly_build_morth("staticcon","staticcontanky","sillycon
         [[energypylon]],
         [[staticmex]],
         [[energysolar]],
-        [[energyfusion]],
+        [[energyfusion]]
+        --[[staticcon]],
     },
+    customParams={
+        integral_menu_be_in_tab=
+        [==[
+        {
+            tab="ECON",
+            pos={order = 9, row = 3, col = 3}
+        }
+        ]==]
+    }
 }))

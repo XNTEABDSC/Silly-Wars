@@ -1,9 +1,15 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-local fleaUD=utils.get_unit_lua("spiderscout")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+local fleaUD=utils_op.GetUnitLua("spiderscout")
 
 --UnitDefs["spiderlightarti"]=fleaUD
-local lanceUD=utils.get_unit_lua("hoverarty")
+local lanceUD=utils_op.GetUnitLua("hoverarty")
 local lanceWD=lanceUD.weaponDefs.ATA--Spring.Utilities.CopyTable(lanceUD.weapondefs.ata,true)
 
 fleaUD.weaponDefs.LASER=lanceWD
@@ -35,7 +41,7 @@ fleaUD.customParams.tactical_ai_defs_copy="cloakarty"
 fleaUD.iconType="spiderlightarty"
 --fleaUD.objectName="lancyFlea"
 
-utils.set_morth_mul("silly_morth","spiderscout","spiderlightarty",1)
-utils.add_build("silly_build","sillycon","spiderlightarty")
+utils_op.MakeSetSillyMorph("spiderscout","spiderlightarty",1)
+utils_op.MakeAddSillyBuild("spiderlightarty")
 
 return {["spiderlightarty"]=fleaUD}

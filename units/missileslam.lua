@@ -1,7 +1,13 @@
-VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
-local ud=utils.get_unit_lua("tacnuke")
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+
+local ud=utils_op.GetUnitLua("tacnuke")
 ud.metalCost=150
 ud.health=600
 ud.objectName="wep_m_phoenix_nonhax.s3o"

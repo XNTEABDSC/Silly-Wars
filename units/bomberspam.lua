@@ -1,7 +1,10 @@
-VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
-local ud=utils.get_unit_lua("bomberriot")
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+local ud=utils_op.GetUnitLua("bomberriot")
 ud.metalCost=3000
 ud.health=6000
 ud.speed=ud.speed*0.9
@@ -22,7 +25,7 @@ udcp.def_scale=2
 
 wd.customParams.spawns_name = "cloakraid"
 --wd.customParams.spawns_expire = 10^5
-wd.model=utils.get_unit_lua("cloakraid").objectName
+wd.model=utils_op.GetUnitLua("cloakraid").objectName
 wd.explosionGenerator      = [[custom:dirt]]
 wd.damage={
     default=260
@@ -32,8 +35,8 @@ wd.customParams.spawn_blocked_by_shield=true
 wd.soundHit                = [[weapon/cannon/badger_hit]]
 wd.soundStart              = [[weapon/cannon/badger_fire]]
 
-utils.set_morth_mul("silly_morth","bomberriot","bomberspam")
-utils.add_build("silly_build","sillycon","bomberspam")
+utils_op.MakeSetSillyMorph("bomberriot","bomberspam")
+utils_op.MakeAddSillyBuild("bomberspam")
 ud.name="Glaives' " .. ud.name
 ud.description="Drop 18 Glaives, " .. 65*19 .. " stockpile"
 ud.fireState=0

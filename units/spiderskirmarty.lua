@@ -1,12 +1,18 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
-utils.set_morth_mul("silly_morth","spiderskirm","spiderskirmarty")
-utils.add_build("silly_build","sillycon","spiderskirmarty")
+utils_op.MakeSetSillyMorph("spiderskirm","spiderskirmarty")
+utils_op.MakeAddSillyBuild("spiderskirmarty")
 
 
-return utils.copy_tweak("spiderskirm","spiderskirmarty",function (ud)
+return utils_op.CopyTweak("spiderskirm","spiderskirmarty",function (ud)
     ud.name="Ranged " .. ud.name
     ud.description="Ranged " .. ud.description
     ud.speed=ud.speed*0.8
@@ -19,5 +25,5 @@ return utils.copy_tweak("spiderskirm","spiderskirmarty",function (ud)
     ud.footprintX=4
     ud.footprintZ=4
     ud.iconType="spiderskirmarty"
-    utils.set_ded_BIG_UNIT(ud)
+    utils_op.set_ded_BIG_UNIT(ud)
 end)

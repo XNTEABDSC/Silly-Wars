@@ -1,9 +1,15 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 local op=Spring.Utilities.to_make_very_op_things
-utils.set_morth_mul("silly_morth","turretheavylaser","turretheavylaserlv20")
-utils.add_build("silly_build","bigsillycon","turretheavylaserlv20")
-return utils.copy_tweak("turretheavylaser","turretheavylaserlv20",function (ud)
+utils_op.MakeSetSillyMorph("turretheavylaser","turretheavylaserlv20")
+utils_op.MakeAddSillyBuild("turretheavylaserlv20")
+return utils_op.CopyTweak("turretheavylaser","turretheavylaserlv20",function (ud)
     op.units_level_up(ud,op.units_level_up_table,20)
     ud.name=ud.name .. " Lv 20"
     ud.description = "Lv 20 " .. ud.description

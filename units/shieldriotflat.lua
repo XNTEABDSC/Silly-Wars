@@ -1,7 +1,12 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-local ud=utils.get_unit_lua("shieldriot")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+local ud=utils_op.GetUnitLua("shieldriot")
 
 utils.table_replace({
     name="Flatty Outlaw",
@@ -16,7 +21,7 @@ utils.table_replace({
     }
 })(ud)
 
-utils.set_morth_mul("silly_morth","shieldriot","shieldriotflat",5)
-utils.add_build("silly_build","sillycon","shieldriotflat")
+utils_op.MakeSetSillyMorph("shieldriot","shieldriotflat",5)
+utils_op.MakeAddSillyBuild("shieldriotflat")
 
 return {["shieldriotflat"]=ud}

@@ -1,10 +1,16 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 
-utils.set_morth_mul("silly_morth","jumpskirm","jumpskirmburst")
-utils.add_build("silly_build","sillycon","jumpskirmburst")
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-return utils.copy_tweak("jumpskirm","jumpskirmburst",utils.table_replace(
+utils_op.MakeSetSillyMorph("jumpskirm","jumpskirmburst")
+utils_op.MakeAddSillyBuild("jumpskirmburst")
+
+return utils_op.CopyTweak("jumpskirm","jumpskirmburst",utils.table_replace(
     {
         name                = [[Moderator Bag]],
         description         = [[4x Disruptor Skirmisher Walker]],

@@ -1,6 +1,6 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-utils.gamedata_UnitDefs=UnitDefs
+local utils_op=Spring.Utilities.to_make_op_things
+utils_op.gamedata_UnitDefs=UnitDefs
 
 Spring.Echo("Loading UnitDefs_posts")
 
@@ -80,21 +80,17 @@ do
 end
 
 
-local tweak_units=utils.tweak_units
+local tweak_units=utils_op.tweak_units
 
-local tweak_defs=utils.tweak_defs
+local tweak_defs=utils_op.tweak_defs
 
 Spring.Utilities.to_make_op_things.load_modoptions()
 
 UnitDefs["dronefighter"].metalcost=150
 
-Spring.Utilities.to_make_op_things.do_fn_list_fns("def_pre")
-
-Spring.Utilities.to_make_op_things.do_fn_list_fns("def")
 
 local modOptions=Spring.GetModOptions()
-
-do
+--[==[do
 	local append = false
 	local name = "tweakdefs"
 	while modOptions[name] and modOptions[name] ~= "" do
@@ -118,17 +114,22 @@ do
 		append = (append or 0) + 1
 		modoptName = "tweakunits" .. append
 	end
+end]==]
+Spring.Echo("RunUnitDefsTweakFns Start")
+utils_op.RunUnitDefsTweakFns()
+Spring.Echo("RunUnitDefsTweakFns End")
+for key, value in pairs(utils_op.unit_defs_tweak_fns.kvlist) do
+	Spring.Echo("task " .. key .. ", before: ".. value.before_count)
 end
 
 do
 	for _, ud in pairs(UnitDefs) do
 		if ud.customparams.def_scale then
-			utils.set_scale(ud,ud.customparams.def_scale)
+			utils_op.set_scale(ud,ud.customparams.def_scale)
 		end
 	end
 end
 
-Spring.Utilities.to_make_op_things.do_fn_list_fns("def_post")
 --[==[
 W T F IS THIS
 UnitDefs.factorysilly.isFactory=true

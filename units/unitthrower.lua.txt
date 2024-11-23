@@ -1,7 +1,7 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils=Spring.Utilities.to_make_op_things
 
-utils.add_build("silly_build","bigsillycon","unitthrower")
+utils_op.AddSillyBuild("unitthrower")
 
 return utils.copy_tweak("amphlaunch","unitthrower",function (ud)
     ud.name="Unit Thrower"

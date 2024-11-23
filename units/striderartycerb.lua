@@ -1,8 +1,14 @@
-VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
-utils.set_morth("silly_morth","striderartypuppy","striderartycerb")
-utils.add_build("silly_build","verybigsillycon","striderartycerb")
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+
+utils_op.MakeSetSillyMorph("striderartypuppy","striderartycerb")
+utils_op.MakeAddSillyBuild("striderartycerb")
 --[=[
 local ud=utils.get_unit_lua("striderarty")
 
@@ -15,7 +21,7 @@ utils.do_tweak({})(ud.weaponDefs.ROCKET)
 
 ]=]
 
-return utils.copy_tweak("striderarty","striderartycerb",function (ud)
+return utils_op.CopyTweak("striderarty","striderartycerb",function (ud)
     utils.table_replace({
         name="Cerberus' Merlin",
         metalCost=16000,

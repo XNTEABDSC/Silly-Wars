@@ -1,10 +1,16 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 
-utils.set_morth_mul("silly_morth","vehheavyartyplus","vehtacmissile")
-utils.add_build("silly_build","bigsillycon","vehtacmissile")
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-return utils.copy_tweak("vehheavyartyplus","vehtacmissile",function (ud)
+utils_op.MakeSetSillyMorph("vehheavyartyplus","vehtacmissile")
+utils_op.MakeAddSillyBuild("vehtacmissile")
+
+return utils_op.CopyTweak("vehheavyartyplus","vehtacmissile",function (ud)
     ud.metalCost=3000
     ud.health=3000
     ud.name="Eos " .. "Impaler"
@@ -27,5 +33,5 @@ return utils.copy_tweak("vehheavyartyplus","vehtacmissile",function (ud)
     ud.trackStrength       = 8*2
     ud.trackStretch        = 1*2
     ]==]
-    utils.set_ded_ATOMIC_BLAST(ud)
+    utils_op.set_ded_ATOMIC_BLAST(ud)
 end)

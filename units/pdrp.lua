@@ -1,5 +1,11 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 local drp_wd_base={
     --name                    = [[Light Mine Artillery]],
     accuracy                = 1,
@@ -52,7 +58,7 @@ local spamed_list={
 
 local function make_wd_spam(spamed,burst,expire,model)
     expire=expire or 60
-    model=model or utils.get_unit_lua(spamed).objectName
+    model=model or utils_op.GetUnitLua(spamed).objectName
     local wd=Spring.Utilities.CopyTable(drp_wd_base,true)
     wd.customParams.spawns_name = "pdrp" .. spamed
     wd.customParams.spawns_expire = expire
@@ -70,13 +76,13 @@ end
 
 for i=1,6 do
     local newname="pdrp" .. spamed_list[i][1]
-    res[newname]=utils.get_unit_lua(spamed_list[i][1])
-    utils.set_free_unit(res[newname])
+    res[newname]=utils_op.GetUnitLua(spamed_list[i][1])
+    utils_op.set_free_unit(res[newname])
     --do_copy_tweak_unit(make_copy_tweak(spamed_list[i][1],"pdrp" .. spamed_list[i][1],set_dummy_unit))
     --spamed_list[i][1]=newname
 end
 
-local ud=utils.get_unit_lua("raveparty")
+local ud=utils_op.GetUnitLua("raveparty")
 ud.name="Pro " .. ud.name
 ud.description="Turret Thrower"
 ud.metalCost=ud.metalCost*1.2
@@ -89,8 +95,8 @@ for i = 1, 6 do
     ud.weaponDefs[spamer_wds[i].name]=spamer_wds[i]
     ud.weapons[i].def=spamer_wds[i].name
 end
-utils.set_morth_mul("silly_morth","raveparty","pdrp")
+utils_op.MakeSetSillyMorph("raveparty","pdrp")
 
-utils.add_build("silly_build","verybigsillycon","pdrp")
+utils_op.MakeAddSillyBuild("pdrp")
 res["pdrp"]=ud
 return res

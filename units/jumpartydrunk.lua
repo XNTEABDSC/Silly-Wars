@@ -1,5 +1,11 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 --[=[
 local function make_drunk(wd)
     if wd.range then
@@ -31,11 +37,11 @@ return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
 end)
 ]=]
 
-utils.set_morth_mul("silly_morth","jumparty","jumpartydrunk")
-utils.add_build("silly_build","bigsillycon","jumpartydrunk")
-return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
-    Spring.Utilities.to_make_very_op_things.make_unit_drunk(ud)
-    utils.set_ded_ATOMIC_BLAST(ud)
+utils_op.MakeSetSillyMorph("jumparty","jumpartydrunk")
+utils_op.MakeAddSillyBuild("jumpartydrunk")
+return utils_op.CopyTweak("jumparty","jumpartydrunk",function (ud)
+    to_make_very_op_things.make_unit_drunk(ud)
+    utils_op.set_ded_ATOMIC_BLAST(ud)
     --ud.weaponDefs.NAPALM_SPRAYER.weaponVelocity=295
     ud.weaponDefs.NAPALM_SPRAYER.range=1100
     ud.customParams.tactical_ai_defs_copy="jumparty"

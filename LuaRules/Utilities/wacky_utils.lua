@@ -200,11 +200,16 @@ if not Spring.Utilities.wacky_utils then
     wacky_utils.loop_until_finish_all_list=loop_until_finish_all_list
     local function loop_until_finish_all_table(values,fn)
         local values_unfinished={}
-        while #values>0 do
+        while next(values) do
+            local reduced=false
             for key,value in pairs(values) do
-                values_unfinished[key]=fn(key,value)
+                local res=fn(key,value)
+                values_unfinished[key]=res
+                if not res then
+                    reduced=true
+                end
             end
-            if #values==#values_unfinished then
+            if not reduced then
                 return values_unfinished
             else
                 values=values_unfinished

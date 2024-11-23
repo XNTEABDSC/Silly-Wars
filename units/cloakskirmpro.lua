@@ -1,11 +1,17 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
-utils.set_morth_mul("silly_morth","cloakskirm","cloakskirmpro")
-utils.add_build("silly_build","sillycon","cloakskirmpro")
+utils_op.MakeSetSillyMorph("cloakskirm","cloakskirmpro")
+utils_op.MakeAddSillyBuild("cloakskirmpro")
 
-return utils.copy_tweak("cloakskirm","cloakskirmpro",function (ud)
+return utils_op.CopyTweak("cloakskirm","cloakskirmpro",function (ud)
     utils.table_replace({
         metalCost=250,
         speed=75,

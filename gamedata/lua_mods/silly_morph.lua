@@ -6,10 +6,6 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+utils_op.PushOptionalUnitDefsTweakFns("silly_morph")
 
-return utils_op.CopyTweakSillyBuildMorph("cloakraid","cloakraidepic",function (ud)
-    to_make_very_op_things.good_scale_unit(ud,100)
-    ud.name="Epic " .. ud.name
-    ud.description=ud.description .. ", but bigger"
-    ud.iconType="cloakraidepic"
-end)
+return {option_notes="Silly things can morph from other things"}

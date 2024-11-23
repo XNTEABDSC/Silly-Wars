@@ -1,7 +1,10 @@
-VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
-local amphteleopud=utils.get_unit_lua("amphtele")
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+local amphteleopud=utils_op.GetUnitLua("amphtele")
 do
     local ud=amphteleopud
     ud.name="OP " .. ud.name
@@ -14,12 +17,12 @@ do
     ud.speed=45
     --utils.set_scale(ud,2)
     ud.customParams.def_scale=2
-    utils.set_ded_ATOMIC_BLAST(ud)
+    utils_op.set_ded_ATOMIC_BLAST(ud)
 end
-local amphteleopbeaconud=utils.get_unit_lua("amphtele")
+local amphteleopbeaconud=utils_op.GetUnitLua("amphtele")
 do
     local ud=amphteleopbeaconud
-    utils.set_free_unit(ud)
+    utils_op.set_free_unit(ud)
     ud.name="OP Lamp"
     ud.description="Djinn"
     ud.speed=25
@@ -35,8 +38,8 @@ do
     ud.sightDistance=600
     ud.radarDistance=1200
 end
-utils.set_morth_mul("silly_morth","amphtele","amphteleop")
-utils.add_build("silly_build","bigsillycon","amphteleop")
+utils_op.MakeSetSillyMorph("amphtele","amphteleop")
+utils_op.MakeAddSillyBuild("amphteleop")
 return{
     amphteleop=amphteleopud,
     amphteleopbeacon=amphteleopbeaconud,

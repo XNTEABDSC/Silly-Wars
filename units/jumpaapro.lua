@@ -1,10 +1,16 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 
-utils.set_morth_mul("silly_morth","jumpaa","jumpaapro")
-utils.add_build("silly_build","bigsillycon","jumpaapro")
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-return utils.copy_tweak("jumpaa","jumpaapro",function (ud)
+utils_op.MakeSetSillyMorph("jumpaa","jumpaapro")
+utils_op.MakeAddSillyBuild("jumpaapro")
+
+return utils_op.CopyTweak("jumpaa","jumpaapro",function (ud)
     ud.name="Pro Toad"
     ud.description="AA Strider, with burst slow beam and flak"
     ud.metalCost=3000

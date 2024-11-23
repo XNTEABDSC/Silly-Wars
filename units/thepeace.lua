@@ -1,6 +1,12 @@
 local ud=(VFS.Include("units/zenith.lua").zenith)
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 ud.name="THE PEACE"
 ud.description="A simple way to bring peace to the world (can be intercepted by antinuke) (Use D to drop a single NUKE)"
@@ -90,8 +96,8 @@ do
 end
 ud.canManualFire          = true
 
-utils.set_morth_mul("silly_morth","zenith","thepeace",30)
+utils_op.MakeSetSillyMorph("zenith","thepeace",30)
 
-utils.add_build("silly_build","verybigsillycon","thepeace")
+utils_op.MakeAddSillyBuild("thepeace")
 
 return {["thepeace"]=ud}

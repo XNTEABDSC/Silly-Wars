@@ -764,7 +764,8 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		generateDrones[unitID] = nil
 		carrierList[unitID] = nil
 		recall_frame_start[unitID] = nil
-	elseif (droneList[unitID]) then
+	end
+	if (droneList[unitID]) then
 		local carrierID = droneList[unitID].carrier
 		local setID = droneList[unitID].set
 		if setID > -1 then --is -1 when carrier morphed and drone is incompatible with the carrier

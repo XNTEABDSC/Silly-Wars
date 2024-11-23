@@ -1,12 +1,17 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 
-utils.set_morth_mul("silly_morth","spiderantiheavy","spidercapture")
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils.add_build("silly_build","sillycon","spidercapture")
+utils_op.MakeSetSillyMorph("spiderantiheavy","spidercapture")
 
-return utils.copy_tweak("spiderantiheavy","spidercapture",function (ud)
+utils_op.MakeAddSillyBuild("spidercapture")
+
+return utils_op.CopyTweak("spiderantiheavy","spidercapture",function (ud)
     ud.metalCost=1200
     ud.health=3600
     ud.speed=40

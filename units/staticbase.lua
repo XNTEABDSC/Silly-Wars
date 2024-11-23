@@ -1,7 +1,13 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-utils.set_morth("silly_morth","turretdronelight","staticbase")
-utils.add_build("silly_build","bigsillycon","staticbase")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+utils_op.MakeSetSillyMorph("turretdronelight","staticbase")
+utils_op.MakeAddSillyBuild("staticbase")
 
 return { staticbase = {
   name                          = [[Frontline Base]],

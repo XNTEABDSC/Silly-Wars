@@ -1,9 +1,14 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-utils.set_morth_mul("silly_morth","shieldshield","shieldshieldpro")
-utils.add_build("silly_build","bigsillycon","shieldshieldpro")
-return utils.copy_tweak("shieldshield","shieldshieldpro",function (ud)
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+utils_op.MakeSetSillyMorph("shieldshield","shieldshieldpro")
+utils_op.MakeAddSillyBuild("shieldshieldpro")
+return utils_op.CopyTweak("shieldshield","shieldshieldpro",function (ud)
     ud.name = "Greater " .. ud.name
     ud.description = "Greater Shield to counter greater silly"
     ud.metalCost=ud.metalCost*4

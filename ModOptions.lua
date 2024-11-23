@@ -233,15 +233,15 @@ local options = {
     section     = "experimental",
     def         = false,
   },
-  --[==[
+  
   {
     key         = "techk",
     name        = "Tech-K",
-    desc        = "Add a tech level system",
+    desc        = "Add a tech level system (not sure whether work)",
     type        = "bool",
     section     = "experimental",
     def         = false,
-  },]==]
+  },
   {
     key         = "disableresurrect",
     name        = "Disable resurrect",

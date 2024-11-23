@@ -1,8 +1,14 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-utils.set_morth_mul("silly_morth","tankheavyassault","tankheavyassaultnuke")
-utils.add_build("silly_build","bigsillycon","tankheavyassaultnuke")
-return utils.copy_tweak("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+utils_op.MakeSetSillyMorph("tankheavyassault","tankheavyassaultnuke")
+utils_op.MakeAddSillyBuild("tankheavyassaultnuke")
+return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
     name="Nuclear Cyclops",
     description="Shoot Nuclear Warhead (200 stockpile)",
     metalCost=8000,

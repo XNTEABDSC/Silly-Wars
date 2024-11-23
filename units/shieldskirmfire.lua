@@ -1,7 +1,12 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
 
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-return utils.copy_tweak_silly_build_morth("shieldskirm","shieldskirmfire","sillycon",function (ud)
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+return utils_op.CopyTweakSillyBuildMorph("shieldskirm","shieldskirmfire",function (ud)
     utils.table_replace({
         name="Napalm " .. ud.name,
         description=ud.description .. "(Napalm)",

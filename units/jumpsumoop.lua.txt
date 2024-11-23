@@ -2,8 +2,8 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils=Spring.Utilities.to_make_op_things
 --utils.add_build("bigsillycon","jumpsumoop")
-utils.set_morth_mul("silly_morth","jumpsumo","jumpsumoop")
-utils.add_build("silly_build","bigsillycon","jumpsumoop")
+utils_op.SetSillyMorph("jumpsumo","jumpsumoop")
+utils_op.AddSillyBuild("jumpsumoop")
 return utils.copy_tweak("jumpsumo","jumpsumoop",utils.table_replace({
     customParams={
         jump_range=600,
