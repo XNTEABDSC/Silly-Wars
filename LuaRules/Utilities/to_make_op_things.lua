@@ -178,6 +178,29 @@ if not Spring.Utilities.to_make_op_things then
 
     to_make_op_things.MakeAddBuildValueWithOrder=MakeAddBuildValueWithOrder
 
+    local function MakeDefAddBuild(builder,buildee)
+        AddFnToUnitDefsTweakFns({
+            k="def_add_build("..builder .. ", "..buildee .. ")",
+            b={"default_add_build_begin"},
+            a={"default_add_build_end"},
+            v=function ()
+                if not UnitDefs[builder] then
+                    error("add_build(" .. builder .. ", " .. buildee .. "): unit " .. builder .. " do not exist")
+                end
+                if not UnitDefs[buildee] then
+                    Spring.Echo("warning: ".. "add_build(" .. builder .. ", " .. buildee .. "): unit " .. buildee .. "do not exist")
+                end
+                if not UnitDefs[builder].buildoptions then
+                    UnitDefs[builder].buildoptions={}
+                end
+                --Spring.Echo("add_build(" .. builer .. ", " .. buildee .. ")")
+                --table.insert(UnitDefs[builder].buildoptions,1,buildee)
+                UnitDefs[builder].buildoptions[#UnitDefs[builder].buildoptions+1]=buildee
+            end
+        })
+        --AddFnToOptionalUnitDefsTweakFns("silly_morph",MakeSetMorphMutValueWithOrder(srcname,toname,morphtime,morphprice))
+    end
+    to_make_op_things.MakeDefAddBuild=MakeDefAddBuild
     local function ModifyTableMBLowkey(tb,key,fn)
         local v=tb[key]
         if not v then

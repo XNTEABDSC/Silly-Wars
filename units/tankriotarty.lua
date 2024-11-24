@@ -17,7 +17,7 @@ return utils_op.CopyTweak("tankriot","tankriotarty",function (ud)
                 range=1200
             }
         },
-        metalCost=5000,
+        metalCost=4500,
         speed=38,
         customParams={
             def_scale=2,

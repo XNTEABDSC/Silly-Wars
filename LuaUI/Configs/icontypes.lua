@@ -1401,19 +1401,23 @@ local icontypes = {
   },
   turretheavylaserlv20 = {
     bitmap='icons/defenseheavy.dds',
-    size=2.0*1.025^20,
+    size=2.0*(1.025^20)^0.5,
   },
   cloakraidepic = {
     bitmap='icons/kbotraider.dds',
-    size=1.8*100^(1/6),
+    size=1.8*(100^(1/6))^0.5,
   },
   jumpaapro = {
     bitmap='icons/jumpjetaa.dds',
-    size=1.8*2.5,
+    size=1.8*2.5^0.5,
   },
   jumpartydrunk = {
     bitmap='icons/fatbotarty.png',
-    size=2.1*2,
+    size=2.1*2^0.5,
+  },
+  planescouthover={
+    bitmap='icons/hoverscout.png',
+    size=2.2,
   },
 }
 

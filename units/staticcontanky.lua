@@ -42,8 +42,9 @@ return utils_op.CopyTweakSillyBuildMorph("staticcon","staticcontanky",utils.tabl
         [[energypylon]],
         [[staticmex]],
         [[energysolar]],
-        [[energyfusion]]
-        --[[staticcon]],
+        [[energyfusion]],
+        [[tankcon]],
+
     },
     customParams={
         integral_menu_be_in_tab=

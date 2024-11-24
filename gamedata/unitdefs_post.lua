@@ -118,9 +118,6 @@ end]==]
 Spring.Echo("RunUnitDefsTweakFns Start")
 utils_op.RunUnitDefsTweakFns()
 Spring.Echo("RunUnitDefsTweakFns End")
-for key, value in pairs(utils_op.unit_defs_tweak_fns.kvlist) do
-	Spring.Echo("task " .. key .. ", before: ".. value.before_count)
-end
 
 do
 	for _, ud in pairs(UnitDefs) do
