@@ -14,7 +14,7 @@ utils_op.MakeAddSillyBuild("cloakskirmpro")
 return utils_op.CopyTweak("cloakskirm","cloakskirmpro",function (ud)
     utils.table_replace({
         metalCost=250,
-        speed=75,
+        --speed=75,
         health=650,
         name="Guided Ronin",
         description=[[Skirmisher Bot (Homing Missile)]],

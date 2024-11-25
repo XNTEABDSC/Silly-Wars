@@ -7,7 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 return utils_op.CopyTweakSillyBuildMorph("bombersingu","bombersinguheavy",function (ud)
     ud.name="Singu Likho"
     ud.description="Throw SINGULARITY, 4000 stockpile cost"
-    ud.metalCost=24000
+    ud.metalCost=20000
     ud.health=20000
     ud.speed=ud.speed*0.85
     local wd=ud.weaponDefs.ARM_PIDR
@@ -19,7 +19,7 @@ return utils_op.CopyTweakSillyBuildMorph("bombersingu","bombersinguheavy",functi
     ud.customParams.reammoseconds=[[90]]
     ud.customParams.light_radius=7500
     ud.customParams.stockpiletime  = [[90]]
-    ud.customParams.stockpilecost  = [[4000]]
+    ud.customParams.stockpilecost  = [[3000]]
     ud.customParams.priority_misc  = 1
     ud.customParams.def_scale=2
 end)

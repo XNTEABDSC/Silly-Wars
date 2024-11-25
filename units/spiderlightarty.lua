@@ -35,10 +35,15 @@ fleaUD.customParams.grey_goo_drain = 2
 fleaUD.customParams.grey_goo_cost = 25
 fleaUD.customParams.grey_goo_range = 120
 fleaUD.name="Lancing Flea"
-fleaUD.description="Ultralight beam artillery spider (Burrows)"
+fleaUD.description="Ultralight beam artillery spider"
 fleaUD.sightDistance=810
 fleaUD.customParams.tactical_ai_defs_copy="cloakarty"
 fleaUD.iconType="spiderlightarty"
+fleaUD.customParams.idle_cloak=nil
+fleaUD.minCloakDistance=nil
+fleaUD.script="spiderlightarty.lua"
+fleaUD.cloakCost           = nil
+fleaUD.moveState=nil
 --fleaUD.objectName="lancyFlea"
 
 utils_op.MakeSetSillyMorph("spiderscout","spiderlightarty",1)

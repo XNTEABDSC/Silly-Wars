@@ -9,17 +9,17 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 local procUnits={
     "staticcontanky",
-    "turretheavylaser",
-    "turretaalaser",
     "turretlaser",
-    "staticmex"
+    "turretriot",
+    "energypylon",
+    "energyfusiontanky",
+    "turretheavy",
+    "turretantiheavy",
 }
 
 local UDBase=utils_op.GetUnitLua("tacnuke")
 local tbnil=utils.table_replace_nil
-utils.table_replace({
-    
-})
+
 
 local procUnitNewUDs={}
 
@@ -28,7 +28,7 @@ local function MakeDeployer(ud,udname)
     utils.table_replace({
         name="Long-Range " .. ud.name .. " Deployer",
         description="Missile to deploy " .. ud.name,
-        metalCost=ud.metalCost*1.3,
+        metalCost=ud.metalCost*1.5,
         --objectName=[[clawshell.s3o]],--ud.objectName,
         buildPic=ud.buildPic,
         weaponDefs={
@@ -67,6 +67,11 @@ utils.table_replace({
     weaponAcceleration=270,
     weaponTimer=2,
 })(procUnitNewUDs["missiledeploy" .. "turretlaser"].weaponDefs.WEAPON)
+utils.table_replace({
+    weaponVelocity=1800,
+    weaponAcceleration=270,
+    weaponTimer=2,
+})(procUnitNewUDs["missiledeploy" .. "turretriot"].weaponDefs.WEAPON)
 
 for udname, ud in pairs(procUnitNewUDs) do
     utils_op.MakeDefAddBuild("staticmissilesilo",udname)

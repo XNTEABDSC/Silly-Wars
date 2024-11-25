@@ -1403,6 +1403,10 @@ local icontypes = {
     bitmap='icons/defenseheavy.dds',
     size=2.0*(1.025^20)^0.5,
   },
+  cloakraidgreat = {
+    bitmap='icons/kbotraider.dds',
+    size=1.8*(10^(1/6))^0.5,
+  },
   cloakraidepic = {
     bitmap='icons/kbotraider.dds',
     size=1.8*(100^(1/6))^0.5,

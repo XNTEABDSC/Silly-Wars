@@ -35,7 +35,7 @@ return utils_op.CopyTweakSillyBuildMorph("planefighter","planefighterstrike",fun
             default=12,
         },
         customparams={
-            script_reload = [[5]],
+            script_reload = [[4]],
             script_burst = [[15]],
         },
         reloadtime=0.0333333,

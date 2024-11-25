@@ -10,7 +10,9 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 local tbnil=utils.table_replace_nil
 return utils_op.CopyTweakSillyBuildMorph("planescout","planescouthover",function (ud)
     utils.table_replace({
-        metalCost=750,
+        name="Not Flying Owl",
+        description="Flying is too danger",
+        metalCost=650,
         health=2250,
         acceleration        = 0.288,
         canFly=tbnil,
@@ -26,12 +28,20 @@ return utils_op.CopyTweakSillyBuildMorph("planescout","planescouthover",function
             jump_reload        = 15,
             sonar_can_be_disabled = tbnil,
             disable_radar_preview = tbnil,
-            tactical_ai_defs_copy="planescout",
+            
+            tactical_ai_defs_behaviour_config=[=[{
+                name="planescouthover",
+                searchRange = 1200,
+                fleeEverything = true,
+                minFleeRange = 600, -- Avoid enemies standing in front of Pickets
+                fleeLeeway = 600,
+                fleeDistance = 600,
+            }]=]
         },
         movementClass       = [[HOVER3]],
         moveState           = 0,
-        speed=81,
-        turnRate            = 985,
+        speed=72,
+        turnRate            = 400,
         cruiseAltitude      = tbnil,
         maxSlope            = 36,
         maxAcc              = tbnil,
