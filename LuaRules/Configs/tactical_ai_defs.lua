@@ -2133,8 +2133,13 @@ for _, ud in pairs(UnitDefs) do
 	if ud.customParams then
 		local udcp=ud.customParams
 		if udcp.tactical_ai_defs_copy then
-			local udname=ud.name
 			local copyed=udcp.tactical_ai_defs_copy
+			udcp.tactical_ai_defs_belongs_to_copy=copyed
+			udcp.tactical_ai_defs_behaviour_config_copy=copyed
+		end
+		if udcp.tactical_ai_defs_belongs_to_copy then
+			local udname=ud.name
+			local copyed=udcp.tactical_ai_defs_belongs_to_copy
 			for key, arr in pairs(AllArrays) do
 				for _, value2 in pairs(arr) do
 					if value2==copyed then
@@ -2143,6 +2148,10 @@ for _, ud in pairs(UnitDefs) do
 					end
 				end
 			end
+		end
+		if udcp.tactical_ai_defs_behaviour_config_copy then
+			local udname=ud.name
+			local copyed=udcp.tactical_ai_defs_behaviour_config_copy
 			for _, value in pairs(behaviourConfig) do
 				if value.name==copyed then
 					local newtable=Spring.Utilities.CopyTable(value,false)
@@ -2159,10 +2168,14 @@ for _, ud in pairs(UnitDefs) do
 			end
 		end
 		if udcp.tactical_ai_defs_behaviour_config then
-			behaviourConfig[#behaviourConfig+1] = utils.justloadstring(
+			local res=utils.justloadstring(
 				"return" .. ud.customParams.tactical_ai_defs_behaviour_config,
 				AllGlobals
 			)
+			if not res.name then 
+				res.name=ud.name
+			end
+			behaviourConfig[#behaviourConfig+1] = res
 		end
 	end
 end

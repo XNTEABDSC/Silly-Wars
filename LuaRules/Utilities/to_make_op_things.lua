@@ -249,7 +249,7 @@ if not Spring.Utilities.to_make_op_things then
             copyUD.description=sillyConsInfo.HumanDesc .. ", Vol." .. sillyConsInfo.builderCount
             copyUD.buildoptions={}
 
-            SetMorphMut(sillyConsInfo.currentName,newname)
+            SetMorphMut(sillyConsInfo.currentName,newname,1)
 
             UnitDefs[newname]=copyUD
             sillyConsInfo.currentUD=copyUD

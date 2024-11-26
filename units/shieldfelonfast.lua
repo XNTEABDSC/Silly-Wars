@@ -15,7 +15,7 @@ return utils_op.CopyTweak("shieldfelon","shieldfelonfast",function (ud)
     local shwd=ud.weaponDefs.SHIELD
     local wd=ud.weaponDefs.SHIELDGUN
     ud.speed=81
-    shwd.shieldPower=2400
+    shwd.shieldPower=2800
     shwd.shieldPowerRegen=80
     shwd.shieldPowerRegenEnergy=40
     shwd.shieldRadius=150

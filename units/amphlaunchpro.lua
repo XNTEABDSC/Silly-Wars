@@ -5,7 +5,7 @@ VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
 return utils_op.CopyTweakSillyBuildMorph("amphlaunch","amphlaunchpro",utils.table_replace({
-    name="Lobster Pro",
+    name="Greater Lobster",
     customParams={
         thrower_gather=300
     },

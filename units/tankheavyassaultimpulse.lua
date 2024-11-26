@@ -14,6 +14,9 @@ weaponDefs={COR_GOL={impulseFactor=-2.5}},
 metalcost=UnitDefs["tankheavyassault"].metalcost+200,
 name="Impulse Cyclops",
 description="Very Heavy Tank Buster With Impulse",
+customParams={
+    tactical_ai_defs_copy="tankheavyassault"
+},
 })(ud)
 
 utils_op.MakeSetSillyMorph(fname,tname,20)

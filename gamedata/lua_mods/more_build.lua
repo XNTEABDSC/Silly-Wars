@@ -30,4 +30,4 @@ utils_op.AddFnToUnitDefsTweakFns({
 
 
 
-return {option_notes="Strider Hub -> Commanders , Nebula;\n Big Silly Con-> Leaper , Spicula"}
+return {option_notes="Strider Hub can build Commanders and Nebula;\n Big Silly Con can build Leaper and Spicula"}
