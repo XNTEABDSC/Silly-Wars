@@ -14,7 +14,7 @@ return utils_op.CopyTweak("gunshipheavyskirm","gunshipheavyskirmplus",function (
         name="Flak Nimbus",
         description="Flying Flak",
         metalCost=2500,
-        health=3500,
+        health=5000,
         speed=80,
     })(ud)
     local wd=ud.weaponDefs.EMG

@@ -237,7 +237,7 @@ local options = {
   {
     key         = "techk",
     name        = "Tech-K",
-    desc        = "Add a tech level system (not sure whether work)",
+    desc        = "Add a tech level system (don't work now)",
     type        = "bool",
     section     = "experimental",
     def         = false,

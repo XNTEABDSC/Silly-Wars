@@ -12,15 +12,15 @@ utils_op.MakeSetSillyMorph("spiderantiheavy","spidercapture")
 utils_op.MakeAddSillyBuild("spidercapture")
 
 return utils_op.CopyTweak("spiderantiheavy","spidercapture",function (ud)
-    ud.metalCost=1200
-    ud.health=3600
+    ud.metalCost=1000
+    ud.health=3000
     ud.speed=40
     ud.minCloakDistance=100
     ud.cloakCost              = 10
     ud.cloakCostMoving        = 30
     local wd=ud.weaponDefs.spy
     wd.name="Hack Lightning"
-    wd.damage.default=4000.1
+    wd.damage.default=5000.1
     wd.customParams.capture_scaling = 1
     wd.customParams.is_capture = 1
     ud.customParams.post_capture_reload=wd.reloadtime*30
@@ -32,7 +32,7 @@ return utils_op.CopyTweak("spiderantiheavy","spidercapture",function (ud)
     wd.paralyzeTime=nil
     ud.customParams.def_scale=1.5
     ud.name="Hacker Widow"
-    ud.description="Hack enemy. WARNING: You need deal unitHealth+1000 of capture damage to cap it e.g. 1040 cap dmg to capture flea"
+    ud.description="Hack enemy. WARNING: You need deal unitHealth+1000 capture damage to capture it e.g. 1040 cap dmg to capture 40hp flea"
     ud.minCloakDistance=100
     ud.sightDistance=300
 end)

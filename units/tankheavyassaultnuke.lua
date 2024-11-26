@@ -29,7 +29,6 @@ return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_
             stockpileTime           = 10^5,
             soundHit                = [[explosion/mini_nuke]],
             range=350,
-            reloadtime              = 5,
             weaponVelocity          = 300,
         },
         SLOWBEAM={
@@ -41,10 +40,22 @@ return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_
     },
     customParams={
         stockpiletime  = [[15]],
-        stockpilecost  = [[200]],
+        stockpilecost  = [[175]],
         priority_misc  = 2,
         def_scale=1.7,
         bait_level_default=3,
+        tactical_ai_defs_behaviour_config=[=[{
+            name = "tankheavyassaultnuke",
+            skirms = lowRangeSkirmieeArray,
+            --swarms = {},
+            --flees = {},
+            avoidHeightDiff = explodableFull,
+            fightOnlyUnits = shortRangeExplodables,
+            skirmOrderDis = 220,
+            skirmLeeway = 50,
+            skirmBlockedApproachFrames = 60,
+	    },]=],
+        tactical_ai_defs_belongs_to_copy="tankheavyassault",
     },
     explodeAs="ATOMIC_BLAST",
     selfDestructAs="ATOMIC_BLAST"

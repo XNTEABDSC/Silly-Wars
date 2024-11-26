@@ -19,7 +19,7 @@ puppyud.name="Puppys' Merlin's Puppy"
 local puppyudname="striderartypuppypuppy"
 
 ud.name="Puppys' Merlin"
-ud.metalCost=10000
+ud.metalCost=8000
 ud.health=8000
 
 ud.customParams.def_scale=1.5

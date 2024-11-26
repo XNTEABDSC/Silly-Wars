@@ -12,4 +12,5 @@ return utils_op.CopyTweakSillyBuildMorph("cloakraid","cloakraidgreat",function (
     ud.name="Greater Glaive"
     ud.description="Greater Raider Bot"
     ud.iconType="cloakraidgreat"
+    ud.customParams.tactical_ai_defs_belongs_to_copy="cloakraid"
 end)
