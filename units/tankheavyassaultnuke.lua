@@ -13,7 +13,7 @@ return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_
     description="Shoot Nuclear Warhead (200 stockpile)",
     metalCost=8000,
     health=40000,
-    speed=45,
+    speed=54,
     weaponDefs={
         COR_GOL={
             name                    = [[Nuclear Cannon]],

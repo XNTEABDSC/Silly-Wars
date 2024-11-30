@@ -2157,7 +2157,7 @@ for _, ud in pairs(UnitDefs) do
 					local newtable=Spring.Utilities.CopyTable(value,false)
 					newtable.name=udname
 					behaviourConfig[#behaviourConfig+1] = newtable
-					break;
+					--break;
 				end
 			end
 		end
@@ -2172,7 +2172,7 @@ for _, ud in pairs(UnitDefs) do
 				"return" .. ud.customParams.tactical_ai_defs_behaviour_config,
 				AllGlobals
 			)
-			if not res.name then 
+			if not res.name then
 				res.name=ud.name
 			end
 			behaviourConfig[#behaviourConfig+1] = res

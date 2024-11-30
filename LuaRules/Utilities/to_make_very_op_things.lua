@@ -407,7 +407,7 @@ if not Spring.Utilities.to_make_very_op_things then
     end
     
     do
-        local lazy_scale=1/7
+        local lazy_scale=1/(6.5)
         local range_scale=lazy_scale
         local damage_scale=1-lazy_scale
         local reload_scale=lazy_scale
