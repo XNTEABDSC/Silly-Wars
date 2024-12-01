@@ -54,7 +54,7 @@ return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_
             skirmOrderDis = 220,
             skirmLeeway = 50,
             skirmBlockedApproachFrames = 60,
-	    },]=],
+	    }]=],
         tactical_ai_defs_belongs_to_copy="tankheavyassault",
     },
     explodeAs="ATOMIC_BLAST",

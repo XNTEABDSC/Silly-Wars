@@ -2140,7 +2140,7 @@ for _, ud in pairs(UnitDefs) do
 		if udcp.tactical_ai_defs_belongs_to_copy then
 			local udname=ud.name
 			local copyed=udcp.tactical_ai_defs_belongs_to_copy
-			for key, arr in pairs(AllArrays) do
+			for _, arr in pairs(AllArrays) do
 				for _, value2 in pairs(arr) do
 					if value2==copyed then
 						arr[#arr+1] = udname
