@@ -14,7 +14,7 @@ return utils_op.CopyTweak("vehheavyartyplus","vehtacmissile",function (ud)
     ud.metalCost=3000
     ud.health=3000
     ud.name="Eos " .. "Impaler"
-    ud.description="Throws Eos (500 stokepile)"
+    ud.description="Throws Eos (600 stokepile)"
     ud.customParams.stockpiletime  = [[30]]
     ud.customParams.stockpilecost  = [[600]]
     ud.speed=38

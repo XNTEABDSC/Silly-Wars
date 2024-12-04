@@ -20,15 +20,15 @@ local uds=utils_op.CopyTweakSillyBuildMorph("nebula","nebulanebula",function (ud
 			maxDrones = 8,
 			spawnSize = 1,
 			range = 1800,
-			maxChaseRange = 2100,
+			maxChaseRange = 1800,
 			buildTime = 50,
 			maxBuild = 4,
 			offsets = {0, 8*3, 15*3, colvolMidX = 0, colvolMidY = 30*3, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
 		},
 	}
     ]==]
-    ud.health=ud.health*6
-    ud.speed=ud.speed*0.8
+    ud.health=ud.health*3
+    ud.speed=ud.speed*0.6
     ud.customParams.def_scale=3
     for i = 1, 4 do
         ud.weapons[i].def=nil
@@ -36,7 +36,7 @@ local uds=utils_op.CopyTweakSillyBuildMorph("nebula","nebulanebula",function (ud
     end
     local shwd=ud.weaponDefs.SHIELD
     ud.weaponDefs.CANNON=nil
-    shwd.shieldPower=shwd.shieldPower*6
+    shwd.shieldPower=shwd.shieldPower*4.5
     shwd.shieldRadius=shwd.shieldRadius*3
     shwd.shieldPowerRegen=shwd.shieldPowerRegen*6
     shwd.shieldPowerRegenEnergy=shwd.shieldPowerRegenEnergy*6
