@@ -132,10 +132,10 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID, teamID)
 	---@type number
-	local myscale=1
-	if UnitDefs[unitDefID].customParams.def_scale then
-        myscale=tonumber(UnitDefs[unitDefID].customParams.def_scale) or 1
-		UnitScale(unitID,myscale)
+	local myscale=tonumber(UnitDefs[unitDefID].customParams.def_scale) or 1
+	local modelscale=tonumber(UnitDefs[unitDefID].customParams.model_scale) or 1
+	if modelscale~=1 then
+		UnitScale(unitID,modelscale)
 	end
 	local ud = UnitDefs[unitDefID]
 	local midTable = ud.model

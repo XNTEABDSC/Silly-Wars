@@ -12,8 +12,8 @@ return utils_op.CopyTweakSillyBuildMorph("staticcontanky","staticconarty",utils.
     description                   = [[Long-Range Construction Assistant]],
     health=1500,
     metalCost=3000,
-    buildDistance=2400,
-    workerTime                    = 40,
+    buildDistance=1500,
+    workerTime                    = 60,
 
     explodeAs                     = [[ATOMIC_BLAST]],
     selfDestructAs                = [[ATOMIC_BLAST]],

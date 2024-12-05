@@ -777,7 +777,6 @@ if not Spring.Utilities.to_make_op_things then
 
     do
         local lowervalues=wacky_utils.lowervalues
-        --- did automatically via def_scale
         local udtryScales3=lowervalues({
             --"collisionVolumeOffsets",
             --"collisionVolumeScales",
@@ -791,9 +790,13 @@ if not Spring.Utilities.to_make_op_things then
             "trackStretch",
             "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed"
         })
+        local udcpdefScales1=lowervalues({
+            "model_scale"
+        })
         local udtryScales1round=lowervalues({
-            "footprintX",
-            "footprintZ",
+            -- special
+            --"footprintX",
+            --"footprintZ",
         })
         local udcptryScales3=lowervalues({
             --"aimposoffset","midposoffset"
@@ -832,6 +835,15 @@ if not Spring.Utilities.to_make_op_things then
                 end
             end
         end
+        local function defscale1(scale)
+            return function (v)
+                if type(v)=="number" then
+                    return v*scale
+                else
+                    return scale
+                end
+            end
+        end
         local function scale1round(scale)
             return function (v)
                 if type(v)=="number" then
@@ -846,6 +858,39 @@ if not Spring.Utilities.to_make_op_things then
                 end
             end
         end
+        local function ScaleYardMap(oldYardMap,oldx,oldz,newx,newz)
+            local oldYardMapTable={}
+            local oldYardMapIndex=1
+            for z = 1, oldz do
+                local oldYardMapTablez={}
+                oldYardMapTable[z]=oldYardMapTablez
+                for x = 1, oldx do
+                    local nextchar
+                    while true do
+                        nextchar=string.sub(oldYardMap,oldYardMapIndex,oldYardMapIndex)
+                        oldYardMapIndex=oldYardMapIndex+1
+                        if nextchar==nil then
+                            error("Bad YardMap and size")
+                        end
+                        if nextchar~=" " then
+                            break
+                        end
+                    end
+                    oldYardMapTablez[x]=nextchar
+                end
+            end
+            local newYardMapTable={}
+            local newYardMap=""
+            local newxToOldx=oldx/newx
+            local newzToOldz=oldz/newz
+            for z = 1, newz do
+                local oldYardMapTabley=oldYardMapTable[math.ceil((z-0.5)*newzToOldz)]
+                for x = 1, newx do
+                    newYardMap=newYardMap .. oldYardMapTabley[math.ceil((x-0.5)*newxToOldx)]
+                end
+            end
+            return newYardMap
+        end
         --local modify_all=to_make_op_things.modify_all
         function to_make_op_things.set_scale(ud,scale)
             modify_all(ud,udtryScales3,scale3(scale))
@@ -856,6 +901,7 @@ if not Spring.Utilities.to_make_op_things then
                 modify_all(udcp,udcptryScales3,scale3(scale))
                 modify_all(udcp,udcptryScales1,scale1(scale))
                 ud.customparams.dynamic_colvol=true
+                modify_all(udcp,udcpdefScales1,defscale1(scale))
             end
             if ud.movementclass then
                 local b,s,p=to_make_op_things.MoveDef_CanGen(ud.movementclass)
@@ -867,6 +913,14 @@ if not Spring.Utilities.to_make_op_things then
                     end
                     --Spring.Echo("Change unit " .. ud.name .. "'s movementclass to: " ..p .. b .. tostring(s))
                     ud.movementclass=p .. b .. tostring(s)
+                end
+            end
+            if ud.footprintx then
+                local oldfpx,oldfpz=ud.footprintx,ud.footprintz
+                local newfpx,newfpz=scale1round(scale)(oldfpx),scale1round(scale)(oldfpz)
+                ud.footprintx,ud.footprintz=newfpx,newfpz
+                if ud.yardmap then
+                    ud.yardmap=ScaleYardMap(ud.yardmap,oldfpx,oldfpz,newfpx,newfpz)
                 end
             end
         end

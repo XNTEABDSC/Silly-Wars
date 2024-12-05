@@ -10,7 +10,7 @@ utils_op.MakeSetSillyMorph("tankheavyassault","tankheavyassaultnuke")
 utils_op.MakeAddSillyBuild("tankheavyassaultnuke")
 return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
     name="Nuclear Cyclops",
-    description="Shoot Nuclear Warhead (200 stockpile)",
+    description="Shoot Nuclear Warhead (175 stockpile)",
     metalCost=8000,
     health=40000,
     speed=54,

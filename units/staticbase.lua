@@ -27,16 +27,16 @@ return { staticbase = {
     soundselect = "building_select1",
     drone_defs_carrier_def=[=[
       {
-        spawnPieces = {"drone","drone","drone","drone"},
+        spawnPieces = {"drone"},
         {
           drone = UnitDefNames.droneheavyslow.id,
-          reloadTime = 10,
+          reloadTime = 5,
           maxDrones = 8,
-          spawnSize = 4,
+          spawnSize = 1,
           range = 1500,
           maxChaseRange = 1800,
           buildTime = 1,
-          maxBuild = 4,
+          maxBuild = 1,
           offsets = {0, 5, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
         },
       }
