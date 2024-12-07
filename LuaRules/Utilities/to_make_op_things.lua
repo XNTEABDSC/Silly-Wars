@@ -93,23 +93,29 @@ if not Spring.Utilities.to_make_op_things then
     ---@param domain string
     ---@param ordered ValueAndOrder<fun()>
     local function AddFnToOptionalUnitDefsTweakFns(domain,ordered)
-        
-        if not OptionalUnitDefsTweakFns[domain] then
+
+        if OptionalUnitDefsTweakFns[domain]==nil then
             OptionalUnitDefsTweakFns[domain]={}
         end
-        local l=OptionalUnitDefsTweakFns[domain]
-        l[ordered.k]=ordered
+        
+        if OptionalUnitDefsTweakFns[domain]==true then
+            AddFnToUnitDefsTweakFns(ordered)
+        else
+            local l=OptionalUnitDefsTweakFns[domain]
+            l[ordered.k]=ordered
+        end
     end
     to_make_op_things.AddFnToOptionalUnitDefsTweakFns=AddFnToOptionalUnitDefsTweakFns
     
     ---put fns in domain into 
     ---@param domain string
     local function PushOptionalUnitDefsTweakFns(domain)
-        if OptionalUnitDefsTweakFns[domain] then
-            local lf=OptionalUnitDefsTweakFns[domain]
+        local lf=OptionalUnitDefsTweakFns[domain]
+        if lf~=nil and lf~=true then
             for _, value in pairs(lf) do
                 AddFnToUnitDefsTweakFns(value)
             end
+            OptionalUnitDefsTweakFns[domain]=true
         end
     end
     to_make_op_things.PushOptionalUnitDefsTweakFns=PushOptionalUnitDefsTweakFns
