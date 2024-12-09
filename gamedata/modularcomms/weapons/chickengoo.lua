@@ -1,0 +1,41 @@
+return "commweapon_chickengoo",{
+    name                    = [[Blob]],
+    areaOfEffect            = 200,
+    burst                   = 8,
+    burstrate               = 0.033,
+    cegTag                  = [[queen_trail]],
+    craterBoost             = 0,
+    craterMult              = 0,
+          
+    customParams            = {
+        is_unit_weapon = 1,
+        light_radius = 0,
+        slot=3,
+        manualfire = 1,
+    },
+          
+    damage                  = {
+      default = 500,
+      planes  = 500,
+    },
+
+    explosionGenerator      = [[custom:large_green_goo]],
+    impulseBoost            = 0,
+    impulseFactor           = 0.4,
+    intensity               = 0.7,
+    interceptedByShieldType = 1,
+    noSelfDamage            = true,
+    proximityPriority       = -4,
+    range                   = 500,
+    reloadtime              = 6,
+    rgbColor                = [[0.2 0.6 0]],
+    size                    = 8,
+    sizeDecay               = 0,
+    soundStart              = [[chickens/bigchickenroar]],
+    sprayAngle              = 6100,
+    tolerance               = 5000,
+    turret                  = true,
+    weaponType              = [[Cannon]],
+    waterWeapon             = true,
+    weaponVelocity          = 600,
+  }
