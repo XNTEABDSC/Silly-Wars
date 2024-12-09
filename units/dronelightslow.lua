@@ -12,7 +12,7 @@ return utils_op.CopyTweak("dronelight","dronelightslow",utils.table_replace(
         name="Disruptor Firefly",
         description="Disruptor Drone",
         metalCost=30,
-        health              = 300,
+        health              = 270,
         acceleration        = 0.6,
         customParams={
             drone_defs_is_drone=1,
@@ -24,7 +24,7 @@ return utils_op.CopyTweak("dronelight","dronelightslow",utils.table_replace(
                     timeslow_damagefactor = 1.5,
                 },
                 damage                  = {
-                    default = 75,
+                    default = 60,
                 },
                 range                   = 200,
                 reloadtime              = 1,

@@ -8,11 +8,11 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 local ud=utils_op.GetUnitLua("tacnuke")
-ud.metalCost=175
+ud.metalCost=200
 ud.health=600
 ud.objectName="wep_m_phoenix_nonhax.s3o"
 ud.name="S.L.A.M"
-ud.description="Lightweight Tactical Missile"
+ud.description="Light Tactical Missile"
 ud.buildPic="commweapon_slamrocket.png"
 local wd=ud.weaponDefs.WEAPON
 utils.table_replace({

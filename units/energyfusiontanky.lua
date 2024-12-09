@@ -14,6 +14,6 @@ return utils_op.CopyTweakSillyBuildMorph("energyfusion","energyfusiontanky",util
         pylonrange=600
     },
     energyMake=50,
-    metalCost=1600,
-    health=9000,
+    metalCost=2000,
+    health=10000,
 }))
