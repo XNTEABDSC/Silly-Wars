@@ -9,12 +9,12 @@ if not Spring.Utilities.wacky_utils then
     Spring.Utilities.wacky_utils=wacky_utils
 
 
-    wacky_utils.table_replace_nil={}
+    wacky_utils.None={}
     -- Spring.Utilities.OverwriteTableInplace, but allow to set nil by to_make_op_things.table_replace_nil
     local function table_replace(tweaks)
         local function replace(t)
             for k, v in pairs(tweaks) do
-                if v==wacky_utils.table_replace_nil then
+                if v==wacky_utils.None then
                     t[k]=nil
                 elseif (type(v) == "table") then
                     if t[k] and type(t[k]) == "table" then

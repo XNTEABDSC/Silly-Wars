@@ -15,9 +15,9 @@ return utils_op.CopyTweak("bomberdisarm","bomberemp",function (ud)
         weaponDefs={
             ARMBOMBLIGHTNING={
                 customParams={
-                    disarmDamageMult=utils.table_replace_nil,
-                    disarmDamageOnly=utils.table_replace_nil,
-                    disarmTimer=utils.table_replace_nil,
+                    disarmDamageMult=utils.None,
+                    disarmDamageOnly=utils.None,
+                    disarmTimer=utils.None,
                 },
                 paralyzer               = true,
                 paralyzeTime            = 16,

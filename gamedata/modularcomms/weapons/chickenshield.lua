@@ -1,8 +1,7 @@
 return "commweapon_chickenshield",{
     name                    = [[Shield]],
-    craterMult              = 0,
     customParams={
-        slot=2
+        slot="2"
     },
 
     damage                  = {

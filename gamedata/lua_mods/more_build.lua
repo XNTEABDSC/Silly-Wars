@@ -23,6 +23,7 @@ utils_op.AddFnToUnitDefsTweakFns({
         add_build("striderhub","dynhub_strike_base")
         add_build("striderhub","dynhub_support_base")
         add_build("striderhub","dynknight0")
+        add_build("striderhub","dynchicken0")
         --add_build("staticcon","staticcon")
         add_build("striderhub","nebula")
     end

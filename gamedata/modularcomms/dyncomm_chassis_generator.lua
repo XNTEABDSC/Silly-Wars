@@ -141,15 +141,15 @@ local chassisDefs = {
 			"commweapon_shockrifle",
 			-- Space for shield
 		}
-	},{
-		name="dynchicken1",
-		weapons={
-			"commweapon_peashooter",
-			"commweapon_chickenclaw",
-			"commweapon_chickenclaw",
-		}
-	}
+	},
 }
+
+local chassisFiles=VFS.DirList("gamedata/modularcomms/chassises_dyncomm_chassis_generator", "*.lua") or {}
+
+for i = 1, #chassisFiles do
+	local chassisDef = VFS.Include(chassisFiles[i])
+	chassisDefs[#chassisDefs+1]=chassisDef
+end
 
 local commanderCost = 1100
 
@@ -168,7 +168,7 @@ for i = 1, #chassisDefs do
 	local name = chassisDefs[i].name
 	local unitDef = UnitDefs[name]
 	
-	for wreckName, wreckDef in pairs(unitDef.featuredefs) do
+	for wreckName, wreckDef in pairs(unitDef.featuredefs or {}) do
 		wreckDef.metal = commanderCost * (wreckName == "heap" and 0.2 or 0.4)
 		wreckDef.reclaimtime = wreckDef.metal
 	end

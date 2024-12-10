@@ -15,8 +15,8 @@ return "commweapon_chickengoo",{
     },
           
     damage                  = {
-      default = 500,
-      planes  = 500,
+      default = 1000,
+      planes  = 1000,
     },
 
     explosionGenerator      = [[custom:large_green_goo]],

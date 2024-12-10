@@ -25,12 +25,12 @@ local nuketable={
     customParams              = {
         light_color = [[2.92 2.64 1.76]],
         light_radius = 3000,
-        spawns_name = utils.table_replace_nil,
-        spawns_feature = utils.table_replace_nil,
+        spawns_name = utils.None,
+        spawns_feature = utils.None,
         
-        smoothradius     = utils.table_replace_nil,
-        smoothmult       = utils.table_replace_nil,
-        movestructures   = utils.table_replace_nil,
+        smoothradius     = utils.None,
+        smoothmult       = utils.None,
+        movestructures   = utils.None,
         
     },
     damage                  = {

@@ -18,7 +18,7 @@ local procUnits={
 }
 
 local UDBase=utils_op.GetUnitLua("tacnuke")
-local tbnil=utils.table_replace_nil
+local tbnil=utils.None
 
 
 local procUnitNewUDs={}

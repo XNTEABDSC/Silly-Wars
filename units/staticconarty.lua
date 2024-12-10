@@ -19,7 +19,7 @@ return utils_op.CopyTweakSillyBuildMorph("staticcontanky","staticconarty",utils.
     selfDestructAs                = [[ATOMIC_BLAST]],
     customParams={
         def_scale=3,
-        integral_menu_be_in_tab=utils.table_replace_nil
+        integral_menu_be_in_tab=utils.None
     },
-    buildoptions=utils.table_replace_nil
+    buildoptions=utils.None
 }))

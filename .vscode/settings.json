@@ -3,7 +3,8 @@
         "VFS",
         "UnitDefs",
         "UnitDefNames",
-        "FeatureDefs"
+        "FeatureDefs",
+        "ModularCommDefsShared"
     ],
     "Lua.runtime.version": "Lua 5.1",
 }

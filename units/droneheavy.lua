@@ -7,7 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-local trnil=utils.table_replace_nil
+local trnil=utils.None
 return utils_op.CopyTweak("droneheavyslow","droneheavy",utils.table_replace(
     {
         name="DPS Viper",
