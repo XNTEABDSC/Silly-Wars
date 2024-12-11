@@ -157,8 +157,6 @@ local function LoadCommData()
 			legacyModulesByUnitDefName[UnitDefs[i].name] = {raw = modulesRaw, human = modulesHuman}
 		end
 	end
-	Spring.Echo("DEBUG newCommProfilesByProfileID")
-	Spring.Utilities.TableEcho(newCommProfilesByProfileID,"newCommProfilesByProfileID")
 
 	return newCommData, newCommProfilesByProfileID, newCommProfileIDsByPlayerID, newProfileIDByBaseDefID
 end
@@ -166,9 +164,6 @@ end
 --------------------------------------------------------------------------------
 
 local function GetCommProfileInfo(commProfileID)
-	Spring.Echo("DEBUG GetCommProfileInfo")
-	Spring.Echo("commProfileID: " .. commProfileID)
-	Spring.Utilities.TableEcho(commProfilesByProfileID,"newCommProfilesByProfileID")
 
 	return commProfilesByProfileID[commProfileID]
 end

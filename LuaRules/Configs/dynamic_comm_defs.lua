@@ -1866,7 +1866,6 @@ end
 local chassisDefNames = {}
 for i = 1, #chassisDefs do
 	chassisDefNames[chassisDefs[i].name] = i
-	Spring.Echo("DEBUG: chassisDefNames " .. chassisDefs[i].name)
 end
 
 ------------------------------------------------------------------------
