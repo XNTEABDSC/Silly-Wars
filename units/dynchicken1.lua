@@ -26,6 +26,7 @@ return { dynchicken1 = {
       outline_yoff = 27.5,
       dynamic_comm=1,
       shared_energy_gen = 1,
+      shield_fxs_type="chicken",
     },
   
     explodeAs           = [[SMALL_UNITEX]],

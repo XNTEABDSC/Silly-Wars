@@ -96,7 +96,7 @@ local function GenerateLevel0DyncommsAndWrecks()
 		local unitName = commProfile.baseUnitName
 		
 		local chassis = commProfile.chassis
-		local mappedChassis = legacyToDyncommChassisMap[chassis] or "assault"
+		local mappedChassis = legacyToDyncommChassisMap[chassis]-- or "assault"
 		if mappedChassis then
 			chassis = mappedChassis
 		end

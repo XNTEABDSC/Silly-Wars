@@ -1,7 +1,8 @@
 return "commweapon_chickenshield",{
     name                    = [[Shield]],
     customParams={
-        slot="2"
+        slot="2",
+        shield_rate=180,
     },
 
     damage                  = {
