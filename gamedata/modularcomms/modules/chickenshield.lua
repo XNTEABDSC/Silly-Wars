@@ -1,19 +1,41 @@
-local shared=ModularCommDefsShared
-local moduleImagePath=shared.moduleImagePath
-local applicationFunctionApplyWeapon=shared.applicationFunctionApplyWeapon
-local COST_MULT=shared.COST_MULT
+
+local humanName="Chicken Shield"
+local description= "Generates a small bubble shield"
+
 return {
-    name = "commweapon_chickenshield",
-    humanName = "Chicken Shield",
-    description = "Chicken Shield - A medium, high regen shield.",
-    image = moduleImagePath .. "module_personal_shield.png",
-    limit = 1,
-    cost = 300 * COST_MULT,
-    prohibitingModules = {"module_personal_cloak"},
-    requireLevel = 2,
-    slotType = "module",
-    applicationFunction = function (modules, sharedData)
-        -- Do not override area shield
-        sharedData.shield = sharedData.shield or "commweapon_chickenshield"
+    moduledef={
+        module_chickenshield={
+            name=humanName,
+    		description=description,order = 5,
+            func = function(unitDef)
+                if unitDef.customparams.dynamic_comm then
+                  DynamicApplyWeapon(unitDef, "commweapon_chickenshield", #unitDef.weapons + 1)
+                else
+                  ApplyWeapon(unitDef, "commweapon_chickenshield", 4)
+                end
+              end,
+        }
+    },
+    dynamic_comm_def=function (shared)
+		shared=ModularCommDefsShared or shared
+		--local shared=ModularCommDefsShared
+        local moduleImagePath=shared.moduleImagePath
+        local applicationFunctionApplyWeapon=shared.applicationFunctionApplyWeapon
+        local COST_MULT=shared.COST_MULT
+        return {
+            name = "commweapon_chickenshield",
+            humanName = humanName,
+            description = description,
+            image = moduleImagePath .. "module_personal_shield.png",
+            limit = 1,
+            cost = 300 * COST_MULT,
+            prohibitingModules = {"module_personal_cloak"},
+            requireLevel = 2,
+            slotType = "module",
+            applicationFunction = function (modules, sharedData)
+                -- Do not override area shield
+                sharedData.shield = "commweapon_chickenshield"
+            end
+        }
     end
 }

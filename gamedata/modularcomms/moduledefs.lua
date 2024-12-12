@@ -755,7 +755,16 @@ upgrades = {
 	}
 }
 
+local moduleFiles=VFS.DirList("gamedata/modularcomms/modules", "*.lua") or {}
 
+for i = 1, #moduleFiles do
+	local moduleDefs = VFS.Include(moduleFiles[i]).moduledef
+	for key, value in pairs(moduleDefs) do
+		upgrades[key]=value
+	end
+end
+
+--[=[
 local moduleFiles=VFS.DirList("gamedata/modularcomms/modules_moduledefs", "*.lua") or {}
 
 for i = 1, #moduleFiles do
@@ -764,7 +773,7 @@ for i = 1, #moduleFiles do
 		upgrades[key]=value
 	end
 end
-
+]=]
 decorations = {
 	skin_recon_dark = {
 		func = function(unitDef)

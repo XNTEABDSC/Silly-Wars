@@ -1,55 +1,8 @@
 local ret = {
-	dyntrainer_strike = {
-		name = "Strike",
-		chassis = "strike",
-		modules = {
-			{"commweapon_heavymachinegun", "module_radarnet"},
-			{"module_ablative_armor", "module_autorepair"},
-			{"commweapon_lightninggun", "module_personal_cloak", "module_ablative_armor"},
-			{"module_high_power_servos", "module_ablative_armor", "module_dmg_booster"},
-			{"module_high_power_servos", "module_ablative_armor", "module_dmg_booster"},
-		},
-		--decorations = {"banner_overhead"},
-		--images = {overhead = "184"}
-	},
-	dyntrainer_recon = {
-		name = "Recon",
-		chassis = "recon",
-		modules = {
-			{"commweapon_heavymachinegun", "module_radarnet"},
-			{"module_ablative_armor", "module_autorepair"},
-			{"commweapon_clusterbomb", "commweapon_personal_shield", "module_ablative_armor"},
-			{"module_high_power_servos", "module_ablative_armor", "module_dmg_booster"},
-			{"module_high_power_servos", "module_ablative_armor", "module_dmg_booster"},
-		},
-		--decorations = {"skin_recon_dark", "banner_overhead"},
-		--images = {overhead = "184"}
-	},
-	dyntrainer_support = {
-		name = "Engineer",
-		chassis = "support",
-		modules = {
-			{"commweapon_lparticlebeam", "module_radarnet"},
-			{"module_ablative_armor", "module_autorepair"},
-			{"commweapon_hparticlebeam", "module_personal_cloak", "module_adv_nano"},
-			{"module_dmg_booster", "module_adv_targeting", "module_adv_targeting"},
-			{"module_adv_targeting", "module_adv_nano", "module_resurrect"},
-		},
-		--decorations = {"skin_support_hotrod"},
-	},
-	dyntrainer_assault = {
-		name = "Guardian",
-		chassis = "assault",
-		modules = {
-			{"commweapon_heavymachinegun", "module_radarnet"},
-			{"module_ablative_armor", "module_autorepair"},
-			{"commweapon_shotgun", "commweapon_personal_shield", "module_heavy_armor"},
-			{"module_dmg_booster", "module_dmg_booster", "module_heavy_armor"},
-			{"conversion_disruptor","module_dmg_booster", "module_heavy_armor"},
-		},
-		--decorations = {"banner_overhead"},
-		--images = {overhead = "166"}
-	},
+	
+	
+	
+	
 	dynhub_strike = {
 		name = "Strike Support",
 		notStarter = true,
@@ -204,19 +157,6 @@ for i = 1, #chassisFiles do
 	end
 end
 
-if Spring.GetModOptions and Spring.GetModOptions().campaign_chassis == "1" then
-	ret.dyntrainer_knight = {
-		name = "Campaign",
-		chassis = "knight",
 
-		modules = { -- all null because nabs want to personalize
-			{"nullbasicweapon", "nullmodule"},
-			{"nullmodule", "nullmodule"},
-			{"nulladvweapon", "nullmodule", "nullmodule"},
-			{"nullmodule", "nullmodule", "nullmodule"},
-			{"nullmodule", "nullmodule", "nullmodule"},
-		},
-	}
-end
 
 return ret
