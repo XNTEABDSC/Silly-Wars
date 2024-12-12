@@ -16,7 +16,7 @@ return {
     baseUnitDef = UnitDefNames and UnitDefNames["dynchicken0"].id,
     extraLevelCostFunction = extraLevelCostFunction,
     maxNormalLevel = 5,
-    secondPeashooter = true,
+    secondPeashooter = false,
     levelDefs = {
         [0] = {
             morphBuildPower = 5,

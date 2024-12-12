@@ -18,12 +18,12 @@ utils_op.AddFnToUnitDefsTweakFns({
         local add_build=function (a,b)
             UnitDefs[a].buildoptions[#UnitDefs[a].buildoptions+1]=b
         end
-        add_build("striderhub","dynhub_assault_base")
-        add_build("striderhub","dynhub_recon_base")
-        add_build("striderhub","dynhub_strike_base")
-        add_build("striderhub","dynhub_support_base")
-        add_build("striderhub","dynknight0")
-        add_build("striderhub","dynchicken0")
+        add_build("striderhub","dyntrainer_assault_base")
+        add_build("striderhub","dyntrainer_recon_base")
+        add_build("striderhub","dyntrainer_strike_base")
+        add_build("striderhub","dyntrainer_support_base")
+        add_build("striderhub","dyntrainer_knight_base")
+        add_build("striderhub","dyntrainer_chicken_base")
         --add_build("staticcon","staticcon")
         add_build("striderhub","nebula")
     end

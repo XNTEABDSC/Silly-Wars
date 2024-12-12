@@ -156,11 +156,14 @@ local function ApplyModuleEffects(unitID, data, totalCost, images)
 		GG.Overdrive.AddUnitResourceGeneration(unitID, data.metalIncome, data.energyIncome, true)
 	end
 	
+	
 	if data.healthBonus then
 		local health, maxHealth = Spring.GetUnitHealth(unitID)
 		local newHealth = math.max(health + data.healthBonus, 1)
 		GG.Attributes.AddEffect(unitID, "self_upgrade", {healthAdd = data.healthBonus, static = true})
+		
 		Spring.SetUnitHealth(unitID, newHealth) -- Override scaled health change from GG.Attributes
+		
 	end
 	
 	if data.skinOverride then
@@ -420,10 +423,11 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 	end
 	
 	local chassisData = chassisDefs[chassisDefID]
+	--[=[
 	if chassisData.notSelectable and not staticLevel then
 		Spring.Echo("Chassis not selectable", commProfileInfo.chassis)
 		return false
-	end
+	end]=]
 	
 	local baseUnitDefID = commProfileInfo.baseUnitDefID or chassisData.baseUnitDef
 	
