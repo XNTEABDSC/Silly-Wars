@@ -74,10 +74,20 @@ for unitDefID = 1, #UnitDefs do
 end
 
 local commShieldDefs = {
-	WeaponDefNames["commweapon_areashield"],
-	WeaponDefNames["commweapon_personal_shield"],
-	WeaponDefNames["commweapon_chickenshield"]
+	--WeaponDefNames["commweapon_areashield"],
+	--WeaponDefNames["commweapon_personal_shield"],
+	--WeaponDefNames["commweapon_chickenshield"]
 }
+
+local weaponsList = VFS.DirList("gamedata/modularcomms/weapons", "*.lua") or {}
+for i = 1, #weaponsList do
+	local name, array = VFS.Include(weaponsList[i])
+	local wd=WeaponDefNames[name]
+	if wd.weaponType              == [[Shield]] then
+		commShieldDefs[#commShieldDefs+1]=wd.id
+	end
+end
+
 
 for i = 1, #commShieldDefs do
 	local wd = commShieldDefs[i]
