@@ -1,6 +1,7 @@
 return {
     name="dynchicken1",
     weapons={
+        "commweapon_beamlaser",
         "commweapon_chickenclaw",
         "commweapon_chickenclaw",
         "commweapon_chickengoo",
