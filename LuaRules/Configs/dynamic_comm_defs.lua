@@ -1009,10 +1009,11 @@ for i = 1, #moduleDefs do
 	end
 end
 
-local moduleFiles=VFS.DirList("gamedata/modularcomms/modules", "*.lua") or {}
+local modulesalldefs=include("gamedata/modularcomms/modulesloadall.lua")
+--local moduleFiles=VFS.DirList("gamedata/modularcomms/modules", "*.lua") or {}
 
-for i = 1, #moduleFiles do
-	local moduleDef = VFS.Include(moduleFiles[i],SharedEnv).dynamic_comm_def(ModularCommDefsShared_)
+for i = 1, #modulesalldefs do
+	local moduleDef = modulesalldefs[i].dynamic_comm_def(ModularCommDefsShared_)
 	moduleDefs[#moduleDefs+1]=moduleDef
 	local def=moduleDef
 	if basicWeapons[def.name] or def.isBasicWeapon then

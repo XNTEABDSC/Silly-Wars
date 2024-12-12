@@ -755,10 +755,12 @@ upgrades = {
 	}
 }
 
-local moduleFiles=VFS.DirList("gamedata/modularcomms/modules", "*.lua") or {}
+include = include or VFS.Include
 
-for i = 1, #moduleFiles do
-	local moduleDefs = VFS.Include(moduleFiles[i]).moduledef
+local modulesdefs=include("gamedata/modularcomms/modulesloadall.lua")
+
+for i = 1, #modulesdefs do
+	local moduleDefs = modulesdefs[i].moduledef
 	for key, value in pairs(moduleDefs) do
 		upgrades[key]=value
 	end
