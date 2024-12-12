@@ -2,10 +2,10 @@ local chassisDefs = {
 	
 }
 
-local chassisFiles=VFS.DirList("gamedata/modularcomms/chassises_dyncomm_chassis_generator", "*.lua") or {}
+local chassisAllDefs=VFS.Include("gamedata/modularcomms/chassises_all_defs.lua")
 
-for i = 1, #chassisFiles do
-	local chassisDef = VFS.Include(chassisFiles[i])
+for i = 1, #chassisAllDefs do
+	local chassisDef = chassisAllDefs[i].dyncomm_chassis_generator
 	chassisDefs[#chassisDefs+1]=chassisDef
 end
 

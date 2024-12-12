@@ -219,10 +219,11 @@ end
 -- Must match dynamic_comm_defs.lua around line 800 (top of the chassis defs)
 --------------------------------------------------------------------------------------
 
-local chassisFiles=VFS.DirList("gamedata/modularcomms/chassises_staticcomms", "*.lua") or {}
+local chassisAllDefs=VFS.Include("gamedata/modularcomms/chassises_all_defs.lua")
 
-for i = 1, #chassisFiles do
-	local name,levelLimits,modules = VFS.Include(chassisFiles[i])
+for i = 1, #chassisAllDefs do
+  local staticcommsDef=chassisAllDefs[i].staticcomms
+	local name,levelLimits,modules = staticcommsDef[1],staticcommsDef[2],staticcommsDef[3]
 	MakeCommanderChassisClones(name,levelLimits,modules)
 end
 

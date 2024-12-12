@@ -248,10 +248,10 @@ local copy = {
 	},
 }
 
-local chassisFiles=VFS.DirList("gamedata/modularcomms/chassises_clonedefs", "*.lua") or {}
+local chassisAllDefs=VFS.Include("gamedata/modularcomms/chassises_all_defs.lua")
 
-for i = 1, #chassisFiles do
-	local chassisDef = VFS.Include(chassisFiles[i])
+for i = 1, #chassisAllDefs do
+	local chassisDef = chassisAllDefs[i].clonedefs
 	for key, value in pairs(chassisDef) do
 		copy[key]=value
 	end

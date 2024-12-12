@@ -1009,7 +1009,7 @@ for i = 1, #moduleDefs do
 	end
 end
 
-local modulesalldefs=include("gamedata/modularcomms/modulesloadall.lua")
+local modulesalldefs=include("gamedata/modularcomms/modules_all_defs.lua")
 --local moduleFiles=VFS.DirList("gamedata/modularcomms/modules", "*.lua") or {}
 
 for i = 1, #modulesalldefs do
@@ -1149,17 +1149,12 @@ do
 end
 
 local chassisDefs = {
-	
-	
-	
-	
-	
 }
 
-local chassisFiles=VFS.DirList("gamedata/modularcomms/chassises_dynamic_comm_defs", "*.lua") or {}
+local chassisAllDefs=VFS.Include("gamedata/modularcomms/chassises_all_defs.lua")
 
-for i = 1, #chassisFiles do
-	local chassisDef = VFS.Include(chassisFiles[i],SharedEnv)
+for i = 1, #chassisAllDefs do
+	local chassisDef = chassisAllDefs[i].dynamic_comm_defs(ModularCommDefsShared_)
 	chassisDefs[#chassisDefs+1]=chassisDef
 end
 

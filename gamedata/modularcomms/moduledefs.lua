@@ -757,7 +757,7 @@ upgrades = {
 
 include = include or VFS.Include
 
-local modulesdefs=include("gamedata/modularcomms/modulesloadall.lua")
+local modulesdefs=include("gamedata/modularcomms/modules_all_defs.lua")
 
 for i = 1, #modulesdefs do
 	local moduleDefs = modulesdefs[i].moduledef

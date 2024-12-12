@@ -148,10 +148,10 @@ local ret = {
 	},
 }
 
-local chassisFiles=VFS.DirList("gamedata/modularcomms/chassises_dyncomms_predefined", "*.lua") or {}
+local chassisAllDefs=VFS.Include("gamedata/modularcomms/chassises_all_defs.lua")
 
-for i = 1, #chassisFiles do
-	local chassisDef = VFS.Include(chassisFiles[i])
+for i = 1, #chassisAllDefs do
+	local chassisDef = chassisAllDefs[i].dyncomms_predefined
 	for key, value in pairs(chassisDef) do
 		ret[key]=value
 	end
