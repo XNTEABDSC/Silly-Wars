@@ -14,8 +14,8 @@ return "commweapon_chickenspores",{
     },
 
     damage                  = {
-      default = 75,
-      planes  = 150,
+      default = 85,
+      planes  = 85*2,
     },
 
     dance                   = 60,
@@ -30,7 +30,7 @@ return "commweapon_chickenspores",{
     interceptedByShieldType = 2,
     model                   = [[chickeneggpink.s3o]],
     noSelfDamage            = true,
-    range                   = 380,
+    range                   = 300,
     reloadtime              = 4,
     smokeTrail              = true,
     startVelocity           = 100,

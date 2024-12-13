@@ -83,8 +83,8 @@ local weaponsList = VFS.DirList("gamedata/modularcomms/weapons", "*.lua") or {}
 for i = 1, #weaponsList do
 	local name, array = VFS.Include(weaponsList[i])
 	local wd=WeaponDefNames[name]
-	if wd.weaponType              == [[Shield]] then
-		commShieldDefs[#commShieldDefs+1]=wd.id
+	if wd.type == [[Shield]] then
+		commShieldDefs[#commShieldDefs+1]=wd
 	end
 end
 

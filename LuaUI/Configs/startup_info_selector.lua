@@ -41,10 +41,14 @@ local chassisImages = {
 	assault = "LuaUI/Images/startup_info_selector/chassis_benzcom.png",
 	strike = "LuaUI/Images/startup_info_selector/chassis_commstrike.png",
 	knight = "LuaUI/Images/startup_info_selector/chassis_cremcom.png",
-	chicken = "unitpics/chickenbroodqueen.png"
 }
+--    moduleDefs, chassisDefs, utilities, LEVEL_BOUND, chassisDefByBaseDef, moduleDefNames, chassisDefNames
+local moduleDefs, chassisDefs, upgradeUtilities, LEVEL_BOUND , chassisDefByBaseDef, moduleDefNames, chassisDefNames = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
 
-local moduleDefs, emptyModules, chassisDefs, upgradeUtilities, chassisDefByBaseDef, moduleDefNames, chassisDefNames = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
+for key, value in pairs(chassisDefs) do
+	Spring.Echo("DEBUG: " .. tostring(value))
+	chassisImages[value.name]=value.chassisImage or chassisImages[value.name]
+end
 
 local colorWeapon = "\255\255\32\32"
 local colorConversion = "\255\255\96\0"

@@ -37,5 +37,5 @@ return "commweapon_chickenspike",{
     weaponAcceleration      = 100,
     weaponType              = [[Cannon]],
     weaponVelocity          = 280,
-    tolerance=3000*2,
+    tolerance=8000,
   }

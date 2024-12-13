@@ -10,7 +10,7 @@ return "commweapon_chickenclaw",{
     },
 
     damage                  = {
-      default = 400,
+      default = 600,
     },
 
     explosionGenerator      = [[custom:NONE]],
@@ -18,13 +18,13 @@ return "commweapon_chickenclaw",{
     impulseFactor           = 1,
     interceptedByShieldType = 0,
     noSelfDamage            = true,
-    range                   = 200,
+    range                   = 140,
     reloadtime              = 1,
     size                    = 0,
     soundStart              = [[chickens/bigchickenbreath]],
     targetborder            = 1,
-    tolerance               = 5000,
-    turret                  = true,
+    tolerance               = 8000,
+    --turret                  = true,
     waterWeapon             = true,
     weaponType              = [[Cannon]],
     weaponVelocity          = 600,

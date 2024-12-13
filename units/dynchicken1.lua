@@ -1,6 +1,6 @@
 return { dynchicken1 = {
-    name                = [[Potential Chicken]],
-    description         = [[Upgradable Chicken]],
+    name                = [[Chicken Comm]],
+    description         = [[CLUCK CLUCK CLUCK]],
     acceleration        = 0.6,
     autoHeal            = 10,
     brakeRate           = 1.23,
@@ -27,6 +27,11 @@ return { dynchicken1 = {
       dynamic_comm=1,
       shared_energy_gen = 1,
       shield_fxs_type="chicken",
+      soundok = [[chickens/chicken]],
+      soundselect = [[chickens/chicken]],
+      soundok_vol = [[0.65]],
+      soundselect_vol = [[0.65]],
+      soundbuild = [[chickens/chicken]],
     },
   
     explodeAs           = [[SMALL_UNITEX]],

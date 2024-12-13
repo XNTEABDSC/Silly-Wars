@@ -30,8 +30,10 @@ return {
             limit = 1,
             cost = 300 * COST_MULT,
             prohibitingModules = {"module_personal_cloak"},
-            requireLevel = 2,
+            requireOneOf = {"commweapon_personal_shield"},
+            requireLevel = 3,
             slotType = "module",
+
             applicationFunction = function (modules, sharedData)
                 -- Do not override area shield
                 sharedData.shield = "commweapon_chickenshield"

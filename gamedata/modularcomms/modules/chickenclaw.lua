@@ -1,10 +1,10 @@
 
-local humanName="Chicken Spike"
-local description= "Chicken Spike: Mid range skirmish weapon"
+local humanName="Chicken Claw"
+local description= "Chicken Claw: CLUCK"
 
 return {
     moduledef={
-        commweapon_chickenspike={
+        commweapon_chickenclaw={
             name=humanName,
 		    description=description,
         }
@@ -17,17 +17,17 @@ return {
         
         local applicationFunctionApplyWeapon=shared.applicationFunctionApplyWeapon
 		return {
-            name = "commweapon_chickenspike",
+            name = "commweapon_chickenclaw",
 			humanName = humanName,
 			description = description,
-            image = moduleImagePath .. "chickens.png",
+            image = moduleImagePath .. "chickena.png",
             limit = 2,
             cost = 0,
             requireChassis = {"chicken"},
             requireLevel = 1,
             slotType = "basic_weapon",
             applicationFunction = applicationFunctionApplyWeapon(function ()
-                return "commweapon_chickenspike"
+                return "commweapon_chickenclaw"
             end),
             isBasicWeapon=true,
         }

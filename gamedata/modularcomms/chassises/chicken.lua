@@ -19,25 +19,25 @@ return {
             dynchicken2 = {
                 level = 2,
                 mainstats = {health = 4600},
-                customparams = {def_scale=1.1},
+                customparams = {def_scale=1.2},
                 nomainstats=nomainstates,
             },
             dynchicken3 = {
                 level = 3,
                 mainstats = {health = 5200},
-                customparams = {def_scale=1.2},
+                customparams = {def_scale=1.4},
                 nomainstats=nomainstates,
             },
             dynchicken4 = {
                 level = 4,
                 mainstats = {health = 5800},
-                customparams = {def_scale=1.3},
+                customparams = {def_scale=1.6},
                 nomainstats=nomainstates,
             },
             dynchicken5 = {
                 level = 5,
                 mainstats = {health = 6400},
-                customparams = {def_scale=1.4},
+                customparams = {def_scale=1.7},
                 nomainstats=nomainstates,
             },
         },
@@ -51,17 +51,19 @@ return {
         local GetCloneModuleString=shared.GetCloneModuleString
         local morphUnitDefFunction=shared.morphUnitDefFunction
         local mymorphUnitDefFunction=morphUnitDefFunction("dynchicken",GetCloneModuleString("chicken",{
-            "commweapon_chickenshield"
+            "commweapon_personal_shield","commweapon_chickenshield"
         }))
         local moduleDefNames=shared.moduleDefNames
 
         return {
             name = "chicken",
-            humanName = "Potential Chicken",
+            humanName = "Chicken",
             baseUnitDef = UnitDefNames and UnitDefNames["dynchicken0"].id,
             extraLevelCostFunction = extraLevelCostFunction,
             maxNormalLevel = 5,
             secondPeashooter = false,
+            chassisImage="unitpics/chickenbroodqueen.png",
+            initWeapon="commweapon_chickenspores",
             levelDefs = {
                 [0] = {
                     morphBuildPower = 5,
@@ -180,14 +182,17 @@ return {
     dyncomm_chassis_generator={
         name="dynchicken1",
         weapons={
-            "commweapon_beamlaser",
+            --"commweapon_beamlaser",
             "commweapon_chickenclaw",
             "commweapon_chickenclaw",
             "commweapon_chickengoo",
             "commweapon_chickenspike",
             "commweapon_chickenspike",
             "commweapon_chickenspores",
-            "commweapon_chickenspores"
+            "commweapon_chickenspores",
+            "commweapon_chickenflamethrower",
+            "commweapon_chickenflamethrower",
+            --"commweapon_personal_shield",
         }
     },
     dyncomms_predefined={
@@ -206,7 +211,7 @@ return {
     },
     staticcomms={
 "dynchicken",
-	{{1}, {1}, {1}, {1}, {1}},
-	{"module_chickenshield"}
+	{{0,0}, {1,0}, {1,1}, {1,1}, {1,1}},
+	{"module_personal_shield","module_chickenshield"}
     }
 }

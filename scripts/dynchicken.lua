@@ -42,17 +42,42 @@ local SIG_MOVE = 8
 local dyncomm = include('dynamicCommander.lua')
 _G.dyncomm = dyncomm
 
-local WeaponIsTurret={}
+local WeaponLauncherType={}
+local WeaponLauncherType_Head_Mid=1
+local WeaponLauncherType_Head_Fast=2
+local WeaponLauncherType_Head_Slow=3
+local WeaponLauncherType_Spike=4
+local WeaponLauncherType_Shield=5
+local WeaponLauncherType_Odd=6
 for key, value in pairs(UnitDef.weapons or {}) do
 	local wd=WeaponDefs[value.weaponDef]
 	if wd then
-		if wd.weaponType=="shield" then
-			
+		--Spring.Utilities.TableEcho(wd,wd.name)
+		if wd.type=="shield" then
+			WeaponLauncherType[key]=WeaponLauncherType_Shield
 		else
-			WeaponIsTurret[key]=wd.turret
+			if not wd.turret then
+				local reload=wd.reload
+				if reload then
+					local res
+					if reload<1 then
+						res=WeaponLauncherType_Head_Fast
+					elseif reload<10 then
+						res=WeaponLauncherType_Head_Mid
+					else
+						res=WeaponLauncherType_Head_Slow
+					end
+					WeaponLauncherType[key]=res
+				else
+					WeaponLauncherType[key]=WeaponLauncherType_Odd
+				end
+			else
+				WeaponLauncherType[key]=WeaponLauncherType_Spike
+			end
 		end
 	end
 end
+
 
 local function Walk()
 		
@@ -235,8 +260,11 @@ end
 
 function script.AimFromWeapon(num)
 	if dyncomm.GetWeapon(num) == 1 or dyncomm.GetWeapon(num) == 2 then
-		if WeaponIsTurret[num] then
+		local wlt=WeaponLauncherType[num]
+		if wlt==WeaponLauncherType_Spike then
 			return spike1
+		elseif wlt==WeaponLauncherType_Shield then
+			return body
 		else
 			return firepoint
 		end
@@ -249,12 +277,11 @@ function script.AimFromWeapon(num)
 end]=]
 function script.QueryWeapon(num)
 	if dyncomm.GetWeapon(num) == 1 or dyncomm.GetWeapon(num) == 2 then
-		if WeaponIsTurret[num]==nil then
-			Spring.Echo("Odd weapon " .. num .. " name: " .. WeaponDefs[ UnitDef.weapons[num].weaponDef].name)
-			return body
-		end
-		if WeaponIsTurret[num] then
+		local wlt=WeaponLauncherType[num]
+		if wlt==WeaponLauncherType_Spike then
 			return spike1
+		elseif wlt==WeaponLauncherType_Shield then
+			return body
 		else
 			return firepoint
 		end
@@ -267,28 +294,27 @@ function  script.QueryWeapon(num)
 end]=]
 
 function script.AimWeapon(num,heading,pitch)
-	local wpnnum=dyncomm.GetWeapon(num)
-	if wpnnum==3 then
+	local commwpnnum=dyncomm.GetWeapon(num)
+	local wd=WeaponDefs[ UnitDef.weapons[num].weaponDef ]
+	if commwpnnum==3 then
 		return true
 	end
 
-	if wpnnum==1 or wpnnum==2 then
-		if WeaponIsTurret[num]==nil then
-			Spring.Echo("Odd weapon " .. num .. " name: " .. WeaponDefs[ UnitDef.weapons[num].weaponDef].name)
-			return body
-		end
-		if WeaponIsTurret[num] then
+	if commwpnnum==1 or commwpnnum==2 then
+		local wlt=WeaponLauncherType[num]
+		if wlt==WeaponLauncherType_Spike or wlt==WeaponLauncherType_Shield then
+			return true
+		else
+			Signal( SIG_AIM)
+			SetSignalMask( SIG_AIM)
+			Turn( head , y_axis, (heading ), math.rad(250) )
+			Turn( head , x_axis, (-pitch ), math.rad(200) )
+				
+			WaitForTurn(head, y_axis)
+			--StartThread(RestoreAfterDelay)
+			
 			return true
 		end
-		Signal( SIG_AIM)
-		SetSignalMask( SIG_AIM)
-		Turn( head , y_axis, (heading ), math.rad(250) )
-		Turn( head , x_axis, (-pitch ), math.rad(200) )
-			
-		WaitForTurn(head, y_axis)
-		--StartThread(RestoreAfterDelay)
-		
-		return true
 	end
 end
 local Blades={
@@ -314,19 +340,27 @@ function script.Shot(num)
 		return
 	end
 	if wpnnum==1 or wpnnum==2 then
-		if WeaponIsTurret[num]==nil then
-			Spring.Echo("Odd weapon " .. num .. " name: " .. WeaponDefs[ UnitDef.weapons[num].weaponDef].name)
+		local wlt=WeaponLauncherType[num]
+		if wlt==WeaponLauncherType_Spike or wlt==WeaponLauncherType_Shield then
 			return
+		else
+			if wlt==WeaponLauncherType_Head_Mid then
+				gun_1=gun_1+1
+				if gun_1 > 4 then
+					
+					gun_1 = 1
+				end
+				StartThread(MoveBlade,gun_1)
+			elseif wlt==WeaponLauncherType_Head_Fast then
+				return
+			elseif wlt==WeaponLauncherType_Head_Slow then
+				StartThread(MoveBlade,1)
+				StartThread(MoveBlade,2)
+				StartThread(MoveBlade,3)
+				StartThread(MoveBlade,4)
+			end
 		end
-		if WeaponIsTurret[num] then
-			return
-		end
-		gun_1=gun_1+1
-		if gun_1 > 4 then
-			
-			gun_1 = 1
-		end
-		StartThread(MoveBlade,gun_1)
+		
 	end
 end
 

@@ -1,6 +1,6 @@
 
 local humanName="Chicken Spores"
-local description= "Chicken Spores"
+local description= "Chicken Spores: Chasing Projectile, x0.5 damage vs ground"
 return {
     moduledef={
         commweapon_chickenspores={
@@ -19,7 +19,7 @@ return {
             name = "commweapon_chickenspores",
 			humanName = humanName,
 			description = description,
-            image = moduleImagePath .. "commweapon_flamethrower.png",
+            image = moduleImagePath .. "chickend.png",
             limit = 2,
             cost = 0,
             requireChassis = {"chicken"},

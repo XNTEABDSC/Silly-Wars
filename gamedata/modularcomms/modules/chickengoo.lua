@@ -1,0 +1,40 @@
+
+local humanName="Chicken Blob"
+local description= "Chicken Blob, replace other weapon"
+
+return {
+    moduledef={
+        commweapon_chickengoo={
+            name=humanName,
+		    description=description,
+        }
+    },
+    dynamic_comm_def=function (shared)
+		shared=ModularCommDefsShared or shared
+		local moduleImagePath=shared.moduleImagePath
+		local COST_MULT=shared.COST_MULT
+		local HP_MULT=shared.HP_MULT
+        
+		return {
+            name = "commweapon_chickengoo",
+			humanName = humanName,
+			description = description,
+            image = moduleImagePath .. "commweapon_clusterbomb.png",
+            limit = 1,
+            cost = 0,
+            requireChassis = {"chicken"},
+            requireLevel = 3,
+            slotType = "adv_weapon",
+            applicationFunction = function (modules, sharedData)
+                if sharedData.noMoreWeapons then
+                    return
+                end
+                local weaponName = "commweapon_chickengoo"
+                sharedData.weapon1 = weaponName
+                sharedData.weapon2 = nil
+                sharedData.noMoreWeapons = true
+            end,
+            --isBasicWeapon=true,
+        }
+    end
+}
