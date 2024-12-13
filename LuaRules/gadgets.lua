@@ -20,8 +20,8 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
-utils.load_modoptions()
+local utils_op=Spring.Utilities.to_make_op_things
+utils_op.load_modoptions()
 
 
 

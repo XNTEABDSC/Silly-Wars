@@ -1,7 +1,7 @@
 return {
 	name='Silly Wars',
 	description='https://github.com/XNTEABDSC/Silly-Wars/wiki',
-	version='v0.6.0.17',
+	version='v0.7.0.0',
 	shortname='ZKSW',
 	mutator='1',
 	game='Zero-K',
