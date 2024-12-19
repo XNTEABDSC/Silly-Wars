@@ -60,7 +60,7 @@ for key, value in pairs(UnitDef.weapons or {}) do
 				local reload=wd.reload
 				if reload then
 					local res
-					if reload<1 then
+					if reload<0.5 then
 						res=WeaponLauncherType_Head_Fast
 					elseif reload<10 then
 						res=WeaponLauncherType_Head_Mid

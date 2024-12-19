@@ -27,7 +27,7 @@ return "commweapon_chickenspike",{
     interceptedByShieldType = 2,
     model                   = [[spike.s3o]],
     range                   = 460,
-    reloadtime              = 1.5,
+    reloadtime              = 1,
     soundHit                = [[chickens/spike_hit]],
     soundStart              = [[chickens/spike_fire]],
     startVelocity           = 320,

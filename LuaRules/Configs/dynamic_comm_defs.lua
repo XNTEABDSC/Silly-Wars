@@ -1030,6 +1030,23 @@ for i = 1, #modulesalldefs do
 	end
 end
 
+do
+	local i=1
+	while(i<=#moduleDefs)do
+		local md=moduleDefs[i]
+		if(md.hardcodedID) then
+			local b=md.hardcodedID
+			local mdb=moduleDefs[b]
+			if mdb.hardcodedID and mdb.hardcodedID==b then
+				error("Both " .. md.name .. " and " .. mdb.name .. " has same hardcodedID " .. b)
+			end
+			moduleDefs[i],moduleDefs[b]=moduleDefs[b],md
+		else
+			i=i+1
+		end
+	end
+end
+
 -- Add second versions of basic weapons
 
 

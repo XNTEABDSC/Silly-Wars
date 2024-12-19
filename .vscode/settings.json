@@ -4,7 +4,8 @@
         "UnitDefs",
         "UnitDefNames",
         "FeatureDefs",
-        "ModularCommDefsShared"
+        "ModularCommDefsShared",
+        "piece"
     ],
     "Lua.runtime.version": "Lua 5.1",
 }
