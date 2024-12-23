@@ -1,6 +1,6 @@
 
 local humanName="Chicken Spike"
-local description= "Chicken Spike: Mid range skirmish weapon"
+local description= "Chicken Spike: Mid range skirmish weapon, can onlt shot at front"
 
 return {
     moduledef={

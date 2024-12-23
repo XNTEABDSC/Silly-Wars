@@ -6,6 +6,7 @@ return "commweapon_chickengoo",{
     cegTag                  = [[queen_trail]],
     craterBoost             = 0,
     craterMult              = 0,
+    highTrajectory                = 2,
           
     customParams            = {
         is_unit_weapon = 1,

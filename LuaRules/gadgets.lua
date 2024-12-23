@@ -35,8 +35,8 @@ local SCRIPT_DIR = Script.GetName() .. '/'
 local ECHO_DESCRIPTIONS = false
 local SYNC_MEMORY_DEBUG = false --(gcinfo or false)
 
-local VFSMODE = VFS.ZIP_ONLY
-if (Spring.IsDevLuaEnabled()) then
+local VFSMODE = nil--VFS.ZIP_ONLY
+if (Spring.IsDevLuaEnabled()) and false then
   VFSMODE = VFS.RAW_ONLY
 end
 
@@ -54,7 +54,7 @@ local actionHandler = VFS.Include(HANDLER_DIR .. 'actions.lua', nil, VFSMODE)
 --  the gadgetHandler object
 --
 
-gadgetHandler = {
+gadgetHandler = gadgetHandler or {
 
   gadgets = {},
 

@@ -543,19 +543,20 @@ if not Spring.Utilities.to_make_op_things then
         --do_lua_mods=do_lua_mods or false
         local modOptions = {}
         local utils=wacky_utils
+        local toload={}
         if (Spring.GetModOptions) then
-            modOptions = Spring.GetModOptions()
+            toload = Spring.GetModOptions()
         end
         Spring.GetModOptions=function ()
             return modOptions
         end
-        if modOptions.did_load_mod then
+        if toload.did_load_mod then
             Spring.Echo("modoptions already loaded")
             return
         end
 
-        if not modOptions.mods then
-            modOptions.mods ="silly()"
+        if not toload.mods then
+            toload.mods ="silly()"
         end
         local option_mult=utils.list_to_set( {"metalmult","energymult","terracostmult","cratermult","hpmult",
         "team_1_econ","team_2_econ","team_3_econ","team_4_econ","team_5_econ","team_6_econ","team_7_econ","team_8_econ",
@@ -580,7 +581,6 @@ if not Spring.Utilities.to_make_op_things then
         local do_at_def_pre_count=1
         local json_mods_dir="gamedata/mods/"
         local lua_mods_dir="gamedata/lua_mods/"
-        local mods=modOptions.mods
 
         local mod_count=0
         local last_order="load_modoptions_begin"
@@ -735,7 +735,7 @@ if not Spring.Utilities.to_make_op_things then
 
         --load_mod(mods)
 
-        load_modoption(modOptions)
+        load_modoption(toload)
 
         UnitDefsTweakFns.AddOrder(last_order,"load_modoptions_end")
 

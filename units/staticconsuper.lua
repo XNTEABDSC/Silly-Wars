@@ -8,13 +8,14 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return utils_op.CopyTweakSillyBuildMorph("staticconarty","staticconsuper",utils.table_replace({
-    name                          = [[Super Caretaker]],
-    description                   = [[Solve caretakers problem]],
+    name                          = [[Nanoframe Projector]],
+    description                   = [[Throw BP. Can't reclaim]],
     health=8000,
-    metalCost=40000,
+    metalCost=30000,
     buildDistance=10000,
     workerTime                    = 400,
     customParams={
         def_scale=5
     },
+    canReclaim=false,
 }))

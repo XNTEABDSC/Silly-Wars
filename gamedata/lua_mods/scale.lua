@@ -66,4 +66,4 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
     end
 })
 
-return {option_notes="Everything is x".. Scale .." size, except commanders"}
+return {option_notes="Everything x".. Scale ..", except commanders"}

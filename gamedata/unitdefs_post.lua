@@ -86,7 +86,6 @@ local tweak_defs=utils_op.tweak_defs
 
 Spring.Utilities.to_make_op_things.load_modoptions()
 
-UnitDefs["dronefighter"].metalcost=150
 
 
 local modOptions=Spring.GetModOptions()

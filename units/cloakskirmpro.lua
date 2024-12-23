@@ -13,15 +13,37 @@ utils_op.MakeAddSillyBuild("cloakskirmpro")
 
 return utils_op.CopyTweak("cloakskirm","cloakskirmpro",function (ud)
     utils.table_replace({
-        metalCost=250,
+        --metalCost=250,
         --speed=75,
-        health=650,
+        --health=650,
         name="Guided Ronin",
         description=[[Skirmisher Bot (Homing Missile)]],
         weaponDefs={
             BOT_ROCKET={
+                name                    = [[Homing Missiles]],
+                cegTag                  = [[missiletrailyellow]],
+                damage                  = {
+                    default = 80.01,
+                },
+                customParams        = {
+                light_camera_height = 2000,
+                light_radius = 200,
+                },
+                explosionGenerator      = [[custom:FLASH2]],
+                fireStarter             = 70,
+                flightTime              = 3,
+                impulseBoost            = 0,
+                impulseFactor           = 0.4,
+                craterBoost             = 0,
+                craterMult              = 0,
+                interceptedByShieldType = 2,
+                model                   = [[wep_m_frostshard.s3o]],
+                smokeTrail              = true,
+                soundHit                = [[explosion/ex_med17]],
+                soundStart              = [[weapon/missile/missile_fire11]],
+                
                 tracks                  = true,
-                turnRate                = 10000,
+                turnRate                = 20000,
             },
         },
         customParams={
