@@ -1122,3 +1122,9 @@ if not Script or not Script.IsEngineMinVersion(105, 0, 2365) then
 		end
 	end
 end
+
+if not Engine.FeatureSupport.hasExitOnlyYardmaps then
+	for name, ud in pairs(UnitDefs) do
+		ud.yardmap = ud.yardmap and ud.yardmap:gsub("u", "y"):gsub("e", "c")
+	end
+end

@@ -63,9 +63,13 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
+local unitScaleDef={}
 local function UnitScale(unitID, scale)
     local base = FindBase(unitID)
+	local modelscale=unitScaleDef[unitID]
+	if modelscale then
+		scale=scale*modelscale
+	end
     if base then
 		if not origPieceTable[unitID] then
 			origPieceTable[unitID] = {Spring.GetUnitPieceMatrix(unitID, base)}
@@ -73,6 +77,14 @@ local function UnitScale(unitID, scale)
 
         SetScale(unitID, base, scale)
     end
+end
+
+function gadget:UnitCreated(unitID,unitDefID)
+	local modelscale=tonumber(UnitDefs[unitDefID].customParams.model_scale)
+	if modelscale then
+		unitScaleDef[unitID]=modelscale
+		UnitScale(unitID,1)
+	end
 end
 
 function gadget:UnitDestroyed(unitID)
