@@ -16,30 +16,30 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
     v=function ()
         ---
         local udtoscale=utils.lowervalues({
-            "radarDistanceJam","buildDistance",
             "cruiseAltitude",
             "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed",
             --"acceleration",
             "minCloakDistance",
         })
         local udcptoscale=utils.lowervalues({
-            "area_cloak_radius"
         })
         local wdtoscale=utils.lowervalues({
-            "areaOfEffect","damageAreaOfEffect","shieldRadius","accuracy","sprayAngle",
         })
         local wdcptoscale=utils.lowervalues({
-            "area_damage_radius"
         })
         ---
         local udtoscalesqrt=utils.lowervalues({
+            "radarDistanceJam",
         })
         local udcptoscalesqrt=utils.lowervalues({
+            "area_cloak_radius",
         })
         local wdtoscalesqrt=utils.lowervalues({
-            "flightTime",
+            "flightTime","areaOfEffect","damageAreaOfEffect","shieldRadius",
+            "accuracy","sprayAngle",
         })
         local wdcptoscalesqrt=utils.lowervalues({
+            "area_damage_radius",
         })
         ---
         local udtoscaleinv=utils.lowervalues({

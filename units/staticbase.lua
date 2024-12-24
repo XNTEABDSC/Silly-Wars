@@ -11,7 +11,7 @@ utils_op.MakeAddSillyBuild("staticbase")
 
 return { staticbase = {
   name                          = [[Frontline Base]],
-  description                   = [[Provides hp, bp, radar, los, radar jam, cloak, drones, shield, pylon, and disruptor pulse]],
+  description                   = [[Provides hp, bp, radar, los, radar jam, cloak, drones, shield, pylon, and disruptor pulse. Make it at front]],
   activateWhenBuilt             = true,
   buildPic                      = [[pw_hq.png]],
   category                      = [[FLOAT UNARMED]],
