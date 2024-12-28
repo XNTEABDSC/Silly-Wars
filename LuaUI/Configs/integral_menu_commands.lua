@@ -353,28 +353,6 @@ local special_commands = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local function AddBuildQueue(name)
-	factoryUnitPosDef[name] = {}
-	local ud = UnitDefNames[name]
-	if ud and ud.buildOptions then
-		local row = 1
-		local col = 1
-		local order = 1
-		for i = 1, #ud.buildOptions do
-			local buildName = UnitDefs[ud.buildOptions[i]].name
-			factoryUnitPosDef[name][buildName] = {row = row, col = col, order = order}
-			col = col + 1
-			if col == 7 then
-				col = 1
-				row = row + 1
-			end
-			order = order + 1
-		end
-	end
-end
-
-AddBuildQueue("striderhub")
-AddBuildQueue("staticmissilesilo")
 
 if VFS.FileExists("LuaRules/Configs/modCommandsDefs.lua") then
 	local modCommands = VFS.Include("LuaRules/Configs/modCommandsDefs.lua")
@@ -415,6 +393,31 @@ for udid, ud in pairs(UnitDefs) do
 	end
 end
 
+
+local function AddBuildQueue(name)
+	factoryUnitPosDef[name] = {}
+	local ud = UnitDefNames[name]
+	if ud and ud.buildOptions then
+		local row = 1
+		local col = 1
+		local order = 1
+		for i = 1, #ud.buildOptions do
+			local buildName = UnitDefs[ud.buildOptions[i]].name
+			if not factory_commands[buildName] and not econ_commands[buildName] and not defense_commands[buildName] and not special_commands[buildName] then
+				factoryUnitPosDef[name][buildName] = {row = row, col = col, order = order}
+				col = col + 1
+				if col == 7 then
+					col = 1
+					row = row + 1
+				end
+				order = order + 1
+			end
+		end
+	end
+end
+
+AddBuildQueue("striderhub")
+AddBuildQueue("staticmissilesilo")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

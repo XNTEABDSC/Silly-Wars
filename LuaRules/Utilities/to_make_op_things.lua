@@ -12,8 +12,12 @@ if not Spring.Utilities.to_make_op_things then
     local wacky_utils=Spring.Utilities.wacky_utils
     VFS.Include("LuaRules/Utilities/ordered_list.lua")
 
+    if not Spring.Utilities.json then
+        Spring.Utilities.json= VFS.Include("LuaRules/Utilities/json.lua")
+    end
     local to_make_op_things={}
     Spring.Utilities.to_make_op_things=to_make_op_things
+
 
     local UnitDefsTweakFns=Spring.Utilities.OrderedList.New()
     to_make_op_things.unit_defs_tweak_fns=UnitDefsTweakFns
@@ -72,6 +76,7 @@ if not Spring.Utilities.to_make_op_things then
         fns.Add({k="default_modify_feature_begin",a={"default_modify_feature_end"},b={"pre_set_values"}})
         fns.Add({k="default_modify_feature_end",a={"post_set_values"}})
         fns.Add({k="post_set_values"})
+        --- notes that changes that may removes previous modify (e.g. buildoptions = ...) should be before default_modify, not in
     end
     --[==[
     local utils={
@@ -516,19 +521,26 @@ if not Spring.Utilities.to_make_op_things then
         end
     end
 
-    function to_make_op_things.tweak_units(tweaks)
+    local function tweak_units(tweaks)
+        for name, _ in pairs(tweaks) do
+            if UnitDefs[name] then
+                Spring.Echo("Loading tweakunits for " .. name)
+                Spring.Utilities.OverwriteTableInplace(UnitDefs[name], wacky_utils.lowerkeys(tweaks[name]), true)
+            end
+        end
+        --[=[
         for name, ud in pairs(UnitDefs) do
             if tweaks[name] then
                 Spring.Echo("Loading tweakunits for " .. name)
                 Spring.Utilities.OverwriteTableInplace(ud, to_make_op_things.lowerkeys(tweaks[name]), true)
             end
-        end
+        end]=]
     end
 
-    
+    to_make_op_things.tweak_units=tweak_units
     
 
-    function to_make_op_things.tweak_defs(postsFuncStr)
+    local function tweak_defs(postsFuncStr)
         local postfunc, err = loadstring(postsFuncStr)
 		if postfunc then
 			postfunc()
@@ -536,7 +548,7 @@ if not Spring.Utilities.to_make_op_things then
 			Spring.Log("defs.lua", LOG.ERROR, "tweakdefs", err)
 		end
     end
-    
+    to_make_op_things.tweak_defs=tweak_defs
 
     --- load modOptions
     function to_make_op_things.load_modoptions()
@@ -604,7 +616,7 @@ if not Spring.Utilities.to_make_op_things then
                 else
                     modOptions[key]=value
                 end
-            end-- loaded at end
+            end
 
             AddFnToUnitDefsTweakFns({
                 v=function ()
@@ -612,13 +624,8 @@ if not Spring.Utilities.to_make_op_things then
                     local name = "tweakdefs"
                     while modOptions[name] and modOptions[name] ~= "" do
                         local postsFuncStr = Spring.Utilities.Base64Decode(modOptions[name])
-                        local postfunc, err = loadstring(postsFuncStr)
                         Spring.Echo("Loading tweakdefs modoption", append or 0)
-                        if postfunc then
-                            postfunc()
-                        else
-                            Spring.Log("defs.lua", LOG.ERROR, name, err)
-                        end
+                        tweak_defs(postsFuncStr)
                         append = (append or 0) + 1
                         name = "tweakdefs" .. append
                     end
@@ -634,12 +641,7 @@ if not Spring.Utilities.to_make_op_things then
                         local tweaks = Spring.Utilities.CustomKeyToUsefulTable(modOptions[modoptName])
                         if type(tweaks) == "table" then
                             Spring.Echo("Loading tweakunits modoption", append or 0)
-                            for name, ud in pairs(UnitDefs) do
-                                if tweaks[name] then
-                                    Spring.Echo("Loading tweakunits for " .. name)
-                                    Spring.Utilities.OverwriteTableInplace(ud, utils.lowerkeys(tweaks[name]), true)
-                                end
-                            end
+                            tweak_units(tweaks)
                         end
                         append = (append or 0) + 1
                         modoptName = "tweakunits" .. append
@@ -706,7 +708,7 @@ if not Spring.Utilities.to_make_op_things then
             end
         end}
         setmetatable(load_mod_env,load_mod_env_mt)]==]
-        for key, value in pairs(VFS.DirList(lua_mods_dir)) do
+        for key, value in pairs(VFS.DirList(lua_mods_dir,"*.lua")) do
             local mod=string.match(value,[[([a-zA-Z_]+)%.lua]])
             Spring.Echo("find luamod: " .. value .. " modname: " .. tostring( mod))
             if mod then
@@ -718,7 +720,7 @@ if not Spring.Utilities.to_make_op_things then
             end
         end
 
-        for key, value in pairs(VFS.DirList(json_mods_dir)) do
+        for key, value in pairs(VFS.DirList(json_mods_dir,"*.json")) do
             local mod=string.match(value,[[([a-zA-Z_]+)%.json]])
             Spring.Echo("find jsonmod: " .. value .. " modname: " .. tostring( mod))
             if mod then
@@ -797,7 +799,7 @@ if not Spring.Utilities.to_make_op_things then
             "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed"
         })
         local udcpdefScales1=lowervalues({
-            "model_scale"
+            "model_rescale"
         })
         local udtryScales1round=lowervalues({
             -- special
@@ -1064,5 +1066,31 @@ if not Spring.Utilities.to_make_op_things then
             return movedef
         end
     end
+    to_make_op_things.units_basic_factories={
+        [[factorycloak]],
+        [[factoryshield]],
+        [[factoryveh]],
+        [[factoryhover]],
+        [[factorygunship]],
+        [[factoryplane]],
+        [[factoryspider]],
+        [[factoryjump]],
+        [[factorytank]],
+        [[factoryamph]],
+        [[factoryship]],
+    }
+    to_make_op_things.units_basic_cons={
+        "cloakcon",
+        "shieldcon",
+        "vehcon",
+        "hovercon",
+        "gunshipcon",
+        "planecon",
+        "spidercon",
+        "jumpcon",
+        "tankcon",
+        "amphcon",
+        "shipcon",
+    }
 end
 return Spring.Utilities.to_make_op_things

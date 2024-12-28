@@ -11,9 +11,9 @@ utils_op.MakeAddSillyBuild("tankheavyassaultnuke")
 return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
     name="Nuclear Cyclops",
     description="Shoot Nuclear Warhead (175 stockpile)",
-    metalCost=8000,
-    health=40000,
-    speed=54,
+    metalCost=6000,
+    health=36000,
+    speed=45,
     weaponDefs={
         COR_GOL={
             name                    = [[Nuclear Cannon]],
@@ -34,7 +34,7 @@ return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_
         SLOWBEAM={
             range=620,
             damage={
-                default=3500,
+                default=3000,
             }
         }
     },

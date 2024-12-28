@@ -125,7 +125,6 @@ local function UpdateUnitGrow(unitID, data, growScale)
 		data.aim[1], data.aim[2] - growScale*data.aimOff, data.aim[3], true)
 end
 local unitDefScale={}
---local UnitScale
 local function UpdateUnitCollisionData(unitID, unitDefID, scales)
 	local ud = UnitDefs[unitDefID]
 	if not (ud and unitDefID) then

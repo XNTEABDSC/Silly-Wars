@@ -8,12 +8,12 @@ end
 
 function gadget:GetInfo()
 	return {
-		name      = "Size Changer (ULU)",
+		name      = "Model Rescaler",
 		desc      = "Changes the sizes of units so their centre of mass may be seen.",
 		author    = "GoogleFrog",
 		date      = "10 April 2020",
 		license   = "GNU GPL, v2 or later",
-		layer     = -math.huge,
+		layer     = 0,
 		enabled   = true,  --  loaded by default?
 	}
 end
@@ -21,8 +21,8 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local NULL_PIECE = "[null]"
 local origPieceTable = {}
+local INLOS_ACCESS = {inlos = true}
 
 VFS.Include("LuaRules/Utilities/tablefunctions.lua")
 local suCopyTable = Spring.Utilities.CopyTable
@@ -31,6 +31,9 @@ local suCopyTable = Spring.Utilities.CopyTable
 --------------------------------------------------------------------------------
 
 local function SetScale(unitID, base, scale)
+	local currentScale = (Spring.GetUnitRulesParam(unitID, "currentModelScale") or 1)
+	Spring.SetUnitRulesParam(unitID, "currentModelScale", scale, INLOS_ACCESS)
+	
 	local pieceTable = suCopyTable(origPieceTable[unitID])
 
 	pieceTable[1] = pieceTable[1] * scale
@@ -52,38 +55,17 @@ local function SetScale(unitID, base, scale)
 	Spring.SetUnitPieceMatrix(unitID, base, pieceTable)
 end
 
-local function FindBase(unitID)
-	local pieces = Spring.GetUnitPieceList(unitID)
-	for pieceNum = 1, #pieces do
-		if Spring.GetUnitPieceInfo(unitID, pieceNum).parent == NULL_PIECE then
-			return pieceNum
-		end
-	end
-end
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-local unitScaleDef={}
-local function UnitScale(unitID, scale)
-    local base = FindBase(unitID)
-	local modelscale=unitScaleDef[unitID]
-	if modelscale then
-		scale=scale*modelscale
-	end
-    if base then
+local function UnitModelRescale(unitID, scale)
+	local base = Spring.GetUnitRootPiece(unitID)
+	if base then
 		if not origPieceTable[unitID] then
 			origPieceTable[unitID] = {Spring.GetUnitPieceMatrix(unitID, base)}
 		end
 
-        SetScale(unitID, base, scale)
-    end
-end
-
-function gadget:UnitCreated(unitID,unitDefID)
-	local modelscale=tonumber(UnitDefs[unitDefID].customParams.model_scale)
-	if modelscale then
-		unitScaleDef[unitID]=modelscale
-		UnitScale(unitID,1)
+		SetScale(unitID, base, scale)
 	end
 end
 
@@ -91,11 +73,29 @@ function gadget:UnitDestroyed(unitID)
 	origPieceTable[unitID] = nil
 end
 
-function gadget:Initialize()
-	--Spring.Echo("I LOAD IT")
-    GG.UnitScale = UnitScale
+function gadget:Shutdown()
+	for unitID in pairs(origPieceTable) do
+		UnitModelRescale(unitID, 1)
+	end
 end
 
+GG.UnitModelRescale = UnitModelRescale
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
+local rescaleUnitDefIDs = {}
+for i = 1, #UnitDefs do
+	local scale = tonumber(UnitDefs[i].customParams.model_rescale)
+	if scale and scale ~= 1 and scale > 0 then
+		rescaleUnitDefIDs[i] = scale
+	end
+end
+
+if next(rescaleUnitDefIDs) then
+	function gadget:UnitCreated(unitID, unitDefID)
+		local scale = rescaleUnitDefIDs[unitDefID]
+		if not scale then
+			return
+		end
+
+		UnitModelRescale(unitID, scale)
+	end
+end
