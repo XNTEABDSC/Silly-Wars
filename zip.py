@@ -5,6 +5,7 @@ thisAbsPath=os.path.abspath(".")
 thisDirName=os.path.split(thisAbsPath)[1]
 thisModName="Silly Wars"# str.replace(thisDirName," dev.sdd","")
 thisModVersion=""
+thisModFileName="Silly_Wars"
 with open("modinfo.lua","r") as filer:
     with open("_modinfo.lua","w") as filew:
         while True:
@@ -33,7 +34,7 @@ ignoreFileNames=listToDict({
 ignoreFileEnds={".blend",".blend1",".txt"}
 
 GameDirPath=os.path.split(thisAbsPath)[0]
-outputfilename=thisModName+" "+thisModVersion+".sdz"
+outputfilename=thisModFileName+"_"+thisModVersion+".sdz"
 
 zip=zipfile.ZipFile(os.path.join(GameDirPath,outputfilename),"w")
 zip.write("_modinfo.lua","modinfo.lua")
