@@ -17,9 +17,9 @@ if not Spring.Utilities.to_make_very_op_things then
         end
         
         if wd.range then
-            wd.sprayAngle = (wd.sprayAngle or 0) + 4000 / math.max( math.sqrt(wd.range/600),1)
+            wd.sprayAngle = (wd.sprayAngle or 0) + 3000 / math.max( math.log(wd.range/450+2),0.75)
             if wd.areaOfEffect then
-                wd.areaOfEffect = wd.areaOfEffect * 0.1
+                wd.areaOfEffect = wd.areaOfEffect * 0.5
             end
             if wd.weaponType=="BeamLaser" then
                 wd.projectiles=(wd.projectiles or 1)*10
@@ -31,8 +31,8 @@ if not Spring.Utilities.to_make_very_op_things then
                     wd.burst =  burst
                 end
             end
-            wd.tracks = false
         end
+        wd.tracks = false
 
         --[=[
         if wd.areaofeffect then
