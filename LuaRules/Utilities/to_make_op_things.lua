@@ -559,12 +559,12 @@ if not Spring.Utilities.to_make_op_things then
         if (Spring.GetModOptions) then
             toload = Spring.GetModOptions()
         end
-        Spring.GetModOptions=function ()
-            return modOptions
-        end
         if toload.did_load_mod then
             Spring.Echo("modoptions already loaded")
             return
+        end
+        Spring.GetModOptions=function ()
+            return modOptions
         end
 
         if not toload.mods then
@@ -585,12 +585,8 @@ if not Spring.Utilities.to_make_op_things then
         local option_bindstr={
             disabledunits="+ ",
             option_notes="\n---\n",
+            mods=" "
         }
-        ---@type integer
-        local tweakdefs_count=1
-        ---@type integer
-        local tweakunits_count=1
-        local do_at_def_pre_count=1
         local json_mods_dir="gamedata/mods/"
         local lua_mods_dir="gamedata/lua_mods/"
 
@@ -599,8 +595,8 @@ if not Spring.Utilities.to_make_op_things then
         
 
         local load_mod
-        local function load_modoption(themodoptions)
-            for key, value in pairs(themodoptions) do
+        local function load_modoption(loaded_mod_options)
+            for key, value in pairs(loaded_mod_options) do
                 if  modOptions[key] then
                     if option_mult[key] then
                         modOptions[key]=modOptions[key]*value
@@ -622,9 +618,9 @@ if not Spring.Utilities.to_make_op_things then
                 v=function ()
                     local append = false
                     local name = "tweakdefs"
-                    while modOptions[name] and modOptions[name] ~= "" do
-                        local postsFuncStr = Spring.Utilities.Base64Decode(modOptions[name])
-                        Spring.Echo("Loading tweakdefs modoption", append or 0)
+                    while loaded_mod_options[name] and loaded_mod_options[name] ~= "" do
+                        local postsFuncStr = Spring.Utilities.Base64Decode(loaded_mod_options[name])
+                        Spring.Echo("Loading tweakdefs modoption ".. (append or 0) .. "\n" .. postsFuncStr)
                         tweak_defs(postsFuncStr)
                         append = (append or 0) + 1
                         name = "tweakdefs" .. append
@@ -637,8 +633,8 @@ if not Spring.Utilities.to_make_op_things then
                 v=function ()
                     local append = false
                     local modoptName = "tweakunits"
-                    while modOptions[modoptName] and modOptions[modoptName] ~= "" do
-                        local tweaks = Spring.Utilities.CustomKeyToUsefulTable(modOptions[modoptName])
+                    while loaded_mod_options[modoptName] and loaded_mod_options[modoptName] ~= "" do
+                        local tweaks = Spring.Utilities.CustomKeyToUsefulTable(loaded_mod_options[modoptName])
                         if type(tweaks) == "table" then
                             Spring.Echo("Loading tweakunits modoption", append or 0)
                             tweak_units(tweaks)
@@ -652,8 +648,8 @@ if not Spring.Utilities.to_make_op_things then
             })
             last_order="modoption " .. mod_count .. " tweakunits"
             mod_count=mod_count+1
-            if themodoptions.mods then
-                load_mod(themodoptions.mods)
+            if loaded_mod_options.mods then
+                load_mod(loaded_mod_options.mods)
             end
             
             --[==[

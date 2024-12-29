@@ -7,22 +7,33 @@ if not Spring.Utilities.to_make_very_op_things then
     local utils_op=Spring.Utilities.to_make_op_things
     local to_make_very_op_things={}
     Spring.Utilities.to_make_very_op_things=to_make_very_op_things
-    function to_make_very_op_things.make_weapon_drunk(wd)
+    local mlkg=utils.maylowerkeyget
+    local mlks=utils.maylowerkeyset
+    function to_make_very_op_things.make_weapon_drunk(wd_)
+        local wd=utils.MayLowerKeyProxy(wd_)
+
+        if wd.reloadTime then
+            wd.reloadTime = wd.reloadTime * 2
+        end
+        
         if wd.range then
-            if not wd.sprayangle then
-                wd.sprayangle = 4000 - wd.range
-            else
-                wd.sprayangle = wd.sprayangle + 4000 - wd.range
+            wd.sprayAngle = (wd.sprayAngle or 0) + 4000 / math.max( math.sqrt(wd.range/600),1)
+            if wd.areaOfEffect then
+                wd.areaOfEffect = wd.areaOfEffect * 0.1
             end
+            if wd.weaponType=="BeamLaser" then
+                wd.projectiles=(wd.projectiles or 1)*10
+            else
+                local burst=(wd.burst or 1)*10
+                if wd.reloadTime and (wd.burstRate or (1/30))*burst>wd.reloadTime then
+                    wd.projectiles=(wd.projectiles or 1)*10
+                else
+                    wd.burst =  burst
+                end
+            end
+            wd.tracks = false
         end
-        if not wd.burst then
-            wd.burst = 10
-        else
-            wd.burst = wd.burst * 10
-        end
-        if wd.reloadtime then
-            wd.reloadtime = wd.reloadtime * 2
-        end
+
         --[=[
         if wd.areaofeffect then
             wd.areaofeffect = wd.areaofeffect * 0.1

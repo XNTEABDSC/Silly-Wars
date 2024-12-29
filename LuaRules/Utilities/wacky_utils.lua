@@ -219,4 +219,49 @@ if not Spring.Utilities.wacky_utils then
         return nil
     end
     wacky_utils.loop_until_finish_all_table=loop_until_finish_all_table
+
+    local function maylowerkeyget(t,k)
+        return t[k] or t[string.lower(k)]
+        --[=[
+        if t[k]~=nil then
+            return t[k]
+        else
+            local k2=string.lower(k)
+            if t[k2]~=nil then
+                return t[k2]
+            else
+                return nil
+            end
+        end]=]
+    end
+    local function maylowerkeyset(t,k,v)
+        if t[k]~=nil then
+            t[k]=v
+        else
+            local k2=string.lower(k)
+            if t[k2]~=nil then
+                t[k2]=v
+            else
+                t[k]=v
+            end
+        end
+    end
+    wacky_utils.maylowerkeyget=maylowerkeyget
+    wacky_utils.maylowerkeyset=maylowerkeyset
+
+    do
+        wacky_utils.MayLowerKeyProxy=function (tb)
+            local maylowermt={
+                __index=function (t,k)
+                    return maylowerkeyget(tb,k)
+                end,
+                __newindex=function (t,k,v)
+                    maylowerkeyset(tb,k,v)
+                end
+            }
+            local o={}
+            setmetatable(o,maylowermt)
+            return o
+        end
+    end
 end
