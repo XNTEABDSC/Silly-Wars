@@ -8,10 +8,10 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
-utils_op.MakeSetSillyMorph("cloakskirm","cloakskirmpro")
-utils_op.MakeAddSillyBuild("cloakskirmpro")
+utils_op.MakeSetSillyMorph("cloakskirm","cloakskirmguide")
+utils_op.MakeAddSillyBuild("cloakskirmguide")
 
-return utils_op.CopyTweak("cloakskirm","cloakskirmpro",function (ud)
+return utils_op.CopyTweak("cloakskirm","cloakskirmguide",function (ud)
     utils.table_replace({
         --metalCost=250,
         --speed=75,
@@ -23,7 +23,7 @@ return utils_op.CopyTweak("cloakskirm","cloakskirmpro",function (ud)
                 name                    = [[Homing Missiles]],
                 cegTag                  = [[missiletrailyellow]],
                 damage                  = {
-                    default = 80.01,
+                    default = 90.01,
                 },
                 customParams        = {
                 light_camera_height = 2000,
