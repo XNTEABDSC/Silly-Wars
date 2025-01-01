@@ -606,6 +606,8 @@ if not Spring.Utilities.to_make_op_things then
                         modOptions[key]=modOptions[key]*value/option_mult_withdef[key]
                     elseif option_bindstr[key] then
                         modOptions[key]=modOptions[key] .. option_bindstr[key] .. value
+                    elseif string.find(key,"tweakdefs") then
+                    elseif string.find(key,"tweakunits") then
                     else
                         modOptions[key]=value
                     end

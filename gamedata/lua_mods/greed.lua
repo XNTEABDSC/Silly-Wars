@@ -49,6 +49,37 @@ utils_op.AddFnToUnitDefsTweakFns({
     b={"pre_set_values"},
     a={"default_add_build_begin"},
     v=function ()
+        local commBuilds={
+            [[staticmex]],
+            [[energywind]],
+            [[staticstorage]],
+            [[energypylon]],
+            [[staticcon]],
+            [[staticrearm]],
+            [[turretlaser]],
+            [[turretmissile]],
+            [[turretriot]],
+            [[turretemp]],
+            [[turretheavylaser]],
+            [[turretaaclose]],
+            [[turretaalaser]],
+            [[turretimpulse]],
+            [[turrettorp]],
+            [[staticshield]],
+            [[staticradar]],
+            [[staticjammer]],
+            [[factorycloak]],
+            [[factoryshield]],
+            [[factoryveh]],
+            [[factoryhover]],
+            [[factorygunship]],
+            [[factoryplane]],
+            [[factoryspider]],
+            [[factoryjump]],
+            [[factorytank]],
+            [[factoryamph]],
+            [[factoryship]],
+        }
         local t1Builds={
             [[staticmex]],
             [[energywind]],
@@ -204,7 +235,7 @@ utils_op.AddFnToUnitDefsTweakFns({
         for udname, ud in pairs(UnitDefs) do
             if ud.customparams.commtype then
                 ud.workertime=(ud.workertime or 10)*GreedFactor
-                ud.buildoptions=t1Builds
+                ud.buildoptions=commBuilds
             end
         end
         UnitDefs.athena.buildoptions=t2Builds
@@ -462,8 +493,8 @@ utils_op.AddFnToUnitDefsTweakFns({
 return {
     equalcom = "enable",
     energymult = 1 *GreedFactor,
-    innateenergy = 20 *GreedFactor,
-    innatemetal = 20 *GreedFactor,
+    innateenergy = 10 *GreedFactor,
+    innatemetal = 10 *GreedFactor,
     noelo = 1,
     option_notes = "mex cost ".. GreedFactor .."k.. innate M/E income.. level up with: CONSTRUCTOR -> ATHENA -> FUNNELWEB -> STRIDER HUB..",
 }
