@@ -29,7 +29,7 @@ def listToDict(list,v=True):
     return dc
 
 ignoreFileNames=listToDict({
-    "modinfo.lua","_modinfo.lua","settings.json","zip.bat","zip.py","LICENSE","README.md","7z.py","7z.bat"
+    "modinfo.lua","_modinfo.lua","settings.json","zip.bat","zip.py","LICENSE","README.md","7z.py","7z.bat",".gitignore"
 })
 ignoreFileEnds={".blend",".blend1",".txt"}
 
