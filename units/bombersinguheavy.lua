@@ -17,6 +17,9 @@ return utils_op.CopyTweakSillyBuildMorph("bombersingu","bombersinguheavy",functi
     wd.stockpileTime           = 10^5
     wd.noSelfDamage=false
 
+    --wd.metalPerShot=3000
+    --wd.energyPerShot=3000
+
     ud.customParams.reammoseconds=[[90]]
     ud.customParams.light_radius=7500
     ud.customParams.stockpiletime  = [[90]]

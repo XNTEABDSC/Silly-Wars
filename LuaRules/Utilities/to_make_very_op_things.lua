@@ -12,15 +12,19 @@ if not Spring.Utilities.to_make_very_op_things then
     function to_make_very_op_things.make_weapon_drunk(wd_)
         local wd=utils.MayLowerKeyProxy(wd_)
 
+        if wd.weaponType=="StarburstLauncher"then
+            return
+        end
+
         if wd.reloadTime then
             wd.reloadTime = wd.reloadTime * 2
         end
         
         if wd.range then
-            wd.sprayAngle = (wd.sprayAngle or 0) + 3000 / math.max( math.log(wd.range/450+2),0.75)
-            if wd.areaOfEffect then
+            wd.sprayAngle = (wd.sprayAngle or 0) + 4000 / math.log(wd.range/350+1.75)
+            --[=[if wd.areaOfEffect then
                 wd.areaOfEffect = wd.areaOfEffect * 0.5
-            end
+            end]=]
             if wd.weaponType=="BeamLaser" then
                 wd.projectiles=(wd.projectiles or 1)*10
             else
@@ -31,8 +35,17 @@ if not Spring.Utilities.to_make_very_op_things then
                     wd.burst =  burst
                 end
             end
+            if wd.turnRate and wd.range and wd.weaponVelocity and wd.sprayAngle then -- zk don't care about turnRate so we just set it manully
+                local raw=wd.turnRate
+                wd.turnRate=wd.sprayAngle/(wd.range/(wd.weaponVelocity)) /2
+                if wd.fixedlauncher then
+                    wd.turnRate=wd.turnRate*2+raw*0.5
+                end
+                --wd.turnRate=wd.turnRate*0.1
+                --wd.sprayAngle=wd.sprayAngle*2
+            end
         end
-        wd.tracks = false
+        --wd.tracks = false
 
         --[=[
         if wd.areaofeffect then

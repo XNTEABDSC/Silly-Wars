@@ -18,16 +18,20 @@ support fortress, 5000m, range bp, slow wave, ?shield, high repair, ?eos, drones
 
 goodBurstSalvo Locust / Rev
 
-goodBurstSalvo moderator
+goodBurstSalvo moderator -done
 
 Odin->Flying Cerberus
 
-rogue rpg
+rogue rpg - no
 
-napalm rogue
+napalm rogue -done
 
 ? moving fencer
 
 strider detri's blaster
 
 x swift gun on bandit -- did anyone noticed swift gun's 667 range?
+
+badger throw dirtbag -done
+
+weapondef_post

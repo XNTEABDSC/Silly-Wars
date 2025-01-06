@@ -26,5 +26,5 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
 })
 
 return {
-    option_notes = "units shoot in bursts but are drunk and cant aim",
+    option_notes = "units throw alot but throw everywhere",
 }
