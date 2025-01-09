@@ -123,6 +123,32 @@ if not Spring.Utilities.wacky_utils then
     end
     wacky_utils.mt_union=mt_union
 
+    --- protective load string
+    ---@return 0|1|2 state 0: success, 1: loadstring error, 2: call error
+    ---@return any result
+    local function pjustloadstring(str,env)
+        local postfunc, err = loadstring(str)
+		if postfunc then
+            local _gr=getfenv(1)
+            if env then
+                setfenv(postfunc,mt_union(env,_gr))
+            else
+                setfenv(postfunc,_gr)
+            end
+			local suc,res=pcall(postfunc)
+            if suc then
+                return 0,res
+            else
+                return 2,res
+            end
+            --return postfunc()
+		else
+            return 1,tostring(err)
+            --error("failed to load string: " .. str .. " with error: " .. tostring(err))
+            --return nil
+		end
+    end
+    wacky_utils.ploadstring=pjustloadstring
     
     local function justloadstring(str,_gextra,_glevel)
         _glevel=_glevel or 1
@@ -264,4 +290,5 @@ if not Spring.Utilities.wacky_utils then
             return o
         end
     end
+
 end

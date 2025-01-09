@@ -20,6 +20,8 @@ local MODSIDE_POSTS_FILEPATH = 'gamedata/weapondefs_mod.lua'
 if VFS.FileExists(MODSIDE_POSTS_FILEPATH, VFS.GAME) then
 	VFS.Include(MODSIDE_POSTS_FILEPATH, nil, VFS.GAME)
 end
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -123,6 +125,12 @@ end
 
 for _, weaponDef in pairs(WeaponDefs) do
 	weaponDef.customparams = weaponDef.customparams or {}
+end
+
+if utils_op.weapon_defs_tweak_fns then
+	Spring.Echo("RunWeaponDefsTweakFns Start")
+	utils_op.RunOrderedList(utils_op.weapon_defs_tweak_fns)
+	Spring.Echo("RunWeaponDefsTweakFns End")
 end
 
 --------------------------------------------------------------------------------

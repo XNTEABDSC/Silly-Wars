@@ -23,7 +23,7 @@ local uds=utils_op.CopyTweakSillyBuildMorph("nebula","nebulanebula",function (ud
 			maxChaseRange = 1800,
 			buildTime = 50,
 			maxBuild = 4,
-			offsets = {0, 8*3, 15*3, colvolMidX = 0, colvolMidY = 30*3, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
+			offsets = {0, 8, 15, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
 		},
 	}
     ]==]
@@ -51,22 +51,6 @@ utils.table_replace({
 	customParams={
 		is_drone=1,
 		drone_defs_is_drone=1,
-		drone_defs_carrier_def=[==[
-		{
-			spawnPieces = {"pad1", "pad2", "pad3", "pad4"},
-			{
-				drone = UnitDefNames.dronefighter.id,
-				reloadTime = 15,
-				maxDrones = 8,
-				spawnSize = 2,
-				range = 1000,
-				maxChaseRange = 1500,
-				buildTime = 3,
-				maxBuild = 4,
-				offsets = {0, 8, 15, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
-			},
-		}
-		]==],
 	},
 	reclaimable=false,
 	repairable=false,

@@ -39,7 +39,7 @@ utils_op.MakeAddSillyBuild("chickenbroodqueen")
 
 utils_op.AddFnToUnitDefsTweakFns({
     k="chix_set_cost",
-    a={"pre_set_values"},
+    a={"default_modify_cost_begin"},
     v=function ()
         local function build_time_to_cost(udname)
             if UnitDefs[udname].buildtime then

@@ -7,7 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-Scale=Scale or (1/3)
+Scale=Scale or (1/2)
 
 utils_op.AddFnToUnitDefsTweakFnsMut({
     k="scale",

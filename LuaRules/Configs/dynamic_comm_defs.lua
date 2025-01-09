@@ -1009,7 +1009,7 @@ for i = 1, #moduleDefs do
 	end
 end
 
-local modulesalldefs=include("gamedata/modularcomms/modules_all_defs.lua")
+local modulesalldefs=VFS.Include("gamedata/modularcomms/modules_all_defs.lua")
 --local moduleFiles=VFS.DirList("gamedata/modularcomms/modules", "*.lua") or {}
 
 for i = 1, #modulesalldefs do

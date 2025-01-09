@@ -21,6 +21,9 @@ if not Spring.Utilities.to_make_op_things then
 
     local UnitDefsTweakFns=Spring.Utilities.OrderedList.New()
     to_make_op_things.unit_defs_tweak_fns=UnitDefsTweakFns
+    
+    local WeaponDefsTweakFns=Spring.Utilities.OrderedList.New()
+    to_make_op_things.weapon_defs_tweak_fns=WeaponDefsTweakFns
 
     local function AddFnToUnitDefsTweakFns(ordered)
         UnitDefsTweakFns.Add(ordered)
@@ -28,39 +31,47 @@ if not Spring.Utilities.to_make_op_things then
     to_make_op_things.AddFnToUnitDefsTweakFns=AddFnToUnitDefsTweakFns
 
     local function AddFnToUnitDefsTweakFnsMut(ordered)
-        local append=0
-        local key=ordered.k
-        while UnitDefsTweakFns.kvlist[key] do
-            append=append+1
-            key=ordered.k .. append
-        end
-        ordered.k=key
-        UnitDefsTweakFns.Add(ordered)
-
+        Spring.Utilities.OrderedList.AddMult(UnitDefsTweakFns,ordered)
     end
     to_make_op_things.AddFnToUnitDefsTweakFnsMut=AddFnToUnitDefsTweakFnsMut
 
     local function RunOrderedList(OList)
-        return function ()
-            local res=OList.ForEach(function (v,k)
-                Spring.Echo("Run Task: " .. k)
-                if v then
-                    v()
+        local res=OList.ForEach(function (v,k)
+            Spring.Echo("Run Task: " .. k)
+            if v then
+                v()
+            end
+        end)
+        if res then
+            for key, value in pairs(res) do
+                Spring.Echo("Warning: Not Done Task " .. key .. ", after:")
+                for _, k2 in pairs(value.afters) do
+                    Spring.Echo(k2)
                 end
-            end)
-            if res then
-                for key, value in pairs(res) do
-                    Spring.Echo("Warning: Not Done Task " .. key .. ", after:")
-                    for _, k2 in pairs(value.afters) do
-                        Spring.Echo(k2)
-                    end
-                end
-                
             end
         end
     end
     to_make_op_things.RunOrderedList=RunOrderedList
-    to_make_op_things.RunUnitDefsTweakFns=RunOrderedList(UnitDefsTweakFns)
+    to_make_op_things.RunUnitDefsTweakFns=function ()
+        RunOrderedList(UnitDefsTweakFns)
+    end
+
+    
+
+    --- make "modify_" .. key .. "_begin" and "modify_" .. key .. "_end" and order
+    --- they are in modify_values_begin and modify_values_end
+    --- cost exclude, use modify_cost_begin modify_cost_end
+    local OrderKeyGen=function (order,key)
+        local beginstr="modify_" .. key .. "_begin"
+        local endstr="modify_" .. key .. "_end"
+        if not order.kvlist[beginstr] and not order.kvlist[endstr] then
+            order.Add({k=beginstr,a={endstr},b="modify_values_begin"})
+            order.Add({k=endstr,a="modify_values_end"})
+        end
+        return {beginstr,endstr}
+    end
+    
+    to_make_op_things.OrderKeyGen=OrderKeyGen
 
     do
         local fns=UnitDefsTweakFns
@@ -727,10 +738,23 @@ if not Spring.Utilities.to_make_op_things then
                 end
             end
         end
-
+        setmetatable(load_mod_env,{__index=function (t,k)
+            Spring.Log("defs.lua", LOG.ERROR, "load_mod", "Mod " .. k .. " don't exist")
+            return function() end
+        end})
         
         load_mod=function(modstr)
-            wacky_utils.justloadstring(modstr,load_mod_env)
+            local chunk,errmsg=loadstring(modstr)
+            if chunk then
+                setfenv(chunk,load_mod_env)
+                local suc,res=pcall(chunk)
+                if not suc then
+                    Spring.Log("defs.lua", LOG.ERROR, "load_mod", "Failed to run string " .. modstr .. " with error ".. res)
+                end
+            else
+                Spring.Log("defs.lua", LOG.ERROR, "load_mod", "Failed to load string " .. modstr .. " with error ".. errmsg)
+            end
+            --wacky_utils.justloadstring(modstr,load_mod_env)
         end
 
         --load_mod(mods)

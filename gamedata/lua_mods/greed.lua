@@ -46,7 +46,6 @@ utils_op.AddFnToUnitDefsTweakFns({
 
 utils_op.AddFnToUnitDefsTweakFns({
     k="greed_tech",
-    b={"pre_set_values"},
     a={"default_add_build_begin"},
     v=function ()
         local commBuilds={
@@ -234,13 +233,25 @@ utils_op.AddFnToUnitDefsTweakFns({
         end
         for udname, ud in pairs(UnitDefs) do
             if ud.customparams.commtype then
-                ud.workertime=(ud.workertime or 10)*GreedFactor
                 ud.buildoptions=commBuilds
             end
         end
         UnitDefs.athena.buildoptions=t2Builds
         UnitDefs.striderfunnelweb.buildoptions=t3Builds
         UnitDefs.striderhub.buildoptions=t4Builds
+    end
+})
+
+utils_op.AddFnToUnitDefsTweakFns({
+    k="greed_comm_bp_x10",
+    b={"default_modify_value_begin"},
+    a={"default_modify_value_end"},
+    v=function ()
+        for udname, ud in pairs(UnitDefs) do
+            if ud.customparams.commtype then
+                ud.workertime=(ud.workertime or 10)*GreedFactor
+            end
+        end
     end
 })
 
@@ -496,5 +507,5 @@ return {
     innateenergy = 10 *GreedFactor,
     innatemetal = 10 *GreedFactor,
     noelo = 1,
-    option_notes = "mex cost ".. GreedFactor .."k.. innate M/E income.. level up with: CONSTRUCTOR -> ATHENA -> FUNNELWEB -> STRIDER HUB..",
+    option_notes = "Op and expensive eco. Mex cost ".. GreedFactor .."k\nlevel up with: CONSTRUCTOR -> ATHENA -> FUNNELWEB -> STRIDER HUB",
 }

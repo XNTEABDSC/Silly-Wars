@@ -103,7 +103,7 @@ local options = {
   {
     key    = 'mods',
     name   = 'mods',
-    desc   = "Extra mods to use, use + for multiple mods, mods order matters, see source code for mods :3, in both gamedata/mods/ and gamedata/lua_mods/ ",
+    desc   = "Extra mods. See source code for mods :3, in both gamedata/mods/ and gamedata/lua_mods/ ",
     type   = 'string',
     section= 'silly',
     def    = "silly()",
@@ -809,6 +809,14 @@ local options = {
 		max     = 10000000,
 		step    = 1,
 	},
+  {
+    key         = "capture_full_override",
+    name        = "Capture Full Override",
+    desc        = "If a unit is captured ",
+    type        = "bool",
+    section     = "experimental",
+    def         = false,
+  },
 	{
 		key     = "allyteam_long_name_1",
 		name    = "Team 1 Name Override",

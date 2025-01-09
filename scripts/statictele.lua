@@ -201,7 +201,7 @@ local function FireTeleporter()
 	Spring.GiveOrderToUnit(unitID, CMD.REMOVE, cmdTag, 0)
 	DoTeleport(tx, tz)
 	
-	spSetUnitWeaponState( unitID, 1, "reloadFrame", spGetGameFrame()+wpnReload*GameSpeed )
+	--spSetUnitWeaponState( unitID, 1, "reloadFrame", spGetGameFrame()+wpnReload*GameSpeed )
 end
 
 function script.QueryWeapon(num)
@@ -214,7 +214,7 @@ end
 
 function script.BlockShot(num, targetID)
 	FireTeleporter()
-	return true
+	return false
 end
 
 function script.Killed(recentDamage, maxHealth)

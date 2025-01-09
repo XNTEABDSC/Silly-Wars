@@ -14,10 +14,10 @@ return utils_op.CopyTweak("tankriot","tankriotarty",function (ud)
         description="Orge with just Adv. Targeting System (expensive)",
         weaponDefs={
             TAWF_BANISHER={
-                range=1200
+                range=1100
             }
         },
-        metalCost=4500,
+        metalCost=4000,
         speed=38,
         customParams={
             def_scale=2,

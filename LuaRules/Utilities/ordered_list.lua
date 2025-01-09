@@ -21,18 +21,18 @@ if not Spring.Utilities.OrderedList then
 
         local Add
 
-        local function RawGet(key)
+        local function GetOrNew(key)
             if not kvlist[key] then
                 Add({k=key})
             end
             return kvlist[key]
         end
-        --self.Get=Get
+        self.GetOrNew=GetOrNew
 
         local function AddOrder(k1,k2)
-            local k1a=RawGet(k1).afters
+            local k1a=GetOrNew(k1).afters
             k1a[#k1a+1] = k2
-            local k2o=RawGet(k2)
+            local k2o=GetOrNew(k2)
             k2o.before_count=k2o.before_count+1
         end
         self.AddOrder=AddOrder
@@ -99,5 +99,18 @@ if not Spring.Utilities.OrderedList then
     end
 
     Spring.Utilities.OrderedList=OrderedList
+
+    function OrderedList.AddMult(list,ordered)
+        local append=0
+        local key=ordered.k
+        while list.kvlist[key] do
+            append=append+1
+            key=ordered.k .. append
+        end
+        ordered.k=key
+        list.Add(ordered)
+        
+    end
+
 end
 return Spring.Utilities.OrderedList

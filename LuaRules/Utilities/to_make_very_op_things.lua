@@ -11,16 +11,34 @@ if not Spring.Utilities.to_make_very_op_things then
     local mlks=utils.maylowerkeyset
     function to_make_very_op_things.make_weapon_drunk(wd_)
         local wd=utils.MayLowerKeyProxy(wd_)
-
-        if wd.weaponType=="StarburstLauncher"then
-            return
-        end
-
-        if wd.reloadTime then
-            wd.reloadTime = wd.reloadTime * 2
-        end
-        
         if wd.range then
+
+            if wd.weaponType=="StarburstLauncher" and wd.weaponVelocity and wd.weaponTimer then
+                
+                --wd.weaponVelocity=wd.range
+                local r=wd.range
+                local a=wd.weaponAcceleration
+                local v0=(wd.startVelocity or 0)
+                local v1=wd.weaponVelocity
+                local t=(v1-v0)/a
+                if (v1+v0)/2*t>r then
+                    -- r=1/2 a t^2 + v t
+                    t=(math.sqrt(2*a*r+v0^2)-v0)/a
+                end
+                local vm=v0+t/2*a
+                wd.startVelocity=vm
+                wd.weaponAcceleration=0
+                wd.weaponVelocity=350
+                wd.weaponType="MissileLauncher"
+                wd.trajectoryHeight=2
+                wd.weaponTimer=nil
+                wd.turret=true
+            end
+
+            if wd.reloadTime then
+                wd.reloadTime = wd.reloadTime * 2
+            end
+        
             wd.sprayAngle = (wd.sprayAngle or 0) + 4000 / math.log(wd.range/350+1.75)
             --[=[if wd.areaOfEffect then
                 wd.areaOfEffect = wd.areaOfEffect * 0.5
@@ -35,22 +53,24 @@ if not Spring.Utilities.to_make_very_op_things then
                     wd.burst =  burst
                 end
             end
-            if wd.turnRate and wd.range and wd.weaponVelocity and wd.sprayAngle then -- zk don't care about turnRate so we just set it manully
-                local raw=wd.turnRate
-                wd.turnRate=wd.sprayAngle/(wd.range/(wd.weaponVelocity)) /2
-                if wd.fixedlauncher then
-                    wd.turnRate=wd.turnRate*2+raw*0.5
+            if wd.turnRate and wd.weaponVelocity then
+                if (not wd.trajectoryHeight) or (wd.trajectoryHeight<0.4) then
+                    wd.trajectoryHeight=0.4
                 end
-                --wd.turnRate=wd.turnRate*0.1
-                --wd.sprayAngle=wd.sprayAngle*2
+                local dance=wd.range/8
+                if wd.tracks then
+                    dance=dance*2
+                else
+                    dance=dance*1
+                end
+                wd.dance=(wd.dance or 0)+dance
+                local wobble=wd.turnRate
+                if wd.tracks then
+                    wobble=wobble*2
+                end
+                wd.wobble=(wd.wobble or 0 ) + wobble
             end
         end
-        --wd.tracks = false
-
-        --[=[
-        if wd.areaofeffect then
-            wd.areaofeffect = wd.areaofeffect * 0.1
-        end]=]
     end
     function to_make_very_op_things.make_unit_drunk(ud)
         for k,v in pairs(ud.weaponDefs) do

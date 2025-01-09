@@ -18,6 +18,13 @@ function gadget:GetInfo()
 	}
 end
 
+local rescaleUnitDefIDs = {}
+for i = 1, #UnitDefs do
+	local scale = tonumber(UnitDefs[i].customParams.model_rescale)
+	if scale and scale ~= 1 and scale > 0 then
+		rescaleUnitDefIDs[i] = scale
+	end
+end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -26,7 +33,7 @@ local INLOS_ACCESS = {inlos = true}
 
 VFS.Include("LuaRules/Utilities/tablefunctions.lua")
 local suCopyTable = Spring.Utilities.CopyTable
-
+local spGetUnitDefID=Spring.GetUnitDefID
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -65,7 +72,7 @@ local function UnitModelRescale(unitID, scale)
 			origPieceTable[unitID] = {Spring.GetUnitPieceMatrix(unitID, base)}
 		end
 
-		SetScale(unitID, base, scale)
+		SetScale(unitID, base, scale*(rescaleUnitDefIDs[spGetUnitDefID(unitID)] or 1))
 	end
 end
 
@@ -81,13 +88,6 @@ end
 
 GG.UnitModelRescale = UnitModelRescale
 
-local rescaleUnitDefIDs = {}
-for i = 1, #UnitDefs do
-	local scale = tonumber(UnitDefs[i].customParams.model_rescale)
-	if scale and scale ~= 1 and scale > 0 then
-		rescaleUnitDefIDs[i] = scale
-	end
-end
 
 if next(rescaleUnitDefIDs) then
 	function gadget:UnitCreated(unitID, unitDefID)
@@ -96,6 +96,6 @@ if next(rescaleUnitDefIDs) then
 			return
 		end
 
-		UnitModelRescale(unitID, scale)
+		UnitModelRescale(unitID, 1)
 	end
 end

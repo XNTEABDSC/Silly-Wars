@@ -1,6 +1,6 @@
 return { dynchicken1 = {
     name                = [[Chicken Comm]],
-    description         = [[CLUCK CLUCK CLUCK]],
+    description         = [[CLUCK]],
     acceleration        = 0.6,
     autoHeal            = 10,
     brakeRate           = 1.23,

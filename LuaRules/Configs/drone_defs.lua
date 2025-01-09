@@ -28,6 +28,7 @@ local carrierDefNames = {
 	},
 	--gunshipkrow = { {drone = UnitDefNames.dronelight.id, reloadTime = 15, maxDrones = 6, spawnSize = 2, range = 900, buildTime=3,
 	-- offsets = {0,0,0,colvolMidX=0, colvolMidY=0,colvolMidZ=0,aimX=0,aimY=0,aimZ=0}},
+	--[=[
 	nebula = {
 		spawnPieces = {"pad1", "pad2", "pad3", "pad4"},
 		{
@@ -41,7 +42,7 @@ local carrierDefNames = {
 			maxBuild = 4,
 			offsets = {0, 8, 15, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
 		},
-	},
+	},]=]
 	pw_garrison = {
 		spawnPieces = {"drone"},
 		{
@@ -218,6 +219,16 @@ end
 
 for name, data in pairs(carrierDefNames) do
 	if UnitDefNames[name] then
+		local ud=UnitDefNames[name]
+		if ud.customParams.def_scale then
+			local scale=tonumber(ud.customParams.def_scale)
+			for idrone=1,#data do
+				local dronedata=data[idrone]
+				for key, value in pairs(dronedata.offsets) do
+					dronedata.offsets[key]=value*scale
+				end
+			end
+		end
 		carrierDefs[UnitDefNames[name].id] = data
 	end
 end
@@ -237,6 +248,7 @@ local function ProcessCarrierDef(carrierData)
 		carrierData.buildStepCost = buildUpProgress*carrierData.buildCost
 		carrierData.perSecondCost = carrierData.buildCost/carrierData.buildTime
 	end
+
 	
 	carrierData.colvolTweaked = carrierData.offsets.colvolMidX ~= 0 or carrierData.offsets.colvolMidY ~= 0
 									or carrierData.offsets.colvolMidZ ~= 0 or carrierData.offsets.aimX ~= 0

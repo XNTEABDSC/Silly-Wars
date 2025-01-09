@@ -12,7 +12,6 @@ local to_make_very_op_things = Spring.Utilities.to_make_very_op_things
 
 utils_op.AddFnToUnitDefsTweakFns({
     k = "home_base_set",
-    b = { "pre_set_values" },
     a = { "default_modify_cost_begin", "default_modify_value_begin" },
     v = function()
         local modifyfn =
@@ -82,3 +81,7 @@ utils_op.AddFnToUnitDefsTweakFns({
         end
     end
 })
+
+return {
+    option_notes="Expensive and op factories"
+}
