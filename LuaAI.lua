@@ -50,7 +50,11 @@ return {
   {
 	name ='Null AI',
 	desc = 'Empty AI for testing purposes'
-  }
+  },
+  {
+    name = 'Silly Chicken',
+    desc = 'Another chicken'
+  },
 }
 
 --------------------------------------------------------------------------------

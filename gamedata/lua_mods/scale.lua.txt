@@ -17,7 +17,6 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
         local udtoscale=utils.lowervalues({
             "brakerate","radarDistance","sightDistance","sonarDistance","speed","radarDistanceJam","buildDistance",
             "cruiseAltitude",
-            "buildingGroundDecalSizeX","buildingGroundDecalSizeY","buildingGroundDecalDecaySpeed",
             "acceleration"
         })
         local udcptoscale=utils.lowervalues({

@@ -1,0 +1,118 @@
+if (gadgetHandler:IsSyncedCode()) or true then
+
+
+function gadget:GetInfo()
+	return {
+		name      = "Unit get rid of enemy Transporter",
+		desc      = "Transporter will drop enemy unit unless enemy unit is stunned",
+		author    = "XNTEABSC",
+		date      = "",
+		license   = "GNU GPL, v2 or later",
+		layer     = -1,
+		enabled   = true  --  loaded by default?
+	}
+end
+
+local spGetUnitIsStunned=Spring.GetUnitIsStunned
+local spus=Spring.UnitScript
+local spusGetScriptEnv=spus.GetScriptEnv
+local spusCallAsUnit=spus.CallAsUnit
+local spGetUnitIsTransporting=Spring.GetUnitIsTransporting
+local spusDropUnit=spus.DropUnit
+local spAreTeamsAllied=Spring.AreTeamsAllied
+local spGetUnitTransporter=Spring.GetUnitTransporter
+local spGetUnitTeam=Spring.GetUnitTeam
+
+local watch_transportee={}
+local watch_transporter={}
+
+local function ChechShouldDrop(transporteeID,transporteeTeam,transporterID,transporterTeam,transporteeIsStunned)
+    return
+        not transporteeIsStunned and
+        not spAreTeamsAllied(transporterTeam,transporteeTeam)
+end
+
+local function ForceUnitDoDrop(transporterID,transporteeID)
+    Spring.Echo("DEBUG: do drop")
+    local env=spusGetScriptEnv(transporterID)
+    local dropfn=env.ForceDropUnit
+    if dropfn then
+        spusCallAsUnit(transporterID,dropfn)
+    else
+        if transporteeID then
+            spusCallAsUnit(transporterID,spusDropUnit,transporteeID)
+        end
+    end
+end
+
+local function CheckAndDrop(transporteeID,transporteeTeam,transporterID,transporterTeam,transporteeIsStunned)
+    
+    if ChechShouldDrop(
+        transporteeID,transporteeTeam,
+        transporterID,transporterTeam,
+        transporteeIsStunned
+    ) then
+        ForceUnitDoDrop(transporterID,transporteeID)
+    end
+end
+
+function gadget:AllowUnitTransportLoad(transporterID, transporterUnitDefID, transporterTeam, transporteeID, transporteeUnitDefID, transporteeTeam, goalX, goalY, goalZ)
+    if ChechShouldDrop(transporteeID,transporteeTeam,
+    transporterID,transporterTeam,spGetUnitIsStunned(transporteeID))then
+        return false or true
+    else
+        return true
+    end
+end
+
+function gadget:UnitLoaded(transporteeID, unitDefID, transporteeTeam, transporterID, transporterTeam)
+    watch_transportee[transporteeID]=transporterID
+    watch_transporter[transporterID]=true
+    Spring.Echo("DEBUG: register transport")
+    return true
+end
+
+function gadget:UnitUnloaded(transporteeID, unitDefID, transporteeTeam, transporterID, transporterTeam)
+    if watch_transportee[transporteeID] then
+        watch_transportee[transporteeID]=nil
+        Spring.Echo("DEBUG: deregister transport")
+    end
+    return true
+end
+
+function gadget:UnitStunned(transporteeID, unitDefID, transporteeTeam, stunned)
+    if stunned==false then
+        Spring.Echo("DEBUG: stun check")
+        local transporterID=watch_transportee[transporteeID]
+        if transporterID then
+            CheckAndDrop(
+                transporteeID,transporteeTeam,
+                transporterID,spGetUnitTeam(transporterID),
+                stunned)
+            
+        end
+    end
+end
+
+function gadget:UnitTaken(unitID, unitDefID, oldTeam, unitTeam)
+    local transporterID=watch_transportee[unitID]
+    if transporterID then
+        ChechShouldDrop(
+            unitID,unitTeam,
+            transporterID,spGetUnitTeam(transporterID),
+            spGetUnitIsStunned(unitID)
+        )
+        
+    end
+    if watch_transporter[unitID] then
+        for key, transporteeID in pairs(spGetUnitIsTransporting(unitID) or {}) do
+            CheckAndDrop(
+                transporteeID,spGetUnitTeam(transporteeID),
+                transporterID,unitTeam,
+                spGetUnitIsStunned(transporteeID)
+            )
+        end
+    end
+end
+
+end

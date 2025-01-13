@@ -83,7 +83,7 @@ local defcopys={}
 for udid, ud in pairs(UnitDefs) do
 	local udcp=ud.customParams
 	if udcp then
-		local cpstr=udcp.onclick_weapon_defs
+		local cpstr=udcp.oneclick_weapon_defs
 		if cpstr then
 			oneClickWepDefs[udid]=utils.justeval(cpstr)
 		end

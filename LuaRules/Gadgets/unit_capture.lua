@@ -74,6 +74,8 @@ local controllers = {}
 local reloading = {}
 
 local FULL_OVERWRITE_TIME=5*60*30
+
+local capture_full_override=Spring.GetModOptions().capture_full_override or true
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Utilities
@@ -345,19 +347,20 @@ local spMarkerAddPoint=Spring.MarkerAddPoint
 function gadget:GameFrame(f)
 	if (f - 5)%32 == 0 then
 
-		
-		for unitID, info in pairs(capturedUnits) do
-			if (info.capturedTime+FULL_OVERWRITE_TIME<f) and info.controllerID then
-				local oldController = info.controllerID
-				removeThingFromIterable(unitID, controllers[oldController].units, controllers[oldController].unitByID)
-				spSetUnitRulesParam(unitID, "capture_controller", -1, LOS_ACCESS)
-				capturedUnits[unitID] = nil
-				--Spring.Echo("game_message: " .. "Unit Fully Overwrited, capturedTime: " .. info.capturedTime .. "f: " .. f)
-				--[==[
-				if myAllyTeam==spGetUnitAllyTeam(unitID) then
-					local ux,uy,uz=spGetUnitPosition(unitID)
-					spMarkerAddPoint(ux,uy,uz,"Unit Fully Overwrited",true)
-				end]==]
+		if capture_full_override then
+			for unitID, info in pairs(capturedUnits) do
+				if (info.capturedTime+FULL_OVERWRITE_TIME<f) and info.controllerID then
+					local oldController = info.controllerID
+					removeThingFromIterable(unitID, controllers[oldController].units, controllers[oldController].unitByID)
+					spSetUnitRulesParam(unitID, "capture_controller", -1, LOS_ACCESS)
+					capturedUnits[unitID] = nil
+					--Spring.Echo("game_message: " .. "Unit Fully Overwrited, capturedTime: " .. info.capturedTime .. "f: " .. f)
+					--[==[
+					if myAllyTeam==spGetUnitAllyTeam(unitID) then
+						local ux,uy,uz=spGetUnitPosition(unitID)
+						spMarkerAddPoint(ux,uy,uz,"Unit Fully Overwrited",true)
+					end]==]
+				end
 			end
 		end
 

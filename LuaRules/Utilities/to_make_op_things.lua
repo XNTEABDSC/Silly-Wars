@@ -61,14 +61,20 @@ if not Spring.Utilities.to_make_op_things then
     --- make "modify_" .. key .. "_begin" and "modify_" .. key .. "_end" and order
     --- they are in modify_values_begin and modify_values_end
     --- cost exclude, use modify_cost_begin modify_cost_end
-    local OrderKeyGen=function (order,key)
-        local beginstr="modify_" .. key .. "_begin"
-        local endstr="modify_" .. key .. "_end"
-        if not order.kvlist[beginstr] and not order.kvlist[endstr] then
-            order.Add({k=beginstr,a={endstr},b="modify_values_begin"})
-            order.Add({k=endstr,a="modify_values_end"})
+    local OrderKeyGen=function (order,keys)
+        local begins,ends={},{}
+        for _, key in pairs(keys) do
+            
+            local beginstr="modify_" .. key .. "_begin"
+            local endstr="modify_" .. key .. "_end"
+            if not order.kvlist[beginstr] and not order.kvlist[endstr] then
+                order.Add({k=beginstr,a={endstr},b="modify_values_begin"})
+                order.Add({k=endstr,a="modify_values_end"})
+            end
+            begins[#begins+1] = beginstr
+            endstr[#endstr+1] = endstr
         end
-        return {beginstr,endstr}
+        return begins,ends
     end
     
     to_make_op_things.OrderKeyGen=OrderKeyGen

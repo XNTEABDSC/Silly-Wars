@@ -1,8 +1,8 @@
 local ud=UnitDefs.statictele
-ud.metalcost=50000
+ud.metalcost=35000
 local udcp=ud.customparams
 udcp.stockpiletime="90"
-udcp.stockpilecost="4000"
+udcp.stockpilecost="2000"
 ud.weapondefs.bogus_cloak_target.reloadtime=30
 
 ud.health=10000

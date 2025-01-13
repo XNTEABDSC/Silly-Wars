@@ -35,3 +35,7 @@ x swift gun on bandit -- did anyone noticed swift gun's 667 range?
 badger throw dirtbag -done
 
 weapondef_post
+
+ban nuke
+
+fix greed mex

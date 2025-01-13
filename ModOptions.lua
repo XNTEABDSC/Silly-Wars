@@ -815,7 +815,7 @@ local options = {
     desc        = "If a unit is captured ",
     type        = "bool",
     section     = "experimental",
-    def         = false,
+    def         = true,
   },
 	{
 		key     = "allyteam_long_name_1",

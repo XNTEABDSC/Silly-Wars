@@ -427,8 +427,6 @@ utils_op.AddFnToUnitDefsTweakFns({
             staticmex = {
                 metalCost = 1000 *GreedFactor,
                 health = 1600 *GreedFactor,
-                selfDestructAs = [[AMPHBOMB_DEATH]],
-                explodeAs = [[AMPHBOMB_DEATH]],
                 customParams = {
                     metal_extractor_mult = 1 *GreedFactor,
                 },
@@ -445,31 +443,6 @@ utils_op.AddFnToUnitDefsTweakFns({
                     },
                 },
                 weaponDefs = {
-                    AMPHBOMB_DEATH = {
-                        areaOfEffect = 5000,
-                        craterBoost = 1,
-                        craterMult = 3.5,
-                        customparams = {
-                            lups_explodespeed = 1.04,
-                            lups_explodelife = 0.88,
-                            timeslow_damagefactor = 10,
-                            timeslow_overslow_frames = 2 * 30,
-                            nofriendlyfire = 1,
-                            light_color = [[1.88 0.63 2.5]],
-                            light_radius = 320,
-                        },
-                        damage = {
-                            default = 120.1,
-                        },
-                        edgeEffectiveness = 1,
-                        explosionGenerator = "custom:riotballplus2_purple_limpet",
-                        explosionSpeed = 10,
-                        impulseBoost = 10,
-                        impulseFactor = 10,
-                        name = "Slowing Explosion",
-                        soundHit = [[weapon/aoe_aura2]],
-                        soundHitVolume = 4,
-                    },
                     BIGSHIELD = {
                         name = [[Big Energy Shield]],
                         damage = {
