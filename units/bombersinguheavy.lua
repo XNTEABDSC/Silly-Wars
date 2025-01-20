@@ -4,7 +4,7 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-return utils_op.CopyTweakSillyBuildMorph("bombersingu","bombersinguheavy",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("bombersingu","bombersinguheavy",function (ud)
     ud.name="Singu Likho"
     ud.description="Throw SINGULARITY, need both rearm and 3000 stockpile cost"
     ud.metalCost=20000

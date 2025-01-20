@@ -21,7 +21,7 @@ utils.table_replace({
     }
 })(ud)
 
-utils_op.MakeSetSillyMorph("shieldriot","shieldriotflat",5)
+utils_op.MakeSetSillyMorphBig("shieldriot","shieldriotflat",5)
 utils_op.MakeAddSillyBuild("shieldriotflat")
 
 return {["shieldriotflat"]=ud}

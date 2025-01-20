@@ -7,7 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-return utils_op.CopyTweakSillyBuildMorph("veharty","vehartydirty",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("veharty","vehartydirty",function (ud)
     ud.metalCost=ud.metalCost*3
     ud.health=ud.health*2.5
     local udcp=ud.customParams

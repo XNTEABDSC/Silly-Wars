@@ -1,1 +1,1 @@
-return {mods="silly_tech() silly_build() silly_morph()  more_build()  add_chixs()"}
+return {mods="silly_tech() silly_build() silly_morph_simple() silly_morph_big() more_build() add_chixs()"}

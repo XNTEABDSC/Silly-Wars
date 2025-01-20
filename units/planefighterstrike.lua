@@ -6,7 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-return utils_op.CopyTweakSillyBuildMorph("planefighter","planefighterstrike",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("planefighter","planefighterstrike",function (ud)
 
     utils.table_replace({
         name=[[OP Swift]],

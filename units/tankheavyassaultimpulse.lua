@@ -19,6 +19,6 @@ customParams={
 },
 })(ud)
 
-utils_op.MakeSetSillyMorph(fname,tname,20)
+utils_op.MakeSetSillyMorphBig(fname,tname,20)
 utils_op.MakeAddSillyBuild(tname)
 return {[tname]=ud}

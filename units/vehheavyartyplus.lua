@@ -7,7 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils_op.MakeSetSillyMorph("vehheavyarty","vehheavyartyplus")
+utils_op.MakeSetSillyMorphBig("vehheavyarty","vehheavyartyplus")
 utils_op.MakeAddSillyBuild("vehheavyartyplus")
 return utils_op.CopyTweak("vehheavyarty","vehheavyartyplus",function (ud)
     ud.metalCost=2000

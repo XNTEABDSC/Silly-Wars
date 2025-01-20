@@ -7,7 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-return utils_op.CopyTweakSillyBuildMorph("staticcontanky","staticconarty",utils.table_replace({
+return utils_op.CopyTweakSillyBuildMorphAuto("staticcontanky","staticconarty",utils.table_replace({
     name                          = [[Long-Range Caretaker]],
     description                   = [[Long-Range Construction Assistant]],
     health=1500,

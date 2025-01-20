@@ -96,7 +96,7 @@ do
 end
 ud.canManualFire          = true
 
-utils_op.MakeSetSillyMorph("zenith","thepeace",30)
+utils_op.MakeSetSillyMorphBig("zenith","thepeace",30)
 
 utils_op.MakeAddSillyBuild("thepeace")
 

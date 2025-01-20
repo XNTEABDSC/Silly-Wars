@@ -7,7 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils_op.MakeSetSillyMorph("jumpaa","jumpaapro")
+utils_op.MakeSetSillyMorphBig("jumpaa","jumpaapro")
 utils_op.MakeAddSillyBuild("jumpaapro")
 
 return utils_op.CopyTweak("jumpaa","jumpaapro",function (ud)

@@ -229,18 +229,6 @@ if not Spring.Utilities.to_make_op_things then
         --AddFnToOptionalUnitDefsTweakFns("silly_morph",MakeSetMorphMutValueWithOrder(srcname,toname,morphtime,morphprice))
     end
     to_make_op_things.MakeDefAddBuild=MakeDefAddBuild
-    local function ModifyTableMBLowkey(tb,key,fn)
-        local v=tb[key]
-        if not v then
-            local key2=string.lower(key)
-            v=tb[key2]
-            if v then
-                key=key2
-            end
-        end
-        v[key]=fn(v)
-    end
-    to_make_op_things.ModifyTableMBLowkey=ModifyTableMBLowkey
 
     do
         local maxBuildPer=18
@@ -350,6 +338,7 @@ if not Spring.Utilities.to_make_op_things then
         --to_make_op_things.AddSillyBuild=AddSillyBuild
     end
 
+    --[=[
     local function MakeAddBuildFrontValueWithOrder(builer,buildee)
         return{
             k="add_build(" .. builer .. ", " .. buildee .. ")",
@@ -373,7 +362,8 @@ if not Spring.Utilities.to_make_op_things then
     end
 
     to_make_op_things.MakeAddBuildFrontValueWithOrder=MakeAddBuildFrontValueWithOrder
-    
+    ]=]
+
     ---set unit to dontcount, and no wreck
     function to_make_op_things.set_free_unit(ud)
         ud.corpse=nil
@@ -398,19 +388,55 @@ if not Spring.Utilities.to_make_op_things then
         fn(ud)
         return {[toname]=ud}
     end
+
     
-    local function MakeSetSillyMorph(srcname,toname,morphtime,morphprice)
-        AddFnToOptionalUnitDefsTweakFns("silly_morph",MakeSetMorphMutValueWithOrder(srcname,toname,morphtime,morphprice))
+    local function MakeSetSillyMorphSimple(srcname,toname,morphtime,morphprice)
+        AddFnToOptionalUnitDefsTweakFns("silly_morph_simple",MakeSetMorphMutValueWithOrder(srcname,toname,morphtime,morphprice))
+    end
+    
+    local function MakeSetSillyMorphBig(srcname,toname,morphtime,morphprice)
+        AddFnToOptionalUnitDefsTweakFns("silly_morph_big",MakeSetMorphMutValueWithOrder(srcname,toname,morphtime,morphprice))
     end
 
     local function MakeAddSillyBuild(name,con)
         AddFnToOptionalUnitDefsTweakFns("silly_build",to_make_op_things.MakeAddSillyBuildValueWithOrder(name,con))
     end
-    to_make_op_things.MakeSetSillyMorph=MakeSetSillyMorph
+    to_make_op_things.MakeSetSillyMorphSimple=MakeSetSillyMorphSimple
+    to_make_op_things.MakeSetSillyMorphBig=MakeSetSillyMorphBig
     to_make_op_things.MakeAddSillyBuild=MakeAddSillyBuild
-    function to_make_op_things.CopyTweakSillyBuildMorph(srcname,toname,fn)
-        MakeSetSillyMorph(srcname,toname)
+    
+    function to_make_op_things.CopyTweakSillyBuildMorphBig(srcname,toname,fn)
+        MakeSetSillyMorphBig(srcname,toname)
         MakeAddSillyBuild(toname)
+        --to_make_op_things.add_build("silly_build",builder,toname)
+        --to_make_op_things.set_morph_mul("silly_morph",srcname,toname)
+        return to_make_op_things.CopyTweak(srcname,toname,fn)
+    end
+
+    function to_make_op_things.CopyTweakSillyBuildMorphAuto(srcname,toname,fn)
+        MakeSetSillyMorphBig(srcname,toname)
+        MakeAddSillyBuild(toname)
+        --to_make_op_things.add_build("silly_build",builder,toname)
+        --to_make_op_things.set_morph_mul("silly_morph",srcname,toname)
+        --
+        local ud=GetUnitLua(srcname)
+        local src_cost=ud.metalCost
+        fn(ud)
+        local new_cost=ud.metalCost
+        if new_cost/src_cost >1.5 then
+            MakeSetSillyMorphBig(srcname,toname)
+            MakeAddSillyBuild(toname)
+        else
+            MakeSetSillyMorphSimple(srcname,toname)
+        end
+        return {[toname]=ud}
+    end
+
+    
+    function to_make_op_things.CopyTweakSillyBuildMorphSimple(srcname,toname,fn)
+        --MakeSetSillyMorphBig(srcname,toname)
+        --MakeAddSillyBuild(toname)
+        MakeSetSillyMorphSimple(srcname,toname)
         --to_make_op_things.add_build("silly_build",builder,toname)
         --to_make_op_things.set_morph_mul("silly_morph",srcname,toname)
         return to_make_op_things.CopyTweak(srcname,toname,fn)

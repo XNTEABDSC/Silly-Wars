@@ -4,7 +4,7 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-utils_op.MakeSetSillyMorph("bomberdisarm","bomberemp")
+utils_op.MakeSetSillyMorphBig("bomberdisarm","bomberemp")
 
 utils_op.MakeAddSillyBuild("bomberemp")
 

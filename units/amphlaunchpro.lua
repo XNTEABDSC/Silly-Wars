@@ -4,7 +4,7 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-return utils_op.CopyTweakSillyBuildMorph("amphlaunch","amphlaunchpro",utils.table_replace({
+return utils_op.CopyTweakSillyBuildMorphAuto("amphlaunch","amphlaunchpro",utils.table_replace({
     name="Greater Lobster",
     customParams={
         thrower_gather=300

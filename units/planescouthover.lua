@@ -8,7 +8,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 local tbnil=utils.None
-return utils_op.CopyTweakSillyBuildMorph("planescout","planescouthover",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("planescout","planescouthover",function (ud)
     utils.table_replace({
         name="Not Flying Owl",
         description="Flying is too danger",

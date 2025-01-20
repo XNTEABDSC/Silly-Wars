@@ -6,14 +6,6 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+utils_op.PushOptionalUnitDefsTweakFns("silly_morph_simple")
 
-return utils_op.CopyTweakSillyBuildMorphAuto("energyfusion","energyfusiontanky",utils.table_replace({
-    name="Tanky Fusion Reactor",
-    description="Stable Energy Grid",
-    customParams={
-        pylonrange=600
-    },
-    energyMake=50,
-    metalCost=2000,
-    health=10000,
-}))
+return {option_notes="Units can morth into its mutate version"}

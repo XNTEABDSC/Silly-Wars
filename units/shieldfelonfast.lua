@@ -6,7 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-utils_op.MakeSetSillyMorph("shieldfelon","shieldfelonfast")
+utils_op.MakeSetSillyMorphBig("shieldfelon","shieldfelonfast")
 utils_op.MakeAddSillyBuild("shieldfelonfast")
 return utils_op.CopyTweak("shieldfelon","shieldfelonfast",function (ud)
     ud.name ="Rushing " .. ud.name

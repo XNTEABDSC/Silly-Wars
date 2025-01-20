@@ -9,7 +9,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils_op.MakeSetSillyMorph("jumpskirm","jumpskirmburst")
+utils_op.MakeSetSillyMorphBig("jumpskirm","jumpskirmburst")
 utils_op.MakeAddSillyBuild("jumpskirmburst")
 
 return utils_op.CopyTweak("jumpskirm","jumpskirmburst",utils.table_replace(

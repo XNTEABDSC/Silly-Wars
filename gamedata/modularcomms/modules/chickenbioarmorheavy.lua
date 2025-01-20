@@ -22,7 +22,7 @@ return {
 		local moduleImagePath=shared.moduleImagePath
 		local COST_MULT=shared.COST_MULT
 		local HP_MULT=shared.HP_MULT
-		return {
+		return {{
 			name = "module_chickenbioarmor",
 			humanName = humanName,
 			description = description,
@@ -37,6 +37,6 @@ return {
 				sharedData.healthBonus = (sharedData.healthBonus or 0) + hp*HP_MULT
 				sharedData.speedMultPost = (sharedData.speedMultPost or 1) + speed
 			end
-		}
+		}}
 	end
 }

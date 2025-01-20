@@ -15,4 +15,4 @@ ud.customparams.statsname=nil
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 utils_op.MakeAddSillyBuild("statictele")
-utils_op.MakeSetSillyMorph("amphlaunchpro","statictele")
+utils_op.MakeSetSillyMorphBig("amphlaunchpro","statictele")

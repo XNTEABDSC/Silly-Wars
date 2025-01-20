@@ -8,7 +8,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
-utils_op.MakeSetSillyMorph("spiderskirm","spiderskirmarty")
+utils_op.MakeSetSillyMorphBig("spiderskirm","spiderskirmarty")
 utils_op.MakeAddSillyBuild("spiderskirmarty")
 
 

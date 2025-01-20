@@ -4,7 +4,7 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-return utils_op.CopyTweakSillyBuildMorph("bomberheavy","bombersingu",function (ud)
+return utils_op.CopyTweakSillyBuildMorphSimple("bomberheavy","bombersingu",function (ud)
     ud.name="Impulse Likho"
     ud.description="Impulse Bomber"
     ud.metalCost=3000

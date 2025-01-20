@@ -8,7 +8,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
-utils_op.MakeSetSillyMorph("cloakskirm","cloakskirmguide")
+utils_op.MakeSetSillyMorphBig("cloakskirm","cloakskirmguide")
 utils_op.MakeAddSillyBuild("cloakskirmguide")
 
 return utils_op.CopyTweak("cloakskirm","cloakskirmguide",function (ud)
