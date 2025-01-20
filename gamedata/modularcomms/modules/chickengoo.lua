@@ -1,6 +1,6 @@
 
 local humanName="Chicken Blob"
-local description= "Chicken Blob, can only shot at front, replace other weapons"
+local description= humanName .. " - Blob, can only shot at front, replace other weapons"
 
 return {
     moduledef={

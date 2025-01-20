@@ -42,6 +42,39 @@ return {
             },
         },
     },
+    dynamic_comm_defs_name="chicken",
+    dynamic_comm_defs_modules={
+        {
+            name = "commweapon_personal_shield",
+        },
+        {
+            name = "module_radarnet",
+        },
+        {
+            requireChassis = {
+                "support",
+            },
+            name = "module_resurrect",
+        },
+        {
+            name = "module_dmg_booster",
+        },{
+            requireChassis = {
+                "assault",
+            },
+            name = "module_high_power_servos",
+        },
+        {
+            name = "module_adv_targeting",
+        },{
+            requireChassis = {
+                [1] = "recon",
+            },
+            name = "module_adv_nano",
+        },{
+            name = "banner_overhead",
+        },
+    },
     dynamic_comm_defs=function(shared)
         shared=ModularCommDefsShared or shared
         local extraLevelCostFunction=shared.extraLevelCostFunction

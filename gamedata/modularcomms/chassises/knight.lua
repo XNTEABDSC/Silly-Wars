@@ -68,6 +68,7 @@ return {
             -- Space for shield
         }
     },
+    dynamic_comm_defs_name="knight",
     dynamic_comm_defs=function(shared)
         
         shared=ModularCommDefsShared or shared

@@ -42,6 +42,7 @@ ModularCommDefsShared_.disableResurrect=disableResurrect
 ------------------------------------------------------------------------
 
 -- For autogenerating expensive advanced versions
+--[=[
 local basicWeapons = {
 	["commweapon_beamlaser"] = true,
 	["commweapon_flamethrower"] = true,
@@ -55,16 +56,16 @@ local basicWeapons = {
 	["commweapon_shotgun"] = true,
 }
 ModularCommDefsShared_.basicWeapons=basicWeapons
+]=]
 
+local forAllChassisModules={
+	"nullmodule","nullbasicweapon","nulladvweapon","nulldualbasicweapon"
+}
 local moduleDefNames = {}
 ModularCommDefsShared_.moduleDefNames=moduleDefNames
 local moduleDefNamesToIDs = {}
 ModularCommDefsShared_.moduleDefNamesToIDs=moduleDefNamesToIDs
 
-local chassisListNames={}
-for key, value in pairs({"recon", "strike", "assault", "support", "knight"}) do
-	chassisListNames[value]=true
-end
 
 ModularCommDefsShared_.applicationFunctionApplyWeapon=function (GetWeaponName)
 	return function (modules, sharedData)
@@ -91,6 +92,14 @@ ModularCommDefsShared_.applicationFunctionApplyNoMoreWeapon=function (GetWeaponN
 	end
 end
 ModularCommDefsShared_.UnitDefNames=UnitDefNames
+ModularCommDefsShared_.GenAdvWeaponModule=function (def)
+	
+	local newDef = Spring.Utilities.CopyTable(def, true)
+	newDef.name = newDef.name .. "_adv"
+	newDef.slotType = "dual_basic_weapon"
+	newDef.cost = 350 * COST_MULT
+	return newDef
+end
 local moduleDefs = {}
 local SharedEnv={ModularCommDefsShared=ModularCommDefsShared_,UnitDefNames=UnitDefNames}
 
@@ -104,456 +113,12 @@ for i = 1, #modulesalldefs do
 	for key, moduleDef in pairs(new_moduleDefs) do
 		moduleDefs[#moduleDefs+1]=moduleDef
 		local def=moduleDef
-		if basicWeapons[def.name] or def.isBasicWeapon then
+		if def.isBasicWeapon then
 			local newDef = Spring.Utilities.CopyTable(def, true)
 			newDef.name = newDef.name .. "_adv"
 			newDef.slotType = "dual_basic_weapon"
 			newDef.cost = 350 * COST_MULT
 			moduleDefs[#moduleDefs + 1] = newDef
-		end
-		if def.requireChassis then
-			for key, value in pairs(def.requireChassis) do
-				chassisListNames[value]=true
-			end
-		end
-	end
-end
-
-do
-	local ModuleToHardcodedID={
-		[1] = {
-			name = "nullmodule",
-		},
-		[2] = {
-			requireChassis = {
-				[1] = "knight",
-			},
-			name = "nullbasicweapon",
-		},
-		[3] = {
-			name = "nulladvweapon",
-		},
-		[4] = {
-			name = "nulldualbasicweapon",
-		},
-		[5] = {
-			name = "commweapon_beamlaser",
-		},
-		[6] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "assault",
-				[3] = "knight",
-			},
-			name = "commweapon_flamethrower",
-		},
-		[7] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "commweapon_heatray",
-		},
-		[8] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "assault",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_heavymachinegun",
-		},
-		[9] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "support",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_lightninggun",
-		},
-		[10] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "recon",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_lparticlebeam",
-		},
-		[11] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "strike",
-				[3] = "knight",
-			},
-			name = "commweapon_missilelauncher",
-		},
-		[12] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "commweapon_riotcannon",
-		},
-		[13] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "commweapon_rocketlauncher",
-		},
-		[14] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "support",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_shotgun",
-		},
-		[15] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "knight",
-			},
-			name = "commweapon_hparticlebeam",
-		},
-		[16] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "knight",
-			},
-			name = "commweapon_shockrifle",
-		},
-		[17] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "assault",
-				[3] = "knight",
-			},
-			name = "commweapon_clusterbomb",
-		},
-		[18] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "knight",
-			},
-			name = "commweapon_concussion",
-		},
-		[19] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "strike",
-				[3] = "knight",
-			},
-			name = "commweapon_disintegrator",
-		},
-		[20] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "support",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_disruptorbomb",
-		},
-		[21] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "recon",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_multistunner",
-		},
-		[22] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "recon",
-				[3] = "knight",
-			},
-			name = "commweapon_napalmgrenade",
-		},
-		[23] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "commweapon_slamrocket",
-		},
-		[24] = {
-			name = "econ",
-		},
-		[25] = {
-			name = "commweapon_personal_shield",
-		},
-		[26] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "support",
-				[3] = "knight",
-			},
-			name = "commweapon_areashield",
-		},
-		[27] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "weaponmod_napalm_warhead",
-		},
-		[28] = {
-			requireChassis = {
-				[1] = "strike",
-				[2] = "recon",
-				[3] = "support",
-				[4] = "knight",
-			},
-			name = "conversion_disruptor",
-		},
-		[29] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "strike",
-				[3] = "recon",
-				[4] = "knight",
-			},
-			name = "weaponmod_stun_booster",
-		},
-		[30] = {
-			name = "module_jammer",
-		},
-		[31] = {
-			name = "module_radarnet",
-		},
-		[32] = {
-			name = "module_personal_cloak",
-		},
-		[33] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "strike",
-				[3] = "knight",
-			},
-			name = "module_cloak_field",
-		},
-		[34] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "knight",
-			},
-			name = "module_resurrect",
-		},
-		[35] = {
-			requireChassis = {
-				[1] = "knight",
-			},
-			name = "module_jumpjet",
-		},
-		[36] = {
-			name = "module_companion_drone",
-		},
-		[37] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "support",
-				[3] = "knight",
-			},
-			name = "module_battle_drone",
-		},
-		[38] = {
-			requireChassis = {
-				[1] = "strike",
-				[2] = "knight",
-			},
-			name = "module_autorepair",
-		},
-		[39] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "recon",
-				[3] = "support",
-			},
-			name = "module_autorepair",
-		},
-		[40] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "module_ablative_armor",
-		},
-		[41] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "module_heavy_armor",
-		},
-		[42] = {
-			requireChassis = {
-				[1] = "strike",
-				[2] = "recon",
-				[3] = "support",
-			},
-			name = "module_ablative_armor",
-		},
-		[43] = {
-			requireChassis = {
-				[1] = "strike",
-				[2] = "recon",
-				[3] = "support",
-			},
-			name = "module_heavy_armor",
-		},
-		[44] = {
-			name = "module_dmg_booster",
-		},
-		[45] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "knight",
-			},
-			name = "module_high_power_servos",
-		},
-		[46] = {
-			requireChassis = {
-				[1] = "strike",
-				[2] = "assault",
-				[3] = "support",
-				[4] = "chicken",
-			},
-			name = "module_high_power_servos",
-		},
-		[47] = {
-			name = "module_adv_targeting",
-		},
-		[48] = {
-			requireChassis = {
-				[1] = "support",
-			},
-			name = "module_adv_nano",
-		},
-		[49] = {
-			requireChassis = {
-				[1] = "strike",
-				[2] = "assault",
-				[3] = "knight",
-			},
-			name = "module_adv_nano",
-		},
-		[50] = {
-			requireChassis = {
-				[1] = "recon",
-			},
-			name = "module_adv_nano",
-		},
-		[51] = {
-			name = "banner_overhead",
-		},
-		[52] = {
-			name = "commweapon_beamlaser_adv",
-		},
-		[53] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "assault",
-				[3] = "knight",
-			},
-			name = "commweapon_flamethrower_adv",
-		},
-		[54] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "commweapon_heatray_adv",
-		},
-		[55] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "assault",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_heavymachinegun_adv",
-		},
-		[56] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "support",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_lightninggun_adv",
-		},
-		[57] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "recon",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_lparticlebeam_adv",
-		},
-		[58] = {
-			requireChassis = {
-				[1] = "support",
-				[2] = "strike",
-				[3] = "knight",
-			},
-			name = "commweapon_missilelauncher_adv",
-		},
-		[59] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "commweapon_riotcannon_adv",
-		},
-		[60] = {
-			requireChassis = {
-				[1] = "assault",
-				[2] = "knight",
-			},
-			name = "commweapon_rocketlauncher_adv",
-		},
-		[61] = {
-			requireChassis = {
-				[1] = "recon",
-				[2] = "support",
-				[3] = "strike",
-				[4] = "knight",
-			},
-			name = "commweapon_shotgun_adv",
-		},
-	}
-	for module_hardcoded_id, module_identity in pairs(ModuleToHardcodedID) do
-		-- yes enum all
-		for _, module in pairs(moduleDefs) do
-			if module.name==module_identity.name then
-
-				local found_all=true
-				if module_identity.requireChassis then
-					for _, requireChassisNeeded in pairs(module_identity.requireChassis) do
-						local found=false
-						for _, requireChassisExist in pairs(module.requireChassis) do
-							if requireChassisExist==requireChassisNeeded then
-								found=true break
-							end
-						end
-						if not found then
-							found_all=false
-							break
-						end
-					end
-					
-				end
-				if found_all then
-					module.hardcodedID=module_hardcoded_id
-				end
-			end
 		end
 	end
 end
@@ -616,10 +181,73 @@ for i = 1, #moduleDefs do
 	moduleDefNamesToIDs[moduleDefs[i].name] = data
 end
 
+local chassisAllDefs=VFS.Include("gamedata/modularcomms/chassises_all_defs.lua")
+
 local chassisList={}
-for k,v in pairs(chassisListNames) do
+for _,v in pairs(chassisAllDefs) do
+	local k=v.dynamic_comm_defs_name
 	moduleDefNames[k] = {}
 	chassisList[#chassisList+1]=k
+end
+
+
+
+for _, moudleName in pairs(forAllChassisModules) do
+	moduleDefs[moduleDefNamesToIDs[moudleName][1]].requireChassis=chassisList
+end
+
+local function FindModule(moduleName,requireChassis)
+	local ids=moduleDefNamesToIDs[moduleName]
+	if not ids then
+		Spring.Echo("Warning: module " ..moduleName .. " not found")
+		return nil
+	end
+	for _, moduleID in pairs(ids) do
+		local moduleDef=moduleDefs[moduleID]
+		if not requireChassis then
+			return moduleDef
+		else
+			local foundAll=true
+			for _, requireChassisNeeded in pairs(requireChassis) do
+				local found=false
+				for _, requireChassisHas in pairs(moduleDef.requireChassis) do
+					if requireChassisHas==requireChassisNeeded then
+						found=true
+						break
+					end
+				end
+				if not found then
+					Spring.Echo("Warning: module " ..moduleName .. " chassis " .. requireChassisNeeded .. "not matched")
+					
+					for _, requireChassisHas in pairs(moduleDef.requireChassis) do
+						Spring.Echo(requireChassisHas)
+					end
+					foundAll=false
+					break
+				end
+			end
+			if foundAll then
+				return moduleDef
+			end
+		end
+	end
+	return nil
+end
+
+ModularCommDefsShared_.FindModule=FindModule
+
+for _,v in pairs(chassisAllDefs) do
+	local moduleIdentities=v.dynamic_comm_defs_modules
+	if moduleIdentities then
+		for _, moduleIdentity in pairs(moduleIdentities) do
+			local moduleDef=FindModule(moduleIdentity.name,moduleIdentity.requireChassis)
+			if moduleDef then
+				moduleDef.requireChassis[#moduleDef.requireChassis+1] = v.dynamic_comm_defs_name
+			else
+				Spring.Echo("Warning: module " ..moduleIdentity.name .. " not found")
+			end
+		end
+	end
 end
 
 for i = 1, #moduleDefs do
@@ -696,7 +324,6 @@ end
 local chassisDefs = {
 }
 
-local chassisAllDefs=VFS.Include("gamedata/modularcomms/chassises_all_defs.lua")
 
 for i = 1, #chassisAllDefs do
 	local chassisDef = chassisAllDefs[i].dynamic_comm_defs(ModularCommDefsShared_)

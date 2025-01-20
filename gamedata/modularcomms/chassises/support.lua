@@ -31,6 +31,7 @@ return {
             },
         },
     },
+    dynamic_comm_defs_name="support",
     dynamic_comm_defs=function(shared)
         
         shared=ModularCommDefsShared or shared

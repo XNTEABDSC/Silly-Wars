@@ -1,3 +1,4 @@
+local MergeTable=Spring.Utilities.MergeTable
 return{
     moduledef={
         -- weapons
@@ -746,6 +747,7 @@ return{
         local moduleImagePath=shared.moduleImagePath
         local moduleDefNamesToIDs=shared.moduleDefNamesToIDs
         local disableResurrect=shared.disableResurrect
+        local basicChassis={"recon", "strike", "assault", "support", "knight"}
         local moduleDefs = {
             -- Empty Module Slots
             {
@@ -758,6 +760,7 @@ return{
                 cost = 0,
                 requireLevel = 0,
                 slotType = "module",
+                hardcodedID=1,
             },
             {
                 name = "nullbasicweapon",
@@ -770,6 +773,7 @@ return{
                 cost = 0,
                 requireLevel = 0,
                 slotType = "basic_weapon",
+                hardcodedID=2,
             },
             {
                 name = "nulladvweapon",
@@ -781,6 +785,7 @@ return{
                 cost = 0 * COST_MULT,
                 requireLevel = 0,
                 slotType = "adv_weapon",
+                hardcodedID=3,
             },
             {
                 name = "nulldualbasicweapon",
@@ -792,93 +797,13 @@ return{
                 cost = 0 * COST_MULT,
                 requireLevel = 0,
                 slotType = "dual_basic_weapon",
+                hardcodedID=4,
             },
             
             -- Weapons
-            {
-                name = "commweapon_beamlaser",
-                humanName = "Beam Laser",
-                description = "Beam Laser: An effective short-range cutting tool",
-                image = moduleImagePath .. "commweapon_beamlaser.png",
-                limit = 2,
-                cost = 0,
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = "commweapon_beamlaser"
-                    else
-                        sharedData.weapon2 = "commweapon_beamlaser"
-                    end
-                end
-            },
-            {
-                name = "commweapon_flamethrower",
-                humanName = "Flamethrower",
-                description = "Flamethrower: Good for deep-frying swarmers and large targets alike",
-                image = moduleImagePath .. "commweapon_flamethrower.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"recon", "assault", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = "commweapon_flamethrower"
-                    else
-                        sharedData.weapon2 = "commweapon_flamethrower"
-                    end
-                end
-            },
-            {
-                name = "commweapon_heatray",
-                humanName = "Heatray",
-                description = "Heatray: Rapidly melts anything at short range; steadily loses all of its damage over distance",
-                image = moduleImagePath .. "commweapon_heatray.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"assault", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = "commweapon_heatray"
-                    else
-                        sharedData.weapon2 = "commweapon_heatray"
-                    end
-                end
-            },
-            {
-                name = "commweapon_heavymachinegun",
-                humanName = "Machine Gun",
-                description = "Machine Gun: Close-in automatic weapon with AoE",
-                image = moduleImagePath .. "commweapon_heavymachinegun.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"recon", "assault", "strike", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    local weaponName = (modules[moduleDefNamesToIDs.conversion_disruptor[1]] and "commweapon_heavymachinegun_disrupt") or "commweapon_heavymachinegun"
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = weaponName
-                    else
-                        sharedData.weapon2 = weaponName
-                    end
-                end
-            },
+            
+            
+            
             --{
             --	name = "commweapon_hpartillery",
             --	humanName = "Plasma Artillery",
@@ -901,137 +826,12 @@ return{
             --		end
             --	end
             --},
-            {
-                name = "commweapon_lightninggun",
-                humanName = "Lightning Rifle",
-                description = "Lightning Rifle: Paralyzes and damages annoying bugs",
-                image = moduleImagePath .. "commweapon_lightninggun.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"recon", "support", "strike", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    local weaponName = (modules[moduleDefNamesToIDs.weaponmod_stun_booster[1]] and "commweapon_lightninggun_improved") or "commweapon_lightninggun"
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = weaponName
-                    else
-                        sharedData.weapon2 = weaponName
-                    end
-                end
-            },
-            {
-                name = "commweapon_lparticlebeam",
-                humanName = "Light Particle Beam",
-                description = "Light Particle Beam: Fast, light pulsed energy weapon",
-                image = moduleImagePath .. "commweapon_lparticlebeam.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"support", "recon", "strike", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    local weaponName = (modules[moduleDefNamesToIDs.conversion_disruptor[1]] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = weaponName
-                    else
-                        sharedData.weapon2 = weaponName
-                    end
-                end
-            },
-            {
-                name = "commweapon_missilelauncher",
-                humanName = "Missile Launcher",
-                description = "Missile Launcher: Lightweight seeker missile with good range",
-                image = moduleImagePath .. "commweapon_missilelauncher.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"support", "strike", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = "commweapon_missilelauncher"
-                    else
-                        sharedData.weapon2 = "commweapon_missilelauncher"
-                    end
-                end
-            },
-            {
-                name = "commweapon_riotcannon",
-                humanName = "Riot Cannon",
-                description = "Riot Cannon: The weapon of choice for crowd control",
-                image = moduleImagePath .. "commweapon_riotcannon.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"assault", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    local weaponName = (modules[moduleDefNamesToIDs.weaponmod_napalm_warhead[1]] and "commweapon_riotcannon_napalm") or "commweapon_riotcannon"
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = weaponName
-                    else
-                        sharedData.weapon2 = weaponName
-                    end
-                end
-            },
-            {
-                name = "commweapon_rocketlauncher",
-                humanName = "Rocket Launcher",
-                description = "Rocket Launcher: Medium-range, low-velocity hitter",
-                image = moduleImagePath .. "commweapon_rocketlauncher.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"assault", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    local weaponName = (modules[moduleDefNamesToIDs.weaponmod_napalm_warhead[1]] and "commweapon_rocketlauncher_napalm") or "commweapon_rocketlauncher"
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = weaponName
-                    else
-                        sharedData.weapon2 = weaponName
-                    end
-                end
-            },
-            {
-                name = "commweapon_shotgun",
-                humanName = "Shotgun",
-                description = "Shotgun: Can hammer a single large target or shred several small ones",
-                image = moduleImagePath .. "commweapon_shotgun.png",
-                limit = 2,
-                cost = 0,
-                requireChassis = {"recon", "support", "strike", "knight"},
-                requireLevel = 1,
-                slotType = "basic_weapon",
-                applicationFunction = function (modules, sharedData)
-                    if sharedData.noMoreWeapons then
-                        return
-                    end
-                    local weaponName = (modules[moduleDefNamesToIDs.conversion_disruptor[1]] and "commweapon_shotgun_disrupt") or "commweapon_shotgun"
-                    if not sharedData.weapon1 then
-                        sharedData.weapon1 = weaponName
-                    else
-                        sharedData.weapon2 = weaponName
-                    end
-                end
-            },
+            
+            
+            
+            
+            
+            
             {
                 name = "commweapon_hparticlebeam",
                 humanName = "Heavy Particle Beam",
@@ -1050,7 +850,8 @@ return{
                     sharedData.weapon1 = weaponName
                     sharedData.weapon2 = nil
                     sharedData.noMoreWeapons = true
-                end
+                end,
+                hardcodedID=15
             },
             {
                 name = "commweapon_shockrifle",
@@ -1069,7 +870,8 @@ return{
                     sharedData.weapon1 = "commweapon_shockrifle"
                     sharedData.weapon2 = nil
                     sharedData.noMoreWeapons = true
-                end
+                end,
+                hardcodedID=16
             },
             {
                 name = "commweapon_clusterbomb",
@@ -1090,7 +892,8 @@ return{
                     else
                         sharedData.weapon2 = "commweapon_clusterbomb"
                     end
-                end
+                end,
+                hardcodedID=17
             },
             {
                 name = "commweapon_concussion",
@@ -1111,7 +914,8 @@ return{
                     else
                         sharedData.weapon2 = "commweapon_concussion"
                     end
-                end
+                end,
+                hardcodedID=18
             },
             {
                 name = "commweapon_disintegrator",
@@ -1132,7 +936,8 @@ return{
                     else
                         sharedData.weapon2 = "commweapon_disintegrator"
                     end
-                end
+                end,
+                hardcodedID=19
             },
             {
                 name = "commweapon_disruptorbomb",
@@ -1153,7 +958,8 @@ return{
                     else
                         sharedData.weapon2 = "commweapon_disruptorbomb"
                     end
-                end
+                end,
+                hardcodedID=20
             },
             {
                 name = "commweapon_multistunner",
@@ -1175,7 +981,8 @@ return{
                     else
                         sharedData.weapon2 = weaponName
                     end
-                end
+                end,
+                hardcodedID=21
             },
             {
                 name = "commweapon_napalmgrenade",
@@ -1196,7 +1003,8 @@ return{
                     else
                         sharedData.weapon2 = "commweapon_napalmgrenade"
                     end
-                end
+                end,
+                hardcodedID=22
             },
             {
                 name = "commweapon_slamrocket",
@@ -1217,7 +1025,8 @@ return{
                     else
                         sharedData.weapon2 = "commweapon_slamrocket"
                     end
-                end
+                end,
+                hardcodedID=23
             },
             
             -- Unique Modules
@@ -1234,7 +1043,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.metalIncome = (sharedData.metalIncome or 0) + 4
                     sharedData.energyIncome = (sharedData.energyIncome or 0) + 6
-                end
+                end,
+                hardcodedID=24
             },
             {
                 name = "commweapon_personal_shield",
@@ -1249,7 +1059,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     -- Do not override area shield
                     sharedData.shield = sharedData.shield or "commweapon_personal_shield"
-                end
+                end,
+                hardcodedID=25
             },
             {
                 name = "commweapon_areashield",
@@ -1265,7 +1076,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.shield = "commweapon_areashield"
-                end
+                end,
+                hardcodedID=26
             },
             {
                 name = "weaponmod_napalm_warhead",
@@ -1281,6 +1093,7 @@ return{
                     "commweapon_hpartillery"},
                 requireLevel = 2,
                 slotType = "module",
+                hardcodedID=27
             },
             {
                 name = "conversion_disruptor",
@@ -1298,6 +1111,7 @@ return{
                 },
                 requireLevel = 2,
                 slotType = "module",
+                hardcodedID=28
             },
             {
                 name = "weaponmod_stun_booster",
@@ -1313,6 +1127,7 @@ return{
                 },
                 requireLevel = 2,
                 slotType = "module",
+                hardcodedID=29
             },
             {
                 name = "module_jammer",
@@ -1327,7 +1142,8 @@ return{
                     if not sharedData.cloakFieldRange then
                         sharedData.radarJammingRange = 500
                     end
-                end
+                end,
+                hardcodedID=30
             },
             {
                 name = "module_radarnet",
@@ -1340,7 +1156,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.radarRange = 1800
-                end
+                end,
+                hardcodedID=31
             },
             {
                 name = "module_personal_cloak",
@@ -1356,7 +1173,8 @@ return{
                     sharedData.decloakDistance = math.max(sharedData.decloakDistance or 0, 150)
                     sharedData.personalCloak = true
                     sharedData.speedMultPost = (sharedData.speedMultPost or 1) - 0.12
-                end
+                end,
+                hardcodedID=32
             },
             {
                 name = "module_cloak_field",
@@ -1376,7 +1194,8 @@ return{
                     sharedData.cloakFieldUpkeep = 15
                     sharedData.cloakFieldRecloakRate = 800 -- UI only, update in unit_commander_upgrade
                     sharedData.radarJammingRange = 320
-                end
+                end,
+                hardcodedID=33
             },
             {
                 name = "module_resurrect",
@@ -1390,7 +1209,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.canResurrect = true
-                end
+                end,
+                hardcodedID=34
             },
             {
                 name = "module_jumpjet",
@@ -1404,7 +1224,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.canJump = true
-                end
+                end,
+                hardcodedID=35
             },
             
             -- Repeat Modules
@@ -1419,7 +1240,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.drones = (sharedData.drones or 0) + 1
-                end
+                end,
+                hardcodedID=36
             },
             {
                 name = "module_battle_drone",
@@ -1434,7 +1256,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 1
-                end
+                end,
+                hardcodedID=37
             },
             {
                 name = "module_autorepair",
@@ -1449,7 +1272,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 12*HP_MULT
                     sharedData.healthBonus = (sharedData.healthBonus or 0) - 100*HP_MULT
-                end
+                end,
+                hardcodedID=38
             },
             {
                 name = "module_autorepair",
@@ -1464,7 +1288,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10*HP_MULT
                     sharedData.healthBonus = (sharedData.healthBonus or 0) - 100*HP_MULT
-                end
+                end,
+                hardcodedID=39
             },
             {
                 name = "module_ablative_armor",
@@ -1478,7 +1303,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.healthBonus = (sharedData.healthBonus or 0) + 750*HP_MULT
-                end
+                end,
+                hardcodedID=40
             },
             {
                 name = "module_heavy_armor",
@@ -1495,7 +1321,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.healthBonus = (sharedData.healthBonus or 0) + 2000*HP_MULT
                     sharedData.speedMultPost = (sharedData.speedMultPost or 1) - 0.02
-                end
+                end,
+                hardcodedID=41
             },
             {
                 name = "module_ablative_armor",
@@ -1509,7 +1336,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.healthBonus = (sharedData.healthBonus or 0) + 600*HP_MULT
-                end
+                end,
+                hardcodedID=42
             },
             {
                 name = "module_heavy_armor",
@@ -1526,7 +1354,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.healthBonus = (sharedData.healthBonus or 0) + 1600*HP_MULT
                     sharedData.speedMultPost = (sharedData.speedMultPost or 1) - 0.02
-                end
+                end,
+                hardcodedID=43
             },
             {
                 name = "module_dmg_booster",
@@ -1540,7 +1369,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
                     sharedData.speedMultPost = (sharedData.speedMultPost or 1) - 0.02
-                end
+                end,
+                hardcodedID=44
             },
             {
                 name = "module_high_power_servos",
@@ -1555,7 +1385,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.speedMod = (sharedData.speedMod or 0) + 4
                     sharedData.jumpReloadMod = (sharedData.jumpReloadMod or 0) - 1
-                end
+                end,
+                hardcodedID=45
             },
             {
                 name = "module_high_power_servos",
@@ -1569,7 +1400,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.speedMod = (sharedData.speedMod or 0) + 3.5
-                end
+                end,
+                hardcodedID=46
             },
             {
                 name = "module_adv_targeting",
@@ -1583,7 +1415,8 @@ return{
                 applicationFunction = function (modules, sharedData)
                     sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
                     sharedData.speedMultPost = (sharedData.speedMultPost or 1) - 0.03
-                end
+                end,
+                hardcodedID=47
             },
             {
                 name = "module_adv_nano",
@@ -1597,7 +1430,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 6
-                end
+                end,
+                hardcodedID=48
             },
             {
                 name = "module_adv_nano",
@@ -1611,7 +1445,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
-                end
+                end,
+                hardcodedID=49
             },
             {
                 name = "module_adv_nano",
@@ -1625,7 +1460,8 @@ return{
                 slotType = "module",
                 applicationFunction = function (modules, sharedData)
                     sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4
-                end
+                end,
+                hardcodedID=50
             },
             -- Decorative Modules
             {
@@ -1639,9 +1475,17 @@ return{
                 slotType = "decoration",
                 applicationFunction = function (modules, sharedData)
                     sharedData.bannerOverhead = true
-                end
-            }
+                end,
+                hardcodedID=51
+            },
+
         }
+        for key, value in pairs(moduleDefs) do
+            if not value.requireChassis then
+                value.requireChassis=basicChassis
+            end
+        end
+
         return moduleDefs
     end
 }

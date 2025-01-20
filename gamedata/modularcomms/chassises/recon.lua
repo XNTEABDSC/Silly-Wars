@@ -31,6 +31,7 @@ return {
             },
         },
     },
+    dynamic_comm_defs_name="recon",
     dynamic_comm_defs=function(shared)
         
         shared=ModularCommDefsShared or shared
@@ -179,6 +180,7 @@ return {
             }
         }
     end,
+
     dyncomm_chassis_generator={
         name = "dynrecon1",
         weapons = {

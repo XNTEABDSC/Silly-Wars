@@ -1,6 +1,6 @@
 
 local humanName="Chicken Shield"
-local description= "Generates a small bubble shield"
+local description= humanName.." - Generates a weak but high regen shield"
 
 return {
     moduledef={
@@ -31,6 +31,7 @@ return {
             cost = 300 * COST_MULT,
             prohibitingModules = {"module_personal_cloak"},
             requireOneOf = {"commweapon_personal_shield"},
+            requireChassis = {"chicken"},
             requireLevel = 3,
             slotType = "module",
 

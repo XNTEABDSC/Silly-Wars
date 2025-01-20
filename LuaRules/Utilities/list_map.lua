@@ -25,7 +25,9 @@ if not Spring.Utilities.list_map then
         local function RemoveByIndex(index)
             local repalcedV=list[#list]
             local v=uo_list_remove(list,index)
-            map[repalcedV]=index
+            if repalcedV then
+                map[repalcedV]=index
+            end
             if v then
                 map[v]=nil
             end

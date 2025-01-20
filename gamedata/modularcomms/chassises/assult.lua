@@ -35,6 +35,7 @@ return {
             },
         },
     },
+    dynamic_comm_defs_name="assault",
     dynamic_comm_defs=function(shared)
         
         shared=ModularCommDefsShared or shared
