@@ -535,17 +535,20 @@ do
 			if module.name==module_identity.name then
 
 				local found_all=true
-				for _, requireChassisNeeded in pairs(module_identity.requireChassis) do
-					local found=false
-					for _, requireChassisExist in pairs(module.requireChassis) do
-						if requireChassisExist==requireChassisNeeded then
-							found=true break
+				if module_identity.requireChassis then
+					for _, requireChassisNeeded in pairs(module_identity.requireChassis) do
+						local found=false
+						for _, requireChassisExist in pairs(module.requireChassis) do
+							if requireChassisExist==requireChassisNeeded then
+								found=true break
+							end
+						end
+						if not found then
+							found_all=false
+							break
 						end
 					end
-					if not found then
-						found_all=false
-						break
-					end
+					
 				end
 				if found_all then
 					module.hardcodedID=module_hardcoded_id
@@ -559,7 +562,7 @@ do
 	local i=1
 	while(i<=#moduleDefs)do
 		local md=moduleDefs[i]
-		if(md.hardcodedID) then
+		if(md.hardcodedID and i~=md.hardcodedID) then
 			local b=md.hardcodedID
 			local mdb=moduleDefs[b]
 			if mdb.hardcodedID and mdb.hardcodedID==b then
