@@ -6,9 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-utils_op.MakeSetSillyMorphBig("shieldshield","shieldshieldpro")
-utils_op.MakeAddSillyBuild("shieldshieldpro")
-return utils_op.CopyTweak("shieldshield","shieldshieldpro",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("shieldshield","shieldshieldpro",function (ud)
     ud.name = "Greater " .. ud.name
     ud.description = "Greater Shield to counter greater silly"
     ud.metalCost=ud.metalCost*4

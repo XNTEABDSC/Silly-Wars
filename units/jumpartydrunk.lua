@@ -37,9 +37,7 @@ return utils.copy_tweak("jumparty","jumpartydrunk",function (ud)
 end)
 ]=]
 
-utils_op.MakeSetSillyMorphBig("jumparty","jumpartydrunk")
-utils_op.MakeAddSillyBuild("jumpartydrunk")
-return utils_op.CopyTweak("jumparty","jumpartydrunk",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("jumparty","jumpartydrunk",function (ud)
     to_make_very_op_things.make_unit_drunk(ud)
     utils_op.set_ded_ATOMIC_BLAST(ud)
     --ud.weaponDefs.NAPALM_SPRAYER.weaponVelocity=295

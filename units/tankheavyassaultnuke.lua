@@ -6,9 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-utils_op.MakeSetSillyMorphBig("tankheavyassault","tankheavyassaultnuke")
-utils_op.MakeAddSillyBuild("tankheavyassaultnuke")
-return utils_op.CopyTweak("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
+return utils_op.CopyTweakSillyBuildMorphAuto("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
     name="Nuclear Cyclops",
     description="Shoot Nuclear Warhead (175 stockpile)",
     metalCost=6000,

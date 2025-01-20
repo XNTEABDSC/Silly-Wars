@@ -4,11 +4,8 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-utils_op.MakeSetSillyMorphBig("bomberdisarm","bomberemp")
 
-utils_op.MakeAddSillyBuild("bomberemp")
-
-return utils_op.CopyTweak("bomberdisarm","bomberemp",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("bomberdisarm","bomberemp",function (ud)
     utils.table_replace({
         name="EMP Bird",
         description         = [[Paralyse Lightning Bomber]],

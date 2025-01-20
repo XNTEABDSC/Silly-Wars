@@ -7,8 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils_op.MakeSetSillyMorphBig("striderarty","striderartypuppy")
-utils_op.MakeAddSillyBuild("striderartypuppy")
+utils_op.MakeSetSillyBuildMorphSimple("striderarty","striderartypuppy")
 
 local ud=utils_op.GetUnitLua("striderarty")
 

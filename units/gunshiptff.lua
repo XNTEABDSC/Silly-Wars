@@ -7,10 +7,8 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils_op.MakeSetSillyMorphBig("gunshipkrow","gunshiptff")
-utils_op.MakeAddSillyBuild("gunshiptff")
 
-return utils_op.CopyTweak("gunshipkrow","gunshiptff",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("gunshipkrow","gunshiptff",function (ud)
     for _,i in pairs({1,2,4})do
         ud.weapons[i].def=nil
         ud.weapons[i].name="turretheavy_plasma"

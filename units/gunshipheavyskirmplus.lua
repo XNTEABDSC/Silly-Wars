@@ -7,9 +7,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils_op.MakeSetSillyMorphBig("gunshipheavyskirm","gunshipheavyskirmplus")
-utils_op.MakeAddSillyBuild("gunshipheavyskirmplus")
-return utils_op.CopyTweak("gunshipheavyskirm","gunshipheavyskirmplus",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("gunshipheavyskirm","gunshipheavyskirmplus",function (ud)
     utils.table_replace({
         name="Flak Nimbus",
         description="Flying Flak",

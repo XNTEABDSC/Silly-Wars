@@ -404,7 +404,18 @@ if not Spring.Utilities.to_make_op_things then
     to_make_op_things.MakeSetSillyMorphSimple=MakeSetSillyMorphSimple
     to_make_op_things.MakeSetSillyMorphBig=MakeSetSillyMorphBig
     to_make_op_things.MakeAddSillyBuild=MakeAddSillyBuild
-    
+
+    local function MakeSetSillyBuildMorphBig(srcname,toname,morthtime,morthprice)
+        
+        MakeSetSillyMorphBig(srcname,toname,morthtime,morthprice)
+        MakeAddSillyBuild(toname)
+    end
+    local function MakeSetSillyBuildMorphSimple(srcname,toname,morthtime,morthprice)
+        
+        MakeSetSillyMorphSimple(srcname,toname,morthtime,morthprice)
+    end
+    to_make_op_things.MakeSetSillyBuildMorphBig=MakeSetSillyBuildMorphBig
+    to_make_op_things.MakeSetSillyBuildMorphSimple=MakeSetSillyBuildMorphSimple
     function to_make_op_things.CopyTweakSillyBuildMorphBig(srcname,toname,fn)
         MakeSetSillyMorphBig(srcname,toname)
         MakeAddSillyBuild(toname)
@@ -413,9 +424,8 @@ if not Spring.Utilities.to_make_op_things then
         return to_make_op_things.CopyTweak(srcname,toname,fn)
     end
 
+
     function to_make_op_things.CopyTweakSillyBuildMorphAuto(srcname,toname,fn)
-        MakeSetSillyMorphBig(srcname,toname)
-        MakeAddSillyBuild(toname)
         --to_make_op_things.add_build("silly_build",builder,toname)
         --to_make_op_things.set_morph_mul("silly_morph",srcname,toname)
         --
@@ -424,10 +434,9 @@ if not Spring.Utilities.to_make_op_things then
         fn(ud)
         local new_cost=ud.metalCost
         if new_cost/src_cost >1.5 then
-            MakeSetSillyMorphBig(srcname,toname)
-            MakeAddSillyBuild(toname)
+            MakeSetSillyBuildMorphBig(srcname,toname)
         else
-            MakeSetSillyMorphSimple(srcname,toname)
+            MakeSetSillyBuildMorphSimple(srcname,toname)
         end
         return {[toname]=ud}
     end

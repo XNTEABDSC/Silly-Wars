@@ -3,8 +3,7 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-utils_op.MakeAddSillyBuild("bunkerbuster")
-utils_op.MakeSetSillyMorphBig("spiderassault","bunkerbuster")
+utils_op.MakeSetSillyBuildMorphBig("spiderassault","bunkerbuster")
 
 return { bunkerbuster = {
     name                   = [[Bunker Buster]],

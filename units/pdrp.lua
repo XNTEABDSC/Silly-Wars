@@ -100,8 +100,7 @@ for i = 1, 6 do
     ud.weaponDefs[spamer_wds[i].name]=spamer_wds[i]
     ud.weapons[i].def=spamer_wds[i].name
 end
-utils_op.MakeSetSillyMorphBig("raveparty","pdrp")
+utils_op.MakeSetSillyBuildMorphSimple("raveparty","pdrp")
 
-utils_op.MakeAddSillyBuild("pdrp")
 res["pdrp"]=ud
 return res

@@ -8,10 +8,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
-utils_op.MakeSetSillyMorphBig("cloakskirm","cloakskirmguide")
-utils_op.MakeAddSillyBuild("cloakskirmguide")
-
-return utils_op.CopyTweak("cloakskirm","cloakskirmguide",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("cloakskirm","cloakskirmguide",function (ud)
     utils.table_replace({
         --metalCost=250,
         --speed=75,

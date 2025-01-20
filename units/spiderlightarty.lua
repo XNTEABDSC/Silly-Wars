@@ -48,7 +48,6 @@ fleaUD.cloakCost           = nil
 fleaUD.moveState=nil
 --fleaUD.objectName="lancyFlea"
 
-utils_op.MakeSetSillyMorphBig("spiderscout","spiderlightarty",1)
-utils_op.MakeAddSillyBuild("spiderlightarty")
+utils_op.MakeSetSillyBuildMorphSimple("spiderscout","spiderlightarty",1)
 
 return {["spiderlightarty"]=fleaUD}

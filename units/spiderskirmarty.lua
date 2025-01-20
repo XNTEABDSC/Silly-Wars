@@ -8,11 +8,8 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
-utils_op.MakeSetSillyMorphBig("spiderskirm","spiderskirmarty")
-utils_op.MakeAddSillyBuild("spiderskirmarty")
 
-
-return utils_op.CopyTweak("spiderskirm","spiderskirmarty",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("spiderskirm","spiderskirmarty",function (ud)
     ud.name="Ranged " .. ud.name
     ud.description="Ranged " .. ud.description
     ud.speed=ud.speed*0.8

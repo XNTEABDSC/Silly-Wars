@@ -61,9 +61,7 @@ set_laser_capper(satelliteud.weaponDefs.NON_CUTTER)
 satelliteud.customParams.post_capture_reload=0
 ud.customParams.post_capture_reload=0
 
-utils_op.MakeSetSillyMorphBig("mahlazer","mahlazercap")
-
-utils_op.MakeAddSillyBuild("mahlazercap")
+utils_op.MakeSetSillyBuildMorphSimple("mahlazer","mahlazercap")
 
 return{
     mahlazercap=ud,

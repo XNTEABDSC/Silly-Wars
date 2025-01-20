@@ -7,11 +7,8 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-utils_op.MakeSetSillyMorphBig("spiderantiheavy","spidercapture")
 
-utils_op.MakeAddSillyBuild("spidercapture")
-
-return utils_op.CopyTweak("spiderantiheavy","spidercapture",function (ud)
+return utils_op.CopyTweakSillyBuildMorphAuto("spiderantiheavy","spidercapture",function (ud)
     ud.metalCost=1000
     ud.health=3000
     ud.speed=40

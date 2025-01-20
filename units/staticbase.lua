@@ -6,8 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-utils_op.MakeSetSillyMorphBig("turretdronelight","staticbase")
-utils_op.MakeAddSillyBuild("staticbase")
+utils_op.MakeSetSillyBuildMorphBig("turretdronelight","staticbase")
 
 return { staticbase = {
   name                          = [[Frontline Base]],

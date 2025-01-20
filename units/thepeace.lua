@@ -96,8 +96,6 @@ do
 end
 ud.canManualFire          = true
 
-utils_op.MakeSetSillyMorphBig("zenith","thepeace",30)
-
-utils_op.MakeAddSillyBuild("thepeace")
+utils_op.MakeSetSillyBuildMorphSimple("zenith","thepeace",30)
 
 return {["thepeace"]=ud}

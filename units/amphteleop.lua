@@ -38,8 +38,7 @@ do
     ud.sightDistance=600
     ud.radarDistance=1200
 end
-utils_op.MakeSetSillyMorphBig("amphtele","amphteleop")
-utils_op.MakeAddSillyBuild("amphteleop")
+utils_op.MakeSetSillyBuildMorphBig("amphtele","amphteleop")
 return{
     amphteleop=amphteleopud,
     amphteleopbeacon=amphteleopbeaconud,
