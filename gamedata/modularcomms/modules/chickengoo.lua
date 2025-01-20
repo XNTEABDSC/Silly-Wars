@@ -15,7 +15,7 @@ return {
 		local COST_MULT=shared.COST_MULT
 		local HP_MULT=shared.HP_MULT
         
-		return {
+		return {{
             name = "commweapon_chickengoo",
 			humanName = humanName,
 			description = description,
@@ -35,6 +35,6 @@ return {
                 sharedData.noMoreWeapons = true
             end,
             --isBasicWeapon=true,
-        }
+        }}
     end
 }

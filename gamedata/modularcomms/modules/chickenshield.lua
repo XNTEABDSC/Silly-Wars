@@ -22,7 +22,7 @@ return {
         local moduleImagePath=shared.moduleImagePath
         local applicationFunctionApplyWeapon=shared.applicationFunctionApplyWeapon
         local COST_MULT=shared.COST_MULT
-        return {
+        return {{
             name = "commweapon_chickenshield",
             humanName = humanName,
             description = description,
@@ -38,6 +38,6 @@ return {
                 -- Do not override area shield
                 sharedData.shield = "commweapon_chickenshield"
             end
-        }
+        }}
     end
 }

@@ -16,7 +16,7 @@ return {
 		local HP_MULT=shared.HP_MULT
         
         local applicationFunctionApplyWeapon=shared.applicationFunctionApplyWeapon
-		return {
+		return {{
             name = "commweapon_chickenspike",
 			humanName = humanName,
 			description = description,
@@ -30,6 +30,6 @@ return {
                 return "commweapon_chickenspike"
             end),
             isBasicWeapon=true,
-        }
+        }}
     end
 }
