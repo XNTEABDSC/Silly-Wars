@@ -1,0 +1,15 @@
+VFS.Include("LuaRules/Utilities/to_make_very_op_things/include.lua")
+if not Spring.Utilities.to_make_very_op_things.table_replace then
+
+    VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+    local utils=Spring.Utilities.wacky_utils
+
+    VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+    local utils_op=Spring.Utilities.to_make_op_things
+    
+    local lowerkeys=utils.lowerkeys
+
+    local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+
+    Spring.Utilities.to_make_very_op_things=to_make_very_op_things
+end

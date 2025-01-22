@@ -74,7 +74,7 @@ utils.table_replace({
 })(procUnitNewUDs["missiledeploy" .. "turretriot"].weaponDefs.WEAPON)
 
 for udname, ud in pairs(procUnitNewUDs) do
-    utils_op.MakeDefAddBuild("staticmissilesilo",udname)
+    utils_op.MakeAddBuild("staticmissilesilo",udname)
 end
 
 return procUnitNewUDs
