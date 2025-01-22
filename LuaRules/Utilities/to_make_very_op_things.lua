@@ -9,6 +9,7 @@ if not Spring.Utilities.to_make_very_op_things then
     Spring.Utilities.to_make_very_op_things=to_make_very_op_things
     local mlkg=utils.maylowerkeyget
     local mlks=utils.maylowerkeyset
+    --- from SmokeDragon
     function to_make_very_op_things.make_weapon_drunk(wd_)
         local wd=utils.MayLowerKeyProxy(wd_)
         if wd.range then

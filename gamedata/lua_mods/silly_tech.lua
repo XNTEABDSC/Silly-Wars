@@ -22,4 +22,4 @@ utils_op.AddFnToUnitDefsTweakFns({
 utils_op.MakeAddSillyBuild("sillyconvery","sillycon")
 utils_op.MakeAddSillyBuild("sillyconveryvery","sillyconvery")
 
-return {option_notes="Builder -> Silly Con -> Very Silly Con -> Very Very Silly Con"}
+return {option_notes="Tech Tree: Builder -> Silly Con -> Very Silly Con -> Very Very Silly Con"}

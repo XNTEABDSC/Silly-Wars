@@ -23,5 +23,5 @@ Spring.Utilities.OrderedList.AddMult(utils_op.weapon_defs_tweak_fns,{
 })
 
 return {
-    option_notes = "terraform are weaker, give all weapon " .. tostring(CraterMult) .. " craterMult",
+    option_notes = "Terra is weaker. Give all weapon " .. tostring(CraterMult) .. " craterMult",
 }

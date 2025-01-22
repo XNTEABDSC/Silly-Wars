@@ -1155,5 +1155,8 @@ if not Spring.Utilities.to_make_op_things then
         "amphcon",
         "shipcon",
     }
+    to_make_op_things.noweapon_weapon={
+        name="NOWEAPON"
+    }
 end
 return Spring.Utilities.to_make_op_things

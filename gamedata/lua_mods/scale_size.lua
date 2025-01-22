@@ -253,7 +253,7 @@ Spring.Utilities.OrderedList.AddMult( utils_op.weapon_defs_tweak_fns,{
     end
 })
 
-return {option_notes="Units size x" .. Scale ..", except commanders"}
+return {option_notes="Units size x" .. Scale}
 
 --[==[
 ---

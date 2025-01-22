@@ -1,3 +1,4 @@
+-- from SmokeDragon
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local utils = Spring.Utilities.wacky_utils
 
@@ -34,5 +35,5 @@ Spring.Utilities.OrderedList.AddMult(utils_op.weapon_defs_tweak_fns,{
 })
 
 return {
-    option_notes = "units throw alot but throw everywhere",
+    option_notes = "Units throw alot but throw everywhere",
 }

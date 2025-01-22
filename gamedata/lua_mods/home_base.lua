@@ -1,3 +1,4 @@
+-- from SmokeDragon
 local Factor = Factor or 4
 local myFactor=Factor/4
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
