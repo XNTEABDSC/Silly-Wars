@@ -130,7 +130,7 @@ local function GetUDCPCustomTooltipSimple(unitID,ud)
 	local customTooltipString=ud.customParams.custom_tooltip_simple
 	if customTooltipString  then
 		customTooltipString=WG.Translate("interface", customTooltipString) or customTooltipString
-		customTooltipString=utils.better_gsub(
+		customTooltipString=string.gsub(
 			customTooltipString,"%%%[(.-)%|(.-)%]",function (str)
 				local param=str[1]
 				local default=str[2]

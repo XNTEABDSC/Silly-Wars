@@ -1,0 +1,6 @@
+VFS.Include("LuaRules/Utilities/to_make_op_things/include.lua")
+if not Spring.Utilities.to_make_op_things.table_replace then
+    local to_make_op_things=Spring.Utilities.to_make_op_things
+
+    Spring.Utilities.to_make_op_things=to_make_op_things
+end

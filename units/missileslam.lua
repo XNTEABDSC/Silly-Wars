@@ -48,5 +48,5 @@ utils.table_replace({
     weaponVelocity          = 1125,
 })(wd)
 
-utils_op.MakeDefAddBuild("staticmissilesilo","missileslam")
+utils_op.MakeAddBuild("staticmissilesilo","missileslam")
 return {missileslam=ud}
