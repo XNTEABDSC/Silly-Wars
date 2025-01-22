@@ -213,3 +213,9 @@ function Spring.GetProjectileVelocity(projectileID)end
 function Spring.GetProjectileDefID(projId)end
 
 CMD={}
+
+---@generic T
+---@param v T
+---@param revurse boolean
+---@return T
+function Spring.Utilities.CopyTable(v,revurse) end

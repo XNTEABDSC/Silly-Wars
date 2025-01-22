@@ -1,0 +1,34 @@
+CustomUnitDefDesign:
+A table, key=value may be used as fuction like key(self,value)
+{
+    custom_ravager={
+        speed=100,
+        hp=1000,
+        weapons={
+            plasma={
+                damage=100,
+                reload=0.5,
+                range=1,
+                speed=1,
+            }
+        }
+    }
+}
+
+CustomUnitDef:
+A table contains values of unit design
+{
+    unitDef=UnitDefNames.custom_ravager,
+    cost=...,
+    mass=...,
+    hp=...,
+    speed=...,
+    weapons={
+        weaponDef=WeaponDefNames.custom_plasma_aoe36,
+        damage=...,
+        range=...,
+        speed=...,
+        ...
+    },
+    ...
+}
