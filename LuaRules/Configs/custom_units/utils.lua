@@ -14,9 +14,9 @@ if not Spring.Utilities.CustomUnits.utils then
     Spring.Utilities.CustomUnits.utils=utils
     utils.bias_factor=0.9
     local function TableMutate(mutate_table)
-        return function (wpn,factor)
+        return function (t,factor)
             for key, value in pairs(mutate_table) do
-                wpn[key]=wpn[key]*factor^value
+                t[key]=t[key]*factor^value
             end
         end
     end

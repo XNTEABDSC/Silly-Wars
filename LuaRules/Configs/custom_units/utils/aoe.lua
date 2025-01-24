@@ -9,6 +9,7 @@ utils.plasma_aoe_mutate={
         wpn.edgeEffectiveness       = 0.5
         wpn.explosionGenerator=[[custom:MARY_SUE]]
     end,]=]
+    --[=[
     ---@param wpn CustomWeaponDataModify
     plasma_aoe_84=function (wpn)
         wpn.cost=wpn.cost*1.4
@@ -31,6 +32,6 @@ utils.plasma_aoe_mutate={
         wpn.mass=wpn.mass*2.2
         wpn.aoe=176
         wpn.explosionGenerator      = [[custom:lrpc_expl]]
-    end
+    end]=]
 }
 Spring.Utilities.CustomUnits.utils=utils
