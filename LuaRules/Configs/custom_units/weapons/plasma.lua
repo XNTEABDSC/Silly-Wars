@@ -1,22 +1,22 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local wacky_utils=Spring.Utilities.wacky_utils
 local utils=Spring.Utilities.CustomUnits.utils
----@type CustomWeaponData
-local custom_weapon={
-    weapon_def_name="custom_plasma_aoe36",
-    cost=1,
-    mass=1,
-    damage=2,
-    speed=280,
-    reload_time=2,
-    range=350,
-}
+
+local custom_weapon_data=utils.a_custom_weapon_data()
+custom_weapon_data.weapon_def_name="custom_plasma"
+custom_weapon_data.aoe=36
+custom_weapon_data.explosionGenerator      = [[custom:INGEBORG]]
+
+local MutateFn=utils.UseMutateTable(
+    wacky_utils.mt_union(utils.plasma_aoe_mutate,utils.BasicWeaponMutate)
+)
 return {
-    name="custom_plasma_aoe36",
+    name="custom_plasma",
     weapon={
         name                    = [[Light Plasma Cannon]],
-        areaOfEffect            = 36,
         craterBoost             = 0,
         craterMult              = 0,
-
+        areaOfEffect=36,
         customParams        = {
             light_camera_height = 1800,
             light_color = [[0.80 0.54 0.23]],
@@ -28,7 +28,7 @@ return {
             planes  = 2,
         },
 
-        explosionGenerator      = [[custom:MARY_SUE]],
+        explosionGenerator      = [[custom:INGEBORG]],
         impulseBoost            = 0,
         impulseFactor           = 0.4,
         interceptedByShieldType = 1,
@@ -41,9 +41,8 @@ return {
         weaponType              = [[Cannon]],
         weaponVelocity          = 280,
     },
-    custom_weapon=custom_weapon,
-    modifyfn=function (mutate_table)
-        local custom_weapon=Spring.Utilities.CopyTable(custom_weapon,true)
-        return utils.UseWeaponMutateTable(custom_weapon)
+    custom_weapon_data=custom_weapon_data,
+    genfn=function (mutate_table)
+        return MutateFn(Spring.Utilities.CopyTable(custom_weapon_data,true),mutate_table)
     end
 }

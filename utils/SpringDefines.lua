@@ -216,6 +216,6 @@ CMD={}
 
 ---@generic T
 ---@param v T
----@param revurse boolean
+---@param recurse boolean
 ---@return T
-function Spring.Utilities.CopyTable(v,revurse) end
+function Spring.Utilities.CopyTable(v,recurse) end

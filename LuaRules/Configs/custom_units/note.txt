@@ -1,5 +1,5 @@
 CustomUnitDefDesign:
-A table, key=value may be used as fuction like key(self,value)
+A table, key=value may be used as function like key(self,value)
 {
     custom_ravager={
         speed=100,
@@ -18,13 +18,13 @@ A table, key=value may be used as fuction like key(self,value)
 CustomUnitDef:
 A table contains values of unit design
 {
-    unitDef=UnitDefNames.custom_ravager,
+    unitDef=UnitDefNames.custom_ravager.id,
     cost=...,
     mass=...,
     hp=...,
     speed=...,
     weapons={
-        weaponDef=WeaponDefNames.custom_plasma_aoe36,
+        weaponDef=WeaponDefNames.custom_plasma_aoe36.id,
         damage=...,
         range=...,
         speed=...,
@@ -32,3 +32,62 @@ A table contains values of unit design
     },
     ...
 }
+
+way to implement
+
+unit uses fake targeter weapon, and shot it.
+
+ProjectileCreated
+
+fake targeter projectile will be replaced by real weapondef
+
+Spring.SpawnProjectile ( number weaponDefID, table projectileParams )
+return: nil | number projectileID
+
+Spring.DeleteProjectile ( number projectileID )
+return: nil
+
+Post 95.0: Spring.SetProjectileTarget ( number projectileID, [ number targetID, number targetType ] | [ number posX = 0, number posY = 0, number posZ = 0 ] )
+return: nil | bool validTarget
+
+
+Spring.SetProjectileCEG ( number projectileID, string ceg_name )
+return: nil
+
+Spring.SetProjectileDamages ( number unitID, number weaponNum, table damages )
+return: nil
+
+or
+
+Spring.SetProjectileDamages ( number unitID, number weaponNum, string key, number value )
+return: nil
+
+Spring.SetUnitCosts ( number unitID, { [ buildTime = number amount ], [ metalCost = number amount ], [ energyCost = number amount ] } )
+
+Spring.SetUnitHealth ( number unitID, number health | { [ health = number health ], [ capture = number capture ], [ paralyze = number paralyze ], [ build = number build ] } )
+return: nil
+
+
+Spring.SetUnitMaxHealth ( number unitID, number maxHealth )
+return: nil
+
+Spring.SetUnitMass ( number unitID, number mass )
+return: nil
+
+Spring.SetUnitBuildSpeed ( number builderID, number buildSpeed [, number repairSpeed [, number reclaimSpeed[, number resurrectSpeed [, number captureSpeed [, number terraformSpeed ]]]]] )
+return: nil
+
+Spring.SetUnitNanoPieces ( number builderID, table pieces )
+
+Spring.SetUnitArmored ( number unitID, bool armored [, number armorMultiple ] )
+return: nil
+
+Spring.SetUnitWeaponState ( number unitID, number weaponNum, string key, number value )
+return: nil
+
+Spring.SetUnitWeaponDamages ( number unitID, number weaponNum | string "selfDestruct" | string "explode", string key, number value )
+return: nil
+
+set speed like raptor
+
+gen ud for different size of unit
