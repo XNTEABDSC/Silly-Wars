@@ -2,7 +2,7 @@ VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils=Spring.Utilities.wacky_utils
 local utils=Spring.Utilities.CustomUnits.utils
 
-local custom_weapon_data=utils.a_custom_weapon_data()
+local custom_weapon_data=utils.ACustomWeaponData()
 custom_weapon_data.weapon_def_name="custom_plasma"
 custom_weapon_data.aoe=36
 custom_weapon_data.explosionGenerator      = [[custom:INGEBORG]]

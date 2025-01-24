@@ -14,10 +14,10 @@ if Spring.SpawnProjectile then
 
     local spSetProjectileDamages=Spring.SetProjectileDamages
     ---@param targeterProjID ProjectileId
-    ---@param customWpnData CustomWeaponDataModify
-    utils.set_projectile_be_weapon_data=function (targeterProjID,customWpnData)
+    ---@param customWpnData CustomWeaponDataFinal
+    utils.ChangeTargeterToRealProj=function (targeterProjID,customWpnData)
         
-        local wdid=utils.update_get_custom_weapon_data_weapon_def_id(customWpnData)
+        local wdid=customWpnData.weapon_def
         
         local newProjID= spSpawnProjectile(wdid,{
             pos = {spGetProjectilePosition(targeterProjID)},
@@ -44,8 +44,39 @@ if Spring.SpawnProjectile then
         end
         
         do
-            spSetProjectileDamages()
+
+            local damage_table={
+                damageAreaOfEffect=customWpnData.aoe,
+                edgeEffectiveness=customWpnData.edgeEffectiveness,
+                explosionSpeed=customWpnData.explosionSpeed,
+                craterMult=customWpnData.craterMult,
+                craterBoost=customWpnData.craterBoost,
+                impulseFactor=customWpnData.impulseFactor,
+                impulseBoost=customWpnData.impulseBoost,
+                craterAreaOfEffect=customWpnData.craterAreaOfEffect
+            }
+
+            for key, value in pairs(customWpnData.damages) do
+                damage_table[key]=value
+            end
+            spSetProjectileDamages(newProjID,0,damage_table)-- spring is so mad
         end
+        spDeleteProjectile(targeterProjID)
+    end
+
+    local spSetUnitWeaponState=Spring.SetUnitWeaponState
+
+    ---@param customWpnData CustomWeaponDataFinal
+    utils.SetUnitWeaponToCustom=function (unitID,wpnnum,customWpnData)
+        spSetUnitWeaponState(unitID,wpnnum,{
+            reloadTime=customWpnData.reload_time,
+            sprayAngle=customWpnData.sprayAngle,
+            range=customWpnData.range,
+            projectileSpeed=customWpnData.speed,
+            burst=customWpnData.burst,
+            burstRate=customWpnData.burstRate,
+            projectiles=customWpnData.projectiles,
+        })
     end
 end
 
