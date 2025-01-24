@@ -9,6 +9,7 @@ if not Spring.Utilities.wacky_utils then
 end
 if not Spring.Utilities.wacky_utils.justeval then
     local wacky_utils=Spring.Utilities.wacky_utils
+    VFS.Include("LuaRules/Utilities/wacky_utils/mt_union.lua")
 
     local mt_union=wacky_utils.mt_union
     
