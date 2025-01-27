@@ -1,4 +1,4 @@
-local utils=Spring.Utilities.CustomUnits.utils
+local utils=GameData.CustomUnits.utils
 utils.BasicWeaponMutate={
     damage=utils.TableMutate(utils.MutateCostMassAnd({damage=utils.bias_factor})),
     range=utils.TableMutate({range=utils.bias_factor*0.5,cost=1,mass=2}),
@@ -6,4 +6,4 @@ utils.BasicWeaponMutate={
     reload_time=utils.TableMutate(utils.MutateCostMassAnd({reload_time=-utils.bias_factor})),
 }
 utils.UseWeaponMutateTable=utils.UseMutateTable(utils.BasicWeaponMutate)
-Spring.Utilities.CustomUnits.utils=utils
+GameData.CustomUnits.utils=utils

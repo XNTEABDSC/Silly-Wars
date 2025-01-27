@@ -1,4 +1,4 @@
-local utils=Spring.Utilities.CustomUnits.utils
+local utils=GameData.CustomUnits.utils
 
 utils.ACustomWeaponData=function ()
     ---@class CustomWeaponDataModify
@@ -41,4 +41,4 @@ utils.ACustomWeaponData=function ()
     }
     return o
 end
-Spring.Utilities.CustomUnits.utils=utils
+GameData.CustomUnits.utils=utils

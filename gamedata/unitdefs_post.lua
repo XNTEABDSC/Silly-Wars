@@ -73,7 +73,7 @@ for _, ud in pairs(UnitDefs) do
 -- modOptions.tweakdefs = 'Zm9yIG5hbWUsIHVkIGluIHBhaXJzKFVuaXREZWZzKSBkbwoJaWYgdWQubWF4dmVsb2NpdHkgdGhlbgoJCXVkLm1heHZlbG9jaXR5ID0gdWQubWF4dmVsb2NpdHkqMTAKCWVuZAplbmQ='
 
 do
-	local files=VFS.DirList("gamedata/tweak_defs","*.lua")
+	local files=VFS.DirList("gamedata/tweak_unit_defs","*.lua")
 	for key, value in pairs(files) do
 		VFS.Include(value)
 	end

@@ -1,20 +1,21 @@
-VFS.Include("LuaRules/Configs/custom_units/utils.lua")
+
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils=Spring.Utilities.wacky_utils
-local utils=Spring.Utilities.CustomUnits.utils
+local utils=GameData.CustomUnits.utils
 
 local MutateFn=utils.UseMutateTable(
     wacky_utils.mt_union({
         
-        ---@param table CustomChassisDataModify
+        ---@param table CustomUnitDataModify
         motor=function (table,factor)
             table.cost=table.cost+factor
-            table.thrust=table.thrust+factor*10
+            table.motor=table.motor+factor*10
         end
 
     },utils.BasicChassisMutate)
 )
-
+local custom_table=utils.ACustomChassisData()
+custom_table.speed_base=88.5
 local name = "custom_ravager"
 return {
     name = name,

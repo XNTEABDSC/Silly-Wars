@@ -36,6 +36,13 @@ Spring.Echo("Loading WeaponDefs_posts")
 
 VFS.Include('gamedata/modularcomms/weapondefgen.lua')
 
+do
+	local files=VFS.DirList("gamedata/tweak_weapon_defs","*.lua")
+	for key, value in pairs(files) do
+		VFS.Include(value)
+	end
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --

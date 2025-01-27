@@ -13,33 +13,17 @@ if not Spring.Utilities.CustomUnits.utils then
     }
     Spring.Utilities.CustomUnits.utils=utils
     utils.bias_factor=0.9
-    local function TableMutate(mutate_table)
-        return function (t,factor)
-            for key, value in pairs(mutate_table) do
-                t[key]=t[key]*factor^value
-            end
-        end
-    end
-    local function MutateCostMassAnd(mutate_table)
-        mutate_table.cost=1
-        mutate_table.mass=1
-        return mutate_table
-    end
-    utils.TableMutate=TableMutate
-    utils.MutateCostMassAnd=MutateCostMassAnd
-    local function UseMutateTable(mutaters)
-
-        return function (t,mutate_table)
-            for key, value in pairs(mutate_table) do
-                mutaters[key](t,value)
-            end
-            return t
-        end
-    end
-    utils.UseMutateTable=UseMutateTable
+    --[=[
     local luaFiles=VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}
     for i = 1, #luaFiles do
         VFS.Include(luaFiles[i])
+    end]=]
+    local luaFiles={
+        ""
+    }--VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}
+    for i = 1, #luaFiles do
+        VFS.Include("LuaRules/Configs/custom_units/utils/" .. luaFiles[i] .. ".lua")
     end
+
 end
 return Spring.Utilities.CustomUnits.utils

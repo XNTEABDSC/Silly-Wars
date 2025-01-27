@@ -1,0 +1,1 @@
+VFS.Include("gamedata/custom_units/weapondef_gen.lua")

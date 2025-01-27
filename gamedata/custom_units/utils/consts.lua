@@ -1,4 +1,4 @@
-local utils=Spring.Utilities.CustomUnits.utils
+local utils=GameData.CustomUnits.utils
 
 utils.consts={
     custom_health=1000,
@@ -7,4 +7,4 @@ utils.consts={
     
 }
 
-Spring.Utilities.CustomUnits.utils=utils
+GameData.CustomUnits.utils=utils

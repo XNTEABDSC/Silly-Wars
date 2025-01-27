@@ -1,4 +1,4 @@
-local utils=Spring.Utilities.CustomUnits.utils
+local utils=GameData.CustomUnits.utils
 utils.plasma_aoe_mutate={
     --[=[
     ---@param wpn CustomWeaponDataModify
@@ -34,4 +34,4 @@ utils.plasma_aoe_mutate={
         wpn.explosionGenerator      = [[custom:lrpc_expl]]
     end]=]
 }
-Spring.Utilities.CustomUnits.utils=utils
+GameData.CustomUnits.utils=utils

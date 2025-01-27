@@ -1,6 +1,6 @@
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils=Spring.Utilities.wacky_utils
-local utils=Spring.Utilities.CustomUnits.utils
+local utils=GameData.CustomUnits.utils
 
 local custom_weapon_data=utils.ACustomWeaponData()
 custom_weapon_data.weapon_def_name="custom_plasma"
@@ -12,7 +12,7 @@ local MutateFn=utils.UseMutateTable(
 )
 return {
     name="custom_plasma",
-    weapon={
+    weaponDef={
         name                    = [[Light Plasma Cannon]],
         craterBoost             = 0,
         craterMult              = 0,
