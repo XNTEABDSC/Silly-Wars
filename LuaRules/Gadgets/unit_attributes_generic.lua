@@ -227,7 +227,7 @@ local function UpdatePausedReload(unitID, unitDefID, gameFrame)
 	end
 end
 
-local function UpdateWeapons(unitID, unitDefID, weaponMods, speedFactor, rangeFactor, projSpeedFactor, projectilesFactor, minSpray, gameFrame)
+local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 	if not origUnitWeapons[unitDefID] then
 		local ud = UnitDefs[unitDefID]
 	
@@ -248,6 +248,7 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, speedFactor, rangeFa
 				oldReloadFrames = floor(reload*Game.gameSpeed),
 				range = wd.range,
 				sprayAngle = wd.sprayAngle,
+				burst=wd.salvoSize,
 			}
 			if wd.type == "LaserCannon" or wd.type == "Cannon" then
 				-- Barely works for missiles, and might break their burnblow and prediction
@@ -261,6 +262,22 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, speedFactor, rangeFa
 		
 	end
 	
+
+	local reloadSpeedFactor, rangeFactor, projSpeedFactor, projectilesFactor,burstFactor,burstRateFactor,sprayAngleAdd
+	if weaponMods[0] then
+		local def=weaponMods[0]
+		reloadSpeedFactor, rangeFactor, projSpeedFactor, projectilesFactor,burstFactor,burstRateFactor,sprayAngleAdd=
+		def.reloadMult,
+		def.rangeMult,
+		def.projSpeedMult,
+		def.projectilesMult,
+		def.burstMult,
+		def.burstRateMult,
+		def.sprayAngleAdd
+	else
+		reloadSpeedFactor, rangeFactor, projSpeedFactor, projectilesFactor,burstFactor,burstRateFactor,sprayAngleAdd=1,1,1,1,1,1,1
+	end
+
 	local state = origUnitWeapons[unitDefID]
 	local maxRangeModified = state.maxWeaponRange*rangeFactor
 
@@ -268,7 +285,11 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, speedFactor, rangeFa
 		local w = state.weapon[i]
 		local reloadState = spGetUnitWeaponState(unitID, i , 'reloadState')
 		local reloadTime  = spGetUnitWeaponState(unitID, i , 'reloadTime')
-		if speedFactor <= 0 then
+		local ReloadSpeedFactor = ((weaponMods and weaponMods[i] and weaponMods[i].reloadMult) or 1)*reloadSpeedFactor
+		
+		local moddedBurstRate=w.burstRate*((weaponMods and weaponMods[i] and weaponMods[i].burstRateMult) or 1)*burstRateFactor/ReloadSpeedFactor
+		spSetUnitWeaponState(unitID,i,"burstRate",moddedBurstRate + HALF_FRAME)
+		if reloadSpeedFactor <= 0 then
 			if not unitReloadPaused[unitID] then
 				local newReload = 100000 -- set a high reload time so healthbars don't judder. NOTE: math.huge is TOO LARGE
 				unitReloadPaused[unitID] = unitDefID
@@ -286,12 +307,11 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, speedFactor, rangeFa
 				unitReloadPaused[unitID] = nil
 				spSetUnitRulesParam(unitID, "reloadPaused", 0, INLOS_ACCESS)
 			end
-			local moddedSpeed = ((weaponMods and weaponMods[i] and weaponMods[i].reloadMult) or 1)*speedFactor
-			local newReload = w.reload/moddedSpeed
+			local newReload = w.reload/ReloadSpeedFactor
 			local nextReload = gameFrame+(reloadState-gameFrame)*newReload/reloadTime
 			-- Add HALF_FRAME to round reloadTime to the closest discrete frame (multiple of 1/30), since the the engine rounds DOWN
 			if w.burstRate then
-				spSetUnitWeaponState(unitID, i, {reloadTime = newReload + HALF_FRAME, reloadState = nextReload + 0.5, burstRate = w.burstRate/moddedSpeed + HALF_FRAME})
+				spSetUnitWeaponState(unitID, i, {reloadTime = newReload + HALF_FRAME, reloadState = nextReload + 0.5, burstRate = moddedBurstRate + HALF_FRAME})
 			else
 				spSetUnitWeaponState(unitID, i, {reloadTime = newReload + HALF_FRAME, reloadState = nextReload + 0.5})
 			end
@@ -299,8 +319,8 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, speedFactor, rangeFa
 		local moddedRange = w.range*((weaponMods and weaponMods[i] and weaponMods[i].rangeMult) or 1)*rangeFactor
 		local moddedProjectiles = w.projectiles*((weaponMods and weaponMods[i] and weaponMods[i].projectilesMult) or 1)*projectilesFactor
 		
-		local sprayAngle = math.max(w.sprayAngle, minSpray)
-		spSetUnitWeaponState(unitID, i, "sprayAngle", sprayAngle)
+		local moddedSprayAngle = math.max(w.sprayAngle+sprayAngleAdd+((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0), minSpray)
+		spSetUnitWeaponState(unitID, i, "sprayAngle", moddedSprayAngle)
 		
 		if w.projectileSpeed then
 			local moddedSpeed = w.projectileSpeed*((weaponMods and weaponMods[i] and weaponMods[i].projSpeedMult) or 1)*projSpeedFactor
@@ -310,6 +330,10 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, speedFactor, rangeFa
 		spSetUnitWeaponState(unitID, i, "projectiles", moddedProjectiles)
 		spSetUnitWeaponState(unitID, i, "range", moddedRange)
 		spSetUnitWeaponDamages(unitID, i, "dynDamageRange", moddedRange)
+
+		local moddedBurst=w.burst*((weaponMods and weaponMods[i] and weaponMods[i].burstMult) or 1)*burstFactor
+		spSetUnitWeaponState(unitID,i,"burst",moddedBurst)
+
 		if maxRangeModified < moddedRange then
 			maxRangeModified = moddedRange
 		end
@@ -460,6 +484,9 @@ local currentEnergy = {}
 local currentBuildpower = {}
 local currentCost = {}
 local currentProjectiles = {}
+local currentBurst = {}
+local currentBurstRate = {}
+local currentSprayAngleAdd={}
 local currentMinSpray = {}
 local currentShieldDisabled = {}
 local currentAbilityDisabled = {}
@@ -530,10 +557,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 	local moveMult = 1
 	local turnMult = 1
 	local accelMult = 1
-	local reloadMult = 1
-	local rangeMult = 1
 	local jumpRangeMult = 1
-	local projSpeedMult = 1
 	local econMult = 1
 	local massMult = 1
 	local energyMult = 1
@@ -543,11 +567,20 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 	local costMult = 1
 	local buildMult = 1
 	local senseMult = 1
-	local projectilesMult = 1
 	local minSpray = 0
 	local abilityDisabled = false
 	local shieldDisabled = false
-	local weaponSpecificMods = false
+	local weaponSpecificMods = {
+		[0]={
+			reloadMult = 1,
+			rangeMult = 1,
+			projSpeedMult = 1,
+			projectilesMult = 1,
+			burstMult=1,
+			burstRateMult=1,
+			sprayAngleAdd=1,
+		}
+	}
 	local setRadar = false
 	local setSonar = false
 	local setJammer = false
@@ -558,6 +591,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 	local staticEnergyMult = 1
 	local staticShieldRegen = 1
 	local staticHealthRegen = 1
+
 	
 	local hasAttributes = false
 	for _, data in IterableMap.Iterator(attTypeMap) do
@@ -598,29 +632,40 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 				staticShieldRegen = staticShieldRegen*(data.shieldRegen and data.shieldRegen[unitID] or 1)
 				staticHealthRegen = staticHealthRegen*(data.healthRegen and data.healthRegen[unitID] or 1)
 			end
-			
-			if data.weaponNum and data.weaponNum[unitID] then
-				local weaponNum = data.weaponNum[unitID]
+			do
+				local weaponNum =(data.weaponNum and  data.weaponNum[unitID]) or 0
+				
 				weaponSpecificMods = weaponSpecificMods or {}
 				weaponSpecificMods[weaponNum] = weaponSpecificMods[weaponNum] or {
 					reloadMult = 1,
 					rangeMult = 1,
 					projSpeedMult = 1,
 					projectilesMult = 1,
+					burstMult=1,
+					burstRateMult=1,
+					sprayAngleAdd=1,
 				}
 				local wepData = weaponSpecificMods[weaponNum]
 				wepData.reloadMult = wepData.reloadMult*(data.reload and data.reload[unitID] or 1)
 				wepData.rangeMult = wepData.rangeMult*(data.range and data.range[unitID] or 1)
 				wepData.projSpeedMult = wepData.projSpeedMult*(data.projSpeed and data.projSpeed[unitID] or 1)
 				wepData.projectilesMult = wepData.projectilesMult*(data.projectiles and data.projectiles[unitID] or 1)
-			else
-				reloadMult = reloadMult*(data.reload and data.reload[unitID] or 1)
-				rangeMult = rangeMult*(data.range and data.range[unitID] or 1)
-				projSpeedMult = projSpeedMult*(data.projSpeed and data.projSpeed[unitID] or 1)
-				projectilesMult = projectilesMult*(data.projectiles and data.projectiles[unitID] or 1)
+				wepData.burstMult=wepData.burstMult*(data.burstMult and data.burstMult[unitID] or 1)
+				wepData.burstRateMult=wepData.burstRateMult*(data.burstRateMult and data.burstRateMult[unitID] or 1)
+				wepData.sprayAngleAdd=wepData.sprayAngleAdd*(data.sprayAngleAdd and data.sprayAngleAdd[unitID] or 1)
 			end
 		end
 	end
+	local weaponSpecificModsDef=weaponSpecificMods[0]
+
+	
+	local reloadMult=weaponSpecificModsDef.reloadMult
+	local rangeMult=weaponSpecificModsDef. rangeMult
+	local projectilesMult= weaponSpecificModsDef.projectilesMult
+	local projSpeedMult= weaponSpecificModsDef.projSpeedMult
+	local burstMult= weaponSpecificModsDef.burstMult
+	local burstRateMult= weaponSpecificModsDef.burstRateMult
+	local sprayAngleAdd=weaponSpecificModsDef.sprayAngleAdd
 	
 	spSetUnitRulesParam(unitID, "totalReloadSpeedChange", reloadMult, INLOS_ACCESS)
 	spSetUnitRulesParam(unitID, "totalEconomyChange", econMult, INLOS_ACCESS)
@@ -638,6 +683,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 	
 	spSetUnitRulesParam(unitID, "totalStaticShieldRegen", staticShieldRegen, INLOS_ACCESS)
 	spSetUnitRulesParam(unitID, "totalStaticHealthRegen", staticHealthRegen, INLOS_ACCESS)
+	spSetUnitRulesParam(unitID, "sprayAngleAdd", sprayAngleAdd, INLOS_ACCESS)
 	
 	-- GG is faster (but gadget-only).
 	GG.att_CostMult[unitID] = costMult
@@ -654,6 +700,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 	GG.att_ProjSpeed[unitID] = projSpeedMult -- Ignores weapon mods
 	GG.att_ProjMult[unitID] = projectilesMult
 	
+	
 	unitSlowed[unitID] = moveMult < 1
 	
 	local healthChanges = (currentHealthAdd[unitID] or 0) ~= healthAdd
@@ -662,7 +709,11 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 	local weaponChanges = (currentReload[unitID] or 1) ~= reloadMult
 		or (currentRange[unitID] or 1) ~= rangeMult
 		or (currentProjectiles[unitID] or 1) ~= projectilesMult
+		or (currentProjSpeed[unitID] or 1) ~= projSpeedMult
 		or (currentMinSpray[unitID] or 0) ~= minSpray
+		or (currentBurst[unitID] or 1) ~= burstMult
+		or (currentBurstRate[unitID] or 1) ~= burstRateMult
+		or (currentSprayAngleAdd[unitID] or 0) ~= currentSprayAngleAdd
 	
 	local moveChanges = (currentMove[unitID] or 1) ~= moveMult
 		or (currentTurn[unitID] or 1) ~= turnMult
@@ -691,13 +742,16 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 		currentAccel[unitID] = accelMult
 	end
 	
-	if weaponSpecificMods or weaponChanges then
-		UpdateWeapons(unitID, unitDefID, weaponSpecificMods, reloadMult, rangeMult, projSpeedMult, projectilesMult, minSpray, frame)
+	if (weaponSpecificMods and #weaponSpecificMods) or weaponChanges then
+		UpdateWeapons(unitID, unitDefID, weaponSpecificMods, minSpray, frame)
 		currentReload[unitID] = reloadMult
 		currentRange[unitID] = rangeMult
 		currentProjSpeed[unitID] = projSpeedMult
 		currentProjectiles[unitID] = projectilesMult
 		currentMinSpray[unitID] = minSpray
+		currentBurst[unitID]=burstMult
+		currentBurstRate[unitID]=burstRateMult
+		currentSprayAngleAdd[unitID]=sprayAngleAdd
 	end
 	
 	if buildMult ~= currentBuildpower[unitID] then
@@ -772,7 +826,10 @@ local attributeNames = {
 	"setJammer",
 	"setSight",
 	"projectiles",
+	"burst",
+	"burstRate",
 	"weaponNum",
+	"sprayAngle",
 	"minSpray",
 	"abilityDisabled",
 	"shieldDisabled",
@@ -805,6 +862,7 @@ local function RemoveUnitFromAttributeType(attType, unitID)
 	end
 	attType.includedUnits[unitID] = nil
 	for i = 1, #attributeNames do
+		local attName=attributeNames[i]
 		if attType[attName] and attType[attName][unitID] ~= nil then
 			attType[attName][unitID] = nil
 		end

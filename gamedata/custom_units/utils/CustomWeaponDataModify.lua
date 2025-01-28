@@ -3,10 +3,9 @@ local utils=GameData.CustomUnits.utils
 utils.ACustomWeaponData=function ()
     ---@class CustomWeaponDataModify
     ---@field cost number
-    ---@field mass number
     ---@field damage_default_mut number
     ---@field damages_mut {[string]:number}
-    ---@field speed_mut number
+    ---@field projSpeed_mut number
     ---@field range_mut number
     ---@field reload_time_mut number
     ---@field weapon_def_name WeaponDefName
@@ -26,11 +25,10 @@ utils.ACustomWeaponData=function ()
     local o={
         damage_default_mut=1,
         damages_mut={},
-        speed_mut=1,
+        projSpeed_mut=1,
         range_mut=1,
         reload_time_mut=1,
         cost=1,
-        mass=1,
         weapon_def_name="NOWEAPON",
         sprayAngle_add=0,
         burst_mut=1,

@@ -39,7 +39,6 @@ return {
             corpse                 = [[DEAD]],
 
             customParams           = {
-                bait_level_default = 0,
                 aimposoffset       = [[0 8 0]],
                 midposoffset       = [[0 3 0]],
                 modelradius        = [[21]],
@@ -53,12 +52,12 @@ return {
             explodeAs              = [[BIG_UNITEX]],
             footprintX             = 3,
             footprintZ             = 3,
-            health                 = 1,
+            health                 = utils.consts.custom_health_const,
             iconType               = [[vehicleassault]],
             leaveTracks            = true,
             maxSlope               = 18,
             maxWaterDepth          = 22,
-            metalCost              = 1,
+            metalCost              = utils.consts.custom_cost_const,
             movementClass          = [[TANK3]],
             noAutoFire             = false,
             noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB DRONE]],
@@ -116,6 +115,6 @@ return {
         end
     end,
     genfn = function(params)
-        
+        return MutateFn(Spring.Utilities.CopyTable(custom_table,true),params)
     end
 }

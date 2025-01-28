@@ -1,15 +1,10 @@
-if not GameData then
-    Spring={}
-end
-if not GameData.CustomUnits then
-    Spring.Utilities.CustomUnits={}
-end
-if not GameData.CustomUnits.unit_defs then
-    local unit_defs={}
-    local luaFiles=VFS.DirList("LuaRules/Configs/custom_units/chassises", "*.lua") or {}
+
+if not GameData.CustomUnits.chassis_defs then
+    local chassis_defs={}
+    local luaFiles=VFS.DirList("gamedata/custom_units/chassises", "*.lua") or {}
     for i = 1, #luaFiles do
         local result=VFS.Include(luaFiles[i])
-        unit_defs[result.name]=result
+        chassis_defs[result.name]=result
     end
-    GameData.CustomUnits.unit_defs=unit_defs
+    GameData.CustomUnits.chassis_defs=chassis_defs
 end

@@ -3,9 +3,19 @@ local utils=Spring.Utilities.CustomUnits.utils
 
 
 local spSetUnitWeaponState=Spring.SetUnitWeaponState
-
 ---@param customWpnData CustomWeaponDataFinal
-utils.SetUnitWeaponToCustom=function (unitID,wpnnum,customWpnData)
+local function SetUnitWeaponToCustom(unitID,wpnnum,customWpnData)
+    GG.Attributes.AddEffect(unitID,"custom_unit_wpn_" .. wpnnum,{
+        weaponNum=wpnnum,
+        reload=1/customWpnData.reload_speed_mut,
+        range=customWpnData.range_mut,
+        burst=customWpnData.burst_mut,
+        burstRate=customWpnData.burstRate_mut,
+        projectiles=customWpnData.projectiles_mut,
+        projSpeed=customWpnData.projSpeed_mut,
+        sprayAngle=customWpnData.sprayAngle
+    })
+    --[=[
     spSetUnitWeaponState(unitID,wpnnum,{
         reloadTime=customWpnData.reload_time,
         sprayAngle=customWpnData.sprayAngle,
@@ -14,8 +24,9 @@ utils.SetUnitWeaponToCustom=function (unitID,wpnnum,customWpnData)
         burst=customWpnData.burst,
         burstRate=customWpnData.burstRate,
         projectiles=customWpnData.projectiles,
-    })
+    })]=]
 end
+utils.SetUnitWeaponToCustom=SetUnitWeaponToCustom
 
 
 
@@ -28,6 +39,9 @@ utils.SetCustomUnit=function (unitID,CustomUnit)
         accel=CustomUnit.speed_mut,
         cost=CustomUnit.cost_mut,
     })
+    for key, value in pairs(CustomUnit.weapons) do
+        SetUnitWeaponToCustom(unitID,key,value)
+    end
 end
 
 

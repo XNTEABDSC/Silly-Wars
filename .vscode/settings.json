@@ -5,7 +5,12 @@
         "UnitDefNames",
         "FeatureDefs",
         "ModularCommDefsShared",
-        "piece"
+        "piece",
+        "GG",
+        "Script",
+        "WG",
+        "widgetHandler",
+        "widget"
     ],
     "Lua.runtime.version": "Lua 5.1",
 }

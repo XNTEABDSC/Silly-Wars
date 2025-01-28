@@ -12,18 +12,24 @@ if not GameData.CustomUnits.utils then
     utils_gamedata.bias_factor=0.9
     local function TableMutate(mutate_table)
         return function (t,factor)
+            if factor==nil then
+                error("factor==nil")
+            end
             for key, value in pairs(mutate_table) do
+                if t[key]==nil then
+                    error("table["..key.."]==nil")
+                end
                 t[key]=t[key]*factor^value
             end
         end
     end
-    local function MutateCostMassAnd(mutate_table)
+    local function MutateCostAnd(mutate_table)
         mutate_table.cost=1
-        mutate_table.mass=1
+        --mutate_table.mass=1
         return mutate_table
     end
     utils_gamedata.TableMutate=TableMutate
-    utils_gamedata.MutateCostMassAnd=MutateCostMassAnd
+    utils_gamedata.MutateCostMassAnd=MutateCostAnd
     local function UseMutateTable(mutaters)
 
         return function (t,mutate_table)
@@ -46,7 +52,9 @@ if not GameData.CustomUnits.utils then
         "aoe",
         "weapons",
         "CustomUnitDataModify",
-        "for_chassis"
+        "for_chassis",
+        "chassis",
+        "genfn"
     }--VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}
     for i = 1, #luaFiles do
         VFS.Include("gamedata/custom_units/utils/" .. luaFiles[i] .. ".lua")
