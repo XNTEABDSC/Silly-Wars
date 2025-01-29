@@ -19,6 +19,7 @@ return { turretdirtbagspamer = {
 
   customParams                  = {
     soundselect = "building_select1",
+    is_debug_unit=1,
   },
 
   explodeAs                     = [[BIG_UNIT]],

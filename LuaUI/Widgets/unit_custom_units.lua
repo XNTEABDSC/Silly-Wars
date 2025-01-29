@@ -11,7 +11,7 @@ function widget:GetInfo()
 end
 
 
----@type {[integer]:CustomChassisDataFinal}
+---@type {[integer]:CustomUnitDataFinal}
 local CustomUnitDefs={}
 
 VFS.Include("LuaRules/Configs/custom_units/utils.lua")

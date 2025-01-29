@@ -4,7 +4,7 @@ utils.BasicChassisMutate={
     ---@param cud CustomUnitDataModify
     ---@param factor number
     armor=function (cud,factor)
-        cud.health=cud.health+factor*30
+        cud.health=cud.health+factor*20
         cud.cost=cud.cost+factor
         return cud
     end,

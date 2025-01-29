@@ -27,19 +27,22 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,customWpnData)
         owner = spGetProjectileOwnerID(targeterProjID),
         team = spGetProjectileTeamID(targeterProjID),
         ttl = spGetProjectileTimeToLive(targeterProjID),
-        --gravity = number,
-        --tracking = number,
+        gravity = -customWpnData.gravity,
+        tracking = customWpnData.tracks,
         --maxRange = number,
         --startAlpha = number,
         --endAlpha = number,
-        --model = string,
+        model = customWpnData.model,
         cegTag = customWpnData.explosionGenerator,
         --end = {number x, number y, number z},
     })
 
     do
         local v1,v2,v3=spGetProjectileTarget(targeterProjID)
-        spSetProjectileTarget(newProjID,v1,v2,v3)
+        if v3 then
+            spSetProjectileTarget(newProjID,v1,v2,v3)
+            
+        end
     end
     
     do
@@ -56,9 +59,17 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,customWpnData)
         }
 
         for key, value in pairs(customWpnData.damages) do
-            damage_table[key]=value
+            damage_table[ tostring( key )--[=[W T F IS THIS GENIUS]=] ]=value
+            --[=[
+                SetProjectileDamages, at LuaSyncedCtrl.cpp line 5001
+                only do SetSingleDynDamagesKey when key is string
+            ]=]
         end
-        spSetProjectileDamages(newProjID,0,damage_table)-- spring is so mad
+        spSetProjectileDamages(newProjID,0--[=[W T F IS THIS GENIUS]=],damage_table)
+        --[=[
+            SetProjectileDamages, at LuaSyncedCtrl.cpp line 5001
+            op Ctrl C V forgot commet and the second param
+        ]=]
     end
     spDeleteProjectile(targeterProjID)
 end

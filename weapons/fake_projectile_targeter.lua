@@ -1,22 +1,36 @@
+VFS.Include("gamedata/custom_units/utils.lua")
+local consts=GameData.CustomUnits.utils.consts
+
 local name="fake_projectile_targeter"
 local fake_projectile_targeter={
-  name                    = [[Projectile Gun]],
+  name                    = [[Light Plasma Cannon]],
+  --areaOfEffect            = 32,
   craterBoost             = 0,
   craterMult              = 0,
+  burst=consts.custom_targeter_burst,
+  burstRate=consts.custom_targeter_burstRate,
+  projectiles=consts.custom_targeter_projectiles,
+
+  customParams        = {
+    --light_camera_height = 1500,
+  },
 
   damage                  = {
-      default = 0.1,
-      planes  = 0.1,
+    default = consts.custom_targeter_damage,
   },
+
+  explosionGenerator      = [[custom:INGEBORG]],
+  impulseBoost            = 0,
+  impulseFactor           = 0,
   interceptedByShieldType = 1,
   noSelfDamage            = true,
-  range                   = 350,
-  reloadtime              = 2,
-  soundHit                = [[explosion/ex_med5]],
-  soundStart              = [[weapon/cannon/cannon_fire5]],
+  range                   = consts.custom_targeter_range,
+  reloadtime              = consts.custom_targeter_reloadtime,
+  soundHit                = [[weapon/cannon/cannon_hit2]],
+  soundStart              = [[weapon/cannon/medplasma_fire]],
   turret                  = true,
   weaponType              = [[Cannon]],
-  weaponVelocity          = 280,
+  weaponVelocity          = consts.custom_targeter_proj_speed,
 }
 local fake_beam_targeter = {
   name                    = [[Beam Targeter]],

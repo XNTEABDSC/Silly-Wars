@@ -14,7 +14,7 @@ function gadget:GetInfo()
 end
 
 
----@type {[integer]:CustomChassisDataFinal}
+---@type {[integer]:CustomUnitDataFinal}
 local CustomUnitDefs={}
 
 VFS.Include("LuaRules/Configs/custom_units/utils.lua")
@@ -122,15 +122,15 @@ if true then -- test
     local jsonencode=Spring.Utilities.json.encode -- ill use loadstring if there is no safity problem
     SyncedAddCustomUnitDef(jsonencode({
         "custom_ravager",{
-            motor=1000,
-            armor=1000,
+            motor=100,
+            armor=100,
             add_weapon={
                 weapon_num=1,
                 weapon={"custom_plasma",{
-                    damage=125,
-                    range=2,
-                    speed=2,
-                    reload_time=2,
+                    damage=10,
+                    range=1,
+                    speed=1,
+                    reload_time=10,
                 }}
             },
         }

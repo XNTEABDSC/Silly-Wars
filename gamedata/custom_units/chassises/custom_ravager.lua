@@ -9,18 +9,22 @@ local MutateFn=utils.UseMutateTable(
         ---@param table CustomUnitDataModify
         motor=function (table,factor)
             table.cost=table.cost+factor
-            table.motor=table.motor+factor*10
+            table.motor=table.motor+factor*75
         end
 
     },utils.BasicChassisMutate)
 )
-local custom_table=utils.ACustomChassisData()
-custom_table.speed_base=88.5
+local custom_table=utils.ACustomUnitDataModify()
+local speed_base=88.5
+--custom_table.speed_base=speed_base
 local name = "custom_ravager"
+local weapons_slots={
+    [1]={"projectile_targeter","beam_targeter"}
+}
+---@type CustomChassisData
 return {
     name = name,
     genUnitDefs = function()
-        --local name=name
         local unitDefSize=3
         local unitDef = {
             name                   = [[Custom Ravager]],
@@ -106,6 +110,8 @@ return {
                     object     = [[debris2x2c.s3o]],
                 },
             },
+
+            weapons=utils.GenChassisWeapons(weapons_slots),
         }
         for i = 1, 6 do
             local newUD=Spring.Utilities.CopyTable(unitDef,true)
@@ -115,6 +121,23 @@ return {
         end
     end,
     genfn = function(params)
-        return MutateFn(Spring.Utilities.CopyTable(custom_table,true),params)
-    end
+        local res=MutateFn(Spring.Utilities.CopyTable(custom_table,true),params)
+        for key, value in pairs(res.weapons) do
+            res.cost=res.cost+value.cost
+        end
+        local mass=wacky_utils.GetMass(res.health,res.cost)
+        local mass_3=math.pow(mass,1/3)
+        local size=math.floor(mass_3/2)
+        if size<1 then
+            size=1
+        end
+        if size>6 then
+            size=6
+        end
+        res.chassis_name=name
+        res.UnitDefName=name .. size
+        return res
+    end,
+    weapon_slots=weapons_slots,
+    speed_base=speed_base,
 }

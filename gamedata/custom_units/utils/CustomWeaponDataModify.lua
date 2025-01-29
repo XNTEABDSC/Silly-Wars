@@ -22,6 +22,7 @@ utils.ACustomWeaponData=function ()
     ---@field projectiles_mut nil|number
     ---@field burstRate_mut nil|number
     ---@field craterAreaOfEffect nil|number
+    ---@field targeter_weapon string
     local o={
         damage_default_mut=1,
         damages_mut={},
@@ -35,7 +36,8 @@ utils.ACustomWeaponData=function ()
         projectiles_mut=1,
         burstRate_mut=1/30,
         aoe=0,
-        explosionGenerator=nil
+        explosionGenerator=nil,
+        targeter_weapon="fake_projectile_targeter"
     }
     return o
 end

@@ -19,7 +19,7 @@ if not Spring.Utilities.CustomUnits.utils then
     end]=]
     local luaFiles={
         "CustomWeaponDataFinal",
-        "CustomChassisDataFinal",
+        "CustomUnitDataFinal",
         "SetCustomUnit",
         "ChangeTargeterToRealProj",
     }--VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}

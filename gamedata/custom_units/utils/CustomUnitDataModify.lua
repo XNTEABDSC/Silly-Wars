@@ -1,6 +1,6 @@
 local utils=GameData.CustomUnits.utils
 
-function utils.ACustomChassisData()
+function utils.ACustomUnitDataModify()
     ---@class CustomUnitDataModify
     ---@field UnitDefName string
     ---@field cost number
@@ -9,14 +9,15 @@ function utils.ACustomChassisData()
     ---@field motor number motor / mass = speed
     ---@field size number
     ---@field weapons {[number]:CustomWeaponDataModify}
-    ---@field speed_base number
+    ---@field chassis_name string
+    -- ---@field speed_base number
     local o={
         weapons={},
         motor=0,
         health=0,
         size=0,
         cost=0,
-        speed_base=100,
+        --speed_base=100,
     }
     return o
 end

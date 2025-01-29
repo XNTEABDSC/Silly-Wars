@@ -243,21 +243,23 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 			local reload = wd.reload
 			state.weapon[i] = {
 				reload = reload,
-				burstRate = wd.salvoDelay,
-				projectiles = wd.projectiles,
+				burstRate = (wd.salvoDelay or (1/30)),
+				projectiles = wd.projectiles or 1,
 				oldReloadFrames = floor(reload*Game.gameSpeed),
 				range = wd.range,
-				sprayAngle = wd.sprayAngle,
-				burst=wd.salvoSize,
+				sprayAngle = wd.sprayAngle or 0,
+				burst=wd.salvoSize or 1,
 			}
 			if wd.type == "LaserCannon" or wd.type == "Cannon" then
 				-- Barely works for missiles, and might break their burnblow and prediction
 				state.weapon[i].projectileSpeed = wd.projectilespeed
 			end
+			-- WHO CARES
+			--[=[
 			if wd.type == "BeamLaser" then
 				-- beamlasers go screwy if you mess with their burst length
 				state.weapon[i].burstRate = false
-			end
+			end]=]
 		end
 		
 	end
@@ -275,7 +277,7 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 		def.burstRateMult,
 		def.sprayAngleAdd
 	else
-		reloadSpeedFactor, rangeFactor, projSpeedFactor, projectilesFactor,burstFactor,burstRateFactor,sprayAngleAdd=1,1,1,1,1,1,1
+		reloadSpeedFactor, rangeFactor, projSpeedFactor, projectilesFactor,burstFactor,burstRateFactor,sprayAngleAdd=1,1,1,1,1,1,0
 	end
 
 	local state = origUnitWeapons[unitDefID]
@@ -287,7 +289,7 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 		local reloadTime  = spGetUnitWeaponState(unitID, i , 'reloadTime')
 		local ReloadSpeedFactor = ((weaponMods and weaponMods[i] and weaponMods[i].reloadMult) or 1)*reloadSpeedFactor
 		
-		local moddedBurstRate=w.burstRate*((weaponMods and weaponMods[i] and weaponMods[i].burstRateMult) or 1)*burstRateFactor/ReloadSpeedFactor
+		local moddedBurstRate=w.burstRate * ( (weaponMods and weaponMods[i] and weaponMods[i].burstRateMult) or 1 ) *burstRateFactor/ReloadSpeedFactor
 		spSetUnitWeaponState(unitID,i,"burstRate",moddedBurstRate + HALF_FRAME)
 		if reloadSpeedFactor <= 0 then
 			if not unitReloadPaused[unitID] then
@@ -578,7 +580,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 			projectilesMult = 1,
 			burstMult=1,
 			burstRateMult=1,
-			sprayAngleAdd=1,
+			sprayAngleAdd=0,
 		}
 	}
 	local setRadar = false
@@ -643,7 +645,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 					projectilesMult = 1,
 					burstMult=1,
 					burstRateMult=1,
-					sprayAngleAdd=1,
+					sprayAngleAdd=0,
 				}
 				local wepData = weaponSpecificMods[weaponNum]
 				wepData.reloadMult = wepData.reloadMult*(data.reload and data.reload[unitID] or 1)
@@ -652,7 +654,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 				wepData.projectilesMult = wepData.projectilesMult*(data.projectiles and data.projectiles[unitID] or 1)
 				wepData.burstMult=wepData.burstMult*(data.burstMult and data.burstMult[unitID] or 1)
 				wepData.burstRateMult=wepData.burstRateMult*(data.burstRateMult and data.burstRateMult[unitID] or 1)
-				wepData.sprayAngleAdd=wepData.sprayAngleAdd*(data.sprayAngleAdd and data.sprayAngleAdd[unitID] or 1)
+				wepData.sprayAngleAdd=wepData.sprayAngleAdd+(data.sprayAngleAdd and data.sprayAngleAdd[unitID] or 0)
 			end
 		end
 	end

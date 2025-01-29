@@ -31,7 +31,9 @@ if not GameData.CustomUnits.utils then
     utils_gamedata.TableMutate=TableMutate
     utils_gamedata.MutateCostMassAnd=MutateCostAnd
     local function UseMutateTable(mutaters)
-
+        ---@generic T
+        ---@param t T
+        ---@return T
         return function (t,mutate_table)
             for key, value in pairs(mutate_table) do
                 mutaters[key](t,value)
@@ -47,6 +49,7 @@ if not GameData.CustomUnits.utils then
     end]=]
     local luaFiles={
         "consts",
+        "targeters",
         "CustomWeaponDataModify",
         "for_weapons",
         "aoe",
