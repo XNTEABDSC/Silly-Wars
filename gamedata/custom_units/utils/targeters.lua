@@ -14,7 +14,7 @@ local projectile_targeter={
         projectiles=consts.custom_targeter_projectiles,
       
         customParams        = {
-          --light_camera_height = 1500,
+            bogus = 1,
         },
       
         damage                  = {
@@ -28,8 +28,6 @@ local projectile_targeter={
         noSelfDamage            = true,
         range                   = consts.custom_targeter_range,
         reloadtime              = consts.custom_targeter_reloadtime,
-        soundHit                = [[weapon/cannon/cannon_hit2]],
-        soundStart              = [[weapon/cannon/medplasma_fire]],
         turret                  = true,
         weaponType              = [[Cannon]],
         weaponVelocity          = consts.custom_targeter_proj_speed,
@@ -41,7 +39,9 @@ local projectile_targeter={
 }
 local beam_targeter={
     name="beam_targeter",
-    weapon_def={
+    weapon_def=
+    -- [=[
+    {
         name                    = [[Beam Targeter]],
         beamTime                = 1/30,
         craterBoost             = 0,
@@ -49,6 +49,7 @@ local beam_targeter={
         projectiles=consts.custom_targeter_projectiles,
       
         customParams            = {
+            bogus = 1,
         },
       
         damage                  = {
@@ -63,18 +64,51 @@ local beam_targeter={
         range                   = consts.custom_targeter_range,
         reloadtime              = consts.custom_targeter_reloadtime,
         rgbColor                = [[1 1 1]],
-        soundStart              = [[weapon/laser/mini_laser]],
-        soundStartVolume        = 6,
         thickness               = 5,
         tolerance               = 8192,
         turret                  = true,
         weaponType              = [[BeamLaser]],
-    },
+    }
+    -- ]=]
+    --[=[
+    {
+        name                    = [[Beam Targeter]],
+        --areaOfEffect            = 32,
+        craterBoost             = 0,
+        craterMult              = 0,
+        burst=consts.custom_targeter_burst,
+        burstRate=consts.custom_targeter_burstRate,
+        projectiles=consts.custom_targeter_projectiles,
+      
+        customParams        = {
+            bogus = 1,
+        },
+      
+        damage                  = {
+          default = consts.custom_targeter_damage,
+        },
+      
+        explosionGenerator      = [[custom:INGEBORG]],
+        impulseBoost            = 0,
+        impulseFactor           = 0,
+        interceptedByShieldType = 1,
+        noSelfDamage            = true,
+        range                   = consts.custom_targeter_range,
+        reloadtime              = consts.custom_targeter_reloadtime,
+        turret                  = true,
+        weaponType              = [[Cannon]],
+        myGravity =0.00001,
+        weaponVelocity          = consts.custom_targeter_proj_speed,
+    }
+    --]=]
+    ,
     weapon_unit={
         onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
     }
 }
 
+local targeters_count=8
+utils.targeters_count=targeters_count
 
 
 local targeterweapondefs={}
@@ -83,7 +117,7 @@ for key, value in pairs({projectile_targeter,beam_targeter}) do
     targeterweapons[value.name]=value
 end
 
-for i = 1, 8 do
+for i = 1, targeters_count do
     for key, value in pairs(targeterweapons) do
         targeterweapondefs[key.. tostring(i)]=Spring.Utilities.CopyTable(value.weapon_def,true)
     end
@@ -95,18 +129,23 @@ utils.targeterweapons=targeterweapons
 ---to generate unitdef.weapons
 ---@param weapons_slots {[integer]:list<string>}
 ---@return table unitdef.weapons
-local function GenChassisWeapons(weapons_slots)
+---@return table targeter_name_to_unit_weapon
+local function GenChassisUnitWeapons(weapons_slots)
     local weapons={}
+    local targeter_name_to_unit_weapon={}
     for wpnnum, possible_targeters_name in pairs(weapons_slots) do
         for _, targeter_name in pairs(possible_targeters_name) do
-            local targeter=targeterweapons
+            local targeter=targeterweapons[targeter_name]
             local weapon_unit=Spring.Utilities.CopyTable(targeter.weapon_unit,true)
             weapon_unit.name=targeter_name .. wpnnum
             weapons[#weapons+1] = weapon_unit
+            targeter_name_to_unit_weapon[weapon_unit.name]=#weapons
         end
     end
-    return weapons
+    return weapons,targeter_name_to_unit_weapon
 end
-utils.GenChassisWeapons=GenChassisWeapons
+utils.GenChassisUnitWeapons=GenChassisUnitWeapons
+
+
 
 GameData.CustomUnits.utils=utils

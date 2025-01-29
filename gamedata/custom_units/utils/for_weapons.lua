@@ -1,9 +1,19 @@
 local utils=GameData.CustomUnits.utils
 utils.BasicWeaponMutate={
     damage=utils.TableMutate(utils.MutateCostMassAnd({damage_default_mut=utils.bias_factor})),
-    range=utils.TableMutate({range_mut=utils.bias_factor*0.5,cost=1}),
+    range=utils.TableMutate({range_mut=utils.bias_factor*0.75,cost=1}),
     speed=utils.TableMutate({projSpeed_mut=utils.bias_factor*2,cost=1}),
     reload_time=utils.TableMutate(utils.MutateCostMassAnd({reload_time_mut=-utils.bias_factor})),
 }
-utils.UseWeaponMutateTable=utils.UseMutateTable(utils.BasicWeaponMutate)
+utils.BeamWeaponMutate={
+    range=utils.TableMutate({range_mut=utils.bias_factor*0.5,cost=1}),
+}
+utils.PlasmaWeaponMutateTable=utils.BasicWeaponMutate
+utils.BeamWeaponMutateTable={
+    damage=utils.BasicWeaponMutate.damage,
+    reload_time=utils.BasicWeaponMutate.reload_time,
+    range=utils.BeamWeaponMutate.range,
+}
+utils.UsePlasmaWeaponMutateTable=utils.UseMutateTable(utils.PlasmaWeaponMutateTable)
+utils.UseBeamWeaponMutateTable=utils.UseMutateTable(utils.BeamWeaponMutateTable)
 GameData.CustomUnits.utils=utils

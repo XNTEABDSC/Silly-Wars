@@ -14,19 +14,21 @@ local MutateFn=utils.UseMutateTable(
 
     },utils.BasicChassisMutate)
 )
-local custom_table=utils.ACustomUnitDataModify()
 local speed_base=88.5
 --custom_table.speed_base=speed_base
 local name = "custom_ravager"
 local weapons_slots={
     [1]={"projectile_targeter","beam_targeter"}
 }
+
+local unit_weapons,targeter_name_to_unit_weapon=utils.GenChassisUnitWeapons(weapons_slots)
+
 ---@type CustomChassisData
 return {
     name = name,
     genUnitDefs = function()
         local unitDefSize=3
-        local unitDef = {
+        local aunitDef = {
             name                   = [[Custom Ravager]],
             description            = [[Custom Rover]],
             acceleration           = 0.162,
@@ -56,17 +58,17 @@ return {
             explodeAs              = [[BIG_UNITEX]],
             footprintX             = 3,
             footprintZ             = 3,
-            health                 = utils.consts.custom_health_const,
             iconType               = [[vehicleassault]],
             leaveTracks            = true,
             maxSlope               = 18,
             maxWaterDepth          = 22,
+            health                 = utils.consts.custom_health_const,
             metalCost              = utils.consts.custom_cost_const,
             movementClass          = [[TANK3]],
             noAutoFire             = false,
             noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB DRONE]],
             objectName             = [[corraid.s3o]],
-            script                 = [[vehassault.lua]],
+            script                 = [[custom_ravager.lua]],
             selfDestructAs         = [[BIG_UNITEX]],
 
             sfxtypes               = {
@@ -111,17 +113,19 @@ return {
                 },
             },
 
-            weapons=utils.GenChassisWeapons(weapons_slots),
+            weapons=unit_weapons,
         }
         for i = 1, 6 do
-            local newUD=Spring.Utilities.CopyTable(unitDef,true)
+            local newUD=Spring.Utilities.CopyTable(aunitDef,true)
             local scale=i/unitDefSize
             newUD.customParams.def_scale= newUD.customParams.def_scale *scale
             UnitDefs[name..i]=lowerkeys( newUD )
         end
     end,
     genfn = function(params)
-        local res=MutateFn(Spring.Utilities.CopyTable(custom_table,true),params)
+        local cud=utils.ACustomUnitDataModify()
+        cud.chassis_name=name
+        local res=MutateFn(cud,params)
         for key, value in pairs(res.weapons) do
             res.cost=res.cost+value.cost
         end
@@ -139,5 +143,6 @@ return {
         return res
     end,
     weapon_slots=weapons_slots,
+    targeter_name_to_unit_weapon=targeter_name_to_unit_weapon,
     speed_base=speed_base,
 }

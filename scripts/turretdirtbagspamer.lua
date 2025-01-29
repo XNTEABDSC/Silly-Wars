@@ -33,7 +33,7 @@ function SpamDirtbag()
 		Sleep(1000)
 		local px, py, pz = Spring.GetUnitPosition(unitID)
 		local team = Spring.GetUnitTeam(unitID)
-		local created = GG.CustomUnits.SpawnCustomUnit(1, px + 100, py + 100, pz + 100, 0, team)
+		local created = GG.CustomUnits.SpawnCustomUnit(2, px + 100, py + 100, pz + 100, 0, team)
 		--local created=Spring.CreateUnit("shieldscout",px+100,py+100,pz+100,0,team)
 		if created and GG.AddSillyUnit and false then
 			GG.AddSillyUnit(created)

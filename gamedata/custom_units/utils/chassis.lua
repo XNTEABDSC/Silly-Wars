@@ -4,8 +4,9 @@ if not GameData.CustomUnits.chassis_defs then
     ---@field speed_base number
     ---@field weapon_slots list<list<string>>
     ---@field genUnitDefs function
-    ---@field genfn function
+    ---@field genfn fun(params:any):CustomUnitDataModify
     ---@field name string
+    ---@field targeter_name_to_unit_weapon {[string]:integer}
 
     ---@type table<string,CustomChassisData>
     local chassis_defs={}

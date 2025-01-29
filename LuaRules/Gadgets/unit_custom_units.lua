@@ -23,6 +23,8 @@ local gdCustomUnits=GameData.CustomUnits
 local GenCUD_mod=gdCustomUnits.utils.GenCUD
 local jsondecode=Spring.Utilities.json.decode
 
+local INLOS_ACCESS={inlos=true}
+
 
 local function GenCustomUnitDef(cudTable)
     local cud_mod=GenCUD_mod(cudTable)
@@ -39,11 +41,14 @@ GG.CustomUnits.CustomUnitDefs=CustomUnitDefs
 
 local CustomUnitsToDefID={}
 
+GG.CustomUnits.CustomUnitsToDefID=CustomUnitsToDefID
+
 local spCreateUnit=Spring.CreateUnit
 local utils_SetCustomUnit=utils.SetCustomUnit
 local utils_ChangeTargeterToRealProj=utils.ChangeTargeterToRealProj
 local spValidUnitID=Spring.ValidUnitID
 local spSetGameRulesParam=Spring.SetGameRulesParam
+local spSetUnitRulesParam=Spring.SetUnitRulesParam
 local SendToUnsynced=SendToUnsynced
 
 local function SpawnCustomUnit(cudid,x, y, z, facing, teamID ,build,flattenGround ,builderID)
@@ -52,30 +57,35 @@ local function SpawnCustomUnit(cudid,x, y, z, facing, teamID ,build,flattenGroun
         return false
     end
     local unitId=spCreateUnit(cud.unitDef,x, y, z, facing, teamID ,build,flattenGround ,builderID)
+    if not unitId then
+        return nil
+    end
     CustomUnitsToDefID[unitId]=cudid
+    spSetUnitRulesParam(unitId,"custom_unit_def_id",cudid,INLOS_ACCESS)
     utils_SetCustomUnit(unitId,cud)
     return unitId
 end
 
 GG.CustomUnits.SpawnCustomUnit=SpawnCustomUnit
 
-local TargeterWD={}
-
+--[=[
 for i = 1, 8 do
-    local wd=WeaponDefNames["fake_projectile_targeter"..tostring( i )]
-    TargeterWD[ wd.id ]=i
     Script.SetWatchWeapon(wd.id,true)
 end
+]=]
 
+local targeterwdid_to_custom_weapon_num=utils.targeterwdid_to_custom_weapon_num
+
+local spGetProjectileDefID=Spring.GetProjectileDefID
+
+for key, value in pairs(targeterwdid_to_custom_weapon_num) do
+    Script.SetWatchWeapon(key,true)
+end
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
     if not spValidUnitID(proOwnerID) then
         return
     end
-    local wpnnum=TargeterWD[weaponDefID]
-    if not wpnnum then
-        Spring.Echo("Warning: odd wpn shot")
-        return
-    end
+    weaponDefID=weaponDefID or spGetProjectileDefID(proID)
 
     local cudid=CustomUnitsToDefID[proOwnerID]
     if not cudid then
@@ -91,6 +101,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 
     utils_ChangeTargeterToRealProj(proID,cud.weapons[wpnnum])
 end
+
 local function SyncedAddCustomUnitDef(cudString)
     local cudid=#CustomUnitDefs+1
     local suc,res=pcall (jsondecode, cudString)
@@ -109,14 +120,46 @@ local function SyncedAddCustomUnitDef(cudString)
 
         end
     else
-        Spring.Echo("Error: CustimUnits: failed to parse cudString " .. cudString .. " with error " .. res)
+        Spring.Echo("Error: CustimUnits: failed to parse CustomUnitDef String " .. cudString .. " with error " .. res)
         return nil
     end
 end
 
 GG.CustomUnits.SyncedAddCustomUnitDef=SyncedAddCustomUnitDef
 
+
+local function CreateCustomUnitscript(unitId)
+    local cud=CustomUnitDefs[ CustomUnitsToDefID[unitId] ]
+    local o={custom_unit_data=cud}
+    local custom_weapon_num_to_unit_weapon_num=cud.custom_weapon_num_to_unit_weapon_num
+    local unit_weapon_num_to_custom_weapon_num=cud.unit_weapon_num_to_custom_weapon_num
+    local weapons=cud.weapons
+    o.custom_weapon_num_to_unit_weapon_num=custom_weapon_num_to_unit_weapon_num
+    o.unit_weapon_num_to_custom_weapon_num=unit_weapon_num_to_custom_weapon_num
+    o.weapons=weapons
+    return o
+end
+
+GG.CustomUnits.CreateCustomUnitscript=CreateCustomUnitscript
+
 --gadgetHandler:RegisterGlobal(gadget,"SyncedAddCustomUnitDef",SyncedAddCustomUnitDef)
+do
+    local LuaMsgHead="SyncedAddCustomUnitDef:"
+    local LuaMsgHeadLen=LuaMsgHead:len()
+    ---@param msg string
+    function gadget:RecvLuaMsg(msg)
+        if msg:sub(1,LuaMsgHeadLen)==LuaMsgHead then
+            local cudstr=msg:sub(LuaMsgHeadLen+1)
+            Spring.Echo("CustomUnits: SyncedAddCustomUnitDef " .. cudstr)
+            SyncedAddCustomUnitDef(cudstr)
+        end
+    end
+    
+end
+
+function gadget:UnitDestroyed(unitId)
+    CustomUnitsToDefID[unitId]=nil
+end
 
 if true then -- test
     local jsonencode=Spring.Utilities.json.encode -- ill use loadstring if there is no safity problem
@@ -124,15 +167,29 @@ if true then -- test
         "custom_ravager",{
             motor=100,
             armor=100,
-            add_weapon={
-                weapon_num=1,
-                weapon={"custom_plasma",{
-                    damage=10,
-                    range=1,
-                    speed=1,
-                    reload_time=10,
-                }}
-            },
+            add_weapon_1={"custom_plasma",{
+                damage=10,
+                range=1,
+                speed=1,
+                reload_time=10,
+            }},
+        }
+    }))
+    SyncedAddCustomUnitDef(jsonencode({
+        "custom_hermit",{
+            motor=100,
+            armor=100,
+            add_weapon_2={"custom_plasma",{
+                damage=100,
+                range=1,
+                speed=1,
+                reload_time=1,
+            }},
+            add_weapon_1={"custom_particle_beam",{
+                damage=10,
+                range=1,
+                reload_time=10,
+            }},
         }
     }))
 end

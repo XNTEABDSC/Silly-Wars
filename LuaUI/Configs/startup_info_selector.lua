@@ -46,7 +46,7 @@ local chassisImages = {
 local moduleDefs, chassisDefs, upgradeUtilities, LEVEL_BOUND , chassisDefByBaseDef, moduleDefNames, chassisDefNames = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
 
 for key, value in pairs(chassisDefs) do
-	Spring.Echo("DEBUG: " .. tostring(value))
+	--Spring.Echo("DEBUG: " .. tostring(value))
 	chassisImages[value.name]=value.chassisImage or chassisImages[value.name]
 end
 

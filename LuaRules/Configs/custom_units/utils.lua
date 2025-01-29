@@ -18,6 +18,7 @@ if not Spring.Utilities.CustomUnits.utils then
         VFS.Include(luaFiles[i])
     end]=]
     local luaFiles={
+        "targeters",
         "CustomWeaponDataFinal",
         "CustomUnitDataFinal",
         "SetCustomUnit",

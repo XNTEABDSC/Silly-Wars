@@ -6,11 +6,14 @@ local custom_weapon_data=utils.ACustomWeaponData()
 custom_weapon_data.weapon_def_name="custom_plasma"
 custom_weapon_data.aoe=36
 custom_weapon_data.explosionGenerator      = [[custom:INGEBORG]]
+custom_weapon_data.targeter_weapon="projectile_targeter"
 
 local MutateFn=utils.UseMutateTable(
     wacky_utils.mt_union(utils.plasma_aoe_mutate,utils.BasicWeaponMutate)
 )
-return {
+---@type CustomWeaponBaseData
+local res=
+{
     name="custom_plasma",
     weaponDef={
         name                    = [[Light Plasma Cannon]],
@@ -25,7 +28,6 @@ return {
 
         damage                  = {
             default = 2,
-            planes  = 2,
         },
 
         explosionGenerator      = [[custom:INGEBORG]],
@@ -46,3 +48,4 @@ return {
         return MutateFn(Spring.Utilities.CopyTable(custom_weapon_data,true),mutate_table)
     end
 }
+return res

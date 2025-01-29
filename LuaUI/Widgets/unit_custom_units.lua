@@ -49,11 +49,11 @@ end
 
 widgetHandler:RegisterGlobal(widget,"UpdateCustomUnitDefs",UpdateCustomUnitDefs)
 
---[=[
+-- --[=[
 function gadget:RecvFromSynced(msg)
     if msg=="UpdateCustomUnitDefs" then
-        
+        UpdateCustomUnitDefs()
     end
 end
-]=]
+--]=]
 

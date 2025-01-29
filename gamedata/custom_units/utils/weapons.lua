@@ -1,4 +1,10 @@
 if not GameData.CustomUnits.weapons_defs then
+    ---@class CustomWeaponBaseData
+    ---@field name string
+    ---@field genfn fun(params:table):CustomWeaponDataModify
+    ---@field weaponDef any
+    
+    ---@type {[string]:CustomWeaponBaseData}
     local weapons_defs={}
     local luaFiles=VFS.DirList("gamedata/custom_units/weapons", "*.lua") or {}
     for i = 1, #luaFiles do

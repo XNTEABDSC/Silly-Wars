@@ -12,11 +12,17 @@ function utils.GenCustomChassisDataFinal(CustomChassisDataModify)
     -- ---@field turnspeed_mut number health_mut = hp/1000
     ---@field health_mut number health_mut = hp/1000
     ---@field weapons {[number]:CustomWeaponDataFinal}
+    ---@field chassis_name string
+    ---@field unit_weapon_num_to_custom_weapon_num {[integer]:integer}
+    ---@field custom_weapon_num_to_unit_weapon_num {[integer]:integer}
     local o={
         health_mut=CustomChassisDataModify.health/1000,
         cost_mut=CustomChassisDataModify.cost/1000,
         speed_mut=CustomChassisDataModify.motor/mass/(chassises[CustomChassisDataModify.chassis_name].speed_base),
-        unitDef=UnitDefNames[CustomChassisDataModify.UnitDefName].id
+        unitDef=UnitDefNames[CustomChassisDataModify.UnitDefName].id,
+        chassis_name=CustomChassisDataModify.chassis_name,
+        unit_weapon_num_to_custom_weapon_num=CustomChassisDataModify.unit_weapon_num_to_custom_weapon_num,
+        custom_weapon_num_to_unit_weapon_num=CustomChassisDataModify.custom_weapon_num_to_unit_weapon_num,
     }
     local weapons={}
     for key, value in pairs(CustomChassisDataModify.weapons) do

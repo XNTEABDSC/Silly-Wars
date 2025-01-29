@@ -217,11 +217,6 @@ local function FindModule(moduleName,requireChassis)
 					end
 				end
 				if not found then
-					--Spring.Echo("Warning: module " ..moduleName .. " chassis " .. requireChassisNeeded .. " not matched")
-					
-					for _, requireChassisHas in pairs(moduleDef.requireChassis) do
-						Spring.Echo(requireChassisHas)
-					end
 					foundAll=false
 					break
 				end

@@ -2,12 +2,13 @@
 local utils=Spring.Utilities.CustomUnits.utils
 
 local spGetUnitDefID=Spring.GetUnitDefID
-local spSetUnitWeaponState=Spring.SetUnitWeaponState
+--local spSetUnitWeaponState=Spring.SetUnitWeaponState
+
 ---@param customWpnData CustomWeaponDataFinal
-local function SetUnitWeaponToCustom(unitID,wpnnum,customWpnData)
-    local wd=WeaponDefs[UnitDefs[spGetUnitDefID(unitID)].weapons[wpnnum].weaponDef]
-    GG.Attributes.AddEffect(unitID,"custom_unit_wpn_" .. wpnnum,{
-        weaponNum=wpnnum,
+local function SetUnitWeaponToCustom(unitID,targeter_weapon_num,customWpnData)
+    local wd=WeaponDefs[UnitDefs[spGetUnitDefID(unitID)].weapons[targeter_weapon_num].weaponDef]
+    GG.Attributes.AddEffect(unitID,"custom_unit_wpn_" .. targeter_weapon_num,{
+        weaponNum=targeter_weapon_num,
         reload=1/(customWpnData.reload_time/wd.reload),
         range=customWpnData.range/wd.range,
         burst=customWpnData.burst/wd.salvoSize,
@@ -51,9 +52,20 @@ utils.SetCustomUnit=function (unitID,CustomUnit)
         accel=CustomUnit.speed_mut,
         cost=CustomUnit.cost_mut,
     })
-    for key, value in pairs(CustomUnit.weapons) do
-        SetUnitWeaponToCustom(unitID,key,value)
+    for custom_wpn_num, cwd in pairs(CustomUnit.weapons) do
+        local targeter_wpn_num=CustomUnit.custom_weapon_num_to_unit_weapon_num[custom_wpn_num]
+        SetUnitWeaponToCustom(unitID,targeter_wpn_num,cwd)
     end
+
+
+    local env_SetCustomUnitScript = Spring.UnitScript.GetScriptEnv(unitID).SetCustomUnitScript
+    if not env_SetCustomUnitScript then
+        Spring.Echo("Error: CustomUnits: unit's script don't have global function SetCustomUnitScript")
+    else
+        Spring.UnitScript.CallAsUnit(unitID, env_SetCustomUnitScript)
+    end
+    
+
 end
 
 

@@ -37,7 +37,7 @@ utils.ACustomWeaponData=function ()
         burstRate_mut=1/30,
         aoe=0,
         explosionGenerator=nil,
-        targeter_weapon="fake_projectile_targeter"
+        targeter_weapon="projectile_targeter"
     }
     return o
 end
