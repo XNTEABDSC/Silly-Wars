@@ -9,7 +9,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 return utils_op.CopyTweakSillyBuildMorphAuto("planefighter","planefighterstrike",function (ud)
 
     utils.table_replace({
-        name=[[OP Swift]],
+        name=[[Good Swift]],
         description            = [[Fighter, can vs ground]],
         metalCost=300,
         speed=250,
