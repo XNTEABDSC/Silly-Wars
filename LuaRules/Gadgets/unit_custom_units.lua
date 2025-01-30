@@ -20,7 +20,7 @@ local CustomUnitDefs={}
 VFS.Include("LuaRules/Configs/custom_units/utils.lua")
 local utils=Spring.Utilities.CustomUnits.utils
 local gdCustomUnits=GameData.CustomUnits
-local GenCUD_mod=gdCustomUnits.utils.GenCUD
+local GenCUD_mod=gdCustomUnits.utils.GenCustomUnitData
 local jsondecode=Spring.Utilities.json.decode
 
 local INLOS_ACCESS={inlos=true}
@@ -54,10 +54,13 @@ local SendToUnsynced=SendToUnsynced
 local function SpawnCustomUnit(cudid,x, y, z, facing, teamID ,build,flattenGround ,builderID)
     local cud=CustomUnitDefs[cudid]
     if not cud then
-        return false
+        Spring.MarkerAddPoint(x, y, z,"CustomUnits: SpawnCustomUnit: CustomUnitDefs[cudid]==nil. cudid:" .. cudid)
+        return nil
     end
     local unitId=spCreateUnit(cud.unitDef,x, y, z, facing, teamID ,build,flattenGround ,builderID)
     if not unitId then
+        Spring.MarkerAddPoint(x, y, z,"CustomUnits: SpawnCustomUnit: Failed to create unit")
+        --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Failed to create unit")
         return nil
     end
     CustomUnitsToDefID[unitId]=cudid
@@ -99,7 +102,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
         return
     end
 
-    utils_ChangeTargeterToRealProj(proID,cud.weapons[wpnnum])
+    utils_ChangeTargeterToRealProj(proID,cud.weapons[targeterwdid_to_custom_weapon_num[weaponDefID]])
 end
 
 local function SyncedAddCustomUnitDef(cudString)
@@ -161,13 +164,6 @@ function gadget:UnitDestroyed(unitId)
     CustomUnitsToDefID[unitId]=nil
 end
 
-function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
-    
-end
-
-function gadget:CommandFallback(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
-    
-end
 
 if true then -- test
     local jsonencode=Spring.Utilities.json.encode -- ill use loadstring if there is no safity problem
