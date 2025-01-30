@@ -15,6 +15,7 @@ local MutateFn=utils.UseMutateTable(
 local res=
 {
     name="custom_plasma",
+    pic="commweapon_assaultcannon.png",
     weaponDef={
         name                    = [[Light Plasma Cannon]],
         craterBoost             = 0,

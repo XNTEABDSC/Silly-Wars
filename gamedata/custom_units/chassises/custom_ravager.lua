@@ -26,6 +26,7 @@ local unit_weapons,targeter_name_to_unit_weapon=utils.GenChassisUnitWeapons(weap
 ---@type CustomChassisData
 return {
     name = name,
+    pic=[[vehassault.png]],
     genUnitDefs = function()
         local unitDefSize=3
         local aunitDef = {
@@ -129,16 +130,14 @@ return {
         for key, value in pairs(res.weapons) do
             res.cost=res.cost+value.cost
         end
-        local mass=wacky_utils.GetMass(res.health,res.cost)
-        local mass_3=math.pow(mass,1/3)
-        local size=math.floor(mass_3/2)
+        local size = utils.GetUnitSize(res)
         if size<1 then
             size=1
         end
         if size>6 then
             size=6
         end
-        res.chassis_name=name
+        --res.chassis_name=name
         res.UnitDefName=name .. size
         return res
     end,

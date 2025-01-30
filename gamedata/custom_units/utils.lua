@@ -57,7 +57,7 @@ if not GameData.CustomUnits.utils then
         "weapons",
         "CustomUnitDataModify",
         "for_chassis",
-        "chassis",
+        "chassises",
         "genfn"
     }--VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}
     for i = 1, #luaFiles do

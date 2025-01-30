@@ -13,6 +13,7 @@ local MutateFn=utils.UseMutateTable(
 local res=
 {
     name="custom_particle_beam",
+    pic="commweapon_beamlaser.png",
     weaponDef={
       name                    = [[Auto Particle Beam]],
       beamDecay               = 0.85,
@@ -51,6 +52,6 @@ local res=
     custom_weapon_data=custom_weapon_data,
     genfn=function (mutate_table)
         return MutateFn(Spring.Utilities.CopyTable(custom_weapon_data,true),mutate_table)
-    end
+    end,
 }
 return res

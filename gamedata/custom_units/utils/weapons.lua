@@ -3,6 +3,7 @@ if not GameData.CustomUnits.weapons_defs then
     ---@field name string
     ---@field genfn fun(params:table):CustomWeaponDataModify
     ---@field weaponDef any
+    ---@field pic string
     
     ---@type {[string]:CustomWeaponBaseData}
     local weapons_defs={}

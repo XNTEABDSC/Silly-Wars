@@ -1,7 +1,7 @@
 local utils=GameData.CustomUnits.utils
 local chassis_defs=GameData.CustomUnits.chassis_defs
 
-local function GenCUD(cudTable)
+local function GenCustomUnitData(cudTable)
     local cudname,param=cudTable[1],cudTable[2]
     local chassis=chassis_defs[cudname]
     if not chassis then
@@ -9,5 +9,5 @@ local function GenCUD(cudTable)
     end
     return chassis.genfn(param)
 end
-utils.GenCUD=GenCUD
+utils.GenCustomUnitData=GenCustomUnitData
 GameData.CustomUnits.utils=utils

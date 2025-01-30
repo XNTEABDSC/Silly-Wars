@@ -1,5 +1,8 @@
 local utils=GameData.CustomUnits.utils
 
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local wacky_utils = Spring.Utilities.wacky_utils
+
 function utils.ACustomUnitDataModify()
     ---@class CustomUnitDataModify
     ---@field UnitDefName string
@@ -24,6 +27,14 @@ function utils.ACustomUnitDataModify()
         --speed_base=100,
     }
     return o
+end
+
+---@param CustomUnitDataModify CustomUnitDataModify
+function utils.GetUnitSize(CustomUnitDataModify)
+    local mass = wacky_utils.GetMass(CustomUnitDataModify.health, CustomUnitDataModify.cost)
+    local mass_3 = math.pow(mass, 1 / 3)
+    local size = math.floor(mass_3 / 2)
+    return size
 end
 
 GameData.CustomUnits.utils=utils

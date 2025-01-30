@@ -354,14 +354,10 @@ local special_commands = {
 --------------------------------------------------------------------------------
 
 
-if VFS.FileExists("LuaRules/Configs/modCommandsDefs.lua") then
-	local modCommands = VFS.Include("LuaRules/Configs/modCommandsDefs.lua")
-	for i = 1, #modCommands do
-		local cmd = modCommands[i]
-		cmdPosDef[cmd.cmdID] = cmd.position
-	end
-else
-	Spring.Echo("Odd not found file LuaRules/Configs/modCommandsDefs.lua")
+local modCommands = VFS.Include("LuaRules/Configs/modCommandsDefs.lua")
+for i = 1, #modCommands do
+	local cmd = modCommands[i]
+	cmdPosDef[cmd.cmdID] = cmd.position
 end
 
 

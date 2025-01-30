@@ -1,0 +1,6 @@
+---@class CustomModify
+---@field name string name
+---@field pic string picture of it
+---@field genfn function
+---@field genUIfn fun():{control:any,getValue:(fun():any),setValue:(fun(param:any))}
+---@field paramType string

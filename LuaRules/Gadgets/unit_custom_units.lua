@@ -161,6 +161,14 @@ function gadget:UnitDestroyed(unitId)
     CustomUnitsToDefID[unitId]=nil
 end
 
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+    
+end
+
+function gadget:CommandFallback(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
+    
+end
+
 if true then -- test
     local jsonencode=Spring.Utilities.json.encode -- ill use loadstring if there is no safity problem
     SyncedAddCustomUnitDef(jsonencode({

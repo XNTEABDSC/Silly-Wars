@@ -7,6 +7,7 @@ if not GameData.CustomUnits.chassis_defs then
     ---@field genfn fun(params:any):CustomUnitDataModify
     ---@field name string
     ---@field targeter_name_to_unit_weapon {[string]:integer}
+    ---@field pic string
 
     ---@type table<string,CustomChassisData>
     local chassis_defs={}
