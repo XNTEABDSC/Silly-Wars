@@ -8,14 +8,31 @@ custom_weapon_data.aoe=36
 custom_weapon_data.explosionGenerator      = [[custom:INGEBORG]]
 custom_weapon_data.targeter_weapon="projectile_targeter"
 
+local modifies={
+    utils.weapon_modifies.damage,
+    utils.weapon_modifies.proj_speed,
+    utils.weapon_modifies.proj_range,
+    utils.weapon_modifies.reload,
+}
+
+local modifyfn=utils.UseModifies(modifies)
+--[=[
 local MutateFn=utils.UseMutateTable(
     wacky_utils.mt_union(utils.plasma_aoe_mutate,utils.BasicWeaponMutate)
-)
+)]=]
+
+local name="custom_plasma"
+local pic="unitpics/commweapon_assaultcannon.png"
+local desc=""
+local humanName="Plasma"
+
+
 ---@type CustomWeaponBaseData
 local res=
 {
-    name="custom_plasma",
-    pic="commweapon_assaultcannon.png",
+    name=name,
+    humanName=humanName,
+    pic=pic,
     weaponDef={
         name                    = [[Light Plasma Cannon]],
         craterBoost             = 0,
@@ -46,7 +63,9 @@ local res=
     },
     custom_weapon_data=custom_weapon_data,
     genfn=function (mutate_table)
-        return MutateFn(Spring.Utilities.CopyTable(custom_weapon_data,true),mutate_table)
-    end
+        return modifyfn(Spring.Utilities.CopyTable(custom_weapon_data,true),mutate_table)
+    end,
+    modifies=modifies,
+    genUIFn=utils.ui.UIPicThen(pic,humanName,desc,utils.ui.StackModifies(modifies))
 }
 return res

@@ -17,7 +17,9 @@ Spring.Utilities.OrderedList.AddMult(utils_op.weapon_defs_tweak_fns,{
     a=a,
     v=function ()
         for key, value in pairs(WeaponDefs) do
-            value.cratermult=(value.cratermult or 0)+CraterMult
+            -- ---@class WeaponDef
+            local value2=value
+            value2.cratermult=(value.cratermult or 0)+CraterMult
         end
     end
 })

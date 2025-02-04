@@ -107,8 +107,8 @@ local beam_targeter={
     }
 }
 
-local targeters_count=8
-utils.targeters_count=targeters_count
+local targeters_wpnnum_count=8
+utils.targeters_wpnnum_count=targeters_wpnnum_count
 
 
 local targeterweapondefs={}
@@ -117,7 +117,7 @@ for key, value in pairs({projectile_targeter,beam_targeter}) do
     targeterweapons[value.name]=value
 end
 
-for i = 1, targeters_count do
+for i = 1, targeters_wpnnum_count do
     for key, value in pairs(targeterweapons) do
         targeterweapondefs[key.. tostring(i)]=Spring.Utilities.CopyTable(value.weapon_def,true)
     end

@@ -22,15 +22,12 @@ local utils=Spring.Utilities.CustomUnits.utils
 local gdCustomUnits=GameData.CustomUnits
 local GenCUD_mod=gdCustomUnits.utils.GenCustomUnitData
 local jsondecode=Spring.Utilities.json.decode
+local GenCustomUnitDataFinal=utils.GenCustomUnitDataFinal
 
-local INLOS_ACCESS={inlos=true}
+local PUBLIC_ACCESS={public=true}
 
 
-local function GenCustomUnitDef(cudTable)
-    local cud_mod=GenCUD_mod(cudTable)
-    local cud=utils.GenCustomChassisDataFinal(cud_mod)
-    return cud
-end
+local GenCustomUnitDef=utils.GenCustomUnitDef
 
 
 
@@ -49,33 +46,29 @@ local utils_ChangeTargeterToRealProj=utils.ChangeTargeterToRealProj
 local spValidUnitID=Spring.ValidUnitID
 local spSetGameRulesParam=Spring.SetGameRulesParam
 local spSetUnitRulesParam=Spring.SetUnitRulesParam
+local spGetUnitRulesParam=Spring.GetUnitRulesParam
 local SendToUnsynced=SendToUnsynced
 
-local function SpawnCustomUnit(cudid,x, y, z, facing, teamID ,build,flattenGround ,builderID)
+local function SpawnCustomUnit(cudid,x, y, z, facing, teamID ,build,flattenGround , targetID, builderID)
     local cud=CustomUnitDefs[cudid]
     if not cud then
         Spring.MarkerAddPoint(x, y, z,"CustomUnits: SpawnCustomUnit: CustomUnitDefs[cudid]==nil. cudid:" .. cudid)
         return nil
     end
-    local unitId=spCreateUnit(cud.unitDef,x, y, z, facing, teamID ,build,flattenGround ,builderID)
+    local unitId=spCreateUnit(cud.unitDef,x, y, z, facing, teamID ,build,flattenGround , targetID, builderID)
     if not unitId then
         Spring.MarkerAddPoint(x, y, z,"CustomUnits: SpawnCustomUnit: Failed to create unit")
         --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Failed to create unit")
         return nil
     end
     CustomUnitsToDefID[unitId]=cudid
-    spSetUnitRulesParam(unitId,"custom_unit_def_id",cudid,INLOS_ACCESS)
+    spSetUnitRulesParam(unitId,"CustomUnitDefId",cudid,PUBLIC_ACCESS)
     utils_SetCustomUnit(unitId,cud)
     return unitId
 end
 
 GG.CustomUnits.SpawnCustomUnit=SpawnCustomUnit
 
---[=[
-for i = 1, 8 do
-    Script.SetWatchWeapon(wd.id,true)
-end
-]=]
 
 local targeterwdid_to_custom_weapon_num=utils.targeterwdid_to_custom_weapon_num
 
@@ -85,6 +78,12 @@ for key, value in pairs(targeterwdid_to_custom_weapon_num) do
     Script.SetWatchWeapon(key,true)
 end
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
+    if not targeterwdid_to_custom_weapon_num[weaponDefID] then
+        --Spring.Echo("Error: CustomUnits: ??? not watched weapon " .. weaponDefID .. " name " .. WeaponDefs[weaponDefID].name)
+        -- idk why this happens
+        Script.SetWatchWeapon(weaponDefID,false)
+        return
+    end
     if not spValidUnitID(proOwnerID) then
         return
     end
@@ -98,33 +97,27 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
     local cud=CustomUnitDefs[cudid]
 
     if not cud then
-        Spring.Utilities.UnitEcho(proOwnerID,"Warning: Custom Unit with unknow id " .. cudid)
+        Spring.Utilities.UnitEcho(proOwnerID,"Warning: Custom Unit with unknow cudid " .. cudid)
         return
     end
 
     utils_ChangeTargeterToRealProj(proID,cud.weapons[targeterwdid_to_custom_weapon_num[weaponDefID]])
 end
 
+local TryGenCustomUnitDef=utils.TryGenCustomUnitDef
+
 local function SyncedAddCustomUnitDef(cudString)
     local cudid=#CustomUnitDefs+1
-    local suc,res=pcall (jsondecode, cudString)
+    local suc,res=TryGenCustomUnitDef(cudString)
     if suc then
-        local cudTable= res
-        local suc2,res2=pcall(GenCustomUnitDef,cudTable)
-        if suc2 then
-            local cud=res2
-            CustomUnitDefs[cudid]=cud
-            spSetGameRulesParam("CustomUnitDefsCount",#CustomUnitDefs)
-            spSetGameRulesParam("CustomUnitDefs"..cudid,cudString)
-            SendToUnsynced("UpdateCustomUnitDefs")
-            return cudid
-        else
-            Spring.Echo("Error: CustimUnits: failed to gen CustomUnitDef for " .. cudString .. " with error " .. res2)
-
-        end
+        local cud=res
+        CustomUnitDefs[cudid]=cud
+        spSetGameRulesParam("CustomUnitDefsCount",#CustomUnitDefs)
+        spSetGameRulesParam("CustomUnitDefs"..cudid,cudString)
+        SendToUnsynced("UpdateCustomUnitDefs")
+        return cudid
     else
-        Spring.Echo("Error: CustimUnits: failed to parse CustomUnitDef String " .. cudString .. " with error " .. res)
-        return nil
+        Spring.Echo("Error: CustimUnits: " .. res)
     end
 end
 
@@ -175,7 +168,7 @@ if true then -- test
                 damage=10,
                 range=1,
                 speed=1,
-                reload_time=10,
+                reload=10,
             }},
         }
     }))
@@ -187,15 +180,34 @@ if true then -- test
                 damage=100,
                 range=1,
                 speed=1,
-                reload_time=1,
+                reload=1,
             }},
             add_weapon_1={"custom_particle_beam",{
                 damage=10,
                 range=1,
-                reload_time=10,
+                reload=10,
             }},
         }
     }))
+end
+
+
+local spGetGameRulesParam=Spring.GetGameRulesParam
+
+function gadget:Initialize()
+    local cudcount=spGetGameRulesParam("CustomUnitDefsCount")
+    if cudcount then
+        while #CustomUnitDefs<cudcount do
+            local cudid=#CustomUnitDefs+1
+            local suc,res=TryGenCustomUnitDef(spGetGameRulesParam("CustomUnitDefs"..cudid))
+            CustomUnitDefs[cudid]=res
+        end
+    end
+    local allunits=Spring.GetAllUnits ( )
+    for key, unitId in pairs(allunits or {}) do
+        local cudid=spGetUnitRulesParam(unitId,"CustomUnitDefId")
+        CustomUnitsToDefID[unitId]=cudid
+    end
 end
 
 end

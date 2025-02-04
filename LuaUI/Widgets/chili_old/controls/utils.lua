@@ -1,0 +1,37 @@
+Utils={
+    BetterGetChildrenMinimumExtents=function (self)
+        local minWidth  = 0
+        local minHeight = 0
+    
+        local cn = self.children
+        for i = 1, #cn do
+            local c = cn[i]
+            local width, height=0,0
+            if (c.GetMinimumExtents) then
+                width, height = c:GetMinimumExtents()
+            else
+                width=math.max(width,c.width)+c.x
+                height=math.max(height,c.height)+c.y
+                --[=[
+                local padding = c.padding
+                if padding then
+                    width=width+padding[1]+padding[3]
+                    height=height+padding[1]+padding[3]
+                end
+                ]=]
+            end
+            width=width
+            height=height
+            minWidth  = math.max(minWidth,  width)
+            minHeight = math.max(minHeight, height)
+        end
+    
+        if (minWidth + minHeight > 0) then
+            local padding = self.padding
+            minWidth  = minWidth + padding[1] + padding[3]
+            minHeight = minHeight + padding[2] + padding[4]
+        end
+    
+        return minWidth, minHeight
+    end
+}

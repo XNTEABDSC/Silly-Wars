@@ -12,6 +12,11 @@ if gadgetHandler:IsSyncedCode() then
         }
     end
     
+    -- cudid,tx,ty,tz,facing,targetID = cmdParams[1],cmdParams[2],cmdParams[3],cmdParams[4],cmdParams[5],cmdParams[6]
+    -- spawned_unit = SpawnCustomUnit(cudid,tx,ty,tz,facing,unitTeam,true,true,nil,builderID)
+    -- Spring.Utilities.InsertOrderToUnit(unitID,true,1,CMD_REPAIR,spawned_unit,0)
+
+
     include("LuaRules/Configs/customcmds.h.lua")
 
     local CMD_BUILD_CUSTOM_UNIT=CMD.BUILD_CUSTOM_UNIT or CMD_BUILD_CUSTOM_UNIT
@@ -53,7 +58,7 @@ if gadgetHandler:IsSyncedCode() then
         if cmdID~=CMD_BUILD_CUSTOM_UNIT then
             return false
         end
-        local cudid,tx,ty,tz,facing=cmdParams[1],cmdParams[2],cmdParams[3],cmdParams[4],cmdParams[5]
+        local cudid,tx,ty,tz,facing,targetID=cmdParams[1],cmdParams[2],cmdParams[3],cmdParams[4],cmdParams[5],cmdParams[6]
         local unitBuildDist=UnitDefs[unitDefID].buildDistance
         local ux,uy,uz=spGetUnitPosition(unitID)
         local unit_tar_offset_x=tx-ux
@@ -61,20 +66,19 @@ if gadgetHandler:IsSyncedCode() then
         local unit_tar_dist_sq=unit_tar_offset_x*unit_tar_offset_x+unit_tar_offset_z*unit_tar_offset_z
         if unit_tar_dist_sq>unitBuildDist*unitBuildDist then
             spSetUnitMoveGoal(unitID,tx,ty,tz,unitBuildDist)
-            Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Unit Moving")
+            --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Unit Moving")
             return true,false
         else
-            local spawned_unit=SpawnCustomUnit(cudid,tx,ty,tz,facing,unitTeam,true,true)
+            local spawned_unit=SpawnCustomUnit(cudid,tx,ty,tz,facing,unitTeam,true,true,nil,unitID)
             if spawned_unit then
-                Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Unit Spawned")
-                suInsertOrderToUnit(unitID,true,0,CMD_REPAIR,spawned_unit,0)
+                --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Unit Spawned")
+                --suInsertOrderToUnit(unitID,true,0,CMD_REPAIR,spawned_unit,0)
                 return true,true
             else
-                Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Failed to create unit")
+                --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Failed to create unit")
                 return true,false
             end
         end
-        --SpawnCustomUnit
     end
 
     function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)

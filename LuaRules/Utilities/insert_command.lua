@@ -8,8 +8,12 @@ function Spring.Utilities.InsertOrderToUnit(unitId,PosOrTag,Pos_Tag,cmdID,cmdPar
     ---@type any
     local insertOption=0
 
-    for index, value in ipairs(cmdParam) do
-        insertparams[index+3]=value
+    if type(cmdParam)=="table" then
+        for index, value in ipairs(cmdParam) do
+            insertparams[index+3]=value
+        end
+    else
+        insertparams[4]=cmdParam
     end
     
     if PosOrTag then

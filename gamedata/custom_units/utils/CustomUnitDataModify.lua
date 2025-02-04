@@ -15,6 +15,7 @@ function utils.ACustomUnitDataModify()
     ---@field chassis_name string
     ---@field custom_weapon_num_to_unit_weapon_num {[integer]:integer}
     ---@field unit_weapon_num_to_custom_weapon_num {[integer]:integer}
+    ---@field name string|nil
     -- ---@field speed_base number
     local o={
         weapons={},

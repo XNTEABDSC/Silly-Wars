@@ -50,6 +50,7 @@ if not GameData.CustomUnits.utils then
     local luaFiles={
         "consts",
         "utils",
+        "uidefs",
         "targeters",
         "CustomWeaponDataModify",
         "for_weapons",

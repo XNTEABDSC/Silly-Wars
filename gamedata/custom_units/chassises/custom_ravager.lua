@@ -3,6 +3,14 @@ VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils=Spring.Utilities.wacky_utils
 local utils=GameData.CustomUnits.utils
 
+local modifies={
+    utils.BasicChassisMutate.name,
+    utils.BasicChassisMutate.armor,
+    utils.BasicChassisMutate.add_weapon_1,
+    utils.genChassisSpeedModify(75)
+}
+local ModifyFn=utils.UseModifies(modifies)
+--[=[
 local MutateFn=utils.UseMutateTable(
     wacky_utils.mt_union({
         
@@ -13,20 +21,25 @@ local MutateFn=utils.UseMutateTable(
         end
 
     },utils.BasicChassisMutate)
-)
+)]=]
 local speed_base=88.5
 --custom_table.speed_base=speed_base
 local name = "custom_ravager"
+local humanName=name
 local weapons_slots={
     [1]={"projectile_targeter","beam_targeter"}
 }
 
 local unit_weapons,targeter_name_to_unit_weapon=utils.GenChassisUnitWeapons(weapons_slots)
+local pic=[[unitpics/vehassault.png]]
+local desc=""
 
 ---@type CustomChassisData
 return {
     name = name,
-    pic=[[vehassault.png]],
+    pic=pic,
+    humanName=humanName,
+    description=desc,
     genUnitDefs = function()
         local unitDefSize=3
         local aunitDef = {
@@ -126,7 +139,7 @@ return {
     genfn = function(params)
         local cud=utils.ACustomUnitDataModify()
         cud.chassis_name=name
-        local res=MutateFn(cud,params)
+        local res=ModifyFn(cud,params)
         for key, value in pairs(res.weapons) do
             res.cost=res.cost+value.cost
         end
@@ -144,4 +157,7 @@ return {
     weapon_slots=weapons_slots,
     targeter_name_to_unit_weapon=targeter_name_to_unit_weapon,
     speed_base=speed_base,
+    modifies=modifies,
+    genUIFn=utils.ui.UIPicThen(pic,humanName,desc,utils.ui.StackModifies(modifies)),
+
 }

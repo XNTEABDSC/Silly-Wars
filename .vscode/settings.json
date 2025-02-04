@@ -10,7 +10,8 @@
         "Script",
         "WG",
         "widgetHandler",
-        "widget"
+        "widget",
+        "GameData"
     ],
     "Lua.runtime.version": "Lua 5.1",
 }
