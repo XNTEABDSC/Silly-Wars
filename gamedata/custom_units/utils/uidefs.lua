@@ -4,46 +4,10 @@ local ui={
 }
 utils.ui=ui
 
-local function BetterGetChildrenMinimumExtents(self)
-    local minWidth  = 0
-	local minHeight = 0
-
-	local cn = self.children
-	for i = 1, #cn do
-		local c = cn[i]
-        local width, height=0,0
-		if (c.GetMinimumExtents) then
-			width, height = c:GetMinimumExtents()
-        else
-            width=math.max(width,c.width)+c.x
-            height=math.max(height,c.height)+c.y
-            --[=[
-            local padding = c.padding
-            if padding then
-                width=width+padding[1]+padding[3]
-                height=height+padding[1]+padding[3]
-            end
-            ]=]
-		end
-        width=width
-        height=height
-        minWidth  = math.max(minWidth,  width)
-        minHeight = math.max(minHeight, height)
-	end
-
-	if (minWidth + minHeight > 0) then
-		local padding = self.padding
-		minWidth  = minWidth + padding[1] + padding[3]
-		minHeight = minHeight + padding[2] + padding[4]
-	end
-
-	return minWidth, minHeight
-end
-
-
----@param thenUIFn ModifyUIGenFn
+---A picture and thenUI at right
+---@param thenUIFn ModifyUIgenfn
 local function UIPicThen(pic,name,desc,thenUIFn)
-    ---@type ModifyUIGenFn
+    ---@type ModifyUIgenfn
     return function (WG,parent)
         local panel0=
         WG.Chili.Panel:New{
@@ -81,6 +45,7 @@ local function UIPicThen(pic,name,desc,thenUIFn)
     end
 end
 ui.UIPicThen=UIPicThen
+---A Box to edit values. can be string, number, boolean
 local function EditBoxUI(paramtype)
     return function (WG,parent)
         local panel
@@ -146,10 +111,12 @@ local function EditBoxUI(paramtype)
     
 end
 ui.EditBoxUI=EditBoxUI
+
+---UIPicThen EditBoxUI
 function ui.SimpleValueUI(pic,name,desc,paramtype)
     return UIPicThen(pic,name,desc,EditBoxUI(paramtype))
 end
----comments
+---Show Modifies genUIFn
 ---@param modifies {[integer]:CustomModify}
 function ui.StackModifies(modifies)
     return function (WG,parent)
@@ -199,7 +166,8 @@ function ui.StackModifies(modifies)
     end
 end
 
----@param items table<string,{name:string,genUIFn:ModifyUIGenFn,humanName:string}>
+---ComboBox for items to choose and show its genUIFn
+---@param items table<string,{name:string,genUIFn:ModifyUIgenfn,humanName:string}>
 function ui.ChooseAndModify(items)
     return function (WG,parent)
         ---@type string|nil

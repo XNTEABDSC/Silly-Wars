@@ -1,3 +1,12 @@
+--[=[
+
+WG.CustomUnits.UploadUnitDef(json) to upload CustomUnitDef
+
+Provides ui to design CustomUnitDef
+
+TODO: auto upload cud from local files
+]=]
+
 
 function widget:GetInfo()
     return{
@@ -215,7 +224,7 @@ end
 
 local function TrySetToggleWindowCommandButton()
     if WG.GlobalCommandBar  then
-		WG.GlobalCommandBar.AddCommand("LuaUI/Images/commands/bold/build.png", "", ToggleWindow)
+		WG.GlobalCommandBar.AddCommand("LuaUI/Images/commands/bold/build.png", "Toggle Custom Units Design UI", ToggleWindow)
 	end
 end
 

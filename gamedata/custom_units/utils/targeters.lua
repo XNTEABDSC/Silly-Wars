@@ -1,3 +1,6 @@
+---targeters are weapons to be used to aim.
+---they will be instantly changed to real projectile by unit_custom_units.lua
+
 local utils=GameData.CustomUnits.utils
 
 local consts=GameData.CustomUnits.utils.consts
@@ -108,6 +111,9 @@ local beam_targeter={
 }
 
 local targeters_wpnnum_count=8
+
+---count of wd for each targeters. also is the maximum custom_weapons_slots for custom units. 
+---each targeter wd maps to custom_weapons_slot_num
 utils.targeters_wpnnum_count=targeters_wpnnum_count
 
 

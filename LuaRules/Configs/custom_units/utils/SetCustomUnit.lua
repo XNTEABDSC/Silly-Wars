@@ -4,6 +4,7 @@ local utils=Spring.Utilities.CustomUnits.utils
 local spGetUnitDefID=Spring.GetUnitDefID
 --local spSetUnitWeaponState=Spring.SetUnitWeaponState
 
+---set Attributes of Custom Unit Weapon for correct shot
 ---@param customWpnData CustomWeaponDataFinal
 local function SetUnitWeaponToCustom(unitID,targeter_weapon_num,customWpnData)
     local wd=WeaponDefs[UnitDefs[spGetUnitDefID(unitID)].weapons[targeter_weapon_num].weaponDef]
@@ -42,7 +43,7 @@ end
 utils.SetUnitWeaponToCustom=SetUnitWeaponToCustom
 
 
-
+---Set Custom Unit to its state
 ---@param CustomUnit CustomUnitDataFinal
 utils.SetCustomUnit=function (unitID,CustomUnit)
     GG.Attributes.AddEffect(unitID,"custom_unit",{

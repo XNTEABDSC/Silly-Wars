@@ -40,7 +40,7 @@ local function add_weapon(custom_weapon_num)
         cud.custom_weapon_num_to_unit_weapon_num[custom_weapon_num] = unit_weapon_num
         cud.unit_weapon_num_to_custom_weapon_num[unit_weapon_num] = custom_weapon_num
     end
-    ---@type ModifyUIGenFn
+    ---@type ModifyUIgenfn
     local uifn=utils.ui.UIPicThen(pic,name,desc, utils.ui.ChooseAndModify(GameData.CustomUnits.weapons_defs))
 
     ---@type CustomModify
@@ -84,10 +84,12 @@ utils.BasicChassisMutate = {
     end,
 
 }]=]
+
 for i = 1, utils.targeters_wpnnum_count do
     utils.BasicChassisMutate["add_weapon_" .. i] = add_weapon(i)
 end
 
+---generate a speed modify for speed_per_cost
 utils.genChassisSpeedModify=function (speed_per_cost)
     return genCustomModify("motor","add motor","unitpics/module_high_power_servos.png",
     ---@param cud CustomUnitDataModify

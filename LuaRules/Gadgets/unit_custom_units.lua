@@ -1,4 +1,15 @@
+--[=[
+To Implement custom units
+1. set custom units to its real state via Spring.Utilities.CustomUnits.utils.SetCustomUnit
+2. on ProjectileCreated, change targeter projectile by ChangeTargeterToRealProj
+don't forgot scripts/custom_units.lua
 
+spSetGameRulesParam("CustomUnitDefsCount",#CustomUnitDefs)
+spSetGameRulesParam("CustomUnitDefs"..cudid,cudString)
+
+spSendLuaRulesMsg("SyncedAddCustomUnitDef:"..text)
+
+]=]
 
 if gadgetHandler:IsSyncedCode() then
 
@@ -80,7 +91,7 @@ end
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
     if not targeterwdid_to_custom_weapon_num[weaponDefID] then
         --Spring.Echo("Error: CustomUnits: ??? not watched weapon " .. weaponDefID .. " name " .. WeaponDefs[weaponDefID].name)
-        -- idk why this happens
+        -- idk why this happens, there is some weaponDef which get SetWatchWeapon by unknow
         Script.SetWatchWeapon(weaponDefID,false)
         return
     end

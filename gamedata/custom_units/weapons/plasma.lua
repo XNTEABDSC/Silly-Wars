@@ -33,34 +33,36 @@ local res=
     name=name,
     humanName=humanName,
     pic=pic,
-    weaponDef={
-        name                    = [[Light Plasma Cannon]],
-        craterBoost             = 0,
-        craterMult              = 0,
-        areaOfEffect=36,
-        customParams        = {
-            light_camera_height = 1800,
-            light_color = [[0.80 0.54 0.23]],
-            light_radius = 200,
-        },
-
-        damage                  = {
-            default = 2,
-        },
-
-        explosionGenerator      = [[custom:INGEBORG]],
-        impulseBoost            = 0,
-        impulseFactor           = 0.4,
-        interceptedByShieldType = 1,
-        noSelfDamage            = true,
-        range                   = 350,
-        reloadtime              = 2,
-        soundHit                = [[explosion/ex_med5]],
-        soundStart              = [[weapon/cannon/cannon_fire5]],
-        turret                  = true,
-        weaponType              = [[Cannon]],
-        weaponVelocity          = 280,
-    },
+    genWeaponDef=function ()
+        WeaponDefs[name]=lowerkeys{
+            name                    = [[Light Plasma Cannon]],
+            craterBoost             = 0,
+            craterMult              = 0,
+            areaOfEffect=36,
+            customParams        = {
+                light_camera_height = 1800,
+                light_color = [[0.80 0.54 0.23]],
+                light_radius = 200,
+            },
+    
+            damage                  = {
+                default = 2,
+            },
+    
+            explosionGenerator      = [[custom:INGEBORG]],
+            impulseBoost            = 0,
+            impulseFactor           = 0.4,
+            interceptedByShieldType = 1,
+            noSelfDamage            = true,
+            range                   = 350,
+            reloadtime              = 2,
+            soundHit                = [[explosion/ex_med5]],
+            soundStart              = [[weapon/cannon/cannon_fire5]],
+            turret                  = true,
+            weaponType              = [[Cannon]],
+            weaponVelocity          = 280,
+        }
+    end,
     custom_weapon_data=custom_weapon_data,
     genfn=function (mutate_table)
         return modifyfn(Spring.Utilities.CopyTable(custom_weapon_data,true),mutate_table)

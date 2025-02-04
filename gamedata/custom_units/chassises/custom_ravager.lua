@@ -25,14 +25,14 @@ local MutateFn=utils.UseMutateTable(
 local speed_base=88.5
 --custom_table.speed_base=speed_base
 local name = "custom_ravager"
-local humanName=name
+local humanName="Car (Ravager)"--name
 local weapons_slots={
     [1]={"projectile_targeter","beam_targeter"}
 }
 
 local unit_weapons,targeter_name_to_unit_weapon=utils.GenChassisUnitWeapons(weapons_slots)
 local pic=[[unitpics/vehassault.png]]
-local desc=""
+local desc="car"
 
 ---@type CustomChassisData
 return {

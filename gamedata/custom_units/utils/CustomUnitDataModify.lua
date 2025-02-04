@@ -4,6 +4,7 @@ VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils = Spring.Utilities.wacky_utils
 
 function utils.ACustomUnitDataModify()
+    ---Data of a custom unit that can be modified
     ---@class CustomUnitDataModify
     ---@field UnitDefName string
     ---@field cost number
@@ -30,6 +31,7 @@ function utils.ACustomUnitDataModify()
     return o
 end
 
+---get the movedef size of a unit
 ---@param CustomUnitDataModify CustomUnitDataModify
 function utils.GetUnitSize(CustomUnitDataModify)
     local mass = wacky_utils.GetMass(CustomUnitDataModify.health, CustomUnitDataModify.cost)

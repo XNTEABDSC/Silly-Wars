@@ -1,13 +1,16 @@
 local utils=GameData.CustomUnits.utils
 
+---use modifies.name to find value in modtable and modfn.
+---modify.modfn(data,modtable[modify.name])
+---error for unused modifies in modtable
 ---@param modifies list<CustomModify>
 utils.UseModifies=function (modifies)
     return function (data,modtable)
-        for index, value in pairs(modifies) do
-            local modv=modtable[value.name]
+        for index, modify in pairs(modifies) do
+            local modv=modtable[modify.name]
             if modv then
-                value.modfn(data,modv)
-                modtable[value.name]=nil
+                modify.modfn(data,modv)
+                modtable[modify.name]=nil
             end
         end
         ---@type string

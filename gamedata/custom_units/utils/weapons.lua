@@ -2,10 +2,10 @@ if not GameData.CustomUnits.weapons_defs then
     ---@class CustomWeaponBaseData
     ---@field name string
     ---@field genfn fun(params:table):CustomWeaponDataModify
-    ---@field weaponDef any
+    ---@field genWeaponDef fun()
     ---@field pic string
     ---@field modifies list<CustomModify>
-    ---@field genUIFn ModifyUIGenFn
+    ---@field genUIFn ModifyUIgenfn
     ---@field humanName string
     
     ---@type {[string]:CustomWeaponBaseData}

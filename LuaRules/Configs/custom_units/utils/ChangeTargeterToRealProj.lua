@@ -12,6 +12,8 @@ local spSetProjectileTarget=Spring.SetProjectileTarget
 local spGetProjectileTarget=Spring.GetProjectileTarget
 
 local spSetProjectileDamages=Spring.SetProjectileDamages
+
+--- To change targeter into real projectile
 ---@param targeterProjID ProjectileId
 ---@param customWpnData CustomWeaponDataFinal
 utils.ChangeTargeterToRealProj=function (targeterProjID,customWpnData)

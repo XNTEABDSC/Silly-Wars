@@ -14,7 +14,7 @@ local ModifyFn=utils.UseModifies(modifies)
 local speed_base = 54
 --custom_table.speed_base=speed_base
 local name = "custom_hermit"
-local humanName=name
+local humanName="Spider (Hermit)"
 local weapons_slots = {
     [1] = { "projectile_targeter", "beam_targeter" },
     [2] = { "projectile_targeter", "beam_targeter" }
@@ -22,7 +22,7 @@ local weapons_slots = {
 
 local unit_weapons, targeter_name_to_unit_weapon = utils.GenChassisUnitWeapons(weapons_slots)
 local pic=[[unitpics/spiderassault.png]]
-local desc=""
+local desc="spider"
 ---@type CustomChassisData
 return {
     name = name,
