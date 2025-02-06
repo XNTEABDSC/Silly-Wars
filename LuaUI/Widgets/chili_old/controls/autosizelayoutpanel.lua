@@ -5,6 +5,10 @@ AutosizeLayoutPanel=LayoutPanel:Inherit{
     autosize=true,
 	noFont = true,
 }
+if not Utils.BetterGetChildrenMinimumExtents then
+    Spring.Echo("DEBUG: NO Utils.BetterGetChildrenMinimumExtents")
+end
+AutosizeLayoutPanel.GetChildrenMinimumExtents=Utils.BetterGetChildrenMinimumExtents
 
 function AutosizeLayoutPanel:GetMinimumExtents()
 --[[

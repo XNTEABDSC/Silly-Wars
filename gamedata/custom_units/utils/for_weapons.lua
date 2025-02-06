@@ -24,6 +24,11 @@ utils.UseBeamWeaponMutateTable=utils.UseMutateTable(utils.BeamWeaponMutateTable)
 local weapon_modifies={}
 utils.weapon_modifies=weapon_modifies
 local genCustomModify=utils.genCustomModify
+weapon_modifies.name=
+genCustomModify("name","name","unitpics/terraunit.png",function (data,name)
+    data.name=name
+end,"string")
+
 weapon_modifies.damage=
 genCustomModify("damage","add damage","unitpics/module_dmg_booster.png",utils.TableMutate(utils.MutateCostMassAnd({damage_default_mut=utils.bias_factor})),"number")
 

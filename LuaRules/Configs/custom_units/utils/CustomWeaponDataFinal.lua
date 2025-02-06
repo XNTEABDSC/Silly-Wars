@@ -44,6 +44,7 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
     ---@field gravity nil|number
     ---@field tracks boolean
     ---@field model string
+    ---@field name string|nil
     local o={
         projSpeed=projSpeed,
         projSpeed_mut=projSpeed/custom_targeter_proj_speed,
@@ -71,6 +72,7 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
         gravity=wd.myGravity,
         tracks =wd.tracks,
         model=wd.visuals.modelName,
+        name=CustomWeaponDataModify.name
     }
 
     --local damage_default=wd.damages.default*CustomWeaponDataModify.damage_default_mut

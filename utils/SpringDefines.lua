@@ -3,7 +3,7 @@
 
 Spring={}
 ---@class UnitId : integer
----@class unitDefId:integer
+---@class UnitDefId:integer
 
 ---@class playerId:integer
 ---@class teamId:integer
@@ -69,7 +69,7 @@ function Spring.Echo(...)end
 
 
 ---@param UnitId UnitId
----@return unitDefId
+---@return UnitDefId
 ---@nodiscard
 function Spring.GetUnitDefID(UnitId)end
 

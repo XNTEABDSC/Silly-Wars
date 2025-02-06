@@ -7,7 +7,7 @@ local modifies={
     utils.BasicChassisMutate.name,
     utils.BasicChassisMutate.armor,
     utils.BasicChassisMutate.add_weapon_1,
-    utils.genChassisSpeedModify(75)
+    utils.genChassisSpeedModify(1000)
 }
 local ModifyFn=utils.UseModifies(modifies)
 --[=[

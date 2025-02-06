@@ -9,6 +9,7 @@ custom_weapon_data.explosionGenerator      = [[custom:INGEBORG]]
 custom_weapon_data.targeter_weapon="projectile_targeter"
 
 local modifies={
+    utils.weapon_modifies.name,
     utils.weapon_modifies.damage,
     utils.weapon_modifies.proj_speed,
     utils.weapon_modifies.proj_range,

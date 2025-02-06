@@ -59,6 +59,7 @@ if gadgetHandler:IsSyncedCode() then
             return false
         end
         local cudid,tx,ty,tz,facing,targetID=cmdParams[1],cmdParams[2],cmdParams[3],cmdParams[4],cmdParams[5],cmdParams[6]
+        facing=facing or 0
         local unitBuildDist=UnitDefs[unitDefID].buildDistance
         local ux,uy,uz=spGetUnitPosition(unitID)
         local unit_tar_offset_x=tx-ux

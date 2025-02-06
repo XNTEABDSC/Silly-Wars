@@ -7,6 +7,7 @@ custom_weapon_data.weapon_def_name="custom_particle_beam"
 custom_weapon_data.targeter_weapon="beam_targeter"
 
 local modifies={
+  utils.weapon_modifies.name,
   utils.weapon_modifies.damage,
   utils.weapon_modifies.beam_range,
   utils.weapon_modifies.reload

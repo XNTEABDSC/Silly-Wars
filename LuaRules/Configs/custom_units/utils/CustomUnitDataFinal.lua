@@ -7,7 +7,7 @@ function utils.GenCustomUnitDataFinal(CustomUnitDataModify)
     local speed=CustomUnitDataModify.motor/mass
     ---@class CustomUnitDataFinal
     ---@field CustomUnitDataModify CustomUnitDataModify
-    ---@field unitDef unitDefId
+    ---@field unitDef UnitDefId
     -- ---@field mass_mut number mass_mut = mass/(GetMass)
     ---@field cost_mut number cost_mut = cost/1000
     ---@field speed_mut number speed_mut = speed/100

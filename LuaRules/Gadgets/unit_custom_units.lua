@@ -47,9 +47,13 @@ GG.CustomUnits={}
 
 GG.CustomUnits.CustomUnitDefs=CustomUnitDefs
 
+local CustomUnitDefsToID={}
+
 local CustomUnitsToDefID={}
 
 GG.CustomUnits.CustomUnitsToDefID=CustomUnitsToDefID
+
+GG.CustomUnits.CustomUnitDefsToID=CustomUnitDefsToID
 
 local spCreateUnit=Spring.CreateUnit
 local utils_SetCustomUnit=utils.SetCustomUnit
@@ -116,19 +120,29 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 end
 
 local TryGenCustomUnitDef=utils.TryGenCustomUnitDef
-
-local function SyncedAddCustomUnitDef(cudString)
-    local cudid=#CustomUnitDefs+1
+local function SyncedAddCustomUnitDef(cudString,playerID)
+    local cudid=CustomUnitDefsToID[cudString]
+    if CustomUnitDefsToID[cudString] then
+        return cudid
+    end
+    cudid=#CustomUnitDefs+1
     local suc,res=TryGenCustomUnitDef(cudString)
     if suc then
         local cud=res
+
         CustomUnitDefs[cudid]=cud
+        CustomUnitDefsToID[cudString]=cudid
+
         spSetGameRulesParam("CustomUnitDefsCount",#CustomUnitDefs)
         spSetGameRulesParam("CustomUnitDefs"..cudid,cudString)
-        SendToUnsynced("UpdateCustomUnitDefs")
+        if playerID then
+            spSetGameRulesParam("CustomUnitDefs"..cudid.."FromPlayer",playerID)
+        end
+        SendToUnsynced("UpdateCustomUnitDefs",nil)
+
         return cudid
     else
-        Spring.Echo("Error: CustimUnits: " .. res)
+        Spring.Echo("Error: CustomUnits: " .. res)
     end
 end
 
@@ -154,11 +168,11 @@ do
     local LuaMsgHead="SyncedAddCustomUnitDef:"
     local LuaMsgHeadLen=LuaMsgHead:len()
     ---@param msg string
-    function gadget:RecvLuaMsg(msg)
+    function gadget:RecvLuaMsg(msg,playerID)
         if msg:sub(1,LuaMsgHeadLen)==LuaMsgHead then
             local cudstr=msg:sub(LuaMsgHeadLen+1)
             Spring.Echo("CustomUnits: SyncedAddCustomUnitDef " .. cudstr)
-            SyncedAddCustomUnitDef(cudstr)
+            SyncedAddCustomUnitDef(cudstr,playerID)
         end
     end
     
@@ -206,12 +220,17 @@ end
 local spGetGameRulesParam=Spring.GetGameRulesParam
 
 function gadget:Initialize()
+	--gadgetHandler:AddSyncAction('UpdateCustomUnitDefs',CallUnsynced_UpdateCustomUnitDefs)
     local cudcount=spGetGameRulesParam("CustomUnitDefsCount")
     if cudcount then
         while #CustomUnitDefs<cudcount do
             local cudid=#CustomUnitDefs+1
-            local suc,res=TryGenCustomUnitDef(spGetGameRulesParam("CustomUnitDefs"..cudid))
-            CustomUnitDefs[cudid]=res
+            local cudStr=spGetGameRulesParam("CustomUnitDefs"..cudid)
+            local suc,res=TryGenCustomUnitDef(cudStr)
+            if suc then
+                CustomUnitDefs[cudid]=res
+                CustomUnitDefsToID[cudStr]=cudid
+            end
         end
     end
     local allunits=Spring.GetAllUnits ( )
@@ -219,6 +238,27 @@ function gadget:Initialize()
         local cudid=spGetUnitRulesParam(unitId,"CustomUnitDefId")
         CustomUnitsToDefID[unitId]=cudid
     end
+end
+
+function gadget:Shutdown()
+	--gadgetHandler:RemoveSyncAction('UpdateCustomUnitDefs')
+    
+end
+
+else -- Unsynced
+
+local function WrapToLuaUI_UpdateCustomUnitDefs()
+    if (Script.LuaUI('UpdateCustomUnitDefs')) then
+        Script.LuaUI.UpdateCustomUnitDefs()
+    end
+end
+
+function gadget:Initialize()
+	gadgetHandler:AddSyncAction('UpdateCustomUnitDefs',WrapToLuaUI_UpdateCustomUnitDefs)
+end
+
+function gadget:Shutdown()
+	gadgetHandler:RemoveSyncAction('UpdateCustomUnitDefs')
 end
 
 end

@@ -23,6 +23,7 @@ utils.ACustomWeaponData=function ()
     ---@field burstRate_mut nil|number
     ---@field craterAreaOfEffect nil|number
     ---@field targeter_weapon string
+    ---@field name string|nil
     local o={
         damage_default_mut=1,
         damages_mut={},

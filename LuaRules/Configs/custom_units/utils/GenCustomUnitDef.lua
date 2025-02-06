@@ -23,9 +23,9 @@ local function TryGenCustomUnitDefFromJson(cudString)
             local cud=res2
             return true,cud
         else
-            return false,"failed to gen CustomUnitDef for " .. cudString .. " with error " .. res2
+            return false,"failed to GenCustomUnitDef for " .. cudString .. " with error " .. res2
         end
-        return false,"failed to parse CustomUnitDef string " .. cudString .. " with error " .. res
+        return false,"failed to jsondecode string " .. cudString .. " with error " .. res
     end
 end
 

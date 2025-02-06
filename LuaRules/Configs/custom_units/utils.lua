@@ -24,6 +24,8 @@ if not Spring.Utilities.CustomUnits.utils then
         "SetCustomUnit",
         "ChangeTargeterToRealProj",
         "GenCustomUnitDef",
+        "GenCUDViewText",
+        "CustomUnitDesignerUI",
     }--VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}
     for i = 1, #luaFiles do
         VFS.Include("LuaRules/Configs/custom_units/utils/" .. luaFiles[i] .. ".lua")

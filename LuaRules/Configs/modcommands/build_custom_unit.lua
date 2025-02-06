@@ -1,9 +1,9 @@
-
+---{CustomUnitDefId, x, y, z, facing, targetID|nil}
 local data = {
 	name = "BUILD_CUSTOM_UNIT",
-	cmdID = 40002,
+	cmdID = 40001,
 	
-	commandType = CMDTYPE.ICON_UNIT,
+	commandType = CMDTYPE.CUSTOM,
 	isState = false, -- Hold fire etc
 	isInstant = true, -- Such as Stop, Self-D etc
 	humanName = "Build Custom Unit",
