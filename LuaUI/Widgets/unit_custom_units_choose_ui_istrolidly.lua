@@ -120,6 +120,7 @@ local function ListUtils(list,OnMoveRaw)
     }
 end
 
+
 local function Gen(CustomUnitDefsIstrolidLibData)
     local lib={
         tabs={},
@@ -146,14 +147,14 @@ local function Gen(CustomUnitDefsIstrolidLibData)
 	}
     lib.control=Main_Window
 
-    local TabPanelScroll=WG.Chili.ScrollPanel:New{
+    local MainTabPanelScroll=WG.Chili.ScrollPanel:New{
         x=2,y=2,right=2,height=80,
         parent=Main_Window,
         --verticalScrollbar=false
     }
 
     local TabPanelAuto=WG.Chili.AutosizeLayoutPanel:New{
-        parent=TabPanelScroll,
+        parent=MainTabPanelScroll,
         autosize=true,
         orientation="vertical",
         preserveChildrenOrder=true,
@@ -163,7 +164,14 @@ local function Gen(CustomUnitDefsIstrolidLibData)
     }
     lib.tabcontrol=TabPanelAuto
 
-    local function MoveTab1left(lib,ida)
+    local MainRowsPanel=WG.Chili.Panel:New{
+        x=2,right=2,y=82,bottom=2,
+        parent=Main_Window,
+
+    }
+    lib.rowscontrol=MainRowsPanel
+
+    function lib.MoveTab1(ida)
         if ida==1 then
             return
         end
@@ -198,7 +206,7 @@ local function Gen(CustomUnitDefsIstrolidLibData)
         --mainctrl:AddChild(tabbctrl,true,ida)
     end
 
-    local function RemoveTab(lib,id)
+    function lib.RemoveTab(id)
         local tab=lib.tabs[id]
 
         local mainctrl=lib.tabcontrol
@@ -207,6 +215,9 @@ local function Gen(CustomUnitDefsIstrolidLibData)
         local len=#lib.tabs
         for i = id, len do
             lib[i]=lib[i+1]
+            if lib[i] then
+                lib[i].id=i
+            end
         end
 
         tab.id=nil
@@ -214,20 +225,20 @@ local function Gen(CustomUnitDefsIstrolidLibData)
     end
 
     ---@param tabdata {name:string|nil,rows:any}
-    local function AddTab(lib,tabdata)
-        local res={
+    local function AddTab(tabdata)
+        local tab={
             name=tabdata.name,
             id=#lib.tabs+1,
             rows={}
         }
-        lib.tabs[#lib.tabs+1]=res
+        lib.tabs[#lib.tabs+1]=tab
         do
             local parent=lib.tabcontrol
             local main_panel=WG.Chili.Panel:New{
                 parent=parent,
                 width=200,height=35,
             }
-            res.tabcontrol=main_panel
+            tab.tabcontrol=main_panel
             local namePanel=WG.Chili.EditBox:New{
                 parent=main_panel,
                 text=tabdata.name,
@@ -238,7 +249,7 @@ local function Gen(CustomUnitDefsIstrolidLibData)
                 x=144,y=2,bottom=2,width=30,caption="move left",
                 OnClick={
                     function ()
-                        MoveTab1left(lib,res.id)
+                        lib.MoveTab1(tab.id)
                     end
                 }
             }
@@ -247,20 +258,37 @@ local function Gen(CustomUnitDefsIstrolidLibData)
                 x=174,y=2,bottom=2,width=30,caption="move left",
                 OnClick={
                     function ()
-                        RemoveTab(lib,res.id)
+                        lib.RemoveTab(tab.id)
                         
                     end
                 }
             }
             
         end
-        lib.tabcontrol:AddChild(res.tabcontrol)
+        lib.tabcontrol:AddChild(tab.tabcontrol)
         
-        return res
+        do
+            local RowsPanel=WG.Chili.ScrollPanel:New{
+
+            }
+            tab.rowscontrol=RowsPanel
+            local function AddRow(rowdata)
+                
+            end
+            local function MoveRow1(id)
+                
+            end
+            local function RemoveRow(id)
+                
+            end
+        end
+        lib.rowscontrol:AddChild(tab.rowscontrol)
+        lib.rowscontrol:HideChild(tab.rowscontrol)
+        return tab
     end
 
     for i = 1, #CustomUnitDefsIstrolidLibData.tabs do
-        AddTab(lib,CustomUnitDefsIstrolidLibData.tabs[i])
+        AddTab(CustomUnitDefsIstrolidLibData.tabs[i])
     end
 
     return lib
