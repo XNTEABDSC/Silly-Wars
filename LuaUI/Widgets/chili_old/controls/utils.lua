@@ -33,5 +33,48 @@ Utils={
         end
     
         return minWidth, minHeight
+    end,
+    MoveChild=function (self,index,offset)
+        local children=self.children
+        local tomove_start
+        local tomove_end
+        if offset>0 then
+            tomove_start=index+1
+            tomove_end=tomove_start+offset
+        else
+
+        end
+        for i, v in pairs(children) do -- remap hardlinks and objects
+			if type(v) == "number" and v >= index then
+				children[i] = v + 1
+			end
+		end
+    end,
+    MoveChildren=function (self,start,count,offset)
+        local children=self.children
+        local tomove_start
+        local tomove_end
+        local tomove_offset
+        local tomove_min
+        local tomove_max
+        if offset>0 then
+            tomove_start=start+count
+            tomove_end=tomove_start+offset
+            tomove_offset=-count
+            tomove_min=tomove_start
+            tomove_max=tomove_end
+        else
+            tomove_start=start-1
+            tomove_end=tomove_start-offset
+            tomove_offset=count
+            tomove_min=tomove_end
+            tomove_max=tomove_start
+        end
+        for i, v in pairs(children) do -- remap hardlinks and objects
+			if type(v) == "number" and tomove_min<=v and v<=tomove_max then
+				children[i] = v + tomove_offset
+			end
+		end
+		table.insert(children, index, objDirect)
     end
 }

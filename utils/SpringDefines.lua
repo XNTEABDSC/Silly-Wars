@@ -1,13 +1,13 @@
 -- ---@diagnostic disable: missing-return
 ---@meta Spring
 
-Spring={}
+Spring=Spring or {}
 ---@class UnitId : integer
 ---@class UnitDefId:integer
 
----@class playerId:integer
----@class teamId:integer
----@class allyteamId:integer
+---@class PlayerId:integer
+---@class TeamId:integer
+---@class AllyteamId:integer
 
 ---@class timeSec:number
 
@@ -117,31 +117,31 @@ function Spring.GetUnitVelocity(UnitId)end
 ---@return WldyPos
 function Spring.GetGroundHeight(x,z)end
 
----@return allyteamId
+---@return AllyteamId
 function Spring.GetMyAllyTeamID()end
 
----@return teamId
+---@return TeamId
 function Spring.GetMyTeamID()end
 
 --- return true when spec
 ---@return boolean
 function Spring.GetSpectatingState()end
 
----whether pos is in radar of allyteamId
+---whether pos is in radar of AllyteamId
 ---@param x WldxPos
 ---@param y WldyPos
 ---@param z WldzPos
----@param allyteamId allyteamId
+---@param AllyteamId AllyteamId
 ---@return boolean
-function Spring.IsPosInRadar(x,y,z,allyteamId)end
+function Spring.IsPosInRadar(x,y,z,AllyteamId)end
 
----whether pos is in los of allyteamId
+---whether pos is in los of AllyteamId
 ---@param x WldxPos
 ---@param y WldyPos
 ---@param z WldzPos
----@param allyteamId allyteamId
+---@param AllyteamId AllyteamId
 ---@return boolean
-function Spring.IsPosInLos(x,y,z,allyteamId)end
+function Spring.IsPosInLos(x,y,z,AllyteamId)end
 
 ---add a marker
 ---@param x WldxPos
@@ -161,9 +161,9 @@ function Spring.MarkerErasePosition(x,y,z)end
 ---@param x WldxPos
 ---@param z WldzPos
 ---@param radius WldDist
----@param teamId teamId
+---@param TeamId TeamId
 ---@return list<UnitId>
-function Spring.GetUnitsInCylinder(x,z,radius,teamId)end
+function Spring.GetUnitsInCylinder(x,z,radius,TeamId)end
 
 
 Game={}

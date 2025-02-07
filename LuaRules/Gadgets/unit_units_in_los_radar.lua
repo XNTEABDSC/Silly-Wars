@@ -17,9 +17,9 @@ end
 
 VFS.Include("LuaRules/Utilities/list_map.lua")
 local list_map=Spring.Utilities.list_map
----@type {[allyteamId]:list_map}
+---@type {[AllyteamId]:list_map}
 local AllyTeam2EnemyUnitsInRadar={}
----@type {[allyteamId]:list_map}
+---@type {[AllyteamId]:list_map}
 local AllyTeam2EnemyUnitsInLOS={}
 
 local AllyTeamList

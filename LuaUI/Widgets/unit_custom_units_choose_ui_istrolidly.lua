@@ -28,9 +28,9 @@ local CustomUnitDefs=WG.CustomUnits.CustomUnitDefs
 local GenCustomUnitDefView=utils.GenCustomUnitDefView
 
 
-local CustomUnitDefsLib={}
+local CustomUnitDefsIstrolidLib=nil
 
-WG.CustomUnits.CustomUnitDefsLib=CustomUnitDefsLib
+WG.CustomUnits.CustomUnitDefsIstrolidLib=CustomUnitDefsIstrolidLib
 
 local CUBuilderUsingPadLine={}
 
@@ -120,163 +120,14 @@ local function ListUtils(list,OnMoveRaw)
     }
 end
 
-local LibPadWindow=nil
-
-local LibPadTabScroll=nil
-
-local LibPadTabAutoLayout=nil
-
-local CustomUnitDefsLibListUtils={
-    Move=function (index,indexInsert)
-        ListUtils(CustomUnitDefsLib,function (v,id)
-            v.id=id
-        end).Move(index,indexInsert)
-        ListUtils(LibPadTabAutoLayout.children).Move(index,indexInsert)
-    end,
-    AddLast=function (tab)
-        ListUtils(CustomUnitDefsLib,function (v,id)
-            v.id=id
-        end).Add(tab)
-        LibPadTabAutoLayout:AddChild(tab.control)
-    end,
-    Remove=function (index)
-        local removed= ListUtils(CustomUnitDefsLib,function (v,id)
-            v.id=id
-        end).Remove(index)
-        LibPadTabAutoLayout:RemoveChild(removed.control)
-    end
-}
-
-
-local function NewLibPadTabUI(tab)
-    local name=tab.name
-    local mainPanel=WG.Chili.AutosizeLayoutPanel:New{
-        --parent=parent,
-        width=320,height=70,
-        orientation="horizontal"
+local function Gen(CustomUnitDefsIstrolidLibData)
+    local lib={
+        tabs={},
+        
     }
-    local nameBox
-    nameBox=WG.Chili.EditBox:New{
-        parent=mainPanel,
-        x=2,y=2,height=40,width=100,
-        text=tab.name,
-        OnTextInput={
-            function ()
-                tab.name=nameBox:GetText()
-            end
-        },
-        OnClick={
-
-        }
-    }
-    local moveLeftButton=WG.Chili.Button:New{
-        parent=mainPanel,
-        width=20,height=20,
-        caption="move left",
-        OnClick={
-            function ()
-                if tab.id>1 then
-                    CustomUnitDefsLibListUtils.Move(tab.id,tab.id-1)
-                end
-            end
-        }
-    }
-    local removeButton=WG.Chili.Button:New{
-        parent=mainPanel,
-        width=20,height=20,
-        caption="remove",
-        OnClick={
-            function ()
-                CustomUnitDefsLibListUtils.Remove(tab.id)
-            end
-        }
-    }
-    --OnKeyPress
-    return mainPanel
-end
-
-
-local function NewCUD(cud)
-    return{
-        str=cud,
-        id=nil,
-    }
-end
-
-local function NewRow(id,name)
-    name=name or ""
-    return {
-        name=name,
-        cuds={},
-        id=id
-    }
-end
-
-local function NewTab(id,name)
-    name=name or ""
-    local tab={
-        name=name,
-        rows={},
-        id=id
-    }
-    tab.control=NewLibPadTabUI(tab)
-    return tab
-end
-
-
-local function GenDefaultCustomUnitDefsLib()
-    return {
-        NewTab(1,"default")
-    }
-end
-
-
-local function GenTestCustomUnitDefsLib()
-    return {
-        {
-            name="adefault",
-            rows={}
-        },{
-            name="ye",
-            rows={}
-        },{
-            name=nil,
-            rows={}
-        },{
-            name="asdvfb",
-            rows={}
-        }
-    }
-end
-
-local function LoadTable(datas)
-    for i = 1, #datas do
-        local datatab=datas[i]
-        local tab=NewTab(i,datatab.name)
-        CustomUnitDefsLibListUtils.AddLast(tab)
-
-    end
-end
-
-local function LoadLocal()
-    if VFS.FileExists(DIR_NAME..FILE_NAME) then
-        local table=VFS.Include(DIR_NAME..FILE_NAME)
-        CustomUnitDefsLib=table
-    else
-        CustomUnitDefsLib=GenDefaultCustomUnitDefsLib()
-    end
-
-end
-
-local function SaveLocal()
-    local res=CustomUnitDefsLib
-    table.save(res,DIR_NAME .. FILE_NAME)
-end
-
-function widget:Initialize()
-    CanBuildCustomUnitsDefs=WG.CustomUnits.CanBuildCustomUnitsDefs
-    CustomUnitDefs=WG.CustomUnits.CustomUnitDefs
-    LibPadWindow=WG.Chili.Window:New{
+    local padding=2
+    
+    local Main_Window=WG.Chili.Window:New{
 		classname = "main_window_small_tall",
 		name      = 'Custom Units Lib UI',
 		x         =  50,
@@ -293,19 +144,149 @@ function widget:Initialize()
 		tweakResizable = true,
 		parent = WG.Chili.Screen0,
 	}
-    LibPadTabScroll=WG.Chili.ScrollPanel:New{
-        x=2,y=2,right=2,height=60,
-        parent=LibPadWindow,
-        verticalScrollbar=false
-    }
-    LibPadTabAutoLayout=WG.Chili.AutosizeLayoutPanel:New{
-        parent=LibPadTabScroll,
-        orientation="horizontal",
-        preserveChildrenOrder=true
+    lib.control=Main_Window
+
+    local TabPanelScroll=WG.Chili.ScrollPanel:New{
+        x=2,y=2,right=2,height=80,
+        parent=Main_Window,
+        --verticalScrollbar=false
     }
 
+    local TabPanelAuto=WG.Chili.AutosizeLayoutPanel:New{
+        parent=TabPanelScroll,
+        autosize=true,
+        orientation="vertical",
+        preserveChildrenOrder=true,
+        itemMargin    = {2, 2, 2, 2},
+        itemPadding   = {2, 2, 2, 2},
+        rows=1
+    }
+    lib.tabcontrol=TabPanelAuto
 
-    LoadTable(GenTestCustomUnitDefsLib())
+    local function MoveTab1left(lib,ida)
+        if ida==1 then
+            return
+        end
+        local idb=ida-1
+        local taba=lib.tabs[ida]
+        local tabb=lib.tabs[idb]
+
+        lib.tabs[idb]=taba
+        taba.id=idb
+        lib.tabs[ida]=tabb
+        tabb.id=ida
+
+        local mainctrl=lib.tabcontrol
+        local tabactrl=taba.tabcontrol
+        local tabbctrl=tabb.tabcontrol
+        --[=[
+        mainctrl.children[tabb]=tabactrl
+        mainctrl.children[taba]=tabbctrl]=]
+        -- Spring.Echo("DEBUG: tabactrl.name: " .. tabactrl.name .. ", tabbctrl.name: " .. tabbctrl.name)
+        -- Spring.Echo("DEBUG: 1 childrenByName[a]: " .. tostring(mainctrl.childrenByName[ tabactrl.name]) .. ", childrenByName[b]: " .. tostring(mainctrl.childrenByName[ tabbctrl.name]) )
+
+        -- Spring.Echo("DEBUG: tabactrl ref: " .. tostring( mainctrl.children[ WG.Chili.UnlinkSafe(tabactrl) ] ))
+        local found=mainctrl:RemoveChild(tabactrl)
+        Spring.Echo("DEBUG: found: " .. tostring(found))
+        --mainctrl:RemoveChild(tabbctrl)
+        -- Spring.Echo("DEBUG: 2 childrenByName[a]: " .. tostring(mainctrl.childrenByName[ tabactrl.name]) .. ", childrenByName[b]: " .. tostring(mainctrl.childrenByName[ tabbctrl.name]) )
+        --[=[
+        mainctrl.childrenByName[ tabactrl.name]=nil
+        mainctrl.childrenByName[ tabbctrl.name]=nil
+        ]=]
+        mainctrl:AddChild(tabactrl,true,idb)
+        --mainctrl:AddChild(tabbctrl,true,ida)
+    end
+
+    local function RemoveTab(lib,id)
+        local tab=lib.tabs[id]
+
+        local mainctrl=lib.tabcontrol
+        mainctrl:RemoveChild(tab.tabcontrol)
+
+        local len=#lib.tabs
+        for i = id, len do
+            lib[i]=lib[i+1]
+        end
+
+        tab.id=nil
+        --tab.tabcontrol:Dispose()
+    end
+
+    ---@param tabdata {name:string|nil,rows:any}
+    local function AddTab(lib,tabdata)
+        local res={
+            name=tabdata.name,
+            id=#lib.tabs+1,
+            rows={}
+        }
+        lib.tabs[#lib.tabs+1]=res
+        do
+            local parent=lib.tabcontrol
+            local main_panel=WG.Chili.Panel:New{
+                parent=parent,
+                width=200,height=35,
+            }
+            res.tabcontrol=main_panel
+            local namePanel=WG.Chili.EditBox:New{
+                parent=main_panel,
+                text=tabdata.name,
+                x=2,y=2,bottom=2,width=140,
+            }
+            local moveLeftPanel=WG.Chili.Button:New{
+                parent=main_panel,
+                x=144,y=2,bottom=2,width=30,caption="move left",
+                OnClick={
+                    function ()
+                        MoveTab1left(lib,res.id)
+                    end
+                }
+            }
+            local moveLeftPanel=WG.Chili.Button:New{
+                parent=main_panel,
+                x=174,y=2,bottom=2,width=30,caption="move left",
+                OnClick={
+                    function ()
+                        RemoveTab(lib,res.id)
+                        
+                    end
+                }
+            }
+            
+        end
+        lib.tabcontrol:AddChild(res.tabcontrol)
+        
+        return res
+    end
+
+    for i = 1, #CustomUnitDefsIstrolidLibData.tabs do
+        AddTab(lib,CustomUnitDefsIstrolidLibData.tabs[i])
+    end
+
+    return lib
+end
+
+function widget:Initialize()
+    CanBuildCustomUnitsDefs=WG.CustomUnits.CanBuildCustomUnitsDefs
+    CustomUnitDefs=WG.CustomUnits.CustomUnitDefs
+    CustomUnitDefsIstrolidLib=Gen({
+        tabs={
+            {name="adef"},
+            {name="awdefvfb"},
+            {name=nil},
+            {name="ye"},
+            {name="1"},
+            {name="2"},
+            {name="3"},
+            {name="4"},
+            {name="5"},
+            {name="6"},
+            {name="7"},
+            {name="8"},
+        }
+    })
+    
+    WG.CustomUnits.CustomUnitDefsIstrolidLib=CustomUnitDefsIstrolidLib
 end
 
 function widget:CommandsChanged()

@@ -130,11 +130,12 @@ local function GetUDCPCustomTooltipSimple(unitID,ud)
 	local customTooltipString=ud.customParams.custom_tooltip_simple
 	if customTooltipString  then
 		customTooltipString=WG.Translate("interface", customTooltipString) or customTooltipString
+
 		customTooltipString=string.gsub(
-			customTooltipString,"%%%[(.-)%|(.-)%]",function (str)
-				local param=str[1]
-				local default=str[2]
-				local param=Spring.GetUnitRulesParam(unitID, param)
+			customTooltipString,"%%%[(.-)%|(.-)%]",function (str1,str2)
+				local paramurp=str1
+				local default=str2
+				local param=Spring.GetUnitRulesParam(unitID, paramurp)
 				if param==nil then
 					if default~=nil then
 						default=tostring(default)
