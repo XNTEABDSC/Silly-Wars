@@ -38,7 +38,7 @@ genCustomModify("speed","add projectiles' speed","unitpics/commweapon_assaultcan
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)
-    tb.projSpeed_mut=tb.projSpeed_mut*factor^(utils.bias_factor*2)
+    tb.projSpeed_mut=tb.projSpeed_mut*factor^(utils.bias_factor)
 end,"number")
 
 
@@ -50,14 +50,18 @@ function (tb,factor)
     tb.range_mut=tb.range_mut*factor^(utils.bias_factor)
 end,"number"
 )
+
+
 weapon_modifies.beam_range=
 genCustomModify("range","add beams' range","unitpics/module_adv_targeting.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)
-    tb.range_mut=tb.range_mut*factor^(utils.bias_factor*0.5)
+    --tb.range_mut=tb.range_mut*factor^(utils.bias_factor*0.5)
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.75)-1 )*2 )
 end,"number"
 )
+
 
 weapon_modifies.reload=
 genCustomModify("reload","reduce reload time","unitpics/weaponmod_autoflechette.png",
@@ -66,6 +70,19 @@ function (tb,factor)
     tb.cost=tb.cost*(factor)
     tb.reload_time_mut=tb.reload_time_mut*factor^(-utils.bias_factor)
 end,"number"
+)
+
+
+weapon_modifies.into_aa=
+genCustomModify("into_aa","make this a aa weapon","icons/kbotaa.dds",
+---@param tb CustomWeaponDataModify
+function (tb,flag)
+    if flag then
+        tb.range_mut=tb.range_mut*2
+        tb.projSpeed_mut=tb.projSpeed_mut*1.5
+        tb.targeter_weapon="aa_targeter"
+    end
+end,"boolean"
 )
 
 

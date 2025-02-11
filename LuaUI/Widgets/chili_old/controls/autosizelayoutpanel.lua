@@ -111,7 +111,7 @@ function AutosizeLayoutPanel:UpdateLayout()
     
         
 end
-
+--[=[
 --- ai bro
 function AutosizeLayoutPanel:_LayoutChildren()
     local cn = self.children
@@ -260,3 +260,4 @@ function AutosizeLayoutPanel:_LayoutChildren()
         child:_UpdateConstraints(cposx, cposy)
     end
 end
+]=]

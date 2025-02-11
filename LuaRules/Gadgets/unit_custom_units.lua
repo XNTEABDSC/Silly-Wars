@@ -92,10 +92,11 @@ local spGetProjectileDefID=Spring.GetProjectileDefID
 for key, value in pairs(targeterwdid_to_custom_weapon_num) do
     Script.SetWatchWeapon(key,true)
 end
+
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
     if not targeterwdid_to_custom_weapon_num[weaponDefID] then
-        --Spring.Echo("Error: CustomUnits: ??? not watched weapon " .. weaponDefID .. " name " .. WeaponDefs[weaponDefID].name)
-        -- idk why this happens, there is some weaponDef which get SetWatchWeapon by unknow
+        Spring.Echo("Error: CustomUnits: not watched weapon " .. weaponDefID .. " name " .. WeaponDefs[weaponDefID].name)
+        -- idk why this happens, some unknown things do SetWatchWeapon on gadget
         Script.SetWatchWeapon(weaponDefID,false)
         return
     end
@@ -116,7 +117,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
         return
     end
 
-    utils_ChangeTargeterToRealProj(proID,cud.weapons[targeterwdid_to_custom_weapon_num[weaponDefID]])
+    utils_ChangeTargeterToRealProj(proID,weaponDefID,cud.weapons[targeterwdid_to_custom_weapon_num[weaponDefID]])
 end
 
 local TryGenCustomUnitDef=utils.TryGenCustomUnitDef
@@ -236,7 +237,12 @@ function gadget:Initialize()
     local allunits=Spring.GetAllUnits ( )
     for key, unitId in pairs(allunits or {}) do
         local cudid=spGetUnitRulesParam(unitId,"CustomUnitDefId")
-        CustomUnitsToDefID[unitId]=cudid
+        if cudid then
+            CustomUnitsToDefID[unitId]=cudid
+            utils_SetCustomUnit(unitId,CustomUnitDefs[cudid])
+            
+        end
+        --
     end
 end
 

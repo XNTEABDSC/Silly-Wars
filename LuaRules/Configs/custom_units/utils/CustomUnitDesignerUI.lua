@@ -117,7 +117,8 @@ local function GenCustomUnitDesignUI(WG,parent,finish_button_caption,finish_butt
     }
     ]==]
     WindowAutoPanel=Chili.AutosizeLayoutPanel:New{
-        parent=parent
+        parent=parent,
+        orientation="horizontal"
     }
     DesignerUI=GameData.CustomUnits.utils.ui.ChooseAndModify(GameData.CustomUnits.chassis_defs)(WG,WindowAutoPanel)
     

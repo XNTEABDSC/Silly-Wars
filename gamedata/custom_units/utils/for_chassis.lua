@@ -1,8 +1,9 @@
 local utils = GameData.CustomUnits.utils
 local genCustomModify=utils.genCustomModify
-local function add_weapon(custom_weapon_num)
+local function add_weapon(custom_weapon_num,slot_name)
+    slot_name=slot_name or ("slot " .. custom_weapon_num)
     local name="add_weapon_".. custom_weapon_num
-    local desc="add weapon at slot " .. custom_weapon_num
+    local desc="add weapon at " .. slot_name
     local pic="unitpics/commweapon_beamlaser.png"
         ---@param cud CustomUnitDataModify
     local modfn=function(cud, t)
@@ -12,7 +13,7 @@ local function add_weapon(custom_weapon_num)
         --local custom_weapon_num,weapon=t.weapon_num,t.weapon
         local weapon = t
         if cud.weapons[custom_weapon_num] then
-            error("unit already have weapon at slot" .. custom_weapon_num)
+            error("unit already have weapon at " .. slot_name)
             return
         end
         local weaponbase=GameData.CustomUnits.weapons_defs[weapon[1]]
@@ -31,7 +32,7 @@ local function add_weapon(custom_weapon_num)
         local unit_weapon_num = chassis.targeter_name_to_unit_weapon[need_targeter]
         if not unit_weapon_num then
             error("chassis " ..
-            cud.chassis_name .. "'s weapon slot " .. custom_weapon_num .. " can't use targeter " .. need_targeter)
+            cud.chassis_name .. "'s weapon " .. slot_name .. " can't use targeter " .. need_targeter)
             return
         end
 
@@ -72,7 +73,7 @@ utils.BasicChassisMutate = {
     end,"number"),
     
 }
-
+utils.BasicChassisMutate.add_weapon=add_weapon
 --[=[
 {
     ---@param cud CustomUnitDataModify
@@ -84,10 +85,6 @@ utils.BasicChassisMutate = {
     end,
 
 }]=]
-
-for i = 1, utils.targeters_wpnnum_count do
-    utils.BasicChassisMutate["add_weapon_" .. i] = add_weapon(i)
-end
 
 ---generate a speed modify for speed_per_cost
 utils.genChassisSpeedModify=function (speed_per_cost)

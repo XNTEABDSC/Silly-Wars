@@ -7,11 +7,9 @@ local consts=GameData.CustomUnits.utils.consts
 
 local projectile_targeter={
     name="projectile_targeter",
-    weapon_def={
+    weapon_def_base={
         name                    = [[Projectile Targeter]],
         --areaOfEffect            = 32,
-        craterBoost             = 0,
-        craterMult              = 0,
         burst=consts.custom_targeter_burst,
         burstRate=consts.custom_targeter_burstRate,
         projectiles=consts.custom_targeter_projectiles,
@@ -25,8 +23,6 @@ local projectile_targeter={
         },
       
         explosionGenerator      = [[custom:INGEBORG]],
-        impulseBoost            = 0,
-        impulseFactor           = 0,
         interceptedByShieldType = 1,
         noSelfDamage            = true,
         range                   = consts.custom_targeter_range,
@@ -42,7 +38,7 @@ local projectile_targeter={
 }
 local beam_targeter={
     name="beam_targeter",
-    weapon_def=
+    weapon_def_base=
     -- [=[
     {
         name                    = [[Beam Targeter]],
@@ -56,7 +52,7 @@ local beam_targeter={
         },
       
         damage                  = {
-          default = consts.custom_targeter_damage,
+          default = 0.1,--consts.custom_targeter_damage,
         },
         fireStarter             = 100,
         impactOnly              = true,
@@ -107,10 +103,84 @@ local beam_targeter={
     ,
     weapon_unit={
         onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
+    },
+    is_beam=true,
+}
+local line_targeter={
+    name="line_targeter",
+    weapon_def_base=
+    -- [=[
+    {
+        name                    = [[Line Targeter]],
+        avoidFeature            = true,
+        burst=consts.custom_targeter_burst,
+        burstRate=consts.custom_targeter_burstRate,
+        projectiles=consts.custom_targeter_projectiles,
+  
+        customParams        = {
+          light_camera_height = 2000,
+          light_radius = 200,
+          bogus = 1,
+        },
+  
+        damage                  = {
+            default = consts.custom_targeter_damage/10,
+            planes  = consts.custom_targeter_damage,
+        },
+
+        turret                  = true,
+        weaponType              = [[MissileLauncher]],
+        range                   = consts.custom_targeter_range,
+        reloadtime              = consts.custom_targeter_reloadtime,
+        startVelocity           = consts.custom_targeter_proj_speed,
+        weaponVelocity          = consts.custom_targeter_proj_speed,
+    }
+    ,
+    weapon_unit={
+        onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
     }
 }
+local aa_targeter={
+    name="aa_targeter",
+    weapon_def_base={
+        name                    = [[AA Targeter]],
+        canAttackGround         = false,
+        cylinderTargeting       = 1,
+        burst=consts.custom_targeter_burst,
+        burstRate=consts.custom_targeter_burstRate,
+        projectiles=consts.custom_targeter_projectiles,
+        burnblow                = true,
 
-local targeters_wpnnum_count=8
+        customParams            = {
+            --burst = Shared.BURST_RELIABLE,
+            -- 
+
+            isaa = [[1]],
+            light_color = [[0.5 0.6 0.6]],
+            light_radius = 380,
+            bogus = 1,
+            burnblow                = true,
+            reaim_time = 1,
+        },
+
+        damage                  = {
+            default = consts.custom_targeter_damage/10,
+            planes  = consts.custom_targeter_damage,
+        },
+
+        noSelfDamage            = true,
+        turret                  = true,
+        weaponType              = [[MissileLauncher]],
+        range                   = consts.custom_targeter_range,
+        reloadtime              = consts.custom_targeter_reloadtime,
+        startVelocity           = consts.custom_targeter_proj_speed,
+        weaponVelocity          = consts.custom_targeter_proj_speed,
+    },
+    weapon_unit={
+        onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+    }
+}
+local targeters_wpnnum_count=16
 
 ---count of wd for each targeters. also is the maximum custom_weapons_slots for custom units. 
 ---each targeter wd maps to custom_weapons_slot_num
@@ -118,14 +188,24 @@ utils.targeters_wpnnum_count=targeters_wpnnum_count
 
 
 local targeterweapondefs={}
-local targeterweapons={}
-for key, value in pairs({projectile_targeter,beam_targeter}) do
+-- ---@type {[string]:{name:string,weapon_def:table,weapon_unit:table}}
+local targeterweapons={
+    projectile_targeter=projectile_targeter,
+    beam_targeter=beam_targeter,
+    aa_targeter=aa_targeter,
+    line_targeter=line_targeter,
+}
+--[=[
+for key, value in pairs({projectile_targeter,beam_targeter,aa_targeter}) do
     targeterweapons[value.name]=value
 end
-
-for i = 1, targeters_wpnnum_count do
-    for key, value in pairs(targeterweapons) do
-        targeterweapondefs[key.. tostring(i)]=Spring.Utilities.CopyTable(value.weapon_def,true)
+]=]
+for name, value in pairs(targeterweapons) do
+    local wd=Spring.Utilities.CopyTable(value.weapon_def_base,true)
+    value.weapon_defs={}
+    for i = 1, targeters_wpnnum_count do
+        targeterweapondefs[name.. tostring(i)]=wd
+        value.weapon_defs[i]=name.. tostring(i)
     end
 end
 

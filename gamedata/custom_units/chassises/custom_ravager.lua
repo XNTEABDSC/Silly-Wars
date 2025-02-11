@@ -5,9 +5,9 @@ local utils=GameData.CustomUnits.utils
 
 local modifies={
     utils.BasicChassisMutate.name,
+    utils.BasicChassisMutate.add_weapon(1),
+    utils.genChassisSpeedModify(1000),
     utils.BasicChassisMutate.armor,
-    utils.BasicChassisMutate.add_weapon_1,
-    utils.genChassisSpeedModify(1000)
 }
 local ModifyFn=utils.UseModifies(modifies)
 --[=[
@@ -29,6 +29,7 @@ local humanName="Car (Ravager)"--name
 local weapons_slots={
     [1]={"projectile_targeter","beam_targeter"}
 }
+local sizeMin,sizeMax=1,6
 
 local unit_weapons,targeter_name_to_unit_weapon=utils.GenChassisUnitWeapons(weapons_slots)
 local pic=[[unitpics/vehassault.png]]
@@ -41,7 +42,6 @@ return {
     humanName=humanName,
     description=desc,
     genUnitDefs = function()
-        local unitDefSize=3
         local aunitDef = {
             name                   = [[Custom Ravager]],
             description            = [[Custom Rover]],
@@ -129,12 +129,9 @@ return {
 
             weapons=unit_weapons,
         }
-        for i = 1, 6 do
-            local newUD=Spring.Utilities.CopyTable(aunitDef,true)
-            local scale=i/unitDefSize
-            newUD.customParams.def_scale= newUD.customParams.def_scale *scale
-            UnitDefs[name..i]=lowerkeys( newUD )
-        end
+        utils.GetChassisUnitDef_DifferentSize(
+            aunitDef,name,sizeMin,sizeMax
+        )
     end,
     genfn = function(params)
         local cud=utils.ACustomUnitDataModify()
@@ -143,13 +140,8 @@ return {
         for key, value in pairs(res.weapons) do
             res.cost=res.cost+value.cost
         end
-        local size = utils.GetUnitSize(res)
-        if size<1 then
-            size=1
-        end
-        if size>6 then
-            size=6
-        end
+        local mass=wacky_utils.GetMass(res.health,res.cost)
+        local size = utils.GetUnitSize_ThrowError(mass,humanName,sizeMin,sizeMax)
         --res.chassis_name=name
         res.UnitDefName=name .. size
         return res

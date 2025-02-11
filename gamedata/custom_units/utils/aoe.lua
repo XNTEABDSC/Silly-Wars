@@ -33,5 +33,7 @@ utils.plasma_aoe_mutate={
         wpn.aoe=176
         wpn.explosionGenerator      = [[custom:lrpc_expl]]
     end]=]
+
+    
 }
 GameData.CustomUnits.utils=utils

@@ -93,7 +93,7 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
             },0)
             --cudid_to_build=nil
         end
-        if cmdOptions and (cmdOptions&CMD.OPT_SHIFT) then
+        if cmdOptions and false then
             
         else
             cudid_to_build=nil

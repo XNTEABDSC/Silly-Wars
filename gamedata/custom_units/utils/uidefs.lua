@@ -46,7 +46,7 @@ local function UIPicThen(pic,name,desc,thenUIFn)
 end
 ui.UIPicThen=UIPicThen
 ---A Box to edit values. can be string, number, boolean
-local function EditBoxUI(paramtype)
+local function AutoEditBoxUI(paramtype)
     return function (WG,parent)
         local panel
         local paramtypenum=({
@@ -60,13 +60,17 @@ local function EditBoxUI(paramtype)
         end
         if paramtypenum==3 then
             local Checkbox=WG.Chili.Checkbox:New{
-                parent=parent
+                parent=parent,
+                caption=""
             }
             getValue=function ()
                 return Checkbox.checked
             end
             setValue=function (v)
-                Checkbox.SetToggle(v)
+                if Checkbox.checked~=v then
+                    Checkbox:Toggle()
+                end
+                --Checkbox:SetToggle(v)
             end
             panel=Checkbox
         else
@@ -110,23 +114,24 @@ local function EditBoxUI(paramtype)
     end
     
 end
-ui.EditBoxUI=EditBoxUI
+ui.AutoEditBoxUI=AutoEditBoxUI
 
 ---UIPicThen EditBoxUI
 function ui.SimpleValueUI(pic,name,desc,paramtype)
-    return UIPicThen(pic,name,desc,EditBoxUI(paramtype))
+    return UIPicThen(pic,name,desc,AutoEditBoxUI(paramtype))
 end
 ---Show Modifies genUIFn
 ---@param modifies {[integer]:CustomModify}
 function ui.StackModifies(modifies)
     return function (WG,parent)
         local panel=WG.Chili.AutosizeLayoutPanel:New{
-            orientation = "vertical",
+            orientation = "horizontal",
             parent=parent,
             x=2,y=2,width=200,height=100,
 			padding = {2, 2, 2, 2},
             itemPadding = {0, 0, 0, 0},
             itemMargin  = {5, 5, 5, 5},
+            --cols=1,rows=1000
         }
         local BetterGetChildrenMinimumExtents=WG.Chili.Utils.BetterGetChildrenMinimumExtents
         panel.GetChildrenMinimumExtents=BetterGetChildrenMinimumExtents

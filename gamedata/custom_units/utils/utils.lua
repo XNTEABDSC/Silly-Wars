@@ -5,10 +5,13 @@ local utils=GameData.CustomUnits.utils
 ---error for unused modifies in modtable
 ---@param modifies list<CustomModify>
 utils.UseModifies=function (modifies)
+    ---@generic T
+    ---@param data T
+    ---@return T
     return function (data,modtable)
         for index, modify in pairs(modifies) do
             local modv=modtable[modify.name]
-            if modv then
+            if modv~=nil then
                 modify.modfn(data,modv)
                 modtable[modify.name]=nil
             end

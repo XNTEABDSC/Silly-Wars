@@ -26,7 +26,34 @@ local name="custom_plasma"
 local pic="unitpics/commweapon_assaultcannon.png"
 local desc=""
 local humanName="Plasma"
+local weaponDef={
+    name                    = [[Light Plasma Cannon]],
+    craterBoost             = 0,
+    craterMult              = 0,
+    areaOfEffect=36,
+    customParams        = {
+        light_camera_height = 1800,
+        light_color = [[0.80 0.54 0.23]],
+        light_radius = 200,
+    },
 
+    damage                  = {
+        default = 4,
+    },
+
+    explosionGenerator      = [[custom:INGEBORG]],
+    impulseBoost            = 0,
+    impulseFactor           = 0.4,
+    interceptedByShieldType = 1,
+    noSelfDamage            = true,
+    range                   = 600,
+    reloadtime              = 2.5,
+    soundHit                = [[explosion/ex_med5]],
+    soundStart              = [[weapon/cannon/cannon_fire5]],
+    turret                  = true,
+    weaponType              = [[Cannon]],
+    weaponVelocity          = 280,
+}
 
 ---@type CustomWeaponBaseData
 local res=
@@ -35,34 +62,7 @@ local res=
     humanName=humanName,
     pic=pic,
     genWeaponDef=function ()
-        WeaponDefs[name]=lowerkeys{
-            name                    = [[Light Plasma Cannon]],
-            craterBoost             = 0,
-            craterMult              = 0,
-            areaOfEffect=36,
-            customParams        = {
-                light_camera_height = 1800,
-                light_color = [[0.80 0.54 0.23]],
-                light_radius = 200,
-            },
-    
-            damage                  = {
-                default = 2,
-            },
-    
-            explosionGenerator      = [[custom:INGEBORG]],
-            impulseBoost            = 0,
-            impulseFactor           = 0.4,
-            interceptedByShieldType = 1,
-            noSelfDamage            = true,
-            range                   = 350,
-            reloadtime              = 2,
-            soundHit                = [[explosion/ex_med5]],
-            soundStart              = [[weapon/cannon/cannon_fire5]],
-            turret                  = true,
-            weaponType              = [[Cannon]],
-            weaponVelocity          = 280,
-        }
+        WeaponDefs[name]=lowerkeys(weaponDef)
     end,
     custom_weapon_data=custom_weapon_data,
     genfn=function (mutate_table)

@@ -17,6 +17,12 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
     local burst=CustomWeaponDataModify.burst_mut*wd.salvoSize
     local burstRate=CustomWeaponDataModify.burstRate_mut*wd.salvoDelay
     local projectiles=CustomWeaponDataModify.projectiles_mut*wd.projectiles
+    local ttl
+    if wd.type == "Cannon" and wd.flightTime == 0 then
+        ttl = 1500 -- Needed to appease the unspeakable evil: https://github.com/beyond-all-reason/spring/issues/704
+    else
+        ttl = wd.flightTime or wd.beamTTL or 9000
+    end
     ---@class CustomWeaponDataFinal
     ---@field damages {[number]:number}
     ---@field projSpeed number
@@ -45,6 +51,7 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
     ---@field tracks boolean
     ---@field model string
     ---@field name string|nil
+    ---@field ttl number|nil
     local o={
         projSpeed=projSpeed,
         projSpeed_mut=projSpeed/custom_targeter_proj_speed,
@@ -72,7 +79,8 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
         gravity=wd.myGravity,
         tracks =wd.tracks,
         model=wd.visuals.modelName,
-        name=CustomWeaponDataModify.name
+        name=CustomWeaponDataModify.name,
+        ttl=ttl,
     }
 
     --local damage_default=wd.damages.default*CustomWeaponDataModify.damage_default_mut
