@@ -1,3 +1,6 @@
+
+if not Spring.GetModOptions().custon_units then return end
+
 VFS.Include("gamedata/custom_units/utils.lua")
 if not Spring then
     Spring={}
@@ -19,6 +22,7 @@ if not Spring.Utilities.CustomUnits.utils then
     end]=]
     local luaFiles={
         "targeters",
+        "CanBuilderBuildCustomUnits",
         "CustomWeaponDataFinal",
         "CustomUnitDataFinal",
         "SetCustomUnit",

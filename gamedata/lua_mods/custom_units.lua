@@ -20,4 +20,4 @@ utils_op.AddFnToUnitDefsTweakFns({
   end
 })
 
-return {option_notes="Can Make Custom Units"}
+return {option_notes="Can Make Custom Units",custon_units=true}

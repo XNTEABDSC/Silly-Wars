@@ -18,7 +18,6 @@ local weaponDef = {
   beamDecay               = 0.85,
   beamTime                = 0.1,
   beamttl                 = 45,
-  canattackground         = false,
   coreThickness           = 0.5,
   craterBoost             = 0,
   craterMult              = 0,
@@ -29,7 +28,6 @@ local weaponDef = {
   damage                  = {
     default = 3,
   },
-  explosionGenerator      = "custom:flash1red",
   fireStarter             = 100,
   impactOnly              = false,
   impulseFactor           = 0,

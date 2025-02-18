@@ -34,6 +34,7 @@ Utils={
     
         return minWidth, minHeight
     end,
+    --[=[]=]
     MoveChild=function (self,index,offset)
         local children=self.children
         local tomove_start
@@ -76,5 +77,20 @@ Utils={
 			end
 		end
 		table.insert(children, index, objDirect)
+    end,
+
+    SetChildIndex=function (self,child,id)
+	    local objDirect =  WG.Chili.UnlinkSafe(child)
+	    local hobj = WG.Chili.MakeHardLink(objDirect)
+        self.children[id]=objDirect
+        self.children[objDirect]=id
+        self.children[hobj]=id
+    end,
+    HitTestSelf=function (self,x,y)
+        return self
     end
+      
 }
+if false then
+    WG.Chili.Utils=Utils
+end

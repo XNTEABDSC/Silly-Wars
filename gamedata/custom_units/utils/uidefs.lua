@@ -31,9 +31,10 @@ local function UIPicThen(pic,name,desc,thenUIFn)
             file = pic,
             parent=panel0,
             tooltip=name .. ": " .. desc,
-            greedyHitTest=true,
+            --greedyHitTest=true,
             
         }
+        picbox.HitTest=WG.Chili.Utils.HitTestSelf
         local thenUI=thenUIFn(WG,panel0)
         thenUI.control:SetPos(22)
 
@@ -122,7 +123,8 @@ function ui.SimpleValueUI(pic,name,desc,paramtype)
 end
 ---Show Modifies genUIFn
 ---@param modifies {[integer]:CustomModify}
-function ui.StackModifies(modifies)
+function ui.StackModifies(modifies,columns)
+    columns=columns or 1
     return function (WG,parent)
         local panel=WG.Chili.AutosizeLayoutPanel:New{
             orientation = "horizontal",
@@ -131,6 +133,8 @@ function ui.StackModifies(modifies)
 			padding = {2, 2, 2, 2},
             itemPadding = {0, 0, 0, 0},
             itemMargin  = {5, 5, 5, 5},
+            rows=math.huge,
+            columns=columns,
             --cols=1,rows=1000
         }
         local BetterGetChildrenMinimumExtents=WG.Chili.Utils.BetterGetChildrenMinimumExtents
@@ -254,13 +258,13 @@ function ui.ChooseAndModify(items)
             minWidth=100,
             width=100,
             OnSelect={function(self, i)
-                local wpn_name=item_id_to_name[i]
-                local wpn=items[wpn_name]
-                if not wpn then
+                local item_name=item_id_to_name[i]
+                local item=items[item_name]
+                if not item then
                     choosed_item=nil
                     UpdateUI()
                 else
-                    choosed_item=wpn_name
+                    choosed_item=item_name
                     UpdateUI()
                 end
             end
@@ -285,9 +289,13 @@ function ui.ChooseAndModify(items)
                 local item_name,item_param=table[1],table[2]
                 if item_name~=nil and item_param~=nil then
                     local item_base=items[item_name]
-                    if item_base then
+                    local item_id=item_name_to_id[item_name]
+                    if item_id then
+                        choose_item_combobox.Select(item_id)
+                        --[=[
                         choosed_item=item_name
                         UpdateUI()
+                        ]=]
                         item_mod_ui.setValue(item_param)
                     else
                         table=nil
@@ -297,8 +305,11 @@ function ui.ChooseAndModify(items)
                 end
             end
             if table==nil then
+                choose_item_combobox.Select(item_id)
+                --[=[
                 choosed_item=nil
                 UpdateUI()
+                ]=]
                 return
             end
         end

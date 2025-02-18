@@ -1,3 +1,5 @@
+
+if not Spring.GetModOptions().custon_units then return end
 --[=[
 To Implement custom units
 1. set custom units to its real state via Spring.Utilities.CustomUnits.utils.SetCustomUnit

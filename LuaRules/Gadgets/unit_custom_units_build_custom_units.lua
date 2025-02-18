@@ -1,3 +1,6 @@
+
+if not Spring.GetModOptions().custon_units then return end
+
 if gadgetHandler:IsSyncedCode() then
 
     function gadget:GetInfo()
@@ -24,6 +27,7 @@ if gadgetHandler:IsSyncedCode() then
 
     local SpawnCustomUnit
     local CustomUnitDefs
+    local utils_CanBuilderBuildCustomUnits=Spring.Utilities.CustomUnits.utils.CanBuilderBuildCustomUnits
 
     if GG and GG.CustomUnits and GG.CustomUnits.SpawnCustomUnit then
         SpawnCustomUnit=GG.CustomUnits.SpawnCustomUnit
@@ -38,7 +42,7 @@ if gadgetHandler:IsSyncedCode() then
     if not CMD_BUILD_CUSTOM_UNIT then
         Spring.Echo("Error: CustomUnits: CMD.BUILD_CUSTOM_UNIT don't exist")
     end
-
+    --[=[
     local can_build_custom_units_defs={}
 
     for udid, ud in pairs(UnitDefs) do
@@ -47,7 +51,7 @@ if gadgetHandler:IsSyncedCode() then
                 range=tonumber(ud.customParams.custom_unit_buildcost_range)
             }
         end
-    end
+    end]=]
 
     local spSetUnitMoveGoal=Spring.SetUnitMoveGoal
     local spGetUnitPosition=Spring.GetUnitPosition
@@ -84,17 +88,20 @@ if gadgetHandler:IsSyncedCode() then
 
     function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
         if cmdID==CMD_BUILD_CUSTOM_UNIT then
-            local can_build_custom_units_def=can_build_custom_units_defs[unitDefID]
-            if can_build_custom_units_def==nil then
-                Spring.Utilities.UnitEcho(unitID,"CustomUnits: CMD_BUILD_CUSTOM_UNIT command blocked because no can_build_custom_units_def")
-                return false
-            end
             local cudid=cmdParams[1]
-            if CustomUnitDefs[cudid]==nil then
+            local cud=CustomUnitDefs[cudid]
+            if cud==nil then
                 Spring.Utilities.UnitEcho(unitID,"CustomUnits: CMD_BUILD_CUSTOM_UNIT command blocked because no CustomUnitDefs[cudid] cudid:" .. tostring(cudid))
                 return false
             end
-            Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command passed")
+            local canbuild,reason=utils_CanBuilderBuildCustomUnits(unitID,unitDefID,cud)
+            if canbuild then
+                return true
+            else
+                Spring.Utilities.UnitEcho(unitID,"CustomUnits: unit can't build Custom Unit " .. cudid .. " because " .. tostring(reason))
+                return false
+            end
+            --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command passed")
         end
         return true
     end

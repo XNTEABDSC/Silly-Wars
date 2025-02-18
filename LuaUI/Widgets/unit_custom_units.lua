@@ -1,3 +1,5 @@
+
+if not Spring.GetModOptions().custon_units then return end
 --[=[
 
 WG.CustomUnits.UploadUnitDef(json) to upload CustomUnitDef
@@ -43,9 +45,9 @@ WG.CustomUnits={}
 
 WG.CustomUnits.CustomUnitDefs=CustomUnitDefs
 
-local CustomUnitDefsToID={}
+local CustomUnitDefsStringToID={}
 
-WG.CustomUnits.CustomUnitDefsToID=CustomUnitDefsToID
+WG.CustomUnits.CustomUnitDefsStringToID=CustomUnitDefsStringToID
 
 local function UpdateCustomUnitDefs()
     local count=spGetGameRulesParam("CustomUnitDefsCount")
@@ -56,13 +58,16 @@ local function UpdateCustomUnitDefs()
         local cudTable=jsondecode(cudStr)
         local cud=GenCustomUnitDef(cudTable)
         CustomUnitDefs[cudid]=cud
-		CustomUnitDefsToID[cudStr]=cudid-- THE WAY
+		CustomUnitDefsStringToID[cudStr]=cudid-- THE WAY
     end
 end
 
 
 local function GetOrUploadUnitDef(cudStr)
-	local cudid=CustomUnitDefsToID[cudStr]
+    if cudStr==nil then
+        return nil
+    end
+	local cudid=CustomUnitDefsStringToID[cudStr]
 	if cudid then
 		return cudid
 	end
@@ -84,19 +89,6 @@ end
 
 local jsonencode=Spring.Utilities.json.encode
 local jsondecode=Spring.Utilities.json.decode
-
----@type {[UnitDefId]:{build_cost_range:number}}
-local CanBuildCustomUnitsDefs={}
-
-for udid, ud in pairs(UnitDefs) do
-	if ud.customParams.custom_unit_buildcost_range and tonumber(ud.customParams.custom_unit_buildcost_range) then
-		CanBuildCustomUnitsDefs[udid]={
-			build_cost_range=tonumber(ud.customParams.custom_unit_buildcost_range)
-		}
-	end
-end
-
-WG.CustomUnits.CanBuildCustomUnitsDefs=CanBuildCustomUnitsDefs
 
 function widget:Initialize()
 	widgetHandler:RegisterGlobal("UpdateCustomUnitDefs",UpdateCustomUnitDefs)

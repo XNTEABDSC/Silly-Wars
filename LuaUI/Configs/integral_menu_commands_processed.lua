@@ -50,4 +50,21 @@ for name, listData in pairs(factoryUnitPosDef) do
 	end
 end
 
+
+local tabs={
+	ECON=buildCmdEconomy,
+	DEFENSE=buildCmdDefence,
+	SPECIAL=buildCmdSpecial,
+	FACTORY=buildCmdFactory,
+}
+
+local modCommands = VFS.Include("LuaRules/Configs/modCommandsDefs.lua")
+for i = 1, #modCommands do
+	local cmd = modCommands[i]
+	local needtab=cmd.at_integral_menu_tab
+	if needtab and tabs[needtab] then
+		tabs[needtab][cmd.cmdID]=cmd.position
+	end
+end
+
 return buildCmdFactory, buildCmdEconomy, buildCmdDefence, buildCmdSpecial, buildCmdUnits, cmdPosDef, factoryUnitPosDef

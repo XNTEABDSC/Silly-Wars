@@ -12,6 +12,7 @@ local spSetProjectileTarget=Spring.SetProjectileTarget
 local spGetProjectileTarget=Spring.GetProjectileTarget
 
 local spSetProjectileDamages=Spring.SetProjectileDamages
+local spSetProjectileCEG=Spring.SetProjectileCEG
 
 local targeterweapons=GameData.CustomUnits.utils.targeterweapons
 local is_beam_targeter={}
@@ -46,14 +47,14 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,targeterwdid,customWpnDa
             --error = {number x, number y, number z},
             owner = spGetProjectileOwnerID(targeterProjID),
             team = spGetProjectileTeamID(targeterProjID),
-            ttl = customWpnData.ttl,
-            gravity = -customWpnData.gravity,
-            tracking = customWpnData.tracks,
+            ttl = 10,--customWpnData.ttl,
+            gravity = 0,
+            tracking = false,
             maxRange = customWpnData.range,
             --startAlpha = number,
             --endAlpha = number,
             model = customWpnData.model,
-            cegTag = customWpnData.explosionGenerator,
+            cegTag = customWpnData.cegTag,
             ["end"] = {px+vx,py+vy,pz+vz},
         })
     else
@@ -72,12 +73,12 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,targeterwdid,customWpnDa
             --startAlpha = number,
             --endAlpha = number,
             model = customWpnData.model,
-            cegTag = customWpnData.explosionGenerator,
+            cegTag = customWpnData.cegTag,
             --end = {number x, number y, number z},
         })
     end
     
-    
+    spSetProjectileCEG(newProjID,customWpnData.explosionGenerator)
 
     do
         local v1,v2,v3=spGetProjectileTarget(targeterProjID)

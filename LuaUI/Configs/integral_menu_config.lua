@@ -1,4 +1,4 @@
-local buildCmdFactory, buildCmdEconomy, buildCmdDefence, buildCmdSpecial, buildCmdUnits, cmdPosDef, factoryUnitPosDef = include("Configs/integral_menu_commands_processed.lua")
+local buildCmdFactory, buildCmdEconomy, buildCmdDefence, buildCmdSpecial, buildCmdUnits, cmdPosDef, factoryUnitPosDef = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -553,10 +553,6 @@ local commandPanels = {
 		humanName = "Units",
 		name = "units_mobile",
 		inclusionFunction = function(cmdID, factoryUnitDefID)
-			Spring.Echo("checking unit " ..
-			((cmdID and UnitDefs[-cmdID] and UnitDefs[-cmdID].name) or " nil ")
-			.. " factory " ..
-			((factoryUnitDefID and UnitDefs[factoryUnitDefID] and UnitDefs[factoryUnitDefID].name) or " nil "))
 			-- This has to be perfect to predict the size of the units tab in integral menu.
 			return (cmdID < 0 and not factoryUnitDefID and
 				not buildCmdEconomy[cmdID] and not buildCmdFactory[cmdID] and
@@ -570,23 +566,19 @@ local commandPanels = {
 		buttonLayoutConfig = buttonLayoutConfig.build,
 	},
 	{
-		humanName = "Factory Units",
+		humanName = "Units",
 		name = "units_factory",
 		inclusionFunction = function(cmdID, factoryUnitDefID)
-			--Spring.Echo("checking factory " .. UnitDefs[factoryUnitDefID].name .. "")
 			if not (factoryUnitDefID and buildCmdUnits[factoryUnitDefID]) then
-				--Spring.Echo("unit " .. UnitDefs[factoryUnitDefID].name .. " is not a factory")
 				return false
 			end
 			local buildOptions = UnitDefs[factoryUnitDefID].buildOptions
 			for i = 1, #buildOptions do
 				if buildOptions[i] == -cmdID then
 					local position = buildCmdUnits[factoryUnitDefID][cmdID]
-					Spring.Echo("found, position " .. tostring(position and true or false))
 					return position and true or false, position
 				end
 			end
-			--Spring.Echo("unit " .. UnitDefs[-cmdID].name .. " is not in buildCmdUnits")
 			return false
 		end,
 		loiterable = true,

@@ -1,4 +1,9 @@
 local utils=GameData.CustomUnits.utils
+
+local function dwa()
+    
+end
+
 utils.plasma_aoe_mutate={
     --[=[
     ---@param wpn CustomWeaponDataModify
@@ -34,6 +39,19 @@ utils.plasma_aoe_mutate={
         wpn.explosionGenerator      = [[custom:lrpc_expl]]
     end]=]
 
-    
+    ---@param wpn CustomWeaponDataModify
+    plasma_aoe_176=function (wpn)
+        wpn.cost=wpn.cost*2.2
+        wpn.aoe=176
+        
+        wpn.craterBoost_add             = 0.25
+        wpn.craterMult_add              = 0.5
+        wpn.cegTag                  = [[vulcanfx]]
+        wpn.explosionGenerator      = [[custom:lrpc_expl]]
+        wpn.impulseBoost_add            = 0.5
+        wpn.impulseFactor_add           = 0.2
+        
+
+    end
 }
 GameData.CustomUnits.utils=utils

@@ -11,7 +11,7 @@ local data = {
 	--cursor = "Techup",
 	image = "LuaUI/Images/commands/Bold/upgrade.png", -- If a state, then this should be a list of images.
 	
-	onCommandMenuByDefault = true,
+	onCommandMenuByDefault = false,
 	position = {pos = 7, priority = 0.1},
 	stateNames = nil, -- A list of what the states are called.
 	stateTooltip = nil, -- A list of tooltips to use for each state.

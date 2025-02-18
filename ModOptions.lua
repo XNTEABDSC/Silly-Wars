@@ -210,6 +210,14 @@ local options = {
     },
   },
   {
+    key         = "custon_units",
+    name        = "Custom Units",
+    desc        = "Turn on Custom Units system. You need lua_mods/custom_units to turn on custom unit builder",
+    type        = "bool",
+    section     = "experimental",
+    def         = false,
+  },
+  {
     key         = "allyreclaim",
     name        = "Reclaimable allies",
     desc        = "Allows reclaiming allied units and structures",

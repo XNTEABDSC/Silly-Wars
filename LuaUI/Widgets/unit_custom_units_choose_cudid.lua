@@ -1,4 +1,6 @@
 
+if not Spring.GetModOptions().custon_units then return end
+VFS.Include("LuaRules/Configs/custom_units/utils.lua")
 --[=[
 ChooseCUDToBuild + CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS -> CMD_BUILD_CUSTOM_UNIT
 --]=]
@@ -24,8 +26,11 @@ local spGetSelectedUnits=Spring.GetSelectedUnits
 local spGetUnitDefID=Spring.GetUnitDefID
 local spGiveOrderToUnitArray=Spring.GiveOrderToUnitArray
 
-local CanBuildCustomUnitsDefs=WG.CustomUnits.CanBuildCustomUnitsDefs
+
+
+local CustomUnitBuilders=Spring.Utilities.CustomUnits.utils.CustomUnitBuilders
 local CustomUnitDefs=WG.CustomUnits.CustomUnitDefs
+local utils_CanBuilderBuildCustomUnits=Spring.Utilities.CustomUnits.utils.CanBuilderBuildCustomUnits
 
 --local ChooseCUDPanel=nil
 
@@ -55,7 +60,7 @@ WG.CustomUnits.ChooseCUDToBuild=ChooseCUDToBuild
 function widget:CommandsChanged()
     local selectedunits=spGetSelectedUnits()
     for _, uid in pairs(selectedunits) do
-        local CanBuildCustomUnitsDef=CanBuildCustomUnitsDefs[spGetUnitDefID(uid)]
+        local CanBuildCustomUnitsDef=CustomUnitBuilders[spGetUnitDefID(uid)]
         if CanBuildCustomUnitsDef then
             --selectedCanBuildUnits[#selectedCanBuildUnits+1] = uid
             local customCommands = widgetHandler.customCommands
@@ -66,6 +71,9 @@ function widget:CommandsChanged()
     end
 end
 
+local CMD_OPT_SHIFT=CMD.OPT_SHIFT
+local CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS=CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS
+local math_bit_and=math.bit_and
 function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
     if cmdID==CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS then
         if cudid_to_build~=nil then
@@ -82,8 +90,8 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
             do
                 local selectedunits=spGetSelectedUnits()
                 for _, uid in pairs(selectedunits) do
-                    local CanBuildCustomUnitsDef=CanBuildCustomUnitsDefs[spGetUnitDefID(uid)]
-                    if CanBuildCustomUnitsDef and cudcost < CanBuildCustomUnitsDef.build_cost_range then
+                    local udid=spGetUnitDefID(uid)
+                    if utils_CanBuilderBuildCustomUnits(uid,udid,cud) then
                         selectedCanBuildUnits[#selectedCanBuildUnits+1] = uid
                     end
                 end
@@ -93,7 +101,7 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
             },0)
             --cudid_to_build=nil
         end
-        if cmdOptions and false then
+        if cmdOptions and (math_bit_and(cmdOptions,CMD_OPT_SHIFT)~=0) then
             
         else
             cudid_to_build=nil
@@ -104,6 +112,5 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
 end
 
 function widget:Initialize()
-    CanBuildCustomUnitsDefs=WG.CustomUnits.CanBuildCustomUnitsDefs
     CustomUnitDefs=WG.CustomUnits.CustomUnitDefs
 end

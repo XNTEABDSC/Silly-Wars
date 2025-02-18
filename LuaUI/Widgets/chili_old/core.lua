@@ -67,8 +67,12 @@ local luaFiles=VFS.DirList(includes_order_dir, "*.lua") or {}
 for i = 1, #luaFiles do
 
     local res=VFS.Include(luaFiles[i])
-	for key, value in pairs(res) do
-		ordered_includes.Add(value)
+	if res==nil then
+		Spring.Echo("Error: file " .. luaFiles[i] .. " returns nil")
+	else
+		for key, value in pairs(res) do
+			ordered_includes.Add(value)
+		end
 	end
 end
 

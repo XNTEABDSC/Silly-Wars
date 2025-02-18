@@ -24,6 +24,9 @@ utils.ACustomWeaponData=function ()
     ---@field craterAreaOfEffect nil|number
     ---@field targeter_weapon string
     ---@field name string|nil
+    ---@field cegTag string|nil
+    ---@field soundHit string|nil
+    ---@field soundStart string|nil
     local o={
         damage_default_mut=1,
         damages_mut={},

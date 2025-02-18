@@ -52,6 +52,9 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
     ---@field model string
     ---@field name string|nil
     ---@field ttl number|nil
+    ---@field cegTag nil|string
+    ---@field soundHit string|nil --TODO
+    ---@field soundStart string|nil
     local o={
         projSpeed=projSpeed,
         projSpeed_mut=projSpeed/custom_targeter_proj_speed,
@@ -81,6 +84,9 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
         model=wd.visuals.modelName,
         name=CustomWeaponDataModify.name,
         ttl=ttl,
+        cegTag=CustomWeaponDataModify.cegTag,
+        soundHit=CustomWeaponDataModify.soundHit,
+        soundStart=CustomWeaponDataModify.soundStart,
     }
 
     --local damage_default=wd.damages.default*CustomWeaponDataModify.damage_default_mut

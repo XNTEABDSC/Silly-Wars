@@ -19,7 +19,7 @@ local modifies                        = {
     utils.weapon_modifies.proj_speed,
     utils.weapon_modifies.proj_range,
     utils.weapon_modifies.reload,
-    utils.weapon_modifies.into_aa,
+    --utils.weapon_modifies.into_aa,
 }
 
 

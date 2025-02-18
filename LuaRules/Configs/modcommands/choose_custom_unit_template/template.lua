@@ -19,8 +19,9 @@ return function (i)
         --cursor = "Techup",
         image = "LuaUI/Images/dynamic_comm_menu/cross.png", -- If a state, then this should be a list of images.
         
-        onCommandMenuByDefault = false,
-        position = {row=row,col=col,order=order},
+        onCommandMenuByDefault = true,
+        position = {row=row,col=col,order=order,priority=0.1},
+        at_integral_menu_tab="SPECIAL",
         stateNames = nil, -- A list of what the states are called.
         stateTooltip = nil, -- A list of tooltips to use for each state.
         tooltip = "Choose custom unit slot " .. i,
