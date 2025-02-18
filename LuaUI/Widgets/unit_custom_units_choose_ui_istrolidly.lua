@@ -48,7 +48,11 @@ local CurrentPadLine={}
 
 local DIR_NAME="LuaUI/Configs/CustomUnits/"
 
-local FILE_NAME="CustomUnitsDefs.lua"
+local FILE_NAME="CustomUnitsDefs.json"
+
+
+local jsonencode=Spring.Utilities.json.encode
+local jsondecode=Spring.Utilities.json.decode
 
 local utils_GetOrUploadUnitDef
 local utils_ChooseCUDToBuild
@@ -134,7 +138,23 @@ local function ListUtils(list,OnMoveRaw)
         Add=Add,Remove=Remove,Move=Move,MoveRaw=MoveRaw
     }
 end
-
+--- lib={
+---     tabs={
+---         name=
+---         rows={
+---             name=
+---             cuds={
+---                 [1]={
+---                     cudid=
+---                     cudstr
+---                 }
+---             }
+---         }
+---     }
+--- }
+---
+---
+---
 local LibCudButtonSize=48
 local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
     local lib={
@@ -404,7 +424,7 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                     itemPadding   = {2, 2, 2, 2},
                     rows=1,columns=math.huge
                 }
-                tab.rowscontrol:AddChild(row.control,row.id)
+                tab.rowscontrol:AddChild(row.control,false,row.id)
 
                 local namePanel=WG.Chili.ButtonLabelEdit:New{
                     parent=row.control,
@@ -430,6 +450,29 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                         cudid=nil,
                         cudstr=cuddata
                     }
+
+                    local trygen=nil
+
+                    
+                    local function SetImg(cudstr)
+
+                        local gen_suc,gen_res=utils_TryGenCustomUnitDef(cudstr)
+
+                        if gen_suc then
+                            cuditem.imgcontrol.file="unitpics/" .. UnitDefs[gen_res.unitDef].buildpicname
+                            
+                        else
+                            cuditem.imgcontrol.file = 'LuaUI/Images/commshare.png'
+                        end
+                        local tooltip=utils_GenCustomUnitDefViewStr(gen_res)
+                        if tooltip=="nil" or tooltip=="empty" then
+                            tooltip="Click to design"
+                        end
+                        cuditem.control.tooltip=tooltip
+                        cuditem.control:Invalidate()
+                        cuditem.imgcontrol:Invalidate()
+                    end
+
                     cuditem.control=WG.Chili.Button:New{
                         parent=row.control,
                         width=LibCudButtonSize,height=LibCudButtonSize,noFont=true,
@@ -457,18 +500,7 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
 
                                     cuditem.cudid=WG.CustomUnits.CustomUnitDefsStringToID[cudstr]-- upload later
 
-                                    local gen_suc,gen_res=utils_TryGenCustomUnitDef(cudstr)
-
-                                    if gen_suc then
-                                        cuditem.imgcontrol.file="unitpics/" .. UnitDefs[gen_res.unitDef].buildpicname
-                                        
-                                    else
-                                        cuditem.imgcontrol.file = 'LuaUI/Images/commshare.png'
-                                    end
-                                    cuditem.control.tooltip=utils_GenCustomUnitDefViewStr(gen_res)
-                                    cuditem.control:Invalidate()
-                                    cuditem.imgcontrol:Invalidate()
-                                    --cuditem.imgcontrol.file=
+                                    SetImg(cudstr)
                                 end
                                 local function Close()
                                     WG.Chili.Screen0:RemoveChild(DesignerWindow)
@@ -507,16 +539,20 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                         },
                         tooltip="Click to design"
                     }
+
+                    local imgfile= 'LuaUI/Images/commshare.png'
+
                     cuditem.imgcontrol=WG.Chili.Image:New{
                         x = 0,
                         y = 0,
                         right = 0,
                         bottom = 0,
                         parent = cuditem.control,
-                        file = 'LuaUI/Images/commshare.png',
+                        file = imgfile,
                     }
 
-                    cuditem.imgcontrol.tooltip="Click to design"
+                    SetImg(cuditem.cudstr)
+
                     cuditem.imgcontrol:Invalidate()
                     function cuditem:TryGetCudid()
                         local cudid=self.cudid
@@ -604,6 +640,64 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
     return lib
 end
 
+local function LibToData(lib)
+    local libres={}
+    libres.tabs={}
+    for tabindex, tab in pairs(lib.tabs) do
+        local tabres={}
+        libres.tabs[tabindex]=tabres
+        tabres.name=tab.name
+        tabres.rows={}
+        for rowindex, row in pairs(tab.rows) do
+            local rowres={}
+            tabres.rows[rowindex]=rowres
+            rowres.name=row.name
+            rowres.cuds={}
+            for i = 1, 12 do
+                --Spring.Echo("DEBUG cudstr: " .. tostring(row.cuds[i].cudstr))
+                rowres.cuds[i]=row.cuds[i].cudstr
+            end
+        end
+    end
+    return libres
+end
+
+local function LoadLocalData()
+    local resdata=nil
+    if VFS.FileExists(DIR_NAME..FILE_NAME) then
+        local jsondecode_suc,jsondecode_res=pcall(jsondecode,VFS.LoadFile(DIR_NAME..FILE_NAME))
+        if jsondecode_suc then
+            resdata=jsondecode_res
+        else
+            Spring.Log("unit_custom_units_choose_ui_istrolidly.lua", LOG.ERROR, 'Failed to jsondecode file: ' .. DIR_NAME..FILE_NAME .. ' with error ' .. jsondecode_res .. '')
+        end
+        
+    end
+
+
+    if not resdata then
+        resdata={
+            tabs={
+                {
+                    name="default"
+                }
+            }
+        }
+    end
+    return resdata
+end
+
+local function SaveLocalData(data)
+    Spring.CreateDir(DIR_NAME)
+    local file,errmsg=io.open(DIR_NAME..FILE_NAME, 'w')
+    if file then
+        file:write(jsonencode(data))
+        file:close()
+    else
+        Spring.Log("unit_custom_units_choose_ui_istrolidly.lua", LOG.ERROR, 'Failed to create save file: ' .. DIR_NAME..FILE_NAME .. ' with error ' .. errmsg .. '')
+    end
+end
+
 local function ToggleWindow()
 	if CustomUnitDefsIstrolidLib then
         if CustomUnitDefsIstrolidLib.control.visible then
@@ -626,29 +720,33 @@ function widget:Initialize()
     CustomUnitDefs=WG.CustomUnits.CustomUnitDefs
     utils_GetOrUploadUnitDef=WG.CustomUnits.GetOrUploadUnitDef
     utils_ChooseCUDToBuild=WG.CustomUnits.ChooseCUDToBuild
-    CustomUnitDefsIstrolidLib=GenIstrolidLibrary({
-        tabs={
-            {name="adef",rows={
-                {
-                    name="ye"
-                },
-                {
-                    name="aye"
-                }
-            }},
-            {name="awdefvfb"},
-            {name=nil},
-            {name="ye"},
-            {name="1"},
-            {name="2"},
-            {name="3"},
-            {name="4"},
-            {name="5"},
-            {name="6"},
-            {name="7"},
-            {name="8"},
-        }
-    })
+    CustomUnitDefsIstrolidLib=GenIstrolidLibrary(
+    --[=[
+        {
+            tabs={
+                {name="adef",rows={
+                    {
+                        name="ye"
+                    },
+                    {
+                        name="aye"
+                    }
+                }},
+                {name="awdefvfb"},
+                {name=nil},
+                {name="ye"},
+                {name="1"},
+                {name="2"},
+                {name="3"},
+                {name="4"},
+                {name="5"},
+                {name="6"},
+                {name="7"},
+                {name="8"},
+            }
+        }]=]
+        LoadLocalData()
+    )
     
     WG.CustomUnits.CustomUnitDefsIstrolidLib=CustomUnitDefsIstrolidLib
     TrySetToggleWindowCommandButton()
@@ -694,4 +792,8 @@ function widget:CommandNotify(cmdID)
         end
         
     end
+end
+
+function widget:Shutdown()
+    SaveLocalData(LibToData(CustomUnitDefsIstrolidLib))
 end

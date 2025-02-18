@@ -69,6 +69,6 @@ local res=
         return modifyfn(Spring.Utilities.CopyTable(custom_weapon_data,true),mutate_table)
     end,
     modifies=modifies,
-    genUIFn=utils.ui.UIPicThen(pic,humanName,desc,utils.ui.StackModifies(modifies))
+    genUIFn=utils.ui.UIPicThen(pic,humanName,desc,utils.ui.StackModifies(modifies,2))
 }
 return res

@@ -13,8 +13,11 @@ local function GenCustomUnitDef(cudTable)
     local cud=GenCustomUnitDataFinal(cud_mod)
     return cud
 end
-
+---@param cudString string
 local function TryGenCustomUnitDefFromJson(cudString)
+    if cudString==nil or cudString:len()==0 then
+        return false,(cudString==nil and "nil" or "empty")
+    end
     local suc,res=pcall (jsondecode, cudString)
     if suc then
         local cudTable= res
@@ -23,9 +26,9 @@ local function TryGenCustomUnitDefFromJson(cudString)
             local cud=res2
             return true,cud
         else
-            return false,"failed to GenCustomUnitDef for " .. cudString .. " with error " .. res2
+            return false,"failed to GenCustomUnitDef\n error: " .. res2 .. "\n for string " .. cudString--"failed to GenCustomUnitDef for " .. cudString .. " with error " .. res2
         end
-        return false,"failed to jsondecode string " .. cudString .. " with error " .. res
+        return false,"failed to jsondecode\n error: " .. res .. "\n for string " .. cudString--"failed to jsondecode string " .. cudString .. " with error " .. res
     end
 end
 

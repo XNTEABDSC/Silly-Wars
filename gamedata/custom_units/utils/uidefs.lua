@@ -291,7 +291,7 @@ function ui.ChooseAndModify(items)
                     local item_base=items[item_name]
                     local item_id=item_name_to_id[item_name]
                     if item_id then
-                        choose_item_combobox.Select(item_id)
+                        choose_item_combobox:Select(item_id)
                         --[=[
                         choosed_item=item_name
                         UpdateUI()
