@@ -27,6 +27,7 @@ utils.ACustomWeaponData=function ()
     ---@field cegTag string|nil
     ---@field soundHit string|nil
     ---@field soundStart string|nil
+    ---@field tracks boolean|nil
     local o={
         damage_default_mut=1,
         damages_mut={},

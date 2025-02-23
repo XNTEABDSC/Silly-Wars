@@ -1,7 +1,7 @@
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils=Spring.Utilities.wacky_utils
 local utils=GameData.CustomUnits.utils
-
+--[==[
 local custom_weapon_data=utils.ACustomWeaponData()
 custom_weapon_data.weapon_def_name="custom_plasma"
 custom_weapon_data.aoe=36
@@ -72,3 +72,49 @@ local res=
     genUIFn=utils.ui.UIPicThen(pic,humanName,desc,utils.ui.StackModifies(modifies,2))
 }
 return res
+--]==]
+
+return utils.GenCustomWeaponBase{
+    name="custom_plasma",
+    pictrue="unitpics/commweapon_assaultcannon.png",
+    description="",
+    humanName="Plasma",
+    WeaponDef={
+        name                    = [[Light Plasma Cannon]],
+        craterBoost             = 0,
+        craterMult              = 0,
+        areaOfEffect=36,
+        customParams        = {
+            light_camera_height = 1800,
+            light_color = [[0.80 0.54 0.23]],
+            light_radius = 200,
+        },
+    
+        damage                  = {
+            default = 4,
+        },
+    
+        explosionGenerator      = [[custom:INGEBORG]],
+        impulseBoost            = 0,
+        impulseFactor           = 0.4,
+        interceptedByShieldType = 1,
+        noSelfDamage            = true,
+        range                   = 600,
+        reloadtime              = 2.5,
+        soundHit                = [[explosion/ex_med5]],
+        soundStart              = [[weapon/cannon/cannon_fire5]],
+        turret                  = true,
+        weaponType              = [[Cannon]],
+        weaponVelocity          = 280,
+    },
+    Modifies={
+        utils.weapon_modifies.name,
+        utils.weapon_modifies.damage,
+        utils.weapon_modifies.plasma_aoe,
+        utils.weapon_modifies.proj_speed,
+        utils.weapon_modifies.proj_range,
+        utils.weapon_modifies.reload,
+        utils.weapon_modifies.slow_partial,
+    },
+    targeter="projectile_targeter"
+}

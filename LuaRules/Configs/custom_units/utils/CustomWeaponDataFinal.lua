@@ -11,6 +11,9 @@ local custom_targeter_projectiles=const.custom_targeter_projectiles
 ---@return CustomWeaponDataFinal
 utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
     local wd=WeaponDefNames[CustomWeaponDataModify.weapon_def_name]
+    if not wd then
+        error("weapon def " .. CustomWeaponDataModify.weapon_def_name .. " dont't exist")
+    end
     local projSpeed=wd.projectilespeed*CustomWeaponDataModify.projSpeed_mut
     local range=wd.range*CustomWeaponDataModify.range_mut
     local reload_time=wd.reload *CustomWeaponDataModify.reload_time_mut
@@ -22,6 +25,10 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
         ttl = 1500 -- Needed to appease the unspeakable evil: https://github.com/beyond-all-reason/spring/issues/704
     else
         ttl = wd.flightTime or wd.beamTTL or 9000
+    end
+    local tracks=CustomWeaponDataModify.tracks
+    if tracks==nil  then
+        tracks=wd.tracks
     end
     ---@class CustomWeaponDataFinal
     ---@field damages {[number]:number}
@@ -80,7 +87,7 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
         impulseBoost=CustomWeaponDataModify.impulseBoost_add and (CustomWeaponDataModify.impulseBoost_add+wd.damages.impulseBoost) or nil,
         craterAreaOfEffect=CustomWeaponDataModify.craterAreaOfEffect or nil,
         gravity=wd.myGravity,
-        tracks =wd.tracks,
+        tracks =tracks,
         model=wd.visuals.modelName,
         name=CustomWeaponDataModify.name,
         ttl=ttl,

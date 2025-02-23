@@ -37,8 +37,29 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,targeterwdid,customWpnDa
     
     local newProjID
 
+
+    --local ProjTarget
+    local ProjTar_a,ProjTar_b=spGetProjectileTarget(targeterProjID)
+    --Spring.Echo("DEBUG: ")
+    local ProjEnd
+    
+    do
+        --[=[if type(ProjTar_b)=='number' then
+            --ProjEnd=ProjTar_b
+        else]=]
+        if type(ProjTar_b)=="table" then
+            --ProjTarget=b
+            ProjEnd=ProjTar_b
+        elseif type(ProjTar_a)=="number" then
+            --ProjEnd=ProjTar_b
+        end
+        if not ProjEnd then
+            --ProjEnd={px+vx,py+vy,pz+vz}
+        end
+    end
+
     if is_beam_targeter[targeterwdid] then
-        Spring.Echo("game_message: is_beam_targeter")
+        --Spring.Echo("DEBUG: is_beam_targeter")
         newProjID= spSpawnProjectile(wdid,{
             pos = {px,py,pz},
             
@@ -74,17 +95,20 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,targeterwdid,customWpnDa
             --endAlpha = number,
             model = customWpnData.model,
             cegTag = customWpnData.cegTag,
-            --end = {number x, number y, number z},
+            ["end"] = ProjEnd,
         })
     end
     
     spSetProjectileCEG(newProjID,customWpnData.explosionGenerator)
 
     do
-        local v1,v2,v3=spGetProjectileTarget(targeterProjID)
-        if v3 then
-            spSetProjectileTarget(newProjID,v1,v2,v3)
-            
+        --[=[if type(ProjTar_b)=='number' then
+            spSetProjectileTarget(newProjID,ProjTar_b)
+        else]=]
+        if type(ProjTar_b)=="table" then
+            spSetProjectileTarget(newProjID,ProjTar_b[1],ProjTar_b[2],ProjTar_b[3])
+        elseif type(ProjTar_a)=="number" then
+            spSetProjectileTarget(newProjID,ProjTar_b,ProjTar_a)
         end
     end
     

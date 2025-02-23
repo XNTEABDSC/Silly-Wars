@@ -1,8 +1,5 @@
 local utils=GameData.CustomUnits.utils
-local ui={
-
-}
-utils.ui=ui
+local ui={}
 
 ---A picture and thenUI at right
 ---@param thenUIFn ModifyUIgenfn
@@ -62,6 +59,7 @@ local function AutoEditBoxUI(paramtype)
         if paramtypenum==3 then
             local Checkbox=WG.Chili.Checkbox:New{
                 parent=parent,
+                checked=false,
                 caption=""
             }
             getValue=function ()
@@ -305,7 +303,7 @@ function ui.ChooseAndModify(items)
                 end
             end
             if table==nil then
-                choose_item_combobox.Select(item_id)
+                choose_item_combobox:Select(1)
                 --[=[
                 choosed_item=nil
                 UpdateUI()
@@ -321,4 +319,5 @@ function ui.ChooseAndModify(items)
         }
     end
 end
+utils.ui=ui
 GameData.CustomUnits.utils=utils

@@ -27,7 +27,7 @@ local speed_base=88.5
 local name = "custom_ravager"
 local humanName="Car (Ravager)"--name
 local weapons_slots={
-    [1]={"projectile_targeter","beam_targeter"}
+    [1]={"projectile_targeter","beam_targeter","line_targeter"}
 }
 local sizeMin,sizeMax=1,6
 

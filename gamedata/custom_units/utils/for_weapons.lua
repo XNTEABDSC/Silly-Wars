@@ -84,6 +84,55 @@ function (tb,flag)
     end
 end,"boolean"
 )
-
+do
+    local postfix="_tracks"
+    weapon_modifies.tracks=
+    genCustomModify("tracks","allow missile tracks enemy","unitpics/commweapon_missilelauncher.png",
+        function (tb,v)
+            if v then
+                tb.tracks=true
+                tb.damage_default_mut=tb.damage_default_mut*0.5
+                tb.weapon_def_name=tb.weapon_def_name .. postfix
+            end
+        end,"boolean",
+        function (wds)
+            local newwds={}
+            for key, value in pairs(wds) do
+                newwds[key]=value
+                local newwd=Spring.Utilities.CopyTable(value,true)
+                newwds[key .. postfix] = newwd
+                newwd.tracks=true
+            end
+            return newwds
+        end
+    )
+end
+do
+    local postfix="_slowpartial"
+    weapon_modifies.slow_partial=
+    genCustomModify("slow_partial","damage x0.75, give slow damage = 2x damage","unitpics/conversion_disruptor.png",
+        function (tb,v)
+            if v then
+                tb.tracks=true
+                tb.damage_default_mut=tb.damage_default_mut*0.75
+                tb.weapon_def_name=tb.weapon_def_name .. postfix
+            end
+        end,"boolean",
+        function (wds)
+            local newwds={}
+            for key, value in pairs(wds) do
+                newwds[key]=value
+                local newwd=Spring.Utilities.CopyTable(value,true)
+                newwds[key .. postfix] = newwd
+                if not newwd.customparams then
+                    newwd.customparams={}
+                end
+                newwd.customparams.timeslow_damagefactor=2
+                newwd.rgbcolor                = [[0.9 0.1 0.9]]
+            end
+            return newwds
+        end
+    )
+end
 
 GameData.CustomUnits.utils=utils

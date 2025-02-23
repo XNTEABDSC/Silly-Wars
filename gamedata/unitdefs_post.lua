@@ -72,12 +72,6 @@ for _, ud in pairs(UnitDefs) do
 
 -- modOptions.tweakdefs = 'Zm9yIG5hbWUsIHVkIGluIHBhaXJzKFVuaXREZWZzKSBkbwoJaWYgdWQubWF4dmVsb2NpdHkgdGhlbgoJCXVkLm1heHZlbG9jaXR5ID0gdWQubWF4dmVsb2NpdHkqMTAKCWVuZAplbmQ='
 
-do
-	local files=VFS.DirList("gamedata/tweak_unit_defs","*.lua")
-	for key, value in pairs(files) do
-		VFS.Include(value)
-	end
-end
 
 
 local tweak_units=utils_op.tweak_units
@@ -89,6 +83,15 @@ Spring.Utilities.to_make_op_things.load_modoptions()
 
 
 local modOptions=Spring.GetModOptions()
+
+
+do
+	local files=VFS.DirList("gamedata/tweak_unit_defs","*.lua")
+	for key, value in pairs(files) do
+		VFS.Include(value)
+	end
+end
+
 --[==[do
 	local append = false
 	local name = "tweakdefs"

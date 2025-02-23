@@ -16,8 +16,8 @@ local speed_base = 54
 local name = "custom_hermit"
 local humanName="Spider (Hermit)"
 local weapons_slots = {
-    [1] = { "projectile_targeter", "beam_targeter" },
-    [2] = { "projectile_targeter", "beam_targeter" }
+    [1] = { "projectile_targeter", "beam_targeter" ,"line_targeter"},
+    [2] = { "projectile_targeter", "beam_targeter" ,"line_targeter"}
 }
 local sizeMin=1
 local sizeMax=6

@@ -19,7 +19,7 @@ utils.UseModifies=function (modifies)
         ---@type string
         local unused=""
         for key, value in pairs(modtable) do
-            unused=unused .. tostring( key) .. ":" .. tostring( value) .. ","
+            unused=unused .. tostring( key) .. " : " .. tostring( value) .. " , "
         end
         if unused:len()>1 then
             error("unused modifies " .. unused)
@@ -28,15 +28,31 @@ utils.UseModifies=function (modifies)
     end
 end
 
-local function genCustomModify(name,desc,pic,modfn,paramType)
+---comments
+---@param name string
+---@param desc string
+---@param pic string
+---@param modfn function
+---@param UI ModifyUIgenfn|string
+---@param moddeffn function|nil
+---@return CustomModify
+local function genCustomModify(name,desc,pic,modfn,UI,moddeffn)
+    if type(UI) == "string" then
+        UI=utils.ui.AutoEditBoxUI(UI)
+    end
+    moddeffn=moddeffn or function (v)
+        return v
+    end
     ---@type CustomModify
     return {
         name=name,
         description=desc,
         pic=pic,
         modfn=modfn,
-        paramType=paramType,
-        genUIFn=utils.ui.SimpleValueUI(pic,name,desc,paramType),
+        genUIFn=
+        utils.ui.UIPicThen(pic,name,desc,UI),
+        --utils.ui.SimpleValueUI(pic,name,desc,paramType),
+        moddeffn=moddeffn,
     }
 end
 utils.genCustomModify=genCustomModify

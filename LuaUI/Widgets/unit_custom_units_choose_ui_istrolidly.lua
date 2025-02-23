@@ -528,7 +528,7 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                                         Close()
                                     end}
                                 }
-                                ButtonsPanel:Invalidate()
+                                ButtonsPanel:UpdateLayout()
                                 local DesignerScroll=WG.Chili.ScrollPanel:New{
                                     x=2,y=50,right=2,bottom=2,
                                     parent=DesignerWindow,

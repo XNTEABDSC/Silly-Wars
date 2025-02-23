@@ -101,10 +101,22 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
             },0)
             --cudid_to_build=nil
         end
-        if cmdOptions and (math_bit_and(cmdOptions,CMD_OPT_SHIFT)~=0) then
-            
-        else
-            cudid_to_build=nil
+        do
+            local opt_shift
+            if cmdOptions then
+                if type(cmdOptions)=="number" and (math_bit_and(cmdOptions,CMD_OPT_SHIFT)~=0)then
+                    opt_shift=true
+                end
+                if type(cmdOptions)=="table" and cmdOptions.shift then
+                    opt_shift=true
+                end
+            else
+            end
+            if opt_shift then
+                
+            else
+                cudid_to_build=nil
+            end
         end
         return true
         
