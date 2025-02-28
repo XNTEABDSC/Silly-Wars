@@ -4,7 +4,11 @@ local chassises=GameData.CustomUnits.chassis_defs
 function utils.GenCustomUnitDataFinal(CustomUnitDataModify)
     
     local mass=Spring.Utilities.wacky_utils.GetMass(CustomUnitDataModify.health,CustomUnitDataModify.cost)
-    local speed=CustomUnitDataModify.motor/mass
+    local speed=(CustomUnitDataModify.motor)/mass
+    local ud=UnitDefNames[CustomUnitDataModify.UnitDefName]
+    if not ud then
+        error("UnitDef " .. tostring(CustomUnitDataModify.UnitDefName) .. " dont exist")
+    end
     ---@class CustomUnitDataFinal
     ---@field CustomUnitDataModify CustomUnitDataModify
     ---@field unitDef UnitDefId
@@ -22,12 +26,13 @@ function utils.GenCustomUnitDataFinal(CustomUnitDataModify)
     ---@field cost number
     ---@field health number
     ---@field speed number
+    ---@field motor number
     ---@field mass number
     local o={
         health_mut=CustomUnitDataModify.health/1000,
         cost_mut=CustomUnitDataModify.cost/1000,
         speed_mut=speed/(chassises[CustomUnitDataModify.chassis_name].speed_base),
-        unitDef=UnitDefNames[CustomUnitDataModify.UnitDefName].id,
+        unitDef=ud.id,
         chassis_name=CustomUnitDataModify.chassis_name,
         unit_weapon_num_to_custom_weapon_num=CustomUnitDataModify.unit_weapon_num_to_custom_weapon_num,
         custom_weapon_num_to_unit_weapon_num=CustomUnitDataModify.custom_weapon_num_to_unit_weapon_num,
@@ -37,6 +42,7 @@ function utils.GenCustomUnitDataFinal(CustomUnitDataModify)
         health=CustomUnitDataModify.health,
         speed=speed,
         mass=mass,
+        motor=CustomUnitDataModify.motor,
     }
     local weapons={}
     for key, value in pairs(CustomUnitDataModify.weapons) do

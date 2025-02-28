@@ -315,7 +315,7 @@ function TargetingLaserUpdate()
 						--// Relay range
 						local _, flashY = Spring.GetUnitPiecePosition(unitID, EmitterMuzzle)
 						local _, SatelliteMuzzleY = Spring.GetUnitPiecePosition(unitID, SatelliteMuzzle)
-						newHeight = max(SatelliteMuzzleY-flashY, 1)
+						local newHeight = max(SatelliteMuzzleY-flashY, 1)
 						if newHeight ~= oldHeight then
 							Spring.SetUnitWeaponState(unitID, 2, "range", newHeight)
 							Spring.SetUnitWeaponState(unitID, 3, "range", newHeight)
@@ -380,7 +380,7 @@ local function DeferredInitialize()
 		Sleep(30)
 		satUnitID = Spring.CreateUnit(UnitDefs[ Spring.GetUnitDefID(unitID) ].customParams.mahlazer_satellite or 'starlight_satellite'--[=['starlight_satellite']=],x,y,z,0,Spring.GetUnitTeam(unitID))
 		if satUnitID then
-			satelliteCreated = true
+			local satelliteCreated = true
 			Spring.SetUnitNoSelect(satUnitID,true)
 			Spring.SetUnitNoMinimap(satUnitID,true)
 			Spring.SetUnitNeutral(satUnitID,true)
@@ -450,7 +450,7 @@ function script.AimWeapon(num, heading, pitch)
 		
 		-- Starlight misses Gnat at max range if the fudge
 		-- factor is either 0.998 or 1.0, unsure why.
-		pitchFudge = (math.pi/2 + pitch)*0.999 - math.pi/2
+		local pitchFudge = (math.pi/2 + pitch)*0.999 - math.pi/2
 		
 		local speedMult = (GG.att_ReloadChange[unitID] or 1)
 		CallSatelliteScript('mahlazer_AimAt', pitchFudge + math.pi/2, PITCH_AIM_RATE*speedMult)

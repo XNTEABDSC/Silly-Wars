@@ -21,8 +21,26 @@ utils.GenCustomWeaponBase=function (params)
 
     local custom_weapon_data              = utils.ACustomWeaponData()
     custom_weapon_data.weapon_def_name    = name
+    do
+        local damageMax=0
+        for key, value in pairs(weaponDef.damage) do
+            damageMax=math.max(damageMax,value)
+            custom_weapon_data.damages_base[key]=value
+        end
+        custom_weapon_data.damage_default_base=damageMax
+    end
+    --custom_weapon_data.damage_default_base=weaponDef.damage.default
+    custom_weapon_data.projSpeed_base=weaponDef.weaponVelocity
+    custom_weapon_data.range_base=weaponDef.range
+    custom_weapon_data.reload_time_base=weaponDef.reloadtime
+
+    --[=[
     custom_weapon_data.aoe                = weaponDef.areaOfEffect
     custom_weapon_data.explosionGenerator = weaponDef.explosionGenerator
+    custom_weapon_data.explosionSpeed     = weaponDef.explosionSpeed
+    custom_weapon_data.edgeEffectiveness  = weaponDef.edgeEffectiveness
+    --]=]
+
     custom_weapon_data.targeter_weapon    = params.targeter
 
     local modifies                        = params.Modifies
@@ -36,12 +54,14 @@ utils.GenCustomWeaponBase=function (params)
         humanName = humanName,
         pic = pic,
         genWeaponDef = function()
-            local res={[name]=lowerkeys(weaponDef)}
+            local res={[name]=weaponDef}
             for i = 1, #modifies do
-                res=modifies[i].moddeffn(res)
+                if modifies[i].moddeffn then
+                    res=modifies[i].moddeffn(res)
+                end
             end
             for key, value in pairs(res) do
-                WeaponDefs[key]=value
+                WeaponDefs[key]=lowerkeys(value)
             end
             --WeaponDefs[name] = lowerkeys(weaponDef)
         end,

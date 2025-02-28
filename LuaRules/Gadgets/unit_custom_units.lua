@@ -97,9 +97,6 @@ end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
     if not targeterwdid_to_custom_weapon_num[weaponDefID] then
-        Spring.Echo("Error: CustomUnits: not watched weapon " .. weaponDefID .. " name " .. WeaponDefs[weaponDefID].name)
-        -- idk why this happens, some unknown things do SetWatchWeapon on gadget
-        Script.SetWatchWeapon(weaponDefID,false)
         return
     end
     if not spValidUnitID(proOwnerID) then

@@ -55,7 +55,26 @@ function utils.GetUnitSize_ThrowError(mass,humanName,sizeMin,sizeMax)
     end
     return size
 end
-
+--[=[
+function utils.GetChassisUnitDef_DifferentSize_Mult(sizeMin,sizeMax)
+    return function (unitDefBases)
+        local newUDs={}
+        for name, unitDefBase in pairs(unitDefBases) do
+            if not unitDefBase.customParams.def_scale then
+                unitDefBase.customParams.def_scale=1
+            end
+            local unitDefSize=unitDefBase.footprintX
+            for i = sizeMin, sizeMax do
+                local newUD = Spring.Utilities.CopyTable(unitDefBase, true)
+                local scale = i / unitDefSize
+                newUD.customParams.def_scale = newUD.customParams.def_scale * scale
+                newUDs[name .. "_size" ..i] = lowerkeys(newUD)
+            end
+        end
+        return newUDs
+    end
+end
+]=]
 function utils.GetChassisUnitDef_DifferentSize(unitDefBase,name,sizeMin,sizeMax,otherModFn)
     if not unitDefBase.customParams.def_scale then
         unitDefBase.customParams.def_scale=1

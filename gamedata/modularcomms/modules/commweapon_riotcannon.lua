@@ -1,8 +1,8 @@
 return{
     moduledef={
-        commweapon_chickenspike={
-            name=humanName,
-		    description=description,
+        commweapon_riotcannon={
+            name="Riot Cannon",
+		    description="Riot Cannon: The weapon of choice for crowd control",
         }
     },
     dynamic_comm_def=function (shared)

@@ -1,8 +1,8 @@
 return{
     moduledef={
-        commweapon_chickenspike={
-            name=humanName,
-		    description=description,
+        commweapon_rocketlauncher={
+            name="Rocket Launcher",
+		    description="Rocket Launcher: Medium-range, low-velocity hitter",
         }
     },
     dynamic_comm_def=function (shared)

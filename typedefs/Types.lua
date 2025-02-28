@@ -6,11 +6,12 @@
 
 ---Cartesian triple (XYZ)
 ---
----@class xyz
+---@class xyz:{[1]:number,[2]:number,[3]:number}
+--[=[
 ---@field x number
 ---@field y number
 ---@field z number
-
+]=]
 ---@alias float3 xyz
 
 --------------------------------------------------------------------------------

@@ -1,3 +1,6 @@
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local wacky_utils = Spring.Utilities.wacky_utils
+
 local utils = GameData.CustomUnits.utils
 local genCustomModify=utils.genCustomModify
 local function add_weapon(custom_weapon_num,slot_name)
@@ -40,6 +43,7 @@ local function add_weapon(custom_weapon_num,slot_name)
         cud.weapons[custom_weapon_num] = customWeaponDataMod
         cud.custom_weapon_num_to_unit_weapon_num[custom_weapon_num] = unit_weapon_num
         cud.unit_weapon_num_to_custom_weapon_num[unit_weapon_num] = custom_weapon_num
+        cud.cost=cud.cost+customWeaponDataMod.cost
     end
     ---@type ModifyUIgenfn
     local uifn=utils.ui.UIPicThen(pic,name,desc, utils.ui.ChooseAndModify(GameData.CustomUnits.weapons_defs))
@@ -51,7 +55,7 @@ local function add_weapon(custom_weapon_num,slot_name)
         pic=pic,
         paramType="table",
         modfn=modfn,
-        genUIFn=uifn
+        genUIFn=uifn,
     }
 
 end
@@ -87,14 +91,55 @@ utils.BasicChassisMutate.add_weapon=add_weapon
 }]=]
 
 ---generate a speed modify for speed_per_cost
-utils.genChassisSpeedModify=function (speed_per_cost)
+utils.BasicChassisMutate.genChassisSpeedModify=function (speed_per_cost)
     return genCustomModify("motor","add motor","unitpics/module_high_power_servos.png",
     ---@param cud CustomUnitDataModify
     ---@param cost number
     function (cud,cost)
         cud.cost=cud.cost+cost
-        cud.motor=cud.motor+cost^0.6*speed_per_cost
+        cud.motor=cud.motor+(cost^0.6)*speed_per_cost*(2000/1.2)
         return cud
     end,"number")
+end
+
+utils.BasicChassisMutate.genChassisChooseSizeModify=function (sizeMin,sizeMax)
+    return {
+        name="size",
+        description="select size",
+        pic="",
+        ---@param cud CustomUnitDataModify
+        modfn=function (cud)
+            local mass=wacky_utils.GetMass(cud.health,cud.cost)
+            local size = utils.GetUnitSize(mass)
+            if size < sizeMin then
+                error("unit is too small. add things.\nfor the chassis " .. cud.chassis_name ..", mass: " .. mass .. " size: " .. size .. "\nsize should be >=" .. sizeMin)
+            end
+            if size > sizeMax then
+                error("unit is too big. remove things.\nfor the chassis " .. cud.chassis_name ..", mass: " .. mass .. " size: " .. size .. "\nsize should be <=" .. sizeMax)
+            end
+            cud.UnitDefName =  cud.UnitDefName .. "_size" .. size
+        end,
+        genUIFn=nil,
+        --utils.ui.SimpleValueUI(pic,name,desc,paramType),
+        moddeffn=function (unitDefBases)
+            local newUDs={}
+            for name, unitDefBase in pairs(unitDefBases) do
+                local unitDefBaseProxy=wacky_utils.may_lower_key_proxy(unitDefBase,wacky_utils.may_lower_key_proxy_ud_checkkeys)
+                if not unitDefBaseProxy.customParams.def_scale then
+                    unitDefBaseProxy.customParams.def_scale=1
+                end
+                local unitDefSize=unitDefBaseProxy.footprintX
+                for i = sizeMin, sizeMax do
+                    local newUD = Spring.Utilities.CopyTable(unitDefBase, true)
+                    local scale = i / unitDefSize
+                    local newUDProxy=wacky_utils.may_lower_key_proxy(newUD,wacky_utils.may_lower_key_proxy_ud_checkkeys)
+                    newUDProxy.customParams.def_scale = newUDProxy.customParams.def_scale * scale
+                    newUDs[name .. "_size" ..i] = lowerkeys(newUD)
+                end
+            end
+            return newUDs
+            --return utils.GetChassisUnitDef_DifferentSize_Mult(sizeMin,sizeMax)(uds)
+        end,
+    }
 end
 GameData.CustomUnits.utils = utils

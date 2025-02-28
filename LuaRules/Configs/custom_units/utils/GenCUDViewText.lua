@@ -46,6 +46,8 @@ local function GenCustomUnitDefView(cud)
 		PutCudParam("cost")
 		PutCudParam("health")
 		PutKV("speed",cud.speed)
+		PutKV("motor",cud.motor)
+
 		PutCudParam("mass")
 
 		for wpn_i = 1, #GameData.CustomUnits.chassis_defs[cud.chassis_name].weapon_slots do
@@ -54,6 +56,7 @@ local function GenCustomUnitDefView(cud)
 				PutStrLn("Weapon " .. wpn_i)
 				tabcount=tabcount+1
 				PutKV("name",cwd.name)
+				PutKV("cost",cwd.cost)
 				local damage=0
 				for damage_i = 0, #cwd.damages do
 					damage=math.max(damage,cwd.damages[damage_i])

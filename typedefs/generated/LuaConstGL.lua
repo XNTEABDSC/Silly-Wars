@@ -75,30 +75,6 @@ GL = {
 	ONE_MINUS_DST_ALPHA = nil,
 
 	---@type number
-	ZERO = nil,
-
-	---@type number
-	ONE = nil,
-
-	---@type number
-	SRC_COLOR = nil,
-
-	---@type number
-	ONE_MINUS_SRC_COLOR = nil,
-
-	---@type number
-	SRC_ALPHA = nil,
-
-	---@type number
-	ONE_MINUS_SRC_ALPHA = nil,
-
-	---@type number
-	DST_ALPHA = nil,
-
-	---@type number
-	ONE_MINUS_DST_ALPHA = nil,
-
-	---@type number
 	DST_COLOR = nil,
 
 	---@type number
@@ -211,18 +187,6 @@ GL = {
 
 	---@type number
 	FILL = nil,
-
-	---@type number
-	DEPTH_BUFFER_BIT = nil,
-
-	---@type number
-	ACCUM_BUFFER_BIT = nil,
-
-	---@type number
-	STENCIL_BUFFER_BIT = nil,
-
-	---@type number
-	COLOR_BUFFER_BIT = nil,
 
 	---@type number
 	FLAT = nil,

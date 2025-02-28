@@ -1,8 +1,8 @@
 return{
     moduledef={
-        commweapon_chickenspike={
-            name=humanName,
-		    description=description,
+        commweapon_heatray={
+            name="Heatray",
+		    description="Heatray: Rapidly melts anything at short range; steadily loses all of its damage over distance",
         }
     },
     dynamic_comm_def=function (shared)

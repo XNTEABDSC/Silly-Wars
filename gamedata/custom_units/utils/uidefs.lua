@@ -141,18 +141,22 @@ function ui.StackModifies(modifies,columns)
         local modifyUIs={}
         local modify_name_to_index={}
         for index, modify in pairs(modifies) do
-            local modifyUI=modify.genUIFn(WG,panel)
-            modifyUIs[index]=modifyUI
-            modify_name_to_index[modify.name]=index
+            if modify.genUIFn then
+                local modifyUI=modify.genUIFn(WG,panel)
+                modifyUIs[index]=modifyUI
+                modify_name_to_index[modify.name]=index
+            end
         end
         local getValue,setValue
         getValue=function ()
             local res={}
             for index, value in pairs(modifies) do
-                if modifyUIs[index].getValue == nil then
-                    Spring.Echo("DEBUG: CustomUnits: ui no getValue for "..modifies[index].name)
-                else
-                    res[value.name]=modifyUIs[index].getValue()
+                if modifyUIs[index] then
+                    if modifyUIs[index].getValue == nil then
+                        Spring.Echo("DEBUG: CustomUnits: ui no getValue for "..modifies[index].name)
+                    else
+                        res[value.name]=modifyUIs[index].getValue()
+                    end
                 end
             end
             return res
@@ -316,6 +320,30 @@ function ui.ChooseAndModify(items)
             control=panel,
             getValue=getValue,
             setValue=setValue
+        }
+    end
+end
+function ui.ChooseOneToUse(id_to_name,id_to_humanName,name_to_id)
+    return function(WG, parent)
+        local choose_item_combobox = WG.Chili.ComboBox:New {
+            parent = parent,
+            items = id_to_humanName,
+            x = 8,
+            right = 8,
+            y = 2,
+            height = 20,
+            minWidth = 100,
+            width = 100,
+        }
+        ---@type ModifyUI
+        return {
+            control = choose_item_combobox,
+            getValue = function()
+                return id_to_name[choose_item_combobox.selected]
+            end,
+            setValue = function(v)
+                choose_item_combobox:Select(name_to_id[v])
+            end
         }
     end
 end

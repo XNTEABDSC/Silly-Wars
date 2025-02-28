@@ -148,6 +148,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+---@diagnostic disable-next-line: lowercase-global
 commDefs = {} --holds precedurally generated comm defs
 
 local function ProcessComm(name, config)

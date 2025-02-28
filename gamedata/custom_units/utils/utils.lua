@@ -11,10 +11,8 @@ utils.UseModifies=function (modifies)
     return function (data,modtable)
         for index, modify in pairs(modifies) do
             local modv=modtable[modify.name]
-            if modv~=nil then
-                modify.modfn(data,modv)
-                modtable[modify.name]=nil
-            end
+            modify.modfn(data,modv)
+            modtable[modify.name]=nil
         end
         ---@type string
         local unused=""
@@ -56,4 +54,17 @@ local function genCustomModify(name,desc,pic,modfn,UI,moddeffn)
     }
 end
 utils.genCustomModify=genCustomModify
+
+utils.SpamDefs=function (foreachfn)
+    return function (ts)
+        local newts={}
+        for key, value in pairs(ts) do
+            for key_, value_ in pairs(foreachfn(key,value)) do
+                newts[key_]=value_
+            end
+        end
+        return newts
+    end
+end
+
 GameData.CustomUnits.utils=utils

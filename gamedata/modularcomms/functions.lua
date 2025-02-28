@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 function lowerkeys(t)
   local tn = {}
   for i,v in pairs(t) do
@@ -60,6 +61,7 @@ function ApplyWeapon(unitDef, weapon, replace, forceslot)
 	local slot = tonumber(wcp.slot) or 5
 	local isDgun = (tonumber(wcp.slot) == 3)
 	local altslot = tonumber(wcp.altslot or 3)
+	---@cast altslot number
 	local dualwield = false
 	
 	if (not isDgun) and unitDef.customparams.alreadyhasweapon and not replace then	-- dual wield

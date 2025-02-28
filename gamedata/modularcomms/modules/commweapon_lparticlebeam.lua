@@ -1,8 +1,8 @@
 return{
     moduledef={
-        commweapon_chickenspike={
-            name=humanName,
-		    description=description,
+        commweapon_lparticlebeam={
+            name="Light Particle Beam",
+		    description="Light Particle Beam: Fast, light pulsed energy weapon",
         }
     },
     dynamic_comm_def=function (shared)

@@ -1289,7 +1289,7 @@ function Spring.GetProjectileType(projectileID) end
 ---Using this to get a weaponDefID is HIGHLY preferred to indexing WeaponDefNames via GetProjectileName
 ---
 ---@param projectileID integer
----@return number?
+---@return WeaponDefId?
 function Spring.GetProjectileDefID(projectileID) end
 
 ---@param projectileID integer

@@ -1,3 +1,7 @@
+
+
+local wacky_utils = Spring.Utilities.wacky_utils
+
 local utils=GameData.CustomUnits.utils
 
 --[=[
@@ -24,6 +28,9 @@ utils.UseBeamWeaponMutateTable=utils.UseMutateTable(utils.BeamWeaponMutateTable)
 local weapon_modifies={}
 utils.weapon_modifies=weapon_modifies
 local genCustomModify=utils.genCustomModify
+local function CheckParam()
+    
+end
 weapon_modifies.name=
 genCustomModify("name","name","unitpics/terraunit.png",function (data,name)
     data.name=name
@@ -37,7 +44,7 @@ weapon_modifies.proj_speed=
 genCustomModify("speed","add projectiles' speed","unitpics/commweapon_assaultcannon.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(1+factor)
+    tb.cost=tb.cost*(1+factor)/2
     tb.projSpeed_mut=tb.projSpeed_mut*factor^(utils.bias_factor)
 end,"number")
 
@@ -46,7 +53,7 @@ weapon_modifies.proj_range=
 genCustomModify("range","add projectiles' range","unitpics/module_adv_targeting.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(1+factor)
+    tb.cost=tb.cost*(1+factor)/2
     tb.range_mut=tb.range_mut*factor^(utils.bias_factor)
 end,"number"
 )
@@ -56,7 +63,7 @@ weapon_modifies.beam_range=
 genCustomModify("range","add beams' range","unitpics/module_adv_targeting.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(1+factor)
+    tb.cost=tb.cost*(1+factor)/2
     --tb.range_mut=tb.range_mut*factor^(utils.bias_factor*0.5)
     tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.75)-1 )*2 )
 end,"number"
@@ -67,7 +74,7 @@ weapon_modifies.reload=
 genCustomModify("reload","reduce reload time","unitpics/weaponmod_autoflechette.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(factor)
+    tb.cost=tb.cost*(1+factor)/2
     tb.reload_time_mut=tb.reload_time_mut*factor^(-utils.bias_factor)
 end,"number"
 )
@@ -81,6 +88,14 @@ function (tb,flag)
         tb.range_mut=tb.range_mut*2
         tb.projSpeed_mut=tb.projSpeed_mut*1.5
         tb.targeter_weapon="aa_targeter"
+        tb.damages_mut.default=(tb.damages_mut.default or 1)
+        tb.damages_mut.planes=(tb.damages_mut.planes or 1)
+        for key, value in pairs(tb.damages_mut) do
+            if key~="planes" then
+                tb.damages_mut[key]=value*0.1
+            end
+        end
+        --tb.damages_mut.default=(tb.damages_mut.default or 1)*0.1
     end
 end,"boolean"
 )
@@ -113,7 +128,6 @@ do
     genCustomModify("slow_partial","damage x0.75, give slow damage = 2x damage","unitpics/conversion_disruptor.png",
         function (tb,v)
             if v then
-                tb.tracks=true
                 tb.damage_default_mut=tb.damage_default_mut*0.75
                 tb.weapon_def_name=tb.weapon_def_name .. postfix
             end
@@ -124,11 +138,12 @@ do
                 newwds[key]=value
                 local newwd=Spring.Utilities.CopyTable(value,true)
                 newwds[key .. postfix] = newwd
-                if not newwd.customparams then
-                    newwd.customparams={}
+                local newwdlk=wacky_utils.may_lower_key_proxy(newwd,wacky_utils.may_lower_key_proxy_wd_checkkeys)
+                if not newwdlk.customparams then
+                    newwdlk.customparams={}
                 end
-                newwd.customparams.timeslow_damagefactor=2
-                newwd.rgbcolor                = [[0.9 0.1 0.9]]
+                newwdlk.customparams.timeslow_damagefactor=2
+                newwdlk.rgbcolor                = [[0.9 0.1 0.9]]
             end
             return newwds
         end

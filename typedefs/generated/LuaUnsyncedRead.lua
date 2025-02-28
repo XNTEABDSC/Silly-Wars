@@ -248,7 +248,7 @@ function Spring.GetUnitDrawFlag(unitID) end
 function Spring.GetUnitNoMinimap(unitID) end
 
 ---@param unitID UnitId
----@return nil|bool noGroup `nil` when `unitID` cannot be parsed.
+---@return nil|boolean noGroup `nil` when `unitID` cannot be parsed.
 function Spring.GetUnitNoGroup(unitID) end
 
 ---@param unitID UnitId
@@ -693,12 +693,6 @@ function Spring.GetActiveCmdDesc(cmdIndex) end
 ---@param cmdID integer
 ---@return integer? cmdDescIndex
 function Spring.GetCmdDescIndex(cmdID) end
-
----@alias Facing
----| 0 # South
----| 1 # East
----| 2 # North
----| 3 # West
 
 ---@return Facing buildFacing
 function Spring.GetBuildFacing() end

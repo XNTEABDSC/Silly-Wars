@@ -138,7 +138,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-          default = 2,
+          default = 4,
         },
     
         explosionGenerator      = [[custom:FLASH2]],
@@ -165,12 +165,12 @@ return utils.GenCustomWeaponBase{
     },
     Modifies={
         utils.weapon_modifies.name,
+        utils.weapon_modifies.tracks,
+        utils.weapon_modifies.slow_partial,
         utils.weapon_modifies.damage,
         utils.weapon_modifies.proj_speed,
         utils.weapon_modifies.proj_range,
         utils.weapon_modifies.reload,
-        utils.weapon_modifies.tracks,
-        utils.weapon_modifies.slow_partial,
     },
     targeter="line_targeter"
 }

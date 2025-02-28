@@ -21,7 +21,7 @@
 ---but later, on the Update cycle (before other Update and Draw callins).
 ---
 ---@param filePath string VFS path to the file, for example "fonts/myfont.ttf". Uses VFS.RAW_FIRST access mode.
----@return bool success
+---@return boolean success
 function gl.AddFallbackFont(filePath) end
 
 ---Clears all fallback fonts.

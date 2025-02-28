@@ -12,4 +12,4 @@
 ---@field pic string picture of it
 ---@field modfn fun(data:any,param:any):any
 ---@field genUIFn ModifyUIgenfn
----@field moddeffn function 
+---@field moddeffn function? 

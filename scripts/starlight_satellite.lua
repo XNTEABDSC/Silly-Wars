@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 include "constants.lua"
 include "pieceControl.lua"
 

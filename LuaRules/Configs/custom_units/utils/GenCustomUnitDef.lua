@@ -26,9 +26,12 @@ local function TryGenCustomUnitDefFromJson(cudString)
             local cud=res2
             return true,cud
         else
-            return false,"failed to GenCustomUnitDef\n error: " .. res2 .. "\n for string " .. cudString--"failed to GenCustomUnitDef for " .. cudString .. " with error " .. res2
+
+            local realerrmsg=string.match(res2,"%[.-%]:%d-:(.*)")
+
+            return false,"failed to GenCustomUnitDef\n \n error: " .. tostring(realerrmsg or res2) .. "\n \n for string " .. cudString--"failed to GenCustomUnitDef for " .. cudString .. " with error " .. res2
         end
-        return false,"failed to jsondecode\n error: " .. res .. "\n for string " .. cudString--"failed to jsondecode string " .. cudString .. " with error " .. res
+        return false,"failed to jsondecode\n\n error: " .. res .. "\n\n for string " .. cudString--"failed to jsondecode string " .. cudString .. " with error " .. res
     end
 end
 

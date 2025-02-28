@@ -60,6 +60,9 @@ function gl.Color(rgbs) end
 ---@param rgb [number,number,number] Red, green, blue
 function gl.Color(rgb) end
 
+---@class GLenum:number
+---@class GLuint:number
+
 ---
 ---labels an object for use with debugging tools
 ---

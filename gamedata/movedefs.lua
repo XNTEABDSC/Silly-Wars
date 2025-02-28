@@ -226,7 +226,7 @@ local moveDefs = {
 	},
 }
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils=Spring.Utilities.to_make_op_things
+local utils_op=Spring.Utilities.to_make_op_things
 --- gen movedef by format
 --- (T(allterrain)|A(amph)|U(subMarine))(KBOT|TANK|HOVER|BOAT)(size)
 do
@@ -235,10 +235,10 @@ do
 		local md=ud.movementclass
 		if md and not moveDefs[md] then
 			Spring.Echo("movedefs: Try Gen moveDef: "..md)
-			local b,s,p=utils.MoveDef_CanGen(md)
+			local b,s,p=utils_op.MoveDef_CanGen(md)
 			if b~=nil then
 
-				local res=utils.MoveDef_TryGen(b,s,p)
+				local res=utils_op.MoveDef_TryGen(b,s,p)
 				moveDefs[md]=res
 			end
 			

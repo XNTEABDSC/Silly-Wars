@@ -1123,20 +1123,20 @@ function Spring.SetFeaturePieceVisible(featureID, pieceIndex, visible) end
 ---@section projectiles
 
 ---@class ProjectileParams
----@field pos float3
----@field speed float3
----@field spread float3
----@field error float3
----@field owner integer
----@field team integer
----@field ttl number
----@field gravity number
----@field tracking number
----@field maxRange number
----@field startAlpha number
----@field endAlpha number
----@field model string
----@field cegTag string
+---@field pos float3?
+---@field speed float3?
+---@field spread float3?
+---@field error float3?
+---@field owner integer?
+---@field team integer?
+---@field ttl number?
+---@field gravity number?
+---@field tracking number|boolean?
+---@field maxRange number?
+---@field startAlpha number?
+---@field endAlpha number?
+---@field model string?
+---@field cegTag string?
 local ProjectileParams = {}
 
 ---@param projectileID integer
@@ -1203,8 +1203,8 @@ function Spring.SetProjectileIsIntercepted(projectileID) end
 
 ---@param unitID UnitId
 ---@param weaponNum number
----@param key string
----@param value number
+---@param key string|WeaponDamages
+---@param value number|nil
 ---@return nil
 function Spring.SetProjectileDamages(unitID, weaponNum, key, value) end
 

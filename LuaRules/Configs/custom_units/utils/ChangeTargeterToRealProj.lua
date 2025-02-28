@@ -12,7 +12,7 @@ local spSetProjectileTarget=Spring.SetProjectileTarget
 local spGetProjectileTarget=Spring.GetProjectileTarget
 
 local spSetProjectileDamages=Spring.SetProjectileDamages
-local spSetProjectileCEG=Spring.SetProjectileCEG
+--local spSetProjectileCEG=Spring.SetProjectileCEG
 
 local targeterweapons=GameData.CustomUnits.utils.targeterweapons
 local is_beam_targeter={}
@@ -24,7 +24,7 @@ for _, targeter in pairs(targeterweapons) do
         end
     end
 end
-
+local GG_SetProjectileExplosionGenerator=GG and GG.SetProjectileExplosionGenerator
 --- To change targeter into real projectile
 ---@param targeterProjID ProjectileId
 ---@param customWpnData CustomWeaponDataFinal
@@ -98,46 +98,44 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,targeterwdid,customWpnDa
             ["end"] = ProjEnd,
         })
     end
-    
-    spSetProjectileCEG(newProjID,customWpnData.explosionGenerator)
 
-    do
-        --[=[if type(ProjTar_b)=='number' then
-            spSetProjectileTarget(newProjID,ProjTar_b)
-        else]=]
-        if type(ProjTar_b)=="table" then
-            spSetProjectileTarget(newProjID,ProjTar_b[1],ProjTar_b[2],ProjTar_b[3])
-        elseif type(ProjTar_a)=="number" then
-            spSetProjectileTarget(newProjID,ProjTar_b,ProjTar_a)
+    if newProjID then
+        --spSetProjectileCEG(newProjID,customWpnData.explosionGenerator)
+
+        do
+            --[=[if type(ProjTar_b)=='number' then
+                spSetProjectileTarget(newProjID,ProjTar_b)
+            else]=]
+            if type(ProjTar_b)=="table" then
+                spSetProjectileTarget(newProjID,ProjTar_b[1],ProjTar_b[2],ProjTar_b[3])
+            elseif type(ProjTar_a)=="number" and type(ProjTar_b)=="number" then
+                spSetProjectileTarget(newProjID,ProjTar_b,ProjTar_a)
+            end
+        end
+        
+        do
+
+            local damage_table={
+                damageAreaOfEffect=customWpnData.aoe,
+                edgeEffectiveness=customWpnData.edgeEffectiveness,
+                explosionSpeed=customWpnData.explosionSpeed,
+                craterMult=customWpnData.craterMult,
+                craterBoost=customWpnData.craterBoost,
+                impulseFactor=customWpnData.impulseFactor,
+                impulseBoost=customWpnData.impulseBoost,
+                craterAreaOfEffect=customWpnData.craterAreaOfEffect
+            }
+
+            for key, value in pairs(customWpnData.damages) do
+                damage_table[ tostring( key ) ]=value
+            end
+            spSetProjectileDamages(newProjID,0,damage_table)
+            GG_SetProjectileExplosionGenerator=GG_SetProjectileExplosionGenerator or GG.SetProjectileExplosionGenerator
+            GG_SetProjectileExplosionGenerator(newProjID,customWpnData.explosionGeneratorCustom,wdid)
         end
     end
     
-    do
-
-        local damage_table={
-            damageAreaOfEffect=customWpnData.aoe,
-            edgeEffectiveness=customWpnData.edgeEffectiveness,
-            explosionSpeed=customWpnData.explosionSpeed,
-            craterMult=customWpnData.craterMult,
-            craterBoost=customWpnData.craterBoost,
-            impulseFactor=customWpnData.impulseFactor,
-            impulseBoost=customWpnData.impulseBoost,
-            craterAreaOfEffect=customWpnData.craterAreaOfEffect
-        }
-
-        for key, value in pairs(customWpnData.damages) do
-            damage_table[ tostring( key ) ]=value
-            --[=[
-                SetProjectileDamages, at LuaSyncedCtrl.cpp line 5001
-                only do SetSingleDynDamagesKey when key is string
-            ]=]
-        end
-        spSetProjectileDamages(newProjID,0,damage_table)
-        --[=[
-            SetProjectileDamages, at LuaSyncedCtrl.cpp line 5001
-            op Ctrl C V forgot commet and the second param
-        ]=]
-    end
+    
     spDeleteProjectile(targeterProjID)
 end
 

@@ -155,7 +155,7 @@ function script.AimWeapon(num, heading, pitch)
 		gun1Salvo.WaitUntilReady()
 	end
 	if not (GetUnitValue(COB.CRASHING) == 1) and isMoving then
-		x,y,z = Spring.GetUnitVelocity(unitID)
+		local x,y,z = Spring.GetUnitVelocity(unitID)
 		return (x ~=0 or z ~= 0)
 	end
 	return false

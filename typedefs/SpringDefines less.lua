@@ -62,6 +62,17 @@ Game.mapSizeZ=512
 ---@field damageAreaOfEffect number
 ---@field damages list<number>
 ---@field flightTime number
+---@field projectilespeed number
+---@field range number
+---@field reload number
+---@field salvoSize number
+---@field salvoDelat number
+---@field projectiles number
+---@field type string
+---@field beamTTL number
+---@field tracks boolean
+---@field sprayAngle number
+---@field craterMult number
 
 ---@type table<WeaponDefId,WeaponDef>
 WeaponDefs={}
@@ -95,10 +106,11 @@ WeaponDefNames={}
 ---@param ... any message to be shown
 function Spring.Echo(...)end
 
-CMD={}
+--CMD={}
 
 ---@generic T
 ---@param v T
 ---@param recurse boolean|nil
+---@param appendTo T|nil
 ---@return T
-function Spring.Utilities.CopyTable(v,recurse) end
+function Spring.Utilities.CopyTable(v,recurse,appendTo) end

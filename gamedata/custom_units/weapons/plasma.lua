@@ -91,7 +91,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-            default = 4,
+            default = 5,
         },
     
         explosionGenerator      = [[custom:INGEBORG]],
@@ -105,16 +105,17 @@ return utils.GenCustomWeaponBase{
         soundStart              = [[weapon/cannon/cannon_fire5]],
         turret                  = true,
         weaponType              = [[Cannon]],
-        weaponVelocity          = 280,
+        weaponVelocity          = 300,
+        size=2,
     },
     Modifies={
         utils.weapon_modifies.name,
+        utils.weapon_modifies.slow_partial,
         utils.weapon_modifies.damage,
         utils.weapon_modifies.plasma_aoe,
         utils.weapon_modifies.proj_speed,
         utils.weapon_modifies.proj_range,
         utils.weapon_modifies.reload,
-        utils.weapon_modifies.slow_partial,
     },
     targeter="projectile_targeter"
 }

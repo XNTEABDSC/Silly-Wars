@@ -113,7 +113,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-            default = 2,
+            default = 3,
         },
     
         explosionGenerator      = [[custom:gauss_hit_h]],
@@ -142,11 +142,11 @@ return utils.GenCustomWeaponBase{
     },
     Modifies={
         utils.weapon_modifies.name,
+        utils.weapon_modifies.slow_partial,
         utils.weapon_modifies.damage,
         utils.weapon_modifies.proj_speed,
         -- utils.weapon_modifies.proj_range, wat happened? gauss's range can't be controlled by set range
         utils.weapon_modifies.reload,
-        utils.weapon_modifies.slow_partial,
     },
     targeter="projectile_targeter"
 }

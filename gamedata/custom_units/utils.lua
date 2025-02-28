@@ -60,6 +60,7 @@ if not GameData.CustomUnits.utils then
         "weapons",
         "CustomUnitDataModify",
         "for_chassis",
+        "custom_chassis_base",
         "chassises",
         "genfn"
     }--VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}

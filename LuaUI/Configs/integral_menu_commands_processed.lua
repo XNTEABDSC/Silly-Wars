@@ -26,7 +26,7 @@ local buildCmdUnits   = {}
 
 local function ProcessBuildArray(source, target)
 	for name, value in pairs(source) do
-		udef = (UnitDefNames[name])
+		local udef = (UnitDefNames[name])
 		if udef then
 			target[-udef.id] = value
 		elseif type(name) == "number" then

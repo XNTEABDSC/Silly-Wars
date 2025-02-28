@@ -40,20 +40,65 @@ if not Spring.Utilities.wacky_utils.may_lower_key_proxy then
     wacky_utils.maylowerkeyget=maylowerkeyget
     wacky_utils.maylowerkeyset=maylowerkeyset
 
+    local function lowerkeyget(t,k)
+        return t[string.lower(k)]
+    end
+
+    local function lowerkeyset(t,k,v)
+        t[string.lower(k)]=v
+    end
+
     do
-        wacky_utils.may_lower_key_proxy=function (tb)
-            local maylowermt={
-                __index=function (t,k)
-                    return maylowerkeyget(tb,k)
-                end,
-                __newindex=function (t,k,v)
-                    maylowerkeyset(tb,k,v)
+        --- returns a table `o` that acts like `tb` e.g. `o.customParams`, but if `tb=lowerkey(tb)`, then `o` will do key:lower() 
+        --- if checkKeys cant check, this function will enumerate all keys to check whether `tb=lowerkey(tb)`
+        ---@param checkKeys list<string>? keys to check whether `tb=lowerkey(tb)`
+        wacky_utils.may_lower_key_proxy=function (tb,checkKeys)
+            local lower=nil
+            if checkKeys then
+                for _, checkKey in pairs(checkKeys) do
+                    if tb[checkKey]~=nil then
+                        lower=false
+                        break
+                    elseif tb[string.lower(checkKey)]~=nil then
+                        lower=true
+                        break
+                    end
                 end
-            }
-            local o={}
-            setmetatable(o,maylowermt)
-            return o
+            end
+            if lower==nil then
+                lower=true
+                for key, _ in pairs(tb) do
+                    if key~=string.lower(key) then
+                        lower=false
+                        break
+                    end
+                end
+            end
+            local maylowermt
+            if lower then
+                maylowermt={
+                    __index=function (_,k)
+                        return lowerkeyget(tb,k)
+                    end,
+                    __newindex=function (_,k,v)
+                        lowerkeyset(tb,k,v)
+                    end
+                }
+                local o={}
+                setmetatable(o,maylowermt)
+                return o
+            else
+                return tb
+            end
         end
+        local may_lower_key_proxy_wd_checkkeys={
+            "weaponType"
+        }
+        wacky_utils.may_lower_key_proxy_wd_checkkeys=may_lower_key_proxy_wd_checkkeys
+        local may_lower_key_proxy_ud_checkkeys={
+            "objectName"
+        }
+        wacky_utils.may_lower_key_proxy_ud_checkkeys=may_lower_key_proxy_ud_checkkeys
     end
 
     Spring.Utilities.wacky_utils=wacky_utils
