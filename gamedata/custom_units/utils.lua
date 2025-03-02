@@ -52,7 +52,7 @@ if not GameData.CustomUnits.utils then
         "utils",
         "uidefs",
         "targeters",
-        "weapon_slot",
+        "weapon_slot_type",
         "CustomWeaponDataModify",
         "for_weapons",
         "for_weapons_aoe",

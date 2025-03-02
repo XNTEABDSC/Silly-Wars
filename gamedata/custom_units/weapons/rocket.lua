@@ -138,7 +138,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-          default = 4,
+          default = 3,
         },
     
         explosionGenerator      = [[custom:FLASH2]],

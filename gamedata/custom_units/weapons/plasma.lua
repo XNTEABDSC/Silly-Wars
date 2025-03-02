@@ -91,7 +91,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-            default = 5,
+            default = 4,
         },
     
         explosionGenerator      = [[custom:INGEBORG]],

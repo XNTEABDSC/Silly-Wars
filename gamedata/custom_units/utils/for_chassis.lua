@@ -3,7 +3,7 @@ local wacky_utils = Spring.Utilities.wacky_utils
 
 local utils = GameData.CustomUnits.utils
 local genCustomModify=utils.genCustomModify
-local function add_weapon(custom_weapon_num,slot_name)
+local function add_weapon(custom_weapon_num,slot_name,slot_type)
     slot_name=slot_name or ("slot " .. custom_weapon_num)
     local name="add_weapon_".. custom_weapon_num
     local desc="add weapon at " .. slot_name
@@ -48,6 +48,12 @@ local function add_weapon(custom_weapon_num,slot_name)
     ---@type ModifyUIgenfn
     local uifn=utils.ui.UIPicThen(pic,name,desc, utils.ui.ChooseAndModify(GameData.CustomUnits.weapons_defs))
 
+    --[=[
+    local moddeffn=function (uds)
+        for key, ud in pairs(uds) do
+            
+        end
+    end]=]
     ---@type CustomModify
     return {
         name=name,
@@ -71,7 +77,7 @@ utils.BasicChassisMutate = {
     ---@param cud CustomUnitDataModify
     ---@param factor number
     function(cud, factor)
-        cud.health = cud.health + factor * 20
+        cud.health = cud.health + factor^utils.bias_factor * 30
         cud.cost = cud.cost + factor
         return cud
     end,"number"),
@@ -97,7 +103,7 @@ utils.BasicChassisMutate.genChassisSpeedModify=function (speed_per_cost)
     ---@param cost number
     function (cud,cost)
         cud.cost=cud.cost+cost
-        cud.motor=cud.motor+(cost^0.6)*speed_per_cost*(2000/1.2)
+        cud.motor=cud.motor+(cost^0.6)*speed_per_cost*1600
         return cud
     end,"number")
 end

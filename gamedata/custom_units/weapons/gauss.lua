@@ -113,7 +113,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-            default = 3,
+            default = 2.5,
         },
     
         explosionGenerator      = [[custom:gauss_hit_h]],

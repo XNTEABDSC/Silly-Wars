@@ -328,9 +328,6 @@ function ui.ChooseOneToUse(id_to_name,id_to_humanName,name_to_id)
         local choose_item_combobox = WG.Chili.ComboBox:New {
             parent = parent,
             items = id_to_humanName,
-            x = 8,
-            right = 8,
-            y = 2,
             height = 20,
             minWidth = 100,
             width = 100,

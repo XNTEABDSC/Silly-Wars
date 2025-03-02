@@ -42,7 +42,7 @@ utils.GenCustomChassisBase=function (params)
         description=desc,
         humanName=humanName,
         genUnitDefs = function()
-            local res={[name]=unitDef}
+            local res={[name]=Spring.Utilities.CopyTable(unitDef,true)}
             for i = 1, #modifies do
                 if modifies[i].moddeffn then
                     res=modifies[i].moddeffn(res)
@@ -52,11 +52,11 @@ utils.GenCustomChassisBase=function (params)
                 UnitDefs[key]=lowerkeys(value)
             end
         end,
-        genfn = function(params)
+        genfn = function(params_)
             local cud = utils.ACustomUnitDataModify()
             cud.chassis_name = name
             cud.UnitDefName=name
-            local res = ModifyFn(cud, params)
+            local res = ModifyFn(cud, params_)
             return res
         end,
         weapon_slots = weapons_slots,
