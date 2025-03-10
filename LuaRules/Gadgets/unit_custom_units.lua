@@ -42,7 +42,7 @@ local PUBLIC_ACCESS={public=true}
 
 local GenCustomUnitDef=utils.GenCustomUnitDef
 
-
+local initialized=false
 
 
 GG.CustomUnits={}
@@ -121,6 +121,10 @@ end
 
 local TryGenCustomUnitDef=utils.TryGenCustomUnitDef
 local function SyncedAddCustomUnitDef(cudString,playerID)
+    if not initialized then
+        Spring.Echo("Warning: unit_custom_units: Try SyncedAddCustomUnitDef Before Init. Blocked.")
+        return
+    end
     local cudid=CustomUnitDefsToID[cudString]
     if CustomUnitDefsToID[cudString] then
         return cudid
@@ -183,7 +187,7 @@ function gadget:UnitDestroyed(unitId)
 end
 
 
-if true then -- test
+if false then -- test
     local jsonencode=Spring.Utilities.json.encode -- ill use loadstring if there is no safity problem
     SyncedAddCustomUnitDef(jsonencode({
         "custom_ravager",{
@@ -221,24 +225,35 @@ local spGetGameRulesParam=Spring.GetGameRulesParam
 
 function gadget:Initialize()
 	--gadgetHandler:AddSyncAction('UpdateCustomUnitDefs',CallUnsynced_UpdateCustomUnitDefs)
-    local cudcount=spGetGameRulesParam("CustomUnitDefsCount")
-    if cudcount then
-        while #CustomUnitDefs<cudcount do
-            local cudid=#CustomUnitDefs+1
+    local cudcount =spGetGameRulesParam("CustomUnitDefsCount")
+    Spring.Echo("DEBUG: unit_custom_units.Initialize: Loading CUDs count: " .. tostring(cudcount))
+    if cudcount~=nil then
+        for cudid = 1, cudcount do
             local cudStr=spGetGameRulesParam("CustomUnitDefs"..cudid)
             local suc,res=TryGenCustomUnitDef(cudStr)
             if suc then
                 CustomUnitDefs[cudid]=res
                 CustomUnitDefsToID[cudStr]=cudid
+            else
+                Spring.Echo("Error: CustomUnits: Failed to load GameRulesParam " .. ("CustomUnitDefs"..cudid) ..
+                "\ncudStr: " .. tostring(cudStr) ..
+                "\nerror: " .. res)
             end
+            
         end
     end
+    initialized=true
     local allunits=Spring.GetAllUnits ( )
     for key, unitId in pairs(allunits or {}) do
         local cudid=spGetUnitRulesParam(unitId,"CustomUnitDefId")
         if cudid then
             CustomUnitsToDefID[unitId]=cudid
-            utils_SetCustomUnit(unitId,CustomUnitDefs[cudid])
+            local cud=CustomUnitDefs[cudid]
+            if cud then
+                utils_SetCustomUnit(unitId,cud)
+            else
+                Spring.Utilities.UnitEcho(unitId,"Error: CustomUnits: Unit's cudid " .. cudid .. " dont matches cud")
+            end
             
         end
         --

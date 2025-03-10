@@ -113,7 +113,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-            default = 2.5,
+            default = utils.consts.custom_weapon_common_damage/2-- 2.5,
         },
     
         explosionGenerator      = [[custom:gauss_hit_h]],
@@ -127,8 +127,6 @@ return utils.GenCustomWeaponBase{
         noExplode               = true,
         noSelfDamage            = true,
         numbounce               = 40,
-        range                   = 600,
-        reloadtime              = 2.5,
         rgbColor                = [[0.5 1 1]],
         separation              = 0.5,
         soundHit                = [[weapon/gauss_hit]],
@@ -138,7 +136,10 @@ return utils.GenCustomWeaponBase{
         turret                  = true,
         waterweapon             = true,
         weaponType              = [[Cannon]],
-        weaponVelocity          = 900,
+        range                   = 600,
+        --range                   = utils.consts.custom_weapon_common_range,
+        weaponVelocity          = utils.consts.custom_weapon_common_projSpeed*3,
+        reloadtime              = utils.consts.custom_weapon_common_reloadtime,
     },
     Modifies={
         utils.weapon_modifies.name,

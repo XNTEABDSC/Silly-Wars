@@ -138,7 +138,7 @@ return utils.GenCustomWeaponBase{
         },
     
         damage                  = {
-          default = 3,
+          default = utils.consts.custom_weapon_common_damage--3,
         },
     
         explosionGenerator      = [[custom:FLASH2]],
@@ -148,8 +148,8 @@ return utils.GenCustomWeaponBase{
         impulseFactor           = 0.4,
         interceptedByShieldType = 2,
         model                   = [[wep_m_frostshard.s3o]],
-        range                   = 600,
-        reloadtime              = 2.5,
+        --range                   = 600,
+        --reloadtime              = 2.5,
         smokeTrail              = true,
         soundHit                = [[explosion/ex_med17]],
         soundStart              = [[weapon/missile/missile_fire11]],
@@ -161,7 +161,10 @@ return utils.GenCustomWeaponBase{
         turret                  = true,
         weaponAcceleration      = 109,
         weaponType              = [[MissileLauncher]],
-        weaponVelocity          = 545,
+        --weaponVelocity          = 545,
+        range                   = utils.consts.custom_weapon_common_range,
+        weaponVelocity          = utils.consts.custom_weapon_common_projSpeed,
+        reloadtime              = utils.consts.custom_weapon_common_reloadtime,
     },
     Modifies={
         utils.weapon_modifies.name,

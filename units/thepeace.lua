@@ -8,13 +8,13 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-ud.name="THE PEACE"
+ud.name="PEACE"
 ud.description="A simple way to bring peace to the world (can be intercepted by antinuke) (Use D to drop a single NUKE)"
 ud.metalCost=100 * 1000
 ud.health=10000
 ud.customParams.zenith_meteor_capacity=100
 ud.customParams.zenith_hover_height=3200
-ud.customParams.custom_tooltip_simple="FOR THE PEACE (%[meteorsControlled|0]/%[meteorsControlledMax|100] nuke)"
+ud.customParams.custom_tooltip_simple="FOR PEACE (%[meteorsControlled|0]/%[meteorsControlledMax|100] nukes)"
 
 local nuketable={
     name="NUKE",

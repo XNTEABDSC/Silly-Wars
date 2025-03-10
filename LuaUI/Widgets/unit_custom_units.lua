@@ -51,14 +51,16 @@ WG.CustomUnits.CustomUnitDefsStringToID=CustomUnitDefsStringToID
 
 local function UpdateCustomUnitDefs()
     local count=spGetGameRulesParam("CustomUnitDefsCount")
-    while #CustomUnitDefs<count do
-        --Spring.Echo("Debug: CustomUnits: UpdateCustomUnitDefs")
-        local cudid=#CustomUnitDefs+1
-        local cudStr=spGetGameRulesParam("CustomUnitDefs"..cudid)
-        local cudTable=jsondecode(cudStr)
-        local cud=GenCustomUnitDef(cudTable)
-        CustomUnitDefs[cudid]=cud
-		CustomUnitDefsStringToID[cudStr]=cudid-- THE WAY
+    if count then
+        while #CustomUnitDefs<count do
+            --Spring.Echo("Debug: CustomUnits: UpdateCustomUnitDefs")
+            local cudid=#CustomUnitDefs+1
+            local cudStr=spGetGameRulesParam("CustomUnitDefs"..cudid)
+            local cudTable=jsondecode(cudStr)
+            local cud=GenCustomUnitDef(cudTable)
+            CustomUnitDefs[cudid]=cud
+            CustomUnitDefsStringToID[cudStr]=cudid-- THE WAY
+        end
     end
 end
 

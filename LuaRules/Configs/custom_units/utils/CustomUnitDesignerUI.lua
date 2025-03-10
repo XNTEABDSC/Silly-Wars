@@ -70,7 +70,7 @@ local function GenCustomUnitDesignUI(WG,parent)
         orientation="horizontal",
         columns=2,rows=2,
     }
-    DesignerUI=GameData.CustomUnits.utils.ui.ChooseAndModify(GameData.CustomUnits.chassis_defs)(WG,WindowAutoPanel)
+    local DesignerUI=GameData.CustomUnits.utils.ui.ChooseAndModify(GameData.CustomUnits.chassis_defs)(WG,WindowAutoPanel)
     
     local CUDView=Chili.Panel:New{
         autosize=true,

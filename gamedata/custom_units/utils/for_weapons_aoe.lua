@@ -3,7 +3,7 @@ local utils = GameData.CustomUnits.utils
 local wacky_utils = Spring.Utilities.wacky_utils
 
 local function ExpectAoe(damage)
-    return math.sqrt(damage) * 4
+    return math.sqrt(damage+1) * 4
 end
 
 local function ExpectAoeArea(damage)

@@ -39,3 +39,5 @@ weapondef_post
 ban nuke
 
 fix greed mex
+
+shogun x BB

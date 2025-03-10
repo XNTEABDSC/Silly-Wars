@@ -28,7 +28,17 @@ return utils.GenCustomChassisBase{
           aim_lookahead      = 80,
           set_target_range_buffer = 30,
           set_target_speed_buffer = 8,
+          -- [=[
+          custom_unit_proxy_use_script="cloakraid.lua",
+          custom_unit_proxy_use_def_piece="head",
+          custom_unit_proxy_use_def_piece_aim_from_weapon="head",
+          custom_unit_proxy_use_def_piece_query_weapon="flare"
+          --]=]
         },
+        script                 =
+        --[[custom_glaive.lua]]
+        [[custom_unit_proxy_use.lua]]
+        ,
       
         explodeAs              = [[SMALL_UNITEX]],
         footprintX             = 2,
@@ -43,7 +53,6 @@ return utils.GenCustomChassisBase{
         noAutoFire             = false,
         noChaseCategory        = [[TERRAFORM FIXEDWING SUB]],
         objectName             = [[spherebot.s3o]],
-        script                 = [[custom_glaive.lua]],
         selfDestructAs         = [[SMALL_UNITEX]],
       
         sfxtypes               = {
