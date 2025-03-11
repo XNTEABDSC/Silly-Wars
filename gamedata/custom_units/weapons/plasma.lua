@@ -148,7 +148,7 @@ return utils.GenCustomWeaponBase{
         name                    = [[Light Plasma Cannon]],
         craterBoost             = 0,
         craterMult              = 0,
-        areaOfEffect=36,
+        --areaOfEffect=36,
         customParams        = {
             light_camera_height = 1800,
             light_color = [[0.80 0.54 0.23]],
@@ -159,7 +159,7 @@ return utils.GenCustomWeaponBase{
             default = utils.consts.custom_weapon_common_damage,
         },
     
-        explosionGenerator      = [[custom:INGEBORG]],
+        --explosionGenerator      = [[custom:INGEBORG]],
         impulseBoost            = 0,
         impulseFactor           = 0.4,
         interceptedByShieldType = 1,

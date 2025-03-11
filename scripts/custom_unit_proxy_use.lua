@@ -33,9 +33,8 @@ udcp.custom_unit_proxy_use_def_piece_query_weapon
 
 fn(CustomUnitProxyUsingScript,defPiece,defPieceAimFromWeapon,defPieceQueryWeapon)
 ]==]
-CustomUnitProxyUsingScript,DefPiece,DefPieceAimFromWeapon,DefPieceQueryWeapon=
-udcp.custom_unit_proxy_use_script,udcp.custom_unit_proxy_use_def_piece,udcp.custom_unit_proxy_use_def_piece_aim_from_weapon,
-udcp.custom_unit_proxy_use_def_piece_query_weapon
+CustomUnitProxyUsingScript,DefPieceWeaponNum=
+udcp.custom_unit_proxy_use_script,tonumber( udcp.custom_unit_proxy_use_def_piece_weapon_num)
 --[=[
 local __G0=getfenv(0)
 local __G=getfenv()

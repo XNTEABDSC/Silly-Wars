@@ -126,7 +126,7 @@ return utils.GenCustomWeaponBase{
     humanName="Rocket/Missile",
     WeaponDef={
         name                    = [[Homing Missiles]],
-        areaOfEffect            = 48,
+        --areaOfEffect            = 48,
         avoidFeature            = true,
         cegTag                  = [[missiletrailyellow]],
         craterBoost             = 0,
@@ -141,7 +141,7 @@ return utils.GenCustomWeaponBase{
           default = utils.consts.custom_weapon_common_damage--3,
         },
     
-        explosionGenerator      = [[custom:FLASH2]],
+        --explosionGenerator      = [[custom:FLASH2]],
         fireStarter             = 70,
         flightTime              = 3,
         impulseBoost            = 0,

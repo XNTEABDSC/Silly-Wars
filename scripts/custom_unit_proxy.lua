@@ -1,17 +1,6 @@
-local CustomUnitProxyUsingScript,DefPiece,DefPieceAimFromWeapon,DefPieceQueryWeapon=CustomUnitProxyUsingScript,DefPiece,DefPieceAimFromWeapon,DefPieceQueryWeapon
+local CustomUnitProxyUsingScript,DefPieceWeaponNum=CustomUnitProxyUsingScript,DefPieceWeaponNum
 
 local CustomUnitProxyUsingScriptFile="scripts/" .. CustomUnitProxyUsingScript
-local pieces=Spring.GetUnitPieceMap(unitID)
-local piece = function(...)
-    local p = {}
-    for _,name in ipairs{...} do
-        p[#p+1] = pieces[name] or error("piece not found: " .. tostring(name), 2)
-    end
-    return unpack(p)
-end
-DefPieceAimFromWeapon = (DefPieceQueryWeapon and piece(DefPieceAimFromWeapon)) or piece(DefPiece)
-
-DefPieceQueryWeapon = (DefPieceQueryWeapon and piece(DefPieceQueryWeapon)) or piece (DefPiece)
 
 local customUnitScript
 local unit_weapon_num_to_custom_weapon_num
@@ -58,9 +47,12 @@ script.BlockShot=Use_unit_weapon_num_to_custom_weapon_num(script.BlockShot,true)
 
 script.AimWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.AimWeapon,false)
 
-script.AimFromWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.AimFromWeapon,DefPieceAimFromWeapon)
-
-script.QueryWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.QueryWeapon,DefPieceQueryWeapon)
+if script.AimFromWeapon then
+    script.AimFromWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.AimFromWeapon,script.AimFromWeapon(DefPieceWeaponNum))
+end
+if script.QueryWeapon then
+    script.QueryWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.QueryWeapon,script.QueryWeapon(DefPieceWeaponNum))
+end
 
 script.FireWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.FireWeapon,nil)
 

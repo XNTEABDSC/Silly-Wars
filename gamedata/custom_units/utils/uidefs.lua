@@ -257,8 +257,8 @@ function ui.ChooseAndModify(items)
             right=8,
             y=2,
             height=20,
-            minWidth=100,
-            width=100,
+            minWidth=300,
+            width=300,
             OnSelect={function(self, i)
                 local item_name=item_id_to_name[i]
                 local item=items[item_name]

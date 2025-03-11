@@ -71,7 +71,7 @@ end,"number"
 
 
 weapon_modifies.reload=
-genCustomModify("reload","reduce reload time","unitpics/weaponmod_autoflechette.png",
+genCustomModify("reload","reduce reload time","unitpics/commweapon_heavymachinegun.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)/2
@@ -99,6 +99,29 @@ function (tb,flag)
     end
 end,"boolean"
 )
+
+weapon_modifies.projectiles=genCustomModify("projectiles","count of projectiles","unitpics/commweapon_shotgun.png",
+---@param tb CustomWeaponDataModify
+function (tb,count)
+    count=math.max( math.round(count or 1,0) , 1)
+
+    tb.cost=tb.cost*count^(1/utils.bias_factor)
+    tb.projectiles_mut=tb.projectiles_mut*count
+    tb.sprayAngle_add=tb.sprayAngle_add+count*0.01
+end,"number"
+)
+
+
+weapon_modifies.burst=genCustomModify("burst","count of burst","unitpics/commweapon_heavymachinegun.png",
+---@param tb CustomWeaponDataModify
+function (tb,count)
+    count=math.max( math.round(count or 1,0) , 1)
+
+    tb.cost=tb.cost*count^(1/utils.bias_factor)
+    tb.burst_mut=tb.burst_mut*count
+end,"number"
+)
+
 do
     local postfix="_tracks"
     weapon_modifies.tracks=
@@ -139,10 +162,10 @@ do
                 local newwd=Spring.Utilities.CopyTable(value,true)
                 newwds[key .. postfix] = newwd
                 local newwdlk=wacky_utils.may_lower_key_proxy(newwd,wacky_utils.may_lower_key_proxy_wd_checkkeys)
-                if not newwdlk.customparams then
-                    newwdlk.customparams={}
+                if not newwdlk.customParams then
+                    newwdlk.customParams={}
                 end
-                newwdlk.customparams.timeslow_damagefactor=2
+                newwdlk.customParams.timeslow_damagefactor=2
                 newwdlk.rgbcolor                = [[0.9 0.1 0.9]]
             end
             return newwds

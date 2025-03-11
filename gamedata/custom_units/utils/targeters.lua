@@ -241,7 +241,7 @@ local targeterweapondefs = {}
 -- ---@type {[string]:{name:string,weapon_def:table,weapon_unit:table}}
 local targeterweapons = {
     projectile_targeter = projectile_targeter,
-    --beam_targeter=beam_targeter,
+    beam_targeter=beam_targeter,
     aa_targeter = aa_targeter,
     line_targeter = line_targeter,
     starburst_targeter = starburst_targeter,

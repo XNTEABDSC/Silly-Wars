@@ -1,3 +1,6 @@
+local utils_op=Spring.Utilities.to_make_op_things
+local wacky_utils=Spring.Utilities.wacky_utils
+
 local utils = GameData.CustomUnits.utils
 
 ---use modifies.name to find value in modtable and modfn.
@@ -140,6 +143,36 @@ do
             return v
         end
     }
+end
+
+function utils.GenCustomUnitChassisUnitDef(name,desc,udname,thenfn)
+    local ud=utils_op.GetUnitLua(udname)
+    local ud_proxy=wacky_utils.may_lower_key_proxy(ud,wacky_utils.may_lower_key_proxy_ud_checkkeys)
+    ud_proxy.name=name
+    ud_proxy.desc=desc
+    ud_proxy.health                 = utils.consts.custom_health_const
+    ud_proxy.metalCost              = utils.consts.custom_cost_const
+    ud_proxy.weaponDefs=nil
+    ud_proxy.weapons=nil
+    if thenfn then
+        thenfn(ud_proxy)
+    end
+    return ud
+end
+
+function utils.GenCustomUnitChassisUnitDef_custom_unit_proxy_use(def_piece_weapon_num)
+    def_piece_weapon_num=(def_piece_weapon_num~=nil and def_piece_weapon_num) or 1
+    
+    return function (t)
+        local script=t.script
+        wacky_utils.table_replace({
+            script=[[custom_unit_proxy_use.lua]],
+            customParams={
+              custom_unit_proxy_use_script=script,
+              custom_unit_proxy_use_def_piece_weapon_num=def_piece_weapon_num,
+            }
+          })(t)
+    end
 end
 
 GameData.CustomUnits.utils = utils

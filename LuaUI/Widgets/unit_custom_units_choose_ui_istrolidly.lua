@@ -426,6 +426,7 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                 }
                 tab.rowscontrol:AddChild(row.control,false,row.id)
 
+
                 local namePanel=WG.Chili.ButtonLabelEdit:New{
                     parent=row.control,
                     caption=row.name,
@@ -443,6 +444,12 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                         end
                     },
                     tooltip="click to choose row, double click to edit name"
+                }
+                row.cuds_panel=WG.Chili.AutosizeLayoutPanel:New{
+                    --parent=tab.rowscontrol,
+                    preserveChildrenOrder=true,
+                    rows=2,columns=6,
+                    parent=row.control
                 }
 
                 local function AddCud(cuddata)
@@ -465,7 +472,7 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                             cuditem.imgcontrol.file = 'LuaUI/Images/commshare.png'
                         end
                         local tooltip=utils_GenCustomUnitDefViewStr(gen_res)
-                        if tooltip=="nil" or tooltip=="empty" then
+                        if tooltip=="is nil" or tooltip=="is empty" then
                             tooltip="Click to design"
                         end
                         cuditem.control.tooltip=tooltip
@@ -474,7 +481,7 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                     end
 
                     cuditem.control=WG.Chili.Button:New{
-                        parent=row.control,
+                        parent=row.cuds_panel,
                         width=LibCudButtonSize,height=LibCudButtonSize,noFont=true,
                         OnClick={
                             function ()
