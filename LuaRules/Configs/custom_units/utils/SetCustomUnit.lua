@@ -8,6 +8,7 @@ local spGetUnitDefID=Spring.GetUnitDefID
 ---@param customWpnData CustomWeaponDataFinal
 local function SetUnitWeaponToCustom(unitID,targeter_weapon_num,customWpnData)
     local wd=WeaponDefs[UnitDefs[spGetUnitDefID(unitID)].weapons[targeter_weapon_num].weaponDef]
+    Spring.Echo("DEBUG: OnAdd: customWpnData.sprayAngle: " .. tostring(customWpnData.sprayAngle))
     GG.Attributes.AddEffect(unitID,"custom_unit_wpn_" .. targeter_weapon_num,{
         weaponNum=targeter_weapon_num,
         reload=1/(customWpnData.reload_time/wd.reload),

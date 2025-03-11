@@ -148,6 +148,8 @@ return utils.GenCustomWeaponBase{
         utils.weapon_modifies.proj_speed,
         -- utils.weapon_modifies.proj_range, wat happened? gauss's range can't be controlled by set range
         utils.weapon_modifies.reload,
+        utils.weapon_modifies.projectiles,
+        utils.weapon_modifies.burst,
     },
     targeter="projectile_targeter"
 }

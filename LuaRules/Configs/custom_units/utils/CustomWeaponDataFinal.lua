@@ -49,13 +49,13 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
     ---@field edgeEffectiveness nil|number
     ---@field explosionSpeed nil|number
     ---@field explosionGenerator nil|string
-    ---@field sprayAngle nil|number
-    ---@field burst nil|number
-    ---@field burst_mut nil|number
-    ---@field projectiles nil|number
-    ---@field projectiles_mut nil|number
-    ---@field burstRate nil|number
-    ---@field burstRate_mut nil|number
+    ---@field sprayAngle number
+    ---@field burst number
+    ---@field burst_mut number
+    ---@field projectiles number
+    ---@field projectiles_mut number
+    ---@field burstRate number
+    ---@field burstRate_mut number
     ---@field craterMult nil|number
     ---@field craterBoost nil|number
     ---@field impulseFactor nil|number
@@ -86,7 +86,7 @@ utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
         edgeEffectiveness=
         CustomWeaponDataModify.edgeEffectiveness or 
         -- wd.edgeEffectiveness or
-        nil , 
+        nil ,
         sprayAngle=wd.sprayAngle + (CustomWeaponDataModify.sprayAngle_add or 0),
         burst= burst,
         burst_mut=burst/custom_targeter_burst,

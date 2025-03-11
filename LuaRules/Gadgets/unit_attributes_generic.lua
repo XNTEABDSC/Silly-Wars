@@ -312,15 +312,18 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 			local newReload = w.reload/ReloadSpeedFactor
 			local nextReload = gameFrame+(reloadState-gameFrame)*newReload/reloadTime
 			-- Add HALF_FRAME to round reloadTime to the closest discrete frame (multiple of 1/30), since the the engine rounds DOWN
+			spSetUnitWeaponState(unitID, i, {reloadTime = newReload + HALF_FRAME, reloadState = nextReload + 0.5})
+			--[=[
 			if w.burstRate then
 				spSetUnitWeaponState(unitID, i, {reloadTime = newReload + HALF_FRAME, reloadState = nextReload + 0.5, burstRate = moddedBurstRate + HALF_FRAME})
 			else
 				spSetUnitWeaponState(unitID, i, {reloadTime = newReload + HALF_FRAME, reloadState = nextReload + 0.5})
-			end
+			end]=]
 		end
 		local moddedRange = w.range*((weaponMods and weaponMods[i] and weaponMods[i].rangeMult) or 1)*rangeFactor
 		local moddedProjectiles = w.projectiles*((weaponMods and weaponMods[i] and weaponMods[i].projectilesMult) or 1)*projectilesFactor
 		
+		Spring.Echo("DEBUG: sprayAngle: " .. tostring(w.sprayAngle) .. " , " ..  tostring(sprayAngleAdd) .. " , " ..  ((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0) .. " , " .. minSpray)
 		local moddedSprayAngle = math.max(w.sprayAngle+sprayAngleAdd+((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0), minSpray)
 		spSetUnitWeaponState(unitID, i, "sprayAngle", moddedSprayAngle)
 		
@@ -652,9 +655,9 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 				wepData.rangeMult = wepData.rangeMult*(data.range and data.range[unitID] or 1)
 				wepData.projSpeedMult = wepData.projSpeedMult*(data.projSpeed and data.projSpeed[unitID] or 1)
 				wepData.projectilesMult = wepData.projectilesMult*(data.projectiles and data.projectiles[unitID] or 1)
-				wepData.burstMult=wepData.burstMult*(data.burstMult and data.burstMult[unitID] or 1)
-				wepData.burstRateMult=wepData.burstRateMult*(data.burstRateMult and data.burstRateMult[unitID] or 1)
-				wepData.sprayAngleAdd=wepData.sprayAngleAdd+(data.sprayAngleAdd and data.sprayAngleAdd[unitID] or 0)
+				wepData.burstMult=wepData.burstMult*(data.burst and data.burst[unitID] or 1)
+				wepData.burstRateMult=wepData.burstRateMult*(data.burstRate and data.burstRate[unitID] or 1)
+				wepData.sprayAngleAdd=wepData.sprayAngleAdd+(data.sprayAngle and data.sprayAngle[unitID] or 0)
 			end
 		end
 	end

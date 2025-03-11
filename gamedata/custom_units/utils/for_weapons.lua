@@ -105,9 +105,9 @@ weapon_modifies.projectiles=genCustomModify("projectiles","count of projectiles"
 function (tb,count)
     count=math.max( math.round(count or 1,0) , 1)
 
-    tb.cost=tb.cost*count^(1/utils.bias_factor)
+    tb.cost=tb.cost*count--^(1/utils.bias_factor)
     tb.projectiles_mut=tb.projectiles_mut*count
-    tb.sprayAngle_add=tb.sprayAngle_add+count*0.01
+    tb.sprayAngle_add=tb.sprayAngle_add+(count-1)*0.02
 end,"number"
 )
 

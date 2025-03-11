@@ -174,6 +174,8 @@ return utils.GenCustomWeaponBase{
         utils.weapon_modifies.proj_speed,
         utils.weapon_modifies.proj_range,
         utils.weapon_modifies.reload,
+        utils.weapon_modifies.projectiles,
+        utils.weapon_modifies.burst,
     },
     targeter="line_targeter"
 }
