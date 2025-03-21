@@ -6,15 +6,15 @@ utils.ACustomWeaponData=function ()
     ---
     ---@field damage_default_mut number
     ---@field damages_mut {[string]:number}
-    ---@field damages_base {[string]:number}
-    ---@field damage_default_base number
+    -- -@field damages_base {[string]:number}
+    -- -@field damage_default_base number
     ---
     ---@field projSpeed_mut number
-    ---@field projSpeed_base number
+    -- -@field projSpeed_base number
     ---@field range_mut number
-    ---@field range_base number
+    -- -@field range_base number
     ---@field reload_time_mut number
-    ---@field reload_time_base number
+    -- -@field reload_time_base number
     ---
     ---@field weapon_def_name WeaponDefName
     ---
@@ -41,17 +41,19 @@ utils.ACustomWeaponData=function ()
     ---
     ---@field targeter_weapon string
     ---@field name string|nil
+    ---
+    ---@field weapon_def_raw table
     local o={
         damage_default_mut=1,
         damages_mut={},
         damage_default_base=0,
-        damages_base={},
+        --damages_base={},
         projSpeed_mut=1,
-        projSpeed_base=0,
+        --projSpeed_base=0,
         range_mut=1,
-        range_base=0,
+        --range_base=0,
         reload_time_mut=1,
-        reload_time_base=0,
+        --reload_time_base=0,
         cost=1,
         weapon_def_name="NOWEAPON",
         sprayAngle_add=0,

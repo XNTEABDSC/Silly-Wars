@@ -21,6 +21,7 @@ utils.GenCustomWeaponBase=function (params)
 
     local custom_weapon_data              = utils.ACustomWeaponData()
     custom_weapon_data.weapon_def_name    = name
+    --[=[
     do
         local damageMax=0
         for key, value in pairs(weaponDef.damage) do
@@ -29,10 +30,14 @@ utils.GenCustomWeaponBase=function (params)
         end
         custom_weapon_data.damage_default_base=damageMax
     end
+    ]=]
     --custom_weapon_data.damage_default_base=weaponDef.damage.default
+
+    --[=[
     custom_weapon_data.projSpeed_base=weaponDef.weaponVelocity
     custom_weapon_data.range_base=weaponDef.range
     custom_weapon_data.reload_time_base=weaponDef.reloadtime
+    ]=]
 
     --[=[
     custom_weapon_data.aoe                = weaponDef.areaOfEffect
@@ -60,9 +65,11 @@ utils.GenCustomWeaponBase=function (params)
                     res=modifies[i].moddeffn(res)
                 end
             end
+            --[=[
             for key, value in pairs(res) do
                 WeaponDefs[key]=lowerkeys(value)
-            end
+            end]=]
+            return res
             --WeaponDefs[name] = lowerkeys(weaponDef)
         end,
         custom_weapon_data = custom_weapon_data,

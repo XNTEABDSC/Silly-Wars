@@ -154,6 +154,15 @@ function utils.GenCustomUnitChassisUnitDef(name,desc,udname,thenfn)
     ud_proxy.metalCost              = utils.consts.custom_cost_const
     ud_proxy.weaponDefs=nil
     ud_proxy.weapons=nil
+    ud_proxy.autoHeal=nil
+    ud_proxy.idleAutoHeal=nil
+    ud_proxy.idleTime=nil
+    ud_proxy.explodeAs=nil
+    ud_proxy.selfDestructAs=nil
+    ud_proxy.sightDistance=600
+    ud_proxy.radarDistance=nil
+    ud_proxy.sonarDistance =300
+
     if thenfn then
         thenfn(ud_proxy)
     end

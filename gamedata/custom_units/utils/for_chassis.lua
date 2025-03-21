@@ -103,7 +103,7 @@ utils.BasicChassisMutate.genChassisSpeedModify=function (speed_per_cost)
     ---@param cost number
     function (cud,cost)
         cud.cost=cud.cost+cost
-        cud.motor=cud.motor+(cost^0.6)*speed_per_cost*1600
+        cud.motor=cud.motor+(cost^0.6)*speed_per_cost*1500
         return cud
     end,"number")
 end

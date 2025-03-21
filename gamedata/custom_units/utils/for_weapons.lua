@@ -28,9 +28,7 @@ utils.UseBeamWeaponMutateTable=utils.UseMutateTable(utils.BeamWeaponMutateTable)
 local weapon_modifies={}
 utils.weapon_modifies=weapon_modifies
 local genCustomModify=utils.genCustomModify
-local function CheckParam()
-    
-end
+
 weapon_modifies.name=
 genCustomModify("name","name","unitpics/terraunit.png",function (data,name)
     data.name=name
@@ -54,7 +52,7 @@ genCustomModify("range","add projectiles' range","unitpics/module_adv_targeting.
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)/2
-    tb.range_mut=tb.range_mut*factor^(utils.bias_factor)
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.25)-1 )/0.25 )
 end,"number"
 )
 
@@ -65,7 +63,7 @@ genCustomModify("range","add beams' range","unitpics/module_adv_targeting.png",
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)/2
     --tb.range_mut=tb.range_mut*factor^(utils.bias_factor*0.5)
-    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.75)-1 )*2 )
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.333)-1 )/0.333 )
 end,"number"
 )
 
@@ -75,13 +73,13 @@ genCustomModify("reload","reduce reload time","unitpics/commweapon_heavymachineg
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)/2
-    tb.reload_time_mut=tb.reload_time_mut*factor^(-utils.bias_factor)
+    tb.reload_time_mut=tb.reload_time_mut*factor^(-1)
 end,"number"
 )
 
 
 weapon_modifies.into_aa=
-genCustomModify("into_aa","make this a aa weapon","icons/kbotaa.dds",
+genCustomModify("into_aa","make this aa only","icons/kbotaa.dds",
 ---@param tb CustomWeaponDataModify
 function (tb,flag)
     if flag then
@@ -121,7 +119,30 @@ function (tb,count)
     tb.burst_mut=tb.burst_mut*count
 end,"number"
 )
-
+---@type CustomModify
+weapon_modifies.weapon_def_finish=
+{
+    name = "weapon_def_finish",
+    description = "get weapon_def_raw",
+    pic = "",
+    ---@param tb CustomWeaponDataModify 
+    modfn = function (tb)
+        local res=GameData.CustomUnits.custom_weapon_defs_raw[tb.weapon_def_name]
+        if not res then
+            error("weapon def " .. tostring(tb.weapon_def_name) .. " dont exist")
+        end
+        tb.weapon_def_raw=res
+        local def_damage=0
+        for key, value in pairs(res.damage) do
+            def_damage=math.max(def_damage,value)
+        end
+        tb.damage_default_base=def_damage
+        return tb
+    end,
+    genUIFn =nil,
+    --utils.ui.SimpleValueUI(pic,name,desc,paramType),
+    moddeffn = nil,
+}
 do
     local postfix="_tracks"
     weapon_modifies.tracks=

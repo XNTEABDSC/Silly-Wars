@@ -61,20 +61,6 @@ if false then
     utils_ChooseCUDToBuild=WG.CustomUnits.ChooseCUDToBuild
 end
 
---"CMD_CHOOSE_CUSTOM_UNIT_" .. i
-local function GenChooseCudCmdDesc(i,cudid)
-    local cud=CustomUnitDefs[cudid]
-    return {
-        id      = _G["CMD_CHOOSE_CUSTOM_UNIT_" .. i],
-        type    = CMDTYPE.ICON,
-        tooltip = utils_GenCustomUnitDefViewStr(cud),
-        cursor  = 'Repair',
-        action  = "choose_custom_unit_" .. i,
-        
-        texture = "unitpics/" .. UnitDefs[cud.unitDef].buildpicname,
-    }
-end
-
 local function ListUtils(list,OnMoveRaw)
     ---@type fun(any,integer)
     local function MoveRaw(value,indexInsert)
@@ -436,6 +422,7 @@ local function GenIstrolidLibrary(CustomUnitDefsIstrolidLibData)
                         function ()
                             lib.usingtab=tab.id
                             lib.usingrow=row.id
+                            WG.CustomUnits.ChooseCUDsIntegralCmd(row.cuds)
                         end
                     },
                     OnEdited={
@@ -757,48 +744,6 @@ function widget:Initialize()
     
     WG.CustomUnits.CustomUnitDefsIstrolidLib=CustomUnitDefsIstrolidLib
     TrySetToggleWindowCommandButton()
-end
-local spGetSelectedUnits=Spring.GetSelectedUnits
-local spGetUnitDefID=Spring.GetUnitDefID
-local CustomUnitBuilders=utils.CustomUnitBuilders
-function widget:CommandsChanged()
-    local selectedUnits=spGetSelectedUnits();
-    local found=false
-    for key, uid in pairs(selectedUnits) do
-        local udid=spGetUnitDefID(uid)
-        --local ud=UnitDefs[udid]
-        if CustomUnitBuilders[udid] then
-            found=true
-            break
-        end
-    end
-    if found and CustomUnitDefsIstrolidLib.usingtab and CustomUnitDefsIstrolidLib.usingrow then
-        local cuds=CustomUnitDefsIstrolidLib.tabs[CustomUnitDefsIstrolidLib.usingtab].rows[CustomUnitDefsIstrolidLib.usingrow].cuds
-        local customCommands = widgetHandler.customCommands
-
-        for i = 1, 12 do
-            local cudid=cuds[i]:TryGetCudid()
-            if cudid then
-                customCommands[#customCommands+1]=GenChooseCudCmdDesc(i,cudid)
-            end
-        end
-    end
-end
-
-function widget:CommandNotify(cmdID)
-    local i=CMDs_CHOOSE_CUSTOM_UNIT_I[cmdID]
-    if i then
-        if CustomUnitDefsIstrolidLib.usingtab and CustomUnitDefsIstrolidLib.usingrow then
-            local cuds=CustomUnitDefsIstrolidLib.tabs[CustomUnitDefsIstrolidLib.usingtab].rows[CustomUnitDefsIstrolidLib.usingrow].cuds
-            local cudid=cuds[i]:TryGetCudid()
-            if cudid then
-                utils_ChooseCUDToBuild(cudid)
-            else
-                Spring.Echo("game_message: cudid not ready")
-            end
-        end
-        
-    end
 end
 
 function widget:Shutdown()

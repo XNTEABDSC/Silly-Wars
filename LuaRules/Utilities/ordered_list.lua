@@ -100,6 +100,7 @@ if not Spring.Utilities.OrderedList then
 
     Spring.Utilities.OrderedList=OrderedList
 
+    ---add ordered value, automatically append a number to make key no overlap
     function OrderedList.AddMult(list,ordered)
         local append=0
         local key=ordered.k
@@ -110,6 +111,47 @@ if not Spring.Utilities.OrderedList then
         ordered.k=key
         list.Add(ordered)
         
+    end
+    ---merge 2 order's `b` and `a`, `ordera` will be changed
+    ---@param ordera {k:string,v:any,b:list<string>|nil,a:list<string>|nil}
+    ---@param orderb {k:string,v:any,b:list<string>|nil,a:list<string>|nil}
+    ---@return {k:string,v:any,b:list<string>|nil,a:list<string>|nil}
+    function OrderedList.MergeOrder(ordera,orderb)
+        if not ordera.a then
+            ordera.a={}
+        end
+        local ordera_a=ordera.a
+        if orderb.a then
+            for key, value in pairs(orderb.a) do
+                ordera_a[#ordera_a+1] = value
+            end
+        end
+        if not ordera.b then
+            ordera.b={}
+        end
+        local ordera_b=ordera.b
+        if orderb.b then
+            for key, value in pairs(orderb.b) do
+                ordera_b[#ordera_b+1] = value
+            end
+        end
+        ordera.v=ordera.v or orderb.v
+        ordera.k=ordera.k or orderb.k
+        return ordera
+    end
+
+    ---@param pos -1|"pre"|0|"in"|1|"post"
+    function OrderedList.MakeOrder(key,pos)
+        if type(pos)=="string" then
+            pos=({pre=-1,["in"]=0,post=1})[pos]
+        end
+        if pos==-1 then
+            return {a={key .. "_pre"}}
+        elseif pos == 0 then
+            return {b={key .. "_pre"},a={key.."_post"}}
+        elseif pos==1 then
+            return {b={key .. "_post"}}
+        end
     end
 
 end

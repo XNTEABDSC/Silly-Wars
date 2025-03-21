@@ -170,6 +170,7 @@ return utils.GenCustomWeaponBase{
         utils.weapon_modifies.name,
         utils.weapon_modifies.tracks,
         utils.weapon_modifies.slow_partial,
+        utils.weapon_modifies.weapon_def_finish,
         utils.weapon_modifies.damage,
         utils.weapon_modifies.proj_speed,
         utils.weapon_modifies.proj_range,

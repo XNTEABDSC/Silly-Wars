@@ -52,18 +52,24 @@ if not Spring.Utilities.to_make_very_op_things.make_weapon_drunk then
                 if (not wd.trajectoryHeight) or (wd.trajectoryHeight<0.4) then
                     wd.trajectoryHeight=0.4
                 end
-                local dance=wd.range/8
+
+                local dance=wd.range/6
+                if dance>500 then
+                    dance=500
+                end
                 if wd.tracks then
                     dance=dance*2
                 else
                     dance=dance*1
                 end
                 wd.dance=(wd.dance or 0)+dance
-                local wobble=wd.turnRate
+
+                local wobble=wd.turnRate*1.75
                 if wd.tracks then
-                    wobble=wobble*2
+                    wobble=wobble*1.75
                 end
                 wd.wobble=(wd.wobble or 0 ) + wobble
+
             end
         end
     end
