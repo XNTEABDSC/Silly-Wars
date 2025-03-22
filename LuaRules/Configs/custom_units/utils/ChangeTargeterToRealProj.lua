@@ -106,6 +106,7 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,targeterwdid,customWpnDa
             --[=[if type(ProjTar_b)=='number' then
                 spSetProjectileTarget(newProjID,ProjTar_b)
             else]=]
+            
             if type(ProjTar_b)=="table" then
                 spSetProjectileTarget(newProjID,ProjTar_b[1],ProjTar_b[2],ProjTar_b[3])
             elseif type(ProjTar_a)=="number" and type(ProjTar_b)=="number" then

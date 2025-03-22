@@ -70,7 +70,7 @@ do
           soundStart              = [[weapon/missile/missile2_fire_bass]],
           soundStartVolume        = 7,
           tracks                  = false,
-          turnrate                = 1000,
+          turnrate                = 5000,
           turret                  = true,
           weaponType              = [[MissileLauncher]],
           range                   = utils.consts.custom_weapon_common_range,
