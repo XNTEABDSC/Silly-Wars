@@ -43,5 +43,6 @@ function gadget:ProjectileDestroyed(projID)
         local px,py,pz=spGetProjectilePosition(projID)
         local dx,dy,dz=spGetProjectileDirection(projID)
         spSpawnCEG(ceg,px,py,pz,dx,dy,dz)
+        ProjUseCeg[projID]=nil
     end
 end
