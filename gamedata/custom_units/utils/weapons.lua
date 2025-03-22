@@ -8,6 +8,7 @@ if not GameData.CustomUnits.weapons_defs then
     ---@field genUIFn ModifyUIgenfn
     ---@field humanName string
     
+    ---all custom weapons
     ---@type {[string]:CustomWeaponBaseData}
     local weapons_defs={}
     local luaFiles=VFS.DirList("gamedata/custom_units/weapons", "*.lua") or {}
@@ -16,7 +17,8 @@ if not GameData.CustomUnits.weapons_defs then
         weapons_defs[result.name]=result
     end
     GameData.CustomUnits.weapons_defs=weapons_defs
-
+    ---raw weapons_def of custom weapons, keep its raw data (wont be modified by tweakdefs)
+    ---be used in modfn to get real stat of weapons
     local custom_weapon_defs_raw={}
     for key, value in pairs(weapons_defs) do
         Spring.Utilities.CopyTable(value.genWeaponDef(),true,custom_weapon_defs_raw)

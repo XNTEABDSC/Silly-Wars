@@ -29,7 +29,7 @@ utils.UseModifies = function(modifies)
     end
 end
 
----comments
+---make a `CustomModify`
 ---@param name string
 ---@param desc string
 ---@param pic string
@@ -58,10 +58,14 @@ local function genCustomModify(name, desc, pic, modfn, UI, moddeffn)
 end
 utils.genCustomModify = genCustomModify
 
-utils.SpamDefs = function(foreachfn)
-    return function(ts)
+---returns `fn(datas)` run `foreachfn(key, value)` for each data and merge results
+---@generic T
+---@param foreachfn fun(key:string,value:T):{[string]:T}
+---@return fun(datas:{[string]:T}):{[string]:T}
+utils.genSpamDefsFn = function(foreachfn)
+    return function(datas)
         local newts = {}
-        for key, value in pairs(ts) do
+        for key, value in pairs(datas) do
             for key_, value_ in pairs(foreachfn(key, value)) do
                 newts[key_] = value_
             end
@@ -71,11 +75,16 @@ utils.SpamDefs = function(foreachfn)
 end
 
 do
-    ---@param modifies list<{name:string,humanName:string,moddeffn:fun(wd:table),modfn:fun(cwd:CustomWeaponDataModify)}>
+    ---make a `CustomModify` that use one modifie choosed in `modifies`, gen moddef for modifies
+    ---@param modifies list<{name:string,humanName:string,moddeffn:fun(wd:table)|nil,modfn:fun(cwd:CustomWeaponDataModify)|nil}>
     local function genCustomModifyChoose1Modify(name,desc,pic,modifies)
+        ---@type {[string]:{name:string,humanName:string,moddeffn:fun(wd:table)|nil,modfn:fun(cwd:CustomWeaponDataModify)|nil}}
         local modifies_name = {}
+        ---@type {[integer]:string}
         local modifies_id_to_humanName = {}
+        ---@type {[integer]:string}
         local modifies_id_to_name = {}
+        ---@type {[string]:integer}
         local modifies_name_to_id = {}
         for key, value in pairs(modifies) do
             --[=[
@@ -98,32 +107,30 @@ do
 
                 local aoe = modifies_name[choice]
                 if aoe then
-                    if aoe.name ~= "empty" then
+                    if aoe.modfn then
                         aoe.modfn(wd)
-                        if aoe.moddeffn then
-                            wd.weapon_def_name = wd.weapon_def_name .. "_" .. aoe.name
-                        end
-                    else
-
+                    end
+                    if aoe.moddeffn then
+                        wd.weapon_def_name = wd.weapon_def_name .. "_" .. aoe.name
                     end
                 else
                     error("modify " .. tostring(choice) .. " don't exist")
                 end
             end,
             utils.ui.ChooseOneToUse(modifies_id_to_name, modifies_id_to_humanName, modifies_name_to_id),
-            utils.SpamDefs(function(wdname, wd)
+            utils.genSpamDefsFn(function(wdname, wd)
                 local res = {}
                 for _, value in pairs(modifies) do
                     if value.moddeffn then
                         local key = value.name
-                        local newname
-                        if key == "empty" then
-                            newname = wdname
-                        else
-                            newname = wdname .. "_" .. key
-                        end
                         local newwd = Spring.Utilities.CopyTable(wd, true)
-                        value.moddeffn(newwd)
+                        local newname
+                        if value.moddeffn then
+                            newname = wdname .. "_" .. key
+                            value.moddeffn(newwd)
+                        else
+                            newname = wdname
+                        end
                         res[newname] = newwd
                     end
                 end
@@ -136,15 +143,14 @@ do
         name = "empty",
         humanName = "Empty",
         desc = "empty",
-        modfn = function(wpn)
-            return wpn
-        end,
-        moddeffn = function(v)
-            return v
-        end
     }
 end
 
+---gen unit def for CustomChassisBaseParams.<br/>
+---set some values
+---@param udname string name of ud, uses `GetUnitLua`
+---@param thenfn fun(ud:any) fn on ud
+---@return any ud
 function utils.GenCustomUnitChassisUnitDef(name,desc,udname,thenfn)
     local ud=utils_op.GetUnitLua(udname)
     local ud_proxy=wacky_utils.may_lower_key_proxy(ud,wacky_utils.may_lower_key_proxy_ud_checkkeys)
@@ -169,6 +175,10 @@ function utils.GenCustomUnitChassisUnitDef(name,desc,udname,thenfn)
     return ud
 end
 
+---script=[[custom_unit_proxy_use.lua]] and set cp.custom_unit_proxy_use_<br/>
+---for `GenCustomUnitChassisUnitDef`
+---@param def_piece_weapon_num any
+---@return function
 function utils.GenCustomUnitChassisUnitDef_custom_unit_proxy_use(def_piece_weapon_num)
     def_piece_weapon_num=(def_piece_weapon_num~=nil and def_piece_weapon_num) or 1
     

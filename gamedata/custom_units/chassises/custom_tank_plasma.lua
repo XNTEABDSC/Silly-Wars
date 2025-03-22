@@ -4,7 +4,7 @@ local wacky_utils=Spring.Utilities.wacky_utils
 local utils=GameData.CustomUnits.utils
 
 return utils.GenCustomChassisBase{
-    name="custom_tank",
+    name="custom_tank_plasma",
     humanName="Tank (Minotaur)",
     pictrue=[[unitpics/tankassault.png]],
     description="Tank",

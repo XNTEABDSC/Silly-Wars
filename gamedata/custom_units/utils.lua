@@ -25,13 +25,7 @@ if not GameData.CustomUnits.utils then
             end
         end
     end
-    local function MutateCostAnd(mutate_table)
-        mutate_table.cost=1
-        --mutate_table.mass=1
-        return mutate_table
-    end
     utils_gamedata.TableMutate=TableMutate
-    utils_gamedata.MutateCostMassAnd=MutateCostAnd
     local function UseMutateTable(mutaters)
         ---@generic T
         ---@param t T
@@ -57,7 +51,6 @@ if not GameData.CustomUnits.utils then
         "weapon_slot_type",
         "CustomWeaponDataModify",
         "for_weapons",
-        "for_weapons_aoe",
         "custom_weapon_base",
         "weapons",
         "CustomUnitDataModify",

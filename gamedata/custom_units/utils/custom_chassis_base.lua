@@ -45,12 +45,14 @@ utils.GenCustomChassisBase=function (params)
             local res={[name]=Spring.Utilities.CopyTable(unitDef,true)}
             for i = 1, #modifies do
                 if modifies[i].moddeffn then
-                    res=modifies[i].moddeffn(res)
+                    res=modifies[i].moddeffn(res) or res
                 end
             end
+            return res
+            --[=[
             for key, value in pairs(res) do
                 UnitDefs[key]=lowerkeys(value)
-            end
+            end]=]
         end,
         genfn = function(params_)
             local cud = utils.ACustomUnitDataModify()

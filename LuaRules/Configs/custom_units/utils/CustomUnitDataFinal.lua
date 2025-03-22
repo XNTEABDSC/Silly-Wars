@@ -47,7 +47,7 @@ function utils.GenCustomUnitDataFinal(CustomUnitDataModify)
     }
     local weapons={}
     for key, value in pairs(CustomUnitDataModify.weapons) do
-        weapons[key]=utils.GetCustomWeaponDataFinal(value)
+        weapons[key]=utils.GenCustomWeaponDataFinal(value)
     end
     o.weapons=weapons
     return o

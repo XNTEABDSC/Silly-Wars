@@ -1,6 +1,7 @@
 local utils=GameData.CustomUnits.utils
 
 utils.ACustomWeaponData=function ()
+    ---custom weapon data that be modified when modfn
     ---@class CustomWeaponDataModify
     ---@field cost number
     ---

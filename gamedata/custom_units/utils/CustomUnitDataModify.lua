@@ -4,7 +4,7 @@ VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils = Spring.Utilities.wacky_utils
 
 function utils.ACustomUnitDataModify()
-    ---Data of a custom unit that can be modified
+    ---custom unit data that be modified when modfn
     ---@class CustomUnitDataModify
     ---@field UnitDefName string
     ---@field cost number

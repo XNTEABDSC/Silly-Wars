@@ -9,7 +9,7 @@ local custom_targeter_burstRate=const.custom_targeter_burstRate
 local custom_targeter_projectiles=const.custom_targeter_projectiles
 ---@param CustomWeaponDataModify CustomWeaponDataModify
 ---@return CustomWeaponDataFinal
-utils.GetCustomWeaponDataFinal=function (CustomWeaponDataModify)
+utils.GenCustomWeaponDataFinal=function (CustomWeaponDataModify)
     local wd=WeaponDefNames[CustomWeaponDataModify.weapon_def_name]
     if not wd then
         error("weapon def " .. CustomWeaponDataModify.weapon_def_name .. " dont't exist")

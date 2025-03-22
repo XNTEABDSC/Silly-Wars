@@ -14,6 +14,7 @@ if not GameData.CustomUnits.chassis_defs then
     ---@field description string
     ---@field humanName string
 
+    ---all custom chassises
     ---@type table<string,CustomChassisData>
     local chassis_defs={}
     local luaFiles=VFS.DirList("gamedata/custom_units/chassises", "*.lua") or {}
@@ -22,4 +23,9 @@ if not GameData.CustomUnits.chassis_defs then
         chassis_defs[result.name]=result
     end
     GameData.CustomUnits.chassis_defs=chassis_defs
+    local chassis_unit_def_raw={}
+    for key, value in pairs(chassis_defs) do
+        Spring.Utilities.CopyTable(value.genUnitDefs(),true,chassis_unit_def_raw)
+    end
+    GameData.CustomUnits.chassis_unit_def_raw=chassis_unit_def_raw
 end

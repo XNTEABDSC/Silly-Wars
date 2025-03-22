@@ -3,7 +3,7 @@ local wacky_utils = Spring.Utilities.wacky_utils
 local utils = GameData.CustomUnits.utils
 
 return utils.GenCustomChassisBase{
-    name="custom_bot",
+    name="custom_bot_plasma",
     humanName="Bot (Glaive)",
     pictrue=[[unitpics/cloakraid.png]],
     description="Bot",

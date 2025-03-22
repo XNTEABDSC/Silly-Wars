@@ -4,12 +4,12 @@ local wacky_utils=Spring.Utilities.wacky_utils
 local utils=GameData.CustomUnits.utils
 
 return utils.GenCustomChassisBase{
-    name="custom_hover",
-    humanName="Hovercraft (Mace)",
-    pictrue=[[unitpics/hoverriot.png]],
-    description="Hovercraft",
+    name="custom_car_plasma",
+    humanName="Car (Ravager)",
+    pictrue=[[unitpics/vehassault.png]],
+    description="Car",
     unitDef=
-        utils.GenCustomUnitChassisUnitDef("Custom Hovercraft","Custom Hovercraft","hoverriot",utils.GenCustomUnitChassisUnitDef_custom_unit_proxy_use())
+        utils.GenCustomUnitChassisUnitDef("Custom Car","Custom Car","vehassault",utils.GenCustomUnitChassisUnitDef_custom_unit_proxy_use())
     ,
     modifies={
         utils.BasicChassisMutate.name,

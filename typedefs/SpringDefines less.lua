@@ -66,7 +66,7 @@ Game.mapSizeZ=512
 ---@field range number
 ---@field reload number
 ---@field salvoSize number
----@field salvoDelat number
+---@field salvoDelay number
 ---@field projectiles number
 ---@field type string
 ---@field beamTTL number

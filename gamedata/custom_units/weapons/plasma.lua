@@ -3,7 +3,7 @@ local wacky_utils=Spring.Utilities.wacky_utils
 local utils=GameData.CustomUnits.utils
 
 local aoemodify
-local aoecalccost
+--local aoecalccost
 do
     
     --[=[
@@ -44,7 +44,7 @@ do
         return {
 
             name = "aoe" .. tostring(aoe),
-            humanName = tostring(aoe / 2), -- same as shown in context menu
+            humanName = tostring(aoe / 2), -- same as shown in context menu, radius
             desc = desc,
             ---@param wpn CustomWeaponDataModify
             modfn = function(wpn)
@@ -56,6 +56,9 @@ do
                 wpn.craterMult_add     = craterMult
                 wpn.impulseBoost_add   = impulseBoost
                 wpn.impulseFactor_add  = impulseFactor
+                --local aoe=wpn.aoe
+                wpn.cost               = wpn.cost *
+                CalcCostBuffForAoe(wpn.damage_default_base * wpn.damage_default_mut, aoe)
                 --]=]
             end,
             --[=[
@@ -136,6 +139,7 @@ do
         "aoe", "Area Of effect. Higher the damage, cheaper the aoe", "unitpics/commweapon_riotcannon.png",
         plasma_aoes
     )
+    --[=[
     ---@type CustomModify
     aoecalccost={
         name="aoecalccost",
@@ -146,7 +150,7 @@ do
             wpn.cost               = wpn.cost *
             CalcCostBuffForAoe(wpn.damage_default_base * wpn.damage_default_mut, aoe)
         end
-    }
+    }]=]
 end
 
 return utils.GenCustomWeaponBase{
@@ -187,10 +191,10 @@ return utils.GenCustomWeaponBase{
         utils.weapon_modifies.name,
         utils.weapon_modifies.slow_partial,
         utils.weapon_modifies.into_aa,
-        aoemodify,
         utils.weapon_modifies.weapon_def_finish,
         utils.weapon_modifies.damage,
-        aoecalccost,
+        aoemodify,
+        --aoecalccost,
         utils.weapon_modifies.proj_speed,
         utils.weapon_modifies.proj_range,
         utils.weapon_modifies.reload,

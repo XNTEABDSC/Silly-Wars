@@ -1,7 +1,7 @@
 
 local utils=Spring.Utilities.CustomUnits.utils
 
-
+---make a CustomUnitDesignUI
 ---@type ModifyUIgenfn
 local function GenCustomUnitDesignUI(WG,parent)
         

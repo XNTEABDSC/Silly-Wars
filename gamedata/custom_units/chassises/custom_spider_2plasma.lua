@@ -3,7 +3,7 @@ local wacky_utils = Spring.Utilities.wacky_utils
 local utils = GameData.CustomUnits.utils
 
 return utils.GenCustomChassisBase{
-    name="custom_hermit",
+    name="custom_spider_2plasma",
     humanName="Spider (Hermit)",
     pictrue=[[unitpics/spiderassault.png]],
     description="Spider",

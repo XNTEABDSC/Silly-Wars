@@ -14,6 +14,7 @@ local function GenCustomUnitDef(cudTable)
     local cud=GenCustomUnitDataFinal(cud_mod)
     return cud
 end
+
 ---@param cudString string
 local function TryGenCustomUnitDefFromJson(cudString)
     if cudString==nil or cudString:len()==0 then
