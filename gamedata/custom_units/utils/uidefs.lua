@@ -44,6 +44,7 @@ local function UIPicThen(pic,name,desc,thenUIFn)
 end
 ui.UIPicThen=UIPicThen
 ---A Box to edit values. can be string, number, boolean
+---@param paramtype "string"|"number"|"boolean"
 local function AutoEditBoxUI(paramtype)
     return function (WG,parent)
         local panel

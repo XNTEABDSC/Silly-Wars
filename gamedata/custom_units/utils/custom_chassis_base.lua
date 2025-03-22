@@ -42,7 +42,7 @@ utils.GenCustomChassisBase=function (params)
         description=desc,
         humanName=humanName,
         genUnitDefs = function()
-            local res={[name]=Spring.Utilities.CopyTable(unitDef,true)}
+            local res={[name]=unitDef and Spring.Utilities.CopyTable(unitDef,true) or nil}
             for i = 1, #modifies do
                 if modifies[i].moddeffn then
                     res=modifies[i].moddeffn(res) or res

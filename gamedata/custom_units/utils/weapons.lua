@@ -19,6 +19,7 @@ if not GameData.CustomUnits.weapons_defs then
     GameData.CustomUnits.weapons_defs=weapons_defs
     ---raw weapons_def of custom weapons, keep its raw data (wont be modified by tweakdefs)
     ---be used in modfn to get real stat of weapons
+    ---no lowerkeys (but def itself may use lowerkeys eg customparams)
     local custom_weapon_defs_raw={}
     for key, value in pairs(weapons_defs) do
         Spring.Utilities.CopyTable(value.genWeaponDef(),true,custom_weapon_defs_raw)

@@ -23,6 +23,7 @@ if not GameData.CustomUnits.chassis_defs then
         chassis_defs[result.name]=result
     end
     GameData.CustomUnits.chassis_defs=chassis_defs
+    ---all chassises unit defs. no lowerkeys
     local chassis_unit_def_raw={}
     for key, value in pairs(chassis_defs) do
         Spring.Utilities.CopyTable(value.genUnitDefs(),true,chassis_unit_def_raw)

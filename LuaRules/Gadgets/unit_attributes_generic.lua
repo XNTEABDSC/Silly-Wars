@@ -323,7 +323,7 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 		local moddedRange = w.range*((weaponMods and weaponMods[i] and weaponMods[i].rangeMult) or 1)*rangeFactor
 		local moddedProjectiles = w.projectiles*((weaponMods and weaponMods[i] and weaponMods[i].projectilesMult) or 1)*projectilesFactor
 		
-		Spring.Echo("DEBUG: sprayAngle: " .. tostring(w.sprayAngle) .. " , " ..  tostring(sprayAngleAdd) .. " , " ..  ((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0) .. " , " .. minSpray)
+		--Spring.Echo("DEBUG: sprayAngle: " .. tostring(w.sprayAngle) .. " , " ..  tostring(sprayAngleAdd) .. " , " ..  ((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0) .. " , " .. minSpray)
 		local moddedSprayAngle = math.max(w.sprayAngle+sprayAngleAdd+((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0), minSpray)
 		spSetUnitWeaponState(unitID, i, "sprayAngle", moddedSprayAngle)
 		

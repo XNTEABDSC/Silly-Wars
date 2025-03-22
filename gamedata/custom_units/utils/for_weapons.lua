@@ -35,7 +35,11 @@ genCustomModify("name","name","unitpics/terraunit.png",function (data,name)
 end,"string")
 
 weapon_modifies.damage=
-genCustomModify("damage","add damage","unitpics/module_dmg_booster.png",utils.TableMutate(utils.MutateCostMassAnd({damage_default_mut=utils.bias_factor})),"number")
+genCustomModify("damage","add damage","unitpics/module_dmg_booster.png",---@param tb CustomWeaponDataModify
+function (tb,factor)
+    tb.cost=tb.cost*factor
+    tb.damage_default_mut=tb.damage_default_mut*factor^(utils.bias_factor)
+end,"number")
 
 
 weapon_modifies.proj_speed=
@@ -52,7 +56,7 @@ genCustomModify("range","add projectiles' range","unitpics/module_adv_targeting.
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)/2
-    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.25)-1 )/0.25 )
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.333)-1 )/0.333 )
 end,"number"
 )
 

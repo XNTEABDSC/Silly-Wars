@@ -34,7 +34,7 @@ end
 ---@param desc string
 ---@param pic string
 ---@param modfn function
----@param UI ModifyUIgenfn|string
+---@param UI ModifyUIgenfn|("string"|"number"|"boolean")
 ---@param moddeffn function|nil
 ---@return CustomModify
 local function genCustomModify(name, desc, pic, modfn, UI, moddeffn)
@@ -121,17 +121,18 @@ do
             utils.genSpamDefsFn(function(wdname, wd)
                 local res = {}
                 for _, value in pairs(modifies) do
+                    
                     if value.moddeffn then
                         local key = value.name
                         local newwd = Spring.Utilities.CopyTable(wd, true)
                         local newname
-                        if value.moddeffn then
-                            newname = wdname .. "_" .. key
-                            value.moddeffn(newwd)
-                        else
-                            newname = wdname
-                        end
+                        newname = wdname .. "_" .. key
+                        newwd=value.moddeffn(newwd) or newwd
                         res[newname] = newwd
+                    else
+                        if not res[wdname] then
+                            res[wdname]= Spring.Utilities.CopyTable(wd, true)
+                        end
                     end
                 end
                 return res

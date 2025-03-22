@@ -3,6 +3,7 @@ local wacky_utils = Spring.Utilities.wacky_utils
 
 local utils = GameData.CustomUnits.utils
 local genCustomModify=utils.genCustomModify
+local lowerkeys=lowerkeys or wacky_utils.lowerkeys
 ---make a modify that can add a weapon at slot
 local function add_weapon(custom_weapon_num,slot_name)
     slot_name=slot_name or ("slot " .. custom_weapon_num)
