@@ -26,7 +26,7 @@ function gadget:GetInfo()
     }
 end
 
-
+---defs of custom units
 ---@type {[integer]:CustomUnitDataFinal}
 local CustomUnitDefs={}
 
@@ -53,8 +53,12 @@ local CustomUnitDefsToID={}
 
 local CustomUnitsToDefID={}
 
+---`CustomUnitsToDefID[UnitId] == cudid`
+---@type {[UnitId]:integer}
 GG.CustomUnits.CustomUnitsToDefID=CustomUnitsToDefID
 
+---`CustomUnitsToDefID[cudstr] == cudid`
+---@type {[string]:integer}
 GG.CustomUnits.CustomUnitDefsToID=CustomUnitDefsToID
 
 local spCreateUnit=Spring.CreateUnit
@@ -72,7 +76,9 @@ local function SpawnCustomUnit(cudid,x, y, z, facing, teamID ,build,flattenGroun
         Spring.MarkerAddPoint(x, y, z,"CustomUnits: SpawnCustomUnit: CustomUnitDefs[cudid]==nil. cudid:" .. cudid)
         return nil
     end
-    local unitId=spCreateUnit(cud.unitDef,x, y, z, facing, teamID ,build,flattenGround , targetID, builderID)
+
+
+    local unitId=spCreateUnit(ud,x, y, z, facing, teamID ,build,flattenGround , targetID, builderID)
     if not unitId then
         Spring.MarkerAddPoint(x, y, z,"CustomUnits: SpawnCustomUnit: Failed to create unit")
         --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Failed to create unit")

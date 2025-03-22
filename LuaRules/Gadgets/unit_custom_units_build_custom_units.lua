@@ -28,6 +28,8 @@ if gadgetHandler:IsSyncedCode() then
     local SpawnCustomUnit
     local CustomUnitDefs
     local utils_CanBuilderBuildCustomUnits=Spring.Utilities.CustomUnits.utils.CanBuilderBuildCustomUnits
+    
+    local spTestBuildOrder=Spring.TestBuildOrder
 
     if GG and GG.CustomUnits and GG.CustomUnits.SpawnCustomUnit then
         SpawnCustomUnit=GG.CustomUnits.SpawnCustomUnit
@@ -64,6 +66,10 @@ if gadgetHandler:IsSyncedCode() then
         end
         local cudid,tx,ty,tz,facing,targetID=cmdParams[1],cmdParams[2],cmdParams[3],cmdParams[4],cmdParams[5],cmdParams[6]
         facing=facing or 0
+        local cud=CustomUnitDefs[cudid]
+        if not cud then
+            return false
+        end
         local unitBuildDist=UnitDefs[unitDefID].buildDistance
         local ux,uy,uz=spGetUnitPosition(unitID)
         local unit_tar_offset_x=tx-ux
@@ -74,6 +80,16 @@ if gadgetHandler:IsSyncedCode() then
             --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Unit Moving")
             return true,false
         else
+
+            
+            local ud=cud.unitDef
+            
+            local testbuild=spTestBuildOrder(ud,tx, ty, tz, facing)
+
+            if not testbuild then
+                return true,false
+            end
+
             local spawned_unit=SpawnCustomUnit(cudid,tx,ty,tz,facing,unitTeam,true,true,nil,unitID)
             if spawned_unit then
                 --Spring.Utilities.UnitEcho(unitID,"DEBUG: CustomUnits: CMD_BUILD_CUSTOM_UNIT command: Unit Spawned")
