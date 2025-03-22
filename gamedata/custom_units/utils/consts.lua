@@ -13,8 +13,9 @@ utils.consts={
     bias_factor=0.9,
     custom_weapon_common_range=350,
     custom_weapon_common_damage=5,
-    custom_weapon_common_projSpeed=300,
+    custom_weapon_common_projSpeed=450,
     custom_weapon_common_reloadtime=3,
+    motor=1400
 
     --custom_speed=100,
     

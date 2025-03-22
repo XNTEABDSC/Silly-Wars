@@ -20,7 +20,7 @@ return utils.GenCustomChassisBase{
             ---@param cost number
             function (cud,cost)
                 cud.cost=cud.cost+cost
-                cud.motor=cud.motor+(cost^0.6)*1.1*1500
+                cud.motor=cud.motor+(cost^0.6)*1.1*utils.consts.motor
                 cud.health=cud.health+cost^utils.bias_factor * 5
                 return cud
             end,"number"

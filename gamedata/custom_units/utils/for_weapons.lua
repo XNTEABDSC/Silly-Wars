@@ -56,7 +56,7 @@ genCustomModify("range","add projectiles' range","unitpics/module_adv_targeting.
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)/2
-    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.333)-1 )/0.333 )
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.5)-1 )/0.5 )
 end,"number"
 )
 
