@@ -4,7 +4,7 @@ local wacky_utils=Spring.Utilities.wacky_utils
 local utils=GameData.CustomUnits.utils
 
 return utils.GenCustomChassisBase{
-    name="custom_ship",
+    name="custom_ship_plasma",
     humanName="Ship (Corsair)",
     pictrue=[[unitpics/shipriot.png]],
     description="Ship",
