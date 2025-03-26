@@ -56,10 +56,12 @@ local function UpdateCustomUnitDefs()
             --Spring.Echo("Debug: CustomUnits: UpdateCustomUnitDefs")
             local cudid=#CustomUnitDefs+1
             local cudStr=spGetGameRulesParam("CustomUnitDefs"..cudid)
-            local cudTable=jsondecode(cudStr)
-            local cud=GenCustomUnitDef(cudTable)
-            CustomUnitDefs[cudid]=cud
-            CustomUnitDefsStringToID[cudStr]=cudid-- THE WAY
+            if cudStr then
+                local cudTable=jsondecode(cudStr)
+                local cud=GenCustomUnitDef(cudTable)
+                CustomUnitDefs[cudid]=cud
+                CustomUnitDefsStringToID[cudStr]=cudid-- THE WAY
+            end
         end
     end
 end
@@ -78,7 +80,7 @@ local function GetOrUploadUnitDef(cudStr)
 	if suc then
 		spSendLuaRulesMsg("SyncedAddCustomUnitDef:"..cudStr)
 	else
-		Spring.Echo("game_message: UploadUnitDef: bad Custom Unit Def with error" .. res)
+		Spring.Echo("UploadUnitDef: bad Custom Unit Def with error" .. res)
 	end
 end
 WG.CustomUnits.GetOrUploadUnitDef=GetOrUploadUnitDef
@@ -89,8 +91,6 @@ function widget:RecvFromSynced(msg)
     end
 end
 
-local jsonencode=Spring.Utilities.json.encode
-local jsondecode=Spring.Utilities.json.decode
 
 function widget:Initialize()
 	widgetHandler:RegisterGlobal("UpdateCustomUnitDefs",UpdateCustomUnitDefs)

@@ -291,7 +291,7 @@ local function GenChassisUnitWeapons(weapons_slots)
         for _, targeter in pairs(possible_targeters) do
             --local targeter = targeterweapons[targeter]
             local weapon_unit = Spring.Utilities.CopyTable(targeter.weapon_unit, true)
-            weapon_unit.name = targeter.weapon_unit[wpnnum]
+            weapon_unit.name = targeter.weapon_defs[wpnnum]
             weapons[#weapons + 1] = weapon_unit
             targeter_name_to_unit_weapon[weapon_unit.name] = #weapons
         end
