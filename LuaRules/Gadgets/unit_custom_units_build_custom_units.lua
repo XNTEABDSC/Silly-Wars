@@ -22,7 +22,9 @@ if gadgetHandler:IsSyncedCode() then
 
     include("LuaRules/Configs/customcmds.h.lua")
 
+---@diagnostic disable-next-line: undefined-field, undefined-global
     local CMD_BUILD_CUSTOM_UNIT=CMD.BUILD_CUSTOM_UNIT or CMD_BUILD_CUSTOM_UNIT
+ ---@diagnostic disable-next-line: undefined-field, undefined-global
     local CMD_REPAIR=CMD.REPAIR or CMD_REPAIR
 
     local SpawnCustomUnit

@@ -18,6 +18,6 @@ return utils.GenCustomChassisBase{
         utils.BasicChassisMutate.genChassisChooseSizeModify(1,4)
     },
     weapons_slots={
-        [1] = { "projectile_targeter","line_targeter","aa_targeter"},
+        [1] = {utils.targeterweapons.projectile_targeter,utils.targeterweapons.line_targeter,utils.targeterweapons.aa_targeter},
     }
 }

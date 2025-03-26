@@ -20,6 +20,7 @@ local function GenCustomUnitDefView(cud)
 			text=text .. TabStr() .. str .. "\n"
 		end
 		local cudm=cud.CustomUnitDataModify
+		local cudcd=GameData.CustomUnits.chassis_defs[cud.chassis_name]
 
 
 		local function PutKV(k,v)
@@ -40,7 +41,7 @@ local function GenCustomUnitDefView(cud)
 
 
 		PutCudParam("name")
-        PutKV("Chassis", GameData.CustomUnits.chassis_defs[cud.chassis_name].humanName)
+        PutKV("Chassis", cudcd.humanName)
         
         
 		PutCudParam("cost")
@@ -50,7 +51,7 @@ local function GenCustomUnitDefView(cud)
 
 		PutCudParam("mass")
 
-		for wpn_i = 1, #GameData.CustomUnits.chassis_defs[cud.chassis_name].weapon_slots do
+		for wpn_i = 1, #cudcd.weapon_slots do
 			local cwd=cud.weapons[wpn_i]
 			if cwd then
 				PutStrLn("Weapon " .. wpn_i)

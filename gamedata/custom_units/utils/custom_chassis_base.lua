@@ -8,7 +8,7 @@ local utils=GameData.CustomUnits.utils
 ---@field humanName string
 ---@field description string
 ---@field pictrue string
----@field weapons_slots list<list<string>>
+---@field weapons_slots list<list<CustomUnitWeaponTargeter>>
 ---@field modifies list<CustomModify>
 ---@field unitDef table
 

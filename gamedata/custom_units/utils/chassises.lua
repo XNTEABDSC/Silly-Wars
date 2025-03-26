@@ -3,7 +3,7 @@ if not GameData.CustomUnits.chassis_defs then
     ---Definition of a chassis, all in GameData.CustomUnits.chassis_defs
     ---@class CustomChassisData
     ---@field speed_base number speed of the unitDef
-    ---@field weapon_slots list<list<string>> {[weapon_slot_num]:list<targeter_name>} for each weapon_slot, what targeter can be used
+    ---@field weapon_slots list<list<CustomUnitWeaponTargeter>> {[weapon_slot_num]:list<targeter_name>} for each weapon_slot, what targeter can be used
     ---@field genUnitDefs function
     ---@field genfn fun(params:any):CustomUnitDataModify
     ---@field name string

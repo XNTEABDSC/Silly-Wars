@@ -77,7 +77,7 @@ local function SpawnCustomUnit(cudid,x, y, z, facing, teamID ,build,flattenGroun
         return nil
     end
 
-
+    local ud=cud.unitDef
     local unitId=spCreateUnit(ud,x, y, z, facing, teamID ,build,flattenGround , targetID, builderID)
     if not unitId then
         Spring.MarkerAddPoint(x, y, z,"CustomUnits: SpawnCustomUnit: Failed to create unit")

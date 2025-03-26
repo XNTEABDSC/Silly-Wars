@@ -8,10 +8,10 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 utils_op.AddFnToUnitDefsTweakFns({
-  k="customunithub_as_default",
+  k="customunitcon_as_default",
   v=function ()
-      UnitDefs.customunithub.customparams.is_default_buildoption=1
-      UnitDefs.customunithub.customparams.integral_menu_be_in_tab=[==[
+      UnitDefs.customunitcon.customparams.is_default_buildoption=1
+      UnitDefs.customunitcon.customparams.integral_menu_be_in_tab=[==[
           {
           tab="FACTORY",
           pos= {order = 15, row = 3, col = 2},

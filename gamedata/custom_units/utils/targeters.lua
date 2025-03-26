@@ -4,7 +4,13 @@
 local utils = GameData.CustomUnits.utils
 
 local consts = GameData.CustomUnits.utils.consts
+---@class CustomUnitWeaponTargeter
+---@field weapon_defs {[integer]:string}
+---@field name string
+---@field weapon_def_base table
+---@field weapon_unit table
 
+---@type CustomUnitWeaponTargeter
 local projectile_targeter = {
     name = "projectile_targeter",
     weapon_def_base = {
@@ -35,9 +41,10 @@ local projectile_targeter = {
     weapon_unit = {
         badTargetCategory  = [[FIXEDWING]],
         onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
-    }
+    },weapon_defs={}
 }
-local beam_targeter = {
+---@type CustomUnitWeaponTargeter
+local laser_targeter = {
     name = "beam_targeter",
     weapon_def_base =
     -- [=[
@@ -106,8 +113,10 @@ local beam_targeter = {
     weapon_unit = {
         onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
     },
-    is_beam = true,
+    is_beam = true
+    ,weapon_defs={},
 }
+---@type CustomUnitWeaponTargeter
 local line_targeter = {
     name = "line_targeter",
     weapon_def_base =
@@ -140,8 +149,9 @@ local line_targeter = {
     ,
     weapon_unit = {
         onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
-    }
+    },weapon_defs={},
 }
+---@type CustomUnitWeaponTargeter
 local aa_targeter = {
     name = "aa_targeter",
     weapon_def_base = {
@@ -179,9 +189,9 @@ local aa_targeter = {
     },
     weapon_unit = {
         onlyTargetCategory = [[FIXEDWING GUNSHIP]],
-    }
+    },weapon_defs={},
 }
-
+---@type CustomUnitWeaponTargeter
 local starburst_targeter = {
     name = "starburst_targeter",
     weapon_def_base = {
@@ -210,7 +220,12 @@ local starburst_targeter = {
         weaponTimer             = 2.1,
         weaponType              = [[StarburstLauncher]],
         weaponVelocity          = 8000,
-    }
+    },
+    weapon_unit={
+        badTargetCategory  = [[MOBILE]],
+        onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
+    },
+    weapon_defs={}
 }
 local targeters_wpnnum_count = 16
 local wacky_utils = Spring.Utilities.wacky_utils
@@ -241,7 +256,7 @@ local targeterweapondefs = {}
 -- ---@type {[string]:{name:string,weapon_def:table,weapon_unit:table}}
 local targeterweapons = {
     projectile_targeter = projectile_targeter,
-    beam_targeter=beam_targeter,
+    laser_targeter=laser_targeter,
     aa_targeter = aa_targeter,
     line_targeter = line_targeter,
     starburst_targeter = starburst_targeter,
@@ -256,8 +271,9 @@ for name, value in pairs(targeterweapons) do
     local wd = Spring.Utilities.CopyTable(value.weapon_def_base, true)
     value.weapon_defs = {}
     for i = 1, targeters_wpnnum_count do
-        targeterweapondefs[name .. tostring(i)] = wd
-        value.weapon_defs[i] = name .. tostring(i)
+        local wd_name=name .. tostring(i)
+        targeterweapondefs[wd_name] = wd
+        value.weapon_defs[i] = wd_name
     end
 end
 
@@ -265,17 +281,17 @@ utils.targeterweapondefs = targeterweapondefs
 utils.targeterweapons = targeterweapons
 
 ---to generate unitdef.weapons
----@param weapons_slots {[integer]:list<string>}
+---@param weapons_slots {[integer]:list<CustomUnitWeaponTargeter>}
 ---@return table unitdef.weapons
 ---@return table targeter_name_to_unit_weapon
 local function GenChassisUnitWeapons(weapons_slots)
     local weapons = {}
     local targeter_name_to_unit_weapon = {}
-    for wpnnum, possible_targeters_name in pairs(weapons_slots) do
-        for _, targeter_name in pairs(possible_targeters_name) do
-            local targeter = targeterweapons[targeter_name]
+    for wpnnum, possible_targeters in pairs(weapons_slots) do
+        for _, targeter in pairs(possible_targeters) do
+            --local targeter = targeterweapons[targeter]
             local weapon_unit = Spring.Utilities.CopyTable(targeter.weapon_unit, true)
-            weapon_unit.name = targeter_name .. wpnnum
+            weapon_unit.name = targeter.weapon_unit[wpnnum]
             weapons[#weapons + 1] = weapon_unit
             targeter_name_to_unit_weapon[weapon_unit.name] = #weapons
         end

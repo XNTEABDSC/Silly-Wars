@@ -1042,8 +1042,10 @@ if Utilities.IsCurrentVersionNewerThan(104, 600) then
 		ud.transportmass = nil
 		local buildCost = ud.metalcost and tonumber(ud.metalcost)
 		if buildCost then
+			---@diagnostic disable-next-line: undefined-global
 			if buildCost > TRANSPORT_MEDIUM_COST_MAX then
 				ud.customparams.requireheavytrans = 1
+				---@diagnostic disable-next-line: undefined-global
 			elseif buildCost > TRANSPORT_LIGHT_COST_MAX then
 				ud.customparams.requiremediumtrans = 1
 			end

@@ -1641,9 +1641,14 @@ function Spring.SetRadarErrorParams(allyTeamID, allyteamErrorSize, baseErrorSize
 function Spring.EditUnitCmdDesc(unitID, cmdDescID, cmdArray) end
 
 ---@param unitID UnitId
----@param cmdDescID integer?
+---@param cmdDescID integer
 ---@param cmdArray CommandDescription
 function Spring.InsertUnitCmdDesc(unitID, cmdDescID, cmdArray) end
+
+
+---@param unitID UnitId
+---@param cmdArray CommandDescription
+function Spring.InsertUnitCmdDesc(unitID, cmdArray) end
 
 ---@param unitID UnitId
 ---@param cmdDescID integer?
