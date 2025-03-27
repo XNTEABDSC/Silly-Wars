@@ -37,6 +37,7 @@ local projectile_targeter = {
         weaponVelocity          = consts.custom_targeter_proj_speed,
         turret                  = true,
         weaponType              = [[Cannon]],
+        highTrajectory=2,
     },
     weapon_unit = {
         badTargetCategory  = [[FIXEDWING]],

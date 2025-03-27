@@ -106,7 +106,7 @@ utils.GenCustomWeaponDataFinal=function (CustomWeaponDataModify)
         craterAreaOfEffect=
         CustomWeaponDataModify.craterAreaOfEffect or 
         --wd.craterAreaOfEffect 
-        nil, 
+        nil,
         gravity=wd.myGravity,
         tracks =tracks,
         model=wd.visuals.modelName,
