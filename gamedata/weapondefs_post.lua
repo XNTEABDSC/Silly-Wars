@@ -259,7 +259,7 @@ Game.gameSpeed = Game.gameSpeed or 30
 
 local defaultMyGravity = 120 / (Game.gameSpeed^2)
 
-for _, weaponDef in pairs(WeaponDefs) do
+for wdname, weaponDef in pairs(WeaponDefs) do
 
 	--[[ There are other weapons that follow gravity,
 	     for example expired missiles and torpedoes
@@ -268,6 +268,10 @@ for _, weaponDef in pairs(WeaponDefs) do
 	local supportsMyGravity =
 		(weaponDef.weapontype == "Cannon") or
 		(weaponDef.weapontype == "AircraftBomb")
+
+	if wdname:find("projectile_targeter") then
+		Spring.Echo("DEBUG: wd_post: processing " .. wdname .. "s' gravity. mygravity: " .. tostring( weaponDef.mygravity) .. " type: " .. tostring(weaponDef.weapontype) .. " pass: " .. tostring(supportsMyGravity and (not weaponDef.mygravity)))
+	end
 
 	if supportsMyGravity and (not weaponDef.mygravity) then -- setting myGravity = 0.0 will use map gravity anyway
 		weaponDef.mygravity = defaultMyGravity

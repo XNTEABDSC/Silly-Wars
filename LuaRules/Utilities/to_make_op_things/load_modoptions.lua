@@ -38,6 +38,33 @@ if not Spring.Utilities.to_make_op_things.load_modoptions then
 
     --- load modOptions
     function to_make_op_things.load_modoptions()
+
+        local luamods={}
+        for i, filename in pairs(VFS.DirList("gamedata/lua_mods", "*.lua") or {}) do
+            --Spring.Utilities.CopyTable(VFS.Include(filename),luamods)
+            local fileluamods=VFS.Include(filename)
+            if fileluamods and type (fileluamods )=="table" then
+                for key, value in pairs(fileluamods) do
+                    if type(value)=="function" then
+                        value={
+                            fn=value
+                        }
+                    end
+                    if type(value)=="table" then
+                        if not value.name then
+                            value.name=key
+                        end
+                        luamods[value.name]=value
+                        Spring.Echo("find luamod: " .. value.name .. " from file: " .. filename)
+                    else
+                        Spring.Log("defs.lua", LOG.ERROR, "load lua mods", "wrong return of file " .. tostring(filename) .. " key: " .. tostring(key) .. " value: " .. tostring(value))
+                    end
+                end
+            else
+                Spring.Log("defs.lua", LOG.ERROR, "load lua mods", "wrong return of file " .. tostring(filename))
+            end
+        end
+
         --do_lua_mods=do_lua_mods or false
         local modOptions = {}
         local utils=wacky_utils
@@ -164,7 +191,7 @@ if not Spring.Utilities.to_make_op_things.load_modoptions then
         end
         local function load_lua_mod(mod,moddir,env)
             Spring.Echo("SW: Run luamod " .. mod)
-            local themodoptions=VFS.Include(moddir,env)
+            local themodoptions=luamods[mod].fn(env)--VFS.Include(moddir,env)
             if themodoptions then
                 load_modoption(themodoptions)
             end
@@ -194,17 +221,34 @@ if not Spring.Utilities.to_make_op_things.load_modoptions then
             end
         end}
         setmetatable(load_mod_env,load_mod_env_mt)]==]
+        for modname, mod in pairs(luamods) do
+            load_mod_env[modname]=function (...)
+                local suc,err=pcall(mod.fn,...)
+                if suc then
+                    local themodoptions=err
+                    if themodoptions then
+                        load_modoption(themodoptions)
+                    end
+                else
+                    Spring.Log("defs.lua", LOG.ERROR, "run_lua_mod", "Failed to run mod " .. modname .. " with error " .. err)
+                end
+            end
+        end
+        --[==[
         for key, value in pairs(VFS.DirList(lua_mods_dir,"*.lua")) do
             local mod=string.match(value,[[([a-zA-Z_]+)%.lua]])
             Spring.Echo("find luamod: " .. value .. " modname: " .. tostring( mod))
             if mod then
-                load_mod_env[mod]=function (env)
+                load_mod_env[mod]=
+                luamods[mod].fn
+                --[=[
+                function (env)
                     env=env or {}
                     env=utils.mt_union(env,getfenv(0))
                     load_lua_mod(mod,value,env)
-                end
+                end]=]
             end
-        end
+        end ]==]
 
         for key, value in pairs(VFS.DirList(json_mods_dir,"*.json")) do
             local mod=string.match(value,[[([a-zA-Z_]+)%.json]])

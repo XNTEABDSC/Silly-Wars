@@ -86,11 +86,12 @@ return utils.GenCustomChassisBase{
     },
     modifies={
         utils.BasicChassisMutate.name,
-        utils.BasicChassisMutate.armor,
         utils.BasicChassisMutate.add_weapon(1,"left gun"),
         utils.BasicChassisMutate.add_weapon(2,"right gun"),
+        utils.BasicChassisMutate.armor,
         utils.BasicChassisMutate.genChassisSpeedModify(0.8),
-        utils.BasicChassisMutate.genChassisChooseSizeModify(1,6)
+        utils.BasicChassisMutate.genChassisChooseSizeModify(1,6),
+        utils.BasicChassisMutate.hp_check,
     },
     weapons_slots={
         [1] = { utils.targeterweapons.projectile_targeter ,utils.targeterweapons.line_targeter},

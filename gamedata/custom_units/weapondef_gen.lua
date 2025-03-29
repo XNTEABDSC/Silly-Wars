@@ -12,5 +12,5 @@ end
 ]=]
 
 for key, value in pairs(GameData.CustomUnits.utils.targeterweapondefs) do
-    WeaponDefs[key]=value
+    WeaponDefs[key]=lowerkeys(value)
 end

@@ -1,14 +1,17 @@
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
-local utils=Spring.Utilities.wacky_utils
+local utils = Spring.Utilities.wacky_utils
 
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
-local utils_op=Spring.Utilities.to_make_op_things
+local utils_op = Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
-local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+local to_make_very_op_things = Spring.Utilities.to_make_very_op_things
 
-Scale=Scale or (1/2)
---[==[
+return {
+    scale_size = function(params)
+        params = params or {}
+        local Scale = params.Scale or (1 / 2)
+        --[==[
 utils_op.AddFnToUnitDefsTweakFnsMut({
     k="scale",
     b={"default_modify_value_begin"},
@@ -41,7 +44,7 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
         local udcptoscaleinv=utils.lowervalues({
         })
         local wdtoscaleinv=utils.lowervalues({
-            
+
         })
         local wdcptoscaleinvsqrt=utils.lowervalues({
         })
@@ -181,81 +184,80 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
             end
          end
         --udtoscale,udcptoscale,wdtoscale,wdcptoscale,to01,to01,to01,to01
-    
+
     end
 })]==]
 
-local function scale(value,factor,key)
-    if value then
-        if type(value)=="number" then
-            return value*Scale^factor
-        elseif type(value)=="string" and tonumber(value) then
-            return tostring(tonumber(value)*Scale^factor)
+        local function scale(value, factor, key)
+            if value then
+                if type(value) == "number" then
+                    return value * Scale ^ factor
+                elseif type(value) == "string" and tonumber(value) then
+                    return tostring(tonumber(value) * Scale ^ factor)
+                end
+                return value
+            end
         end
-        return value
-    end
-end
 
-local udscale=utils.lowerkeys{
-    cruiseAltitude=1,
-    --"acceleration",
-    minCloakDistance=1,
-    radarDistanceJam=0.5,
-}
-local udcpscale=utils.lowerkeys{
-    area_cloak_radius=0.5,
-}
-local wdscale=utils.lowerkeys{
-    flightTime=0.5,
-    areaOfEffect=0.5,
-    damageAreaOfEffect=0.5,
-    shieldRadius=0.5,
-    accuracy=0.5,
-    sprayAngle=0.5,
-    turnRate=0.5,
-    weaponVelocity=-0.5,
-    startVelocity=-0.5,
-    myGravity=-0.5,
-    weaponAcceleration=-0.5,
-    dance=0.5,
-    wobble=0.5
+        local udscale = utils.lowerkeys {
+            cruiseAltitude = 1,
+            --"acceleration",
+            minCloakDistance = 1,
+            radarDistanceJam = 0.5,
+        }
+        local udcpscale = utils.lowerkeys {
+            area_cloak_radius = 0.5,
+        }
+        local wdscale = utils.lowerkeys {
+            flightTime = 0.5,
+            areaOfEffect = 0.5,
+            damageAreaOfEffect = 0.5,
+            shieldRadius = 0.5,
+            accuracy = 0.5,
+            sprayAngle = 0.5,
+            turnRate = 0.5,
+            weaponVelocity = -0.5,
+            startVelocity = -0.5,
+            myGravity = -0.5,
+            weaponAcceleration = -0.5,
+            dance = 0.5,
+            wobble = 0.5
 
-}
-local wdcpscale=utils.lowerkeys{
-    area_damage_radius=0.5,
-}
-utils_op.AddFnToUnitDefsTweakFnsMut({
-    k="scale_units",
-    b={"default_modify_value_begin"},
-    a={"default_modify_value_end"},
-    v=function ()
-        for key, ud in pairs(UnitDefs) do
-            utils.modify_all(ud,udscale,scale)
-            local udcp=ud.customparams or {}
-            ud.customparams=udcp
-            udcp.def_scale=(udcp.def_scale or 1)*Scale
-            utils.modify_all(udcp,udcpscale,scale)
-        end
-    end
-})
+        }
+        local wdcpscale = utils.lowerkeys {
+            area_damage_radius = 0.5,
+        }
+        utils_op.AddFnToUnitDefsTweakFnsMut({
+            k = "scale_units",
+            b = { "default_modify_value_begin" },
+            a = { "default_modify_value_end" },
+            v = function()
+                for key, ud in pairs(UnitDefs) do
+                    utils.modify_all(ud, udscale, scale)
+                    local udcp = ud.customparams or {}
+                    ud.customparams = udcp
+                    udcp.def_scale = (udcp.def_scale or 1) * Scale
+                    utils.modify_all(udcp, udcpscale, scale)
+                end
+            end
+        })
 
-Spring.Utilities.OrderedList.AddMult( utils_op.weapon_defs_tweak_fns,{
-    k="scale_weapons",
-    b={"modify_values_begin"},
-    a={"modify_values_end"},
-    v=function ()
-        for key, wd in pairs(WeaponDefs) do
-            utils.modify_all(wd,wdscale,scale)
-            local wdcp=wd.customparams or {}
-            utils.modify_all(wdcp,wdcpscale,scale)
-            
-        end
-    end
-})
+        Spring.Utilities.OrderedList.AddMult(utils_op.weapon_defs_tweak_fns, {
+            k = "scale_weapons",
+            b = { "modify_values_begin" },
+            a = { "modify_values_end" },
+            v = function()
+                for key, wd in pairs(WeaponDefs) do
+                    utils.modify_all(wd, wdscale, scale)
+                    local wdcp = wd.customparams or {}
+                    utils.modify_all(wdcp, wdcpscale, scale)
+                end
+            end
+        })
 
-return {option_notes="Units size x" .. Scale}
+        return { option_notes = "Units size x" .. Scale }
 
---[==[
+        --[==[
 ---
         local udtoscale=utils.lowervalues({
             "radarDistanceJam","buildDistance",
@@ -265,7 +267,7 @@ return {option_notes="Units size x" .. Scale}
         local udcptoscale=utils.lowervalues({
         })
         local wdtoscale=utils.lowervalues({
-            
+
         })
         local wdcptoscale=utils.lowervalues({
         })
@@ -292,3 +294,5 @@ return {option_notes="Units size x" .. Scale}
         local wdcptoscaleinv=utils.lowervalues({
         })
 ]==]
+    end
+}

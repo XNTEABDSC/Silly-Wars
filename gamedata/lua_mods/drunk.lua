@@ -22,18 +22,24 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
         end        
     end
 })]=]
-
-Spring.Utilities.OrderedList.AddMult(utils_op.weapon_defs_tweak_fns,{
-    k="drunk",
-    b={"modify_values_begin"},
-    a={"modify_values_end"},
-    v=function ()
-        for key, value in pairs(WeaponDefs) do
-            to_make_very_op_things.make_weapon_drunk(value)
-        end
-    end
-})
-
 return {
-    option_notes = "Units throw alot but throw everywhere",
+    drunk={
+        fn=function ()
+        
+            Spring.Utilities.OrderedList.AddMult(utils_op.weapon_defs_tweak_fns,{
+                k="drunk",
+                b={"modify_values_begin"},
+                a={"modify_values_end"},
+                v=function ()
+                    for key, value in pairs(WeaponDefs) do
+                        to_make_very_op_things.make_weapon_drunk(value)
+                    end
+                end
+            })
+    
+            return {
+                option_notes = "Units throw alot but throw everywhere",
+            }
+        end
+    }
 }

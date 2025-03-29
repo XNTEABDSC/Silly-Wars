@@ -73,6 +73,7 @@ Game.mapSizeZ=512
 ---@field tracks boolean
 ---@field sprayAngle number
 ---@field craterMult number
+---@field myGravity number
 
 ---@type table<WeaponDefId,WeaponDef>
 WeaponDefs={}

@@ -58,6 +58,16 @@ return utils.GenCustomWeaponBase{
         utils.weapon_modifies.weapon_def_finish,
         utils.weapon_modifies.damage,
         utils.weapon_modifies.proj_speed,
+        {
+            name="range",
+            description="add projectiles' range",
+            ---@param tb CustomWeaponDataModify
+            modfn=function (tb,factor)
+                factor=1
+                tb.cost=tb.cost*(1+factor)
+                
+            end
+        },
         -- utils.weapon_modifies.proj_range, wat happened? gauss's range can't be controlled by set range
         utils.weapon_modifies.reload,
         utils.weapon_modifies.projectiles,

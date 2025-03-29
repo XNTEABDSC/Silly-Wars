@@ -79,6 +79,9 @@ utils.BasicChassisMutate = {
     ---@param cud CustomUnitDataModify
     ---@param factor number
     function(cud, factor)
+        if factor==nil then
+            error("armor is needed")
+        end
         cud.health = cud.health + factor^utils.bias_factor * 30
         cud.cost = cud.cost + factor
         return cud
@@ -150,4 +153,16 @@ utils.BasicChassisMutate.genChassisChooseSizeModify=function (sizeMin,sizeMax)
         end,
     }
 end
+
+utils.BasicChassisMutate.hp_check={
+    name="hp_check",
+    description="check hp",
+    pic="",
+    ---@param cud CustomUnitDataModify
+    modfn=function (cud)
+        if cud.health<cud.cost and cud.health<2000 then
+            error("hp " .. cud.health .. " is too low. " .. " hp should be higher than either cost " .. cud.cost .. " or 2000")
+        end
+    end
+}
 GameData.CustomUnits.utils = utils

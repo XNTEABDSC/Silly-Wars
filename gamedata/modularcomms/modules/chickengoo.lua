@@ -14,6 +14,7 @@ return {
 		local moduleImagePath=shared.moduleImagePath
 		local COST_MULT=shared.COST_MULT
 		local HP_MULT=shared.HP_MULT
+        local applicationFunctionApplyWeapon=shared.applicationFunctionApplyWeapon
         
 		return {{
             name = "commweapon_chickengoo",
@@ -25,7 +26,11 @@ return {
             requireChassis = {"chicken"},
             requireLevel = 3,
             slotType = "adv_weapon",
-            applicationFunction = function (modules, sharedData)
+            applicationFunction = applicationFunctionApplyWeapon(function ()
+                return "commweapon_chickenflamethrower"
+            end),
+            --[=[
+            function (modules, sharedData)
                 if sharedData.noMoreWeapons then
                     return
                 end
@@ -33,7 +38,7 @@ return {
                 sharedData.weapon1 = weaponName
                 sharedData.weapon2 = nil
                 sharedData.noMoreWeapons = true
-            end,
+            end,]=]
             --isBasicWeapon=true,
         }}
     end

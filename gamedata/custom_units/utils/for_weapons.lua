@@ -46,8 +46,8 @@ weapon_modifies.proj_speed=
 genCustomModify("speed","add projectiles' speed","unitpics/commweapon_assaultcannon.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(1+factor)/2
-    tb.projSpeed_mut=tb.projSpeed_mut*factor^(utils.bias_factor)
+    tb.cost=tb.cost*(1+factor)--/2
+    tb.projSpeed_mut=tb.projSpeed_mut*factor
 end,"number")
 
 
@@ -55,8 +55,8 @@ weapon_modifies.proj_range=
 genCustomModify("range","add projectiles' range","unitpics/module_adv_targeting.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(1+factor)/2
-    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.5)-1 )/0.5 )
+    tb.cost=tb.cost*(1+factor)--/2
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(--[=[utils.bias_factor*]=](1/3))-1 )/(1/3) )
 end,"number"
 )
 
@@ -65,7 +65,7 @@ weapon_modifies.beam_range=
 genCustomModify("range","add beams' range","unitpics/module_adv_targeting.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(1+factor)/2
+    tb.cost=tb.cost*(1+factor)--/2
     --tb.range_mut=tb.range_mut*factor^(utils.bias_factor*0.5)
     tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.333)-1 )/0.333 )
 end,"number"
@@ -76,7 +76,7 @@ weapon_modifies.reload=
 genCustomModify("reload","reduce reload time","unitpics/commweapon_heavymachinegun.png",
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
-    tb.cost=tb.cost*(1+factor)/2
+    tb.cost=tb.cost*(1+factor)--/2
     tb.reload_time_mut=tb.reload_time_mut*factor^(-1)
 end,"number"
 )
@@ -109,12 +109,12 @@ function (tb,count)
 
     tb.cost=tb.cost*count--^(1/utils.bias_factor)
     tb.projectiles_mut=tb.projectiles_mut*count
-    tb.sprayAngle_add=tb.sprayAngle_add+(count-1)*0.02
+    tb.sprayAngle_add=tb.sprayAngle_add+(count-1)*0.025
 end,"number"
 )
 
 
-weapon_modifies.burst=genCustomModify("burst","count of burst","unitpics/commweapon_heavymachinegun.png",
+weapon_modifies.burst=genCustomModify("burst","count of burst","unitpics/commweapon_multistunner.png",
 ---@param tb CustomWeaponDataModify
 function (tb,count)
     count=math.max( math.round(count or 1,0) , 1)
@@ -171,7 +171,7 @@ do
     )
 end
 do
-    local postfix="_slowpartial"
+    local postfix="_slowp"
     weapon_modifies.slow_partial=
     genCustomModify("slow_partial","damage x0.75, give slow damage = 2x damage","unitpics/conversion_disruptor.png",
         function (tb,v)

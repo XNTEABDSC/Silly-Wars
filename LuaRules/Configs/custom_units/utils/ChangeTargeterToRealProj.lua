@@ -12,6 +12,7 @@ local spSetProjectileTarget=Spring.SetProjectileTarget
 local spGetProjectileTarget=Spring.GetProjectileTarget
 
 local spSetProjectileDamages=Spring.SetProjectileDamages
+local spGetProjectileGravity=Spring.GetProjectileGravity
 --local spSetProjectileCEG=Spring.SetProjectileCEG
 
 local targeterweapons=GameData.CustomUnits.utils.targeterweapons
@@ -101,6 +102,15 @@ utils.ChangeTargeterToRealProj=function (targeterProjID,targeterwdid,customWpnDa
 
     if newProjID then
         --spSetProjectileCEG(newProjID,customWpnData.explosionGenerator)
+
+        if true then
+            local gravtargeter=spGetProjectileGravity(targeterProjID)
+            local gravnew=spGetProjectileGravity(newProjID)
+            local defgravtargeter=WeaponDefs[targeterwdid].myGravity
+            local defgravnew=WeaponDefs[wdid].myGravity
+            local mapGrav=Game.gravity
+            Spring.Echo("DEBUG: Grav: " .. " gravtargeter: " .. tostring( gravtargeter) .. " gravnew: " .. tostring(gravnew) .. " defgravtargeter: " .. tostring(defgravtargeter) .. " defgravnew: " .. tostring(defgravnew) .. " mapGrav: " .. tostring(mapGrav))
+        end
 
         do
             --[=[if type(ProjTar_b)=='number' then

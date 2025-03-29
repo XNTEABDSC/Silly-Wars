@@ -50,9 +50,9 @@ if not Spring.Utilities.to_make_op_things.unit_defs_tweak_fns then
 
     
 
-    --- make "modify_" .. key .. "_begin" and "modify_" .. key .. "_end" and order
-    --- they are in modify_values_begin and modify_values_end
-    --- cost exclude, use modify_cost_begin modify_cost_end
+    --- make "modify_" .. key .. "_begin" and "modify_" .. key .. "_end" and order<br/>
+    --- they are in modify_values_begin and modify_values_end<br/>
+    --- cost exclude, use modify_cost_begin modify_cost_end<br/>
     local OrderKeyGen=function (order,keys)
         local begins,ends={},{}
         for _, key in pairs(keys) do

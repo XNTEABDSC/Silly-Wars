@@ -29,7 +29,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("gunshipkrow","gunshiptff",function
     missilewd.weaponVelocity=500
     missilewd.flightTime=5]===]
     ud.script=[[gunshiptff.lua]]
-    ud.metalCost=16000
+    ud.metalCost=24000--16000
     ud.health=48000
     ud.speed=80
     ud.name="The Flying Fortress"

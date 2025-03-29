@@ -47,7 +47,7 @@ local function GenCustomUnitDefView(cud)
 		PutCudParam("cost")
 		PutCudParam("health")
 		PutKV("speed",cud.speed)
-		PutKV("motor",cud.motor)
+		--PutKV("motor",cud.motor)
 
 		PutCudParam("mass")
 

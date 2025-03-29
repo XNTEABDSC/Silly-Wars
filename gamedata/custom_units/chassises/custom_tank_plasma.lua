@@ -26,7 +26,8 @@ return utils.GenCustomChassisBase{
             end,"number"
         ),
         utils.BasicChassisMutate.armor,
-        utils.BasicChassisMutate.genChassisChooseSizeModify(1,6)
+        utils.BasicChassisMutate.genChassisChooseSizeModify(1,6),
+        utils.BasicChassisMutate.hp_check,
     },
     weapons_slots={
         [1]={utils.targeterweapons.projectile_targeter,utils.targeterweapons.line_targeter,utils.targeterweapons.aa_targeter}

@@ -109,13 +109,14 @@ return utils.GenCustomChassisBase{
     },
     modifies={
         utils.BasicChassisMutate.name,
-        utils.BasicChassisMutate.armor,
         utils.BasicChassisMutate.add_weapon(1,"left hand"),
         utils.BasicChassisMutate.add_weapon(2,"right hand"),
         utils.BasicChassisMutate.add_weapon(3,"shoulder"),
         utils.BasicChassisMutate.add_weapon(4,"head aa turret"),
         utils.BasicChassisMutate.add_weapon(5,"head beam"),
+        utils.BasicChassisMutate.armor,
         utils.BasicChassisMutate.genChassisSpeedModify(1),
-        utils.BasicChassisMutate.genChassisChooseSizeModify(2,10)
+        utils.BasicChassisMutate.genChassisChooseSizeModify(2,10),
+        utils.BasicChassisMutate.hp_check,
     }
 }
