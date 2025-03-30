@@ -23,7 +23,9 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 utils_op.load_modoptions()
-
+utils_op.OptionalUnitDefsTweakFns=nil
+utils_op.unit_defs_tweak_fns=nil
+utils_op.weapon_defs_tweak_fns=nil
 
 
 local HANDLER_BASENAME = "gadgets.lua"
