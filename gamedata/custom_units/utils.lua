@@ -39,7 +39,7 @@ if not GameData.CustomUnits.utils then
     end
     utils_gamedata.UseMutateTable=UseMutateTable
     --[=[
-    local luaFiles=VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}
+    local luaFiles=VFS.DirList("LuaRules/Utilities/custom_units/utils", "*.lua") or {}
     for i = 1, #luaFiles do
         VFS.Include(luaFiles[i])
     end]=]
@@ -58,7 +58,7 @@ if not GameData.CustomUnits.utils then
         "custom_chassis_base",
         "chassises",
         "genfn"
-    }--VFS.DirList("LuaRules/Configs/custom_units/utils", "*.lua") or {}
+    }--VFS.DirList("LuaRules/Utilities/custom_units/utils", "*.lua") or {}
     for i = 1, #luaFiles do
         VFS.Include("gamedata/custom_units/utils/" .. luaFiles[i] .. ".lua")
     end

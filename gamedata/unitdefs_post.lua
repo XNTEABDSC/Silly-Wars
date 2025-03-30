@@ -1,6 +1,6 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
-utils_op.gamedata_UnitDefs=UnitDefs
+--utils_op.gamedata_UnitDefs=UnitDefs
 
 Spring.Echo("Loading UnitDefs_posts")
 
@@ -63,8 +63,8 @@ for _, ud in pairs(UnitDefs) do
 	if not ud.customparams then
 		ud.customparams = {}
 	end
- end
- 
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Balance Testing
@@ -74,9 +74,6 @@ for _, ud in pairs(UnitDefs) do
 
 
 
-local tweak_units=utils_op.tweak_units
-
-local tweak_defs=utils_op.tweak_defs
 
 Spring.Utilities.to_make_op_things.load_modoptions()
 
@@ -811,6 +808,7 @@ local function GetDimensions(scale)
 	local dimensionsStr = Explode(" ", scale)
 	-- string conversion (required for MediaWiki export)
 	local dimensions = {}
+---@diagnostic disable-next-line: param-type-mismatch
 	for i,v in pairs(dimensionsStr) do
 		dimensions[i] = tonumber(v)
 	end
@@ -828,6 +826,7 @@ local CYL_ADD = 5
 local SEL_SCALE = 1.5
 local STATIC_SEL_SCALE = 1.35
 
+---@diagnostic disable: need-check-nil
 for name, ud in pairs(UnitDefs) do
 	local scale, widthScale = STATIC_SEL_SCALE, STATIC_SEL_SCALE
 	if ud.acceleration and ud.acceleration > 0 and ud.canmove then
@@ -903,6 +902,7 @@ for name, ud in pairs(UnitDefs) do
 	--Spring.Echo("VISUALIZE_SELECTION_VOLUME", ud.name, ud.collisionvolumescales, ud.selectionvolumescales)
 end
 
+---@diagnostic enable: need-check-nil
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -1147,3 +1147,4 @@ if not Engine.FeatureSupport.hasExitOnlyYardmaps then
 		ud.yardmap = ud.yardmap and ud.yardmap:gsub("u", "y"):gsub("e", "c")
 	end
 end
+

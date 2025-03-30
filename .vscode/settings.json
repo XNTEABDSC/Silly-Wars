@@ -13,7 +13,8 @@
         "widget",
         "GameData",
         "Shared",
-        "gadget"
+        "gadget",
+        "DEFS"
     ],
     "Lua.runtime.version": "Lua 5.1",
     "Lua.diagnostics.disable": [

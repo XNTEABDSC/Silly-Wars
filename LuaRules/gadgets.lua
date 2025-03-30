@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- NOTE overrides section at bottom!
 -- ALSO look for comments	-- FIXME: not in base
 

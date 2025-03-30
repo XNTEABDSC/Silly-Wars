@@ -3,4 +3,4 @@ a table to be put in GameData.CustomUnits.utils.GenCustomUnitData
 
 Custom Unit Def Design -> json encode net decode
 -> CustomUnitDataModify gamedata/custom_units/utils/genfn
--> CustomUnitDataFinal LuaRules/Configs/custom_units/CustomUnitDataFinal
+-> CustomUnitDataFinal LuaRules/Utilities/custom_units/CustomUnitDataFinal
