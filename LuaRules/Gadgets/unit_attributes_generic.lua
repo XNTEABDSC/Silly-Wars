@@ -227,6 +227,9 @@ local function UpdatePausedReload(unitID, unitDefID, gameFrame)
 	end
 end
 
+
+local noBeamBurstRate=true
+
 local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 	if not origUnitWeapons[unitDefID] then
 		local ud = UnitDefs[unitDefID]
@@ -255,11 +258,14 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 				state.weapon[i].projectileSpeed = wd.projectilespeed
 			end
 			-- WHO CARES
-			--[=[
-			if wd.type == "BeamLaser" then
+			-- emm it causes beam to just exist for 1 frame
+			-- [=[
+			if --[=[noBeamBurstRate and]=] wd.type == "BeamLaser" then
 				-- beamlasers go screwy if you mess with their burst length
 				state.weapon[i].burstRate = false
-			end]=]
+				state.weapon[i].burst=false
+			end
+			--]=]
 		end
 		
 	end
@@ -285,12 +291,35 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 
 	for i = 1, state.weaponCount do
 		local w = state.weapon[i]
+
+		local wmod=weaponMods and weaponMods[i]
+		local ReloadSpeedFactor = reloadSpeedFactor
+		
+		local moddedBurstRate=w.burstRate and w.burstRate*burstRateFactor/ReloadSpeedFactor
+
+		local moddedRange = w.range*rangeFactor
+		local moddedProjectiles = w.projectiles*projectilesFactor
+		
+		local moddedSprayAngle = w.sprayAngle+sprayAngleAdd
+		local moddedBurst=w.burst and w.burst*burstFactor
+		
+		if wmod then
+			ReloadSpeedFactor = ((wmod.reloadMult) or 1)*ReloadSpeedFactor
+			
+			moddedRange = moddedRange*((wmod.rangeMult) or 1)
+			
+			moddedSprayAngle = moddedSprayAngle+(wmod.sprayAngleAdd or 0)
+
+			moddedProjectiles = moddedProjectiles*((wmod.projectilesMult) or 1)
+			moddedBurst=moddedBurst and moddedBurst * ((wmod.burstMult) or 1)
+			moddedBurstRate=moddedBurstRate and moddedBurstRate * ( (wmod.burstRateMult) or 1 )
+		end
+		moddedSprayAngle = math.max(moddedSprayAngle, minSpray)
 		local reloadState = spGetUnitWeaponState(unitID, i , 'reloadState')
 		local reloadTime  = spGetUnitWeaponState(unitID, i , 'reloadTime')
-		local ReloadSpeedFactor = ((weaponMods and weaponMods[i] and weaponMods[i].reloadMult) or 1)*reloadSpeedFactor
-		
-		local moddedBurstRate=w.burstRate * ( (weaponMods and weaponMods[i] and weaponMods[i].burstRateMult) or 1 ) *burstRateFactor/ReloadSpeedFactor
-		spSetUnitWeaponState(unitID,i,"burstRate",moddedBurstRate + HALF_FRAME)
+		if moddedBurstRate then
+			spSetUnitWeaponState(unitID,i,"burstRate",moddedBurstRate + HALF_FRAME)
+		end
 		if reloadSpeedFactor <= 0 then
 			if not unitReloadPaused[unitID] then
 				local newReload = 100000 -- set a high reload time so healthbars don't judder. NOTE: math.huge is TOO LARGE
@@ -320,11 +349,6 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 				spSetUnitWeaponState(unitID, i, {reloadTime = newReload + HALF_FRAME, reloadState = nextReload + 0.5})
 			end]=]
 		end
-		local moddedRange = w.range*((weaponMods and weaponMods[i] and weaponMods[i].rangeMult) or 1)*rangeFactor
-		local moddedProjectiles = w.projectiles*((weaponMods and weaponMods[i] and weaponMods[i].projectilesMult) or 1)*projectilesFactor
-		
-		--Spring.Echo("DEBUG: sprayAngle: " .. tostring(w.sprayAngle) .. " , " ..  tostring(sprayAngleAdd) .. " , " ..  ((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0) .. " , " .. minSpray)
-		local moddedSprayAngle = math.max(w.sprayAngle+sprayAngleAdd+((weaponMods and weaponMods[i] and weaponMods[i].sprayAngleAdd) or 0), minSpray)
 		spSetUnitWeaponState(unitID, i, "sprayAngle", moddedSprayAngle)
 		
 		if w.projectileSpeed then
@@ -336,8 +360,9 @@ local function UpdateWeapons(unitID, unitDefID, weaponMods, minSpray, gameFrame)
 		spSetUnitWeaponState(unitID, i, "range", moddedRange)
 		spSetUnitWeaponDamages(unitID, i, "dynDamageRange", moddedRange)
 
-		local moddedBurst=w.burst*((weaponMods and weaponMods[i] and weaponMods[i].burstMult) or 1)*burstFactor
-		spSetUnitWeaponState(unitID,i,"burst",moddedBurst)
+		if moddedBurst then
+			spSetUnitWeaponState(unitID,i,"burst",moddedBurst)
+		end
 
 		if maxRangeModified < moddedRange then
 			maxRangeModified = moddedRange
