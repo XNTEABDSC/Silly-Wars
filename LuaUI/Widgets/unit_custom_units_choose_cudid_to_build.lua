@@ -1,6 +1,6 @@
 
 if not Spring.GetModOptions().custon_units then return end
-VFS.Include("LuaRules/Configs/custom_units/utils.lua")
+VFS.Include("LuaRules/Utilities/custom_units/utils.lua")
 --[=[
 ChooseCUDToBuild + CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS -> CMD_BUILD_CUSTOM_UNIT
 --]=]

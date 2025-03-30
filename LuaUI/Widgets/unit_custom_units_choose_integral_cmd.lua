@@ -6,7 +6,7 @@ yay istrolid
 
 
 ]=]
-VFS.Include("LuaRules/Configs/custom_units/utils.lua")
+VFS.Include("LuaRules/Utilities/custom_units/utils.lua")
 include("LuaRules/Configs/customcmds.h.lua")
 
 _G=getfenv()

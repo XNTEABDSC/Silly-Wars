@@ -6,7 +6,7 @@ yay istrolid
 
 
 ]=]
-VFS.Include("LuaRules/Configs/custom_units/utils.lua")
+VFS.Include("LuaRules/Utilities/custom_units/utils.lua")
 include("LuaRules/Configs/customcmds.h.lua")
 
 _G=getfenv()
@@ -682,13 +682,18 @@ local function LoadLocalData()
 end
 
 local function SaveLocalData(data)
-    Spring.CreateDir(DIR_NAME)
-    local file,errmsg=io.open(DIR_NAME..FILE_NAME, 'w')
-    if file then
-        file:write(jsonencode(data))
-        file:close()
+    if io and io.open then
+        Spring.CreateDir(DIR_NAME)
+        local file,errmsg=io.open(DIR_NAME..FILE_NAME, 'w')
+        if file then
+            file:write(jsonencode(data))
+            file:close()
+        else
+            Spring.Log("unit_custom_units_choose_ui_istrolidly.lua", LOG.ERROR, 'Failed to create save file: ' .. DIR_NAME..FILE_NAME .. ' with error ' .. errmsg .. '')
+        end
+        
     else
-        Spring.Log("unit_custom_units_choose_ui_istrolidly.lua", LOG.ERROR, 'Failed to create save file: ' .. DIR_NAME..FILE_NAME .. ' with error ' .. errmsg .. '')
+        Spring.Echo("Warning: unit_custom_units_choose_ui_istrolidly.lua: no io")
     end
 end
 

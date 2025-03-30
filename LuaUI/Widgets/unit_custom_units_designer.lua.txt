@@ -20,7 +20,7 @@ end
 ---@type {[integer]:CustomUnitDataFinal}
 --local CustomUnitDefs={}
 
-VFS.Include("LuaRules/Configs/custom_units/utils.lua")
+VFS.Include("LuaRules/Utilities/custom_units/utils.lua")
 local utils=Spring.Utilities.CustomUnits.utils
 local gdCustomUnits=GameData.CustomUnits
 local GenCUD_mod=gdCustomUnits.utils.GenCustomUnitData
