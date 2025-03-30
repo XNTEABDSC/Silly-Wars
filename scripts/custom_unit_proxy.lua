@@ -15,16 +15,11 @@ function SetCustomUnitScript()
     unit_weapon_num_to_custom_weapon_num=customUnitScript.unit_weapon_num_to_custom_weapon_num
 end
 
-local function Use_unit_weapon_num_to_custom_weapon_num(origFn,defReturn)
+local function Use_unit_weapon_num_to_custom_weapon_num(origFn,defnum)
     if origFn then
         return function (num,...)
-            num=unit_weapon_num_to_custom_weapon_num[num]
-            if not num then
-                return defReturn
-            else
-                return origFn(num,...)
-            end
-            
+            num=unit_weapon_num_to_custom_weapon_num[num] or defnum
+            return origFn(num,...)
         end
     else
         return nil
@@ -47,12 +42,9 @@ script.BlockShot=Use_unit_weapon_num_to_custom_weapon_num(script.BlockShot,true)
 
 script.AimWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.AimWeapon,false)
 
-if script.AimFromWeapon then
-    script.AimFromWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.AimFromWeapon,script.AimFromWeapon(DefPieceWeaponNum))
-end
-if script.QueryWeapon then
-    script.QueryWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.QueryWeapon,script.QueryWeapon(DefPieceWeaponNum))
-end
+script.AimFromWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.AimFromWeapon,DefPieceWeaponNum)
+
+script.QueryWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.QueryWeapon,DefPieceWeaponNum)
 
 script.FireWeapon=Use_unit_weapon_num_to_custom_weapon_num(script.FireWeapon,nil)
 
