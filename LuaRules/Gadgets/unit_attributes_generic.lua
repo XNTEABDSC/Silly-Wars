@@ -666,7 +666,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 				local weaponNum =(data.weaponNum and  data.weaponNum[unitID]) or 0
 				
 				weaponSpecificMods = weaponSpecificMods or {}
-				weaponSpecificMods[weaponNum] = weaponSpecificMods[weaponNum] or {
+				local wepData = weaponSpecificMods[weaponNum] or {
 					reloadMult = 1,
 					rangeMult = 1,
 					projSpeedMult = 1,
@@ -675,7 +675,6 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 					burstRateMult=1,
 					sprayAngleAdd=0,
 				}
-				local wepData = weaponSpecificMods[weaponNum]
 				wepData.reloadMult = wepData.reloadMult*(data.reload and data.reload[unitID] or 1)
 				wepData.rangeMult = wepData.rangeMult*(data.range and data.range[unitID] or 1)
 				wepData.projSpeedMult = wepData.projSpeedMult*(data.projSpeed and data.projSpeed[unitID] or 1)
@@ -683,6 +682,7 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 				wepData.burstMult=wepData.burstMult*(data.burst and data.burst[unitID] or 1)
 				wepData.burstRateMult=wepData.burstRateMult*(data.burstRate and data.burstRate[unitID] or 1)
 				wepData.sprayAngleAdd=wepData.sprayAngleAdd+(data.sprayAngle and data.sprayAngle[unitID] or 0)
+				weaponSpecificMods[weaponNum]=wepData
 			end
 		end
 	end
