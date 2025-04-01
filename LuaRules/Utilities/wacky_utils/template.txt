@@ -5,7 +5,7 @@ if Spring.Utilities==nil then
     Spring.Utilities={}
 end
 if not Spring.Utilities.wacky_utils then
-    local wacky_utils={}
+    Spring.Utilities.wacky_utils={}
 end
 if not Spring.Utilities.wacky_utils.table_replace then
     local wacky_utils=Spring.Utilities.wacky_utils

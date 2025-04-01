@@ -1,27 +1,14 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things/include.lua")
-if not Spring.Utilities.to_make_op_things.StrExplode then
+if not Spring.Utilities.to_make_op_things.GetDimensions then
     local to_make_op_things=Spring.Utilities.to_make_op_things
-
-    
-    function to_make_op_things.StrExplode(div, str)
-        if div == '' then
-            return nil
-        end
-        local pos, arr = 0, {}
-        -- for each divider found
-        for st, sp in function() return string.find(str, div, pos, true) end do
-            table.insert(arr, string.sub(str, pos, st - 1)) -- Attach chars left of current divider
-            pos = sp + 1 -- Jump past current divider
-        end
-        table.insert(arr,string.sub(str,pos)) -- Attach chars right of last divider
-        return arr
-    end
+    VFS.Include("LuaRules/Utilities/wacky_utils/str_explode.lua")
+    local str_explode=Spring.Utilities.wacky_utils.str_explode
 
     function to_make_op_things.GetDimensions(str)
         if not str then
             return nil
         end
-        local dimensionsStr = to_make_op_things.StrExplode(" ", str)
+        local dimensionsStr = str_explode(" ", str)
         -- string conversion (required for MediaWiki export)
         if dimensionsStr then
             local dimensions = {}
