@@ -515,11 +515,11 @@ function Spring.SetUnitNanoPieces(builderID, pieces) end
 ---@param unitID UnitId
 ---@param isblocking boolean
 ---@param isSolidObjectCollidable boolean
----@param isProjectileCollidable boolean
----@param isRaySegmentCollidable boolean
----@param crushable boolean
----@param blockEnemyPushing boolean
----@param blockHeightChanges boolean
+---@param isProjectileCollidable boolean?
+---@param isRaySegmentCollidable boolean?
+---@param crushable boolean?
+---@param blockEnemyPushing boolean?
+---@param blockHeightChanges boolean?
 ---@return nil
 function Spring.SetUnitBlocking(unitID, isblocking, isSolidObjectCollidable, isProjectileCollidable, isRaySegmentCollidable, crushable, blockEnemyPushing, blockHeightChanges) end
 
@@ -534,6 +534,12 @@ function Spring.SetUnitCrashing(unitID, crashing) end
 ---@param power number?
 ---@return nil
 function Spring.SetUnitShieldState(unitID, weaponID, enabled, power) end
+
+---@param unitID UnitId
+---@param weaponID integer? (Default: -1)
+---@param power number?
+---@return nil
+function Spring.SetUnitShieldState(unitID, weaponID, power) end
 
 ---@param unitID UnitId
 ---@param weaponID integer? (optional if the unit only has one shield)
@@ -1244,8 +1250,8 @@ function Spring.UnitFinishCommand(unitID) end
 
 ---@param unitID UnitId
 ---@param cmdID integer
----@param params number[]?
----@param options CommandOptions?
+---@param params number[]|number?
+---@param options CommandOptions|number?
 ---@return boolean unitOrdered
 function Spring.GiveOrderToUnit(unitID, cmdID, params, options) end
 

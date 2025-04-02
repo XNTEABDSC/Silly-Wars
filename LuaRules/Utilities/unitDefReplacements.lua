@@ -156,7 +156,7 @@ local function GetUDCPCustomTooltipSimple(unitID,ud)
 end
 
 local function GetGridTooltip(unitID, windMult)
-	local gridCurrent = Spring.GetUnitRulesParam(unitID, "OD_gridCurrent")
+	local gridCurrent = Spring.GetUnitRulesParam(unitID, "OD_gridCurrent")--[[@as number]]
 	if not gridCurrent then return end
 
 	local windStr = ""
@@ -180,8 +180,8 @@ local function GetGridTooltip(unitID, windMult)
 	if gridCurrent < 0 then
 		return WG.Translate("interface", "disabled_no_grid") .. windStr
 	end
-	local gridMaximum = Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0
-	local gridMetal = Spring.GetUnitRulesParam(unitID, "OD_gridMetal") or 0
+	local gridMaximum = Spring.GetUnitRulesParam(unitID, "OD_gridMaximum")--[[@as number]] or 0
+	local gridMetal = Spring.GetUnitRulesParam(unitID, "OD_gridMetal")--[[@as number]] or 0
 
 	return WG.Translate("interface", "grid") .. ": " .. math.round(gridCurrent,2) .. "/" .. math.round(gridMaximum,2) .. " E => " .. math.round(gridMetal,2) .. " M " .. windStr
 end
@@ -202,10 +202,10 @@ local function GetMexTooltip(unitID, ud)
 end
 
 local function GetTerraformTooltip(unitID)
-	local spent = Spring.GetUnitRulesParam(unitID, "terraform_spent")
+	local spent = Spring.GetUnitRulesParam(unitID, "terraform_spent")--[[@as number]]
 	if not spent then return end
 
-	return WG.Translate("interface", "terraform") .. " - " .. WG.Translate("interface", "estimated_cost") .. ": " .. math.floor(spent) .. " / " .. math.floor(Spring.GetUnitRulesParam(unitID, "terraform_estimate") or 0)
+	return WG.Translate("interface", "terraform") .. " - " .. WG.Translate("interface", "estimated_cost") .. ": " .. math.floor(spent) .. " / " .. math.floor(Spring.GetUnitRulesParam(unitID, "terraform_estimate")--[[@as number]] or 0)
 end
 
 local function GetZenithTooltip (unitID)
@@ -435,6 +435,7 @@ function Spring.Utilities.UnitEcho(unitID, st)
 	st = st or unitID
 	if Spring.ValidUnitID(unitID) then
 		local x,y,z = Spring.GetUnitPosition(unitID)
+		---@cast x -nil
 		Spring.MarkerAddPoint(x,y,z, st)
 	else
 		Spring.Echo("Invalid unitID")

@@ -486,7 +486,11 @@ GL = {
 	UNIFORM_BUFFER = nil,
 
 	---@type number
-	SHADER_STORAGE_BUFFER = nil
+	SHADER_STORAGE_BUFFER = nil,
+
+	---???
+	---@type number
+	LINE_BITS=nil,
 }
 
 ---BlendingFactorDest

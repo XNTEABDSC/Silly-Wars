@@ -60,6 +60,7 @@ for i = 1, #includes do
 		}
 	)
 end
+---@diagnostic disable-next-line: undefined-global
 local CHILI_DIRNAME=CHILI_DIRNAME or (LUAUI_DIRNAME .. "Widgets/chili/")
 
 local includes_order_dir=CHILI_DIRNAME .. "includes_order/"
@@ -88,6 +89,7 @@ end
 local Chili = widget
 
 Chili.CHILI_DIRNAME = CHILI_DIRNAME
+---@diagnostic disable-next-line: undefined-global
 Chili.SKIN_DIRNAME  =  SKIN_DIRNAME or (CHILI_DIRNAME .. "skins/")
 
 if (-1>0) then

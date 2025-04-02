@@ -128,7 +128,7 @@ end
 local TryGenCustomUnitDef=utils.TryGenCustomUnitDef
 local function SyncedAddCustomUnitDef(cudString,playerID)
     if not initialized then
-        Spring.Echo("Warning: unit_custom_units: Try SyncedAddCustomUnitDef Before Init. Blocked.")
+        Spring.Echo("Error: unit_custom_units: Try SyncedAddCustomUnitDef Before Init. Fn blocked.")
         return
     end
     local cudid=CustomUnitDefsToID[cudString]
@@ -138,7 +138,7 @@ local function SyncedAddCustomUnitDef(cudString,playerID)
     cudid=#CustomUnitDefs+1
     local suc,res=TryGenCustomUnitDef(cudString)
     if suc then
-        local cud=res
+        local cud=res--[[@as CustomUnitDataFinal]]
 
         CustomUnitDefs[cudid]=cud
         CustomUnitDefsToID[cudString]=cudid
@@ -232,18 +232,26 @@ local spGetGameRulesParam=Spring.GetGameRulesParam
 function gadget:Initialize()
 	--gadgetHandler:AddSyncAction('UpdateCustomUnitDefs',CallUnsynced_UpdateCustomUnitDefs)
     local cudcount =spGetGameRulesParam("CustomUnitDefsCount")
-    Spring.Echo("DEBUG: unit_custom_units.Initialize: Loading CUDs count: " .. tostring(cudcount))
+    --Spring.Echo("DEBUG: unit_custom_units.Initialize: Loading CUDs count: " .. tostring(cudcount))
     if cudcount~=nil then
         for cudid = 1, cudcount do
             local cudStr=spGetGameRulesParam("CustomUnitDefs"..cudid)
-            local suc,res=TryGenCustomUnitDef(cudStr)
-            if suc then
-                CustomUnitDefs[cudid]=res
-                CustomUnitDefsToID[cudStr]=cudid
+            if cudStr and type(cudStr)=="string" then
+                local suc,res=TryGenCustomUnitDef(cudStr)
+                if suc then
+                    ---@cast res CustomUnitDataFinal
+                    CustomUnitDefs[cudid]=res
+                    CustomUnitDefsToID[cudStr]=cudid
+                else
+                    Spring.Echo("Error: CustomUnits: Failed to load GameRulesParam " .. ("CustomUnitDefs"..cudid) ..
+                    "\ncudStr: " .. tostring(cudStr) ..
+                    "\nerror: " .. res)
+                end
+
+                
             else
-                Spring.Echo("Error: CustomUnits: Failed to load GameRulesParam " .. ("CustomUnitDefs"..cudid) ..
-                "\ncudStr: " .. tostring(cudStr) ..
-                "\nerror: " .. res)
+                Spring.Echo("Error: unit_custom_units.lua: Initialize: " .. "GameRulesParam CustomUnitDefs"..cudid .. " is " .. tostring(cudStr) .. " while cudcount: " .. tostring(cudcount))
+                
             end
             
         end
@@ -258,11 +266,11 @@ function gadget:Initialize()
             if cud then
                 utils_SetCustomUnit(unitId,cud)
             else
-                Spring.Utilities.UnitEcho(unitId,"Error: CustomUnits: Unit's cudid " .. cudid .. " dont matches cud")
+                Spring.Utilities.UnitEcho(unitId,"Error: unit_custom_units.lua: Initialize: Unit's cudid " .. cudid .. " dont matches cud")
             end
             
         end
-        --
+        
     end
 end
 

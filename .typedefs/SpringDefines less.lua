@@ -74,6 +74,7 @@ Game.mapSizeZ=512
 ---@field sprayAngle number
 ---@field craterMult number
 ---@field myGravity number
+---@field customParams {[string]:string|number|nil}
 
 ---@type table<WeaponDefId,WeaponDef>
 WeaponDefs={}

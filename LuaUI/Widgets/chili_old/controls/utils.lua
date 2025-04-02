@@ -51,6 +51,7 @@ Utils={
 			end
 		end
     end,
+    --[=[
     MoveChildren=function (self,start,count,offset)
         local children=self.children
         local tomove_start
@@ -77,7 +78,7 @@ Utils={
 			end
 		end
 		table.insert(children, index, objDirect)
-    end,
+    end,]=]
 
     SetChildIndex=function (self,child,id)
 	    local objDirect =  WG.Chili.UnlinkSafe(child)

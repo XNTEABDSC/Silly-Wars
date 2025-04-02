@@ -1,6 +1,6 @@
 {
-    /*
-    "Lua.diagnostics.globals": [
+    "diagnostics.globalsRegex": ["CMD_.*"],
+    "diagnostics.globals": [
         "VFS",
         "UnitDefs",
         "UnitDefNames",
@@ -20,12 +20,13 @@
         "FeatureDefNames",
         "SendToUnsynced"
     ],
-    "Lua.runtime.version": "Lua 5.1",
-    "Lua.diagnostics.disable": [
+    "runtime.version": "Lua 5.1",
+    "diagnostics.disable": [
         "duplicate-set-field"
     ],
-    "Lua.runtime.special": {
+    "runtime.special": {
         "include":"require",
-        "VFS.Include":"require",
-    }*/
+        "VFS.Include":"require"
+    }
+    
 }

@@ -61,6 +61,10 @@ local function GetMass(health, cost)
 	return (((cost/2) + (health/8))^0.6)*6.5
 end
 
+local function tobool(v)
+	return v and true or false
+end
+
 GG.att_CostMult = {}
 GG.att_HealthMult = {}
 GG.att_EconomyChange = {}

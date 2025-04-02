@@ -66,7 +66,7 @@ local LOS_ACCESS = {inlos = true}
 --------------------------------------------------------------------------------
 
 local captureWeaponDefs, captureUnitDefs = include("LuaRules/Configs/capture_defs.lua")
-
+---@cast captureUnitDefs table
 local damageByID = {data = {}, count = 0}
 local unitDamage = {}
 local capturedUnits = {}
@@ -89,14 +89,14 @@ local function checkThingsDoubleTable(things, thingByID)
 			covered[id] = true
 		else
 			Spring.Echo("Thing with incorrect index")
-			local bla = bla + 1
+			--local bla = bla + 1
 		end
 	end
 	
 	for id,data in pairs(things) do
 		if not covered[id] then
 			Spring.Echo("Thing not covered")
-			local bla = bla + 1
+			--local bla = bla + 1
 		end
 	end
 end
@@ -298,6 +298,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		local controllerID = attackerID
 		if def.captureToDroneController then
 			local parentID = Spring.GetUnitRulesParam(attackerID, "parent_unit_id")
+			---@cast parentID UnitId
 			if Spring.ValidUnitID(parentID) and not spGetUnitIsDead(parentID) then
 				local parentAllyTeamID = Spring.GetUnitAllyTeam(parentID)
 				if parentAllyTeamID and parentAllyTeamID == attackerAllyTeam then
@@ -468,6 +469,7 @@ local function GetActiveTeam(teamID, allyTeamID)
 	end
 	
 	local teamList = Spring.GetTeamList(allyTeamID)
+	---@cast teamList -nil
 	for i = 1, #teamList do
 		if teamResourceShare[teamList[i]] ~= 0 then
 			return teamList[i]
@@ -702,6 +704,7 @@ function gadget:DrawWorld()
 	end
 	
 	if drawAnything then
+---@diagnostic disable-next-line: undefined-field
 		glPushAttrib(GL.LINE_BITS)
 		glLineWidth(3)
 		gl.DepthTest(false)

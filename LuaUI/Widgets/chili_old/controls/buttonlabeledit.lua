@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 
 --- a button, click to OnClick, double click to change text
 ButtonLabelEdit = Control:Inherit{

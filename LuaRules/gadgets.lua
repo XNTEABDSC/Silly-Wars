@@ -57,6 +57,7 @@ local actionHandler = VFS.Include(HANDLER_DIR .. 'actions.lua', nil, VFSMODE)
 --  the gadgetHandler object
 --
 
+---@diagnostic disable-next-line: lowercase-global
 gadgetHandler = gadgetHandler or {
 
   gadgets = {},
@@ -688,6 +689,7 @@ function gadgetHandler:UpdateCallIn(name)
       (name == 'GotChatMsg')      or
       (name == 'RecvFromSynced')) then
     local selffunc = self[name]
+    ---@cast selffunc any
     _G[name] = function(...)
       return selffunc(self, ...)
     end

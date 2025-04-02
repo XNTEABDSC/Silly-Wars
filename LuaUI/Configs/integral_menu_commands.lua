@@ -13,6 +13,8 @@ VFS.Include("LuaRules/Configs/customcmds.h.lua")
 --   four-row mode.
 -- * Missing commands have {pos = 1, priority = 100}
 
+---@diagnostic disable: undefined-global
+
 local cmdPosDef = {
 	-- Commands
 	[CMD.STOP]          = {pos = 1, priority = 1},
@@ -88,6 +90,7 @@ local cmdPosDef = {
 	[CMD_AP_FLY_STATE]        = {pos = 1, priority = 19},
 	[CMD_AUTO_CALL_TRANSPORT] = {pos = 1, priority = 21},
 }
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
