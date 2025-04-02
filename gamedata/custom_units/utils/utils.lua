@@ -169,6 +169,7 @@ function utils.GenCustomUnitChassisUnitDef(name,desc,udname,thenfn)
     ud_proxy.sightDistance=600
     ud_proxy.radarDistance=nil
     ud_proxy.sonarDistance =300
+    ud_proxy.featureDefs=nil
 
     if thenfn then
         thenfn(ud_proxy)

@@ -56,7 +56,7 @@ genCustomModify("range","add projectiles' range","unitpics/module_adv_targeting.
 ---@param tb CustomWeaponDataModify
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)--/2
-    tb.range_mut=tb.range_mut*( ( (1+factor)^(--[=[utils.bias_factor*]=](1/3))-1 )/(1/3) )
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(--[=[utils.bias_factor*]=](1/2))-1 )/(1/2) )
 end,"number"
 )
 
@@ -67,7 +67,7 @@ genCustomModify("range","add beams' range","unitpics/module_adv_targeting.png",
 function (tb,factor)
     tb.cost=tb.cost*(1+factor)--/2
     --tb.range_mut=tb.range_mut*factor^(utils.bias_factor*0.5)
-    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*0.333)-1 )/0.333 )
+    tb.range_mut=tb.range_mut*( ( (1+factor)^(utils.bias_factor*(1/3))-1 )/(1/3) )
 end,"number"
 )
 

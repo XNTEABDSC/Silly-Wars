@@ -13,6 +13,8 @@ local spGetProjectileTarget=Spring.GetProjectileTarget
 
 local spSetProjectileDamages=Spring.SetProjectileDamages
 local spGetProjectileGravity=Spring.GetProjectileGravity
+
+--local spSpawnSFX=Spring.SpawnSFX
 --local spSetProjectileCEG=Spring.SetProjectileCEG
 
 local targeterweapons=GameData.CustomUnits.utils.targeterweapons
