@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
     "diagnostics.globalsRegex": ["CMD_.*"],
     "diagnostics.globals": [
         "VFS",
@@ -19,6 +20,7 @@
         "LOG",
         "FeatureDefNames",
         "SendToUnsynced"
+        //,{ "name": "script", "include": "scripts/**.lua" }
     ],
     "runtime.version": "Lua 5.1",
     "diagnostics.disable": [
