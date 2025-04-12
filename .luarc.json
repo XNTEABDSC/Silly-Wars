@@ -1,7 +1,7 @@
 {
-    
-    /*
-    "Lua.diagnostics.globals": [
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+    "diagnostics.globalsRegex": ["CMD_.*"],
+    "diagnostics.globals": [
         "VFS",
         "UnitDefs",
         "UnitDefNames",
@@ -20,13 +20,15 @@
         "LOG",
         "FeatureDefNames",
         "SendToUnsynced"
+        //,{ "name": "script", "include": "scripts/**.lua" }
     ],
-    "Lua.runtime.version": "Lua 5.1",
-    "Lua.diagnostics.disable": [
+    "runtime.version": "Lua 5.1",
+    "diagnostics.disable": [
         "duplicate-set-field"
     ],
-    "Lua.runtime.special": {
+    "runtime.special": {
         "include":"require",
-        "VFS.Include":"require",
-    }*/
+        "VFS.Include":"require"
+    }
+    
 }

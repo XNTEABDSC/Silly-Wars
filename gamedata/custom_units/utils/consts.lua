@@ -12,10 +12,10 @@ utils.consts={
     custom_targeter_burstRate=1/30,
     bias_factor=0.9,
     custom_weapon_common_range=600,
-    custom_weapon_common_damage=10,
-    custom_weapon_common_projSpeed=600,
+    custom_weapon_common_damage=12,
+    custom_weapon_common_projSpeed=750,
     custom_weapon_common_reloadtime=5,
-    motor=1400
+    motor=1300
 
     --custom_speed=100,
     

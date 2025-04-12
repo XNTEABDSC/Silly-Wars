@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 AutosizeLayoutPanel = LayoutPanel:Inherit {
     classname = "autosizelayoutpanel",
     resizeItems = false,
@@ -273,7 +274,8 @@ function AutosizeLayoutPanel:_LayoutChildren()
 
     local cur_x, cur_y                     = 0, 0
     local curLine, curLineSize             = 1, self.minItemHeight
-    local totalChildWidth, totalChildHeight = 0
+    local totalChildWidth                  = 0
+    local totalChildHeight
     local lineHeights                      = {}
     local lineWidths                       = {}
 

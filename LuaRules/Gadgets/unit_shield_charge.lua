@@ -22,6 +22,8 @@ end
 
 include("LuaRules/Configs/constants.lua")
 
+---@diagnostic disable-next-line: undefined-global
+local TEAM_SLOWUPDATE_RATE=TEAM_SLOWUPDATE_RATE
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -122,6 +124,7 @@ function gadget:GameFrame(n)
 
 	local updatePriority = (n % TEAM_SLOWUPDATE_RATE == 0)
 	local setParam = ((n % 30) == 8)
+	---@type false|table
 	local toDestroy = false
 	
 	for i = 1, unitCount do

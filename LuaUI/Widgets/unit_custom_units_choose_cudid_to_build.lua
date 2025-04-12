@@ -21,6 +21,11 @@ end
 
 include("LuaRules/Configs/customcmds.h.lua")
 
+---@diagnostic disable-next-line: undefined-global
+local CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS=CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS
+---@diagnostic disable-next-line: undefined-global
+local CMD_BUILD_CUSTOM_UNIT=CMD_BUILD_CUSTOM_UNIT
+
 local spSetActiveCommand=Spring.SetActiveCommand
 local spGetSelectedUnits=Spring.GetSelectedUnits
 local spGetUnitDefID=Spring.GetUnitDefID
@@ -52,6 +57,7 @@ local CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS_DESC={
 local function ChooseCUDToBuild(cudid)
     cudid_to_build=cudid
     local CmdDescIndex=Spring.GetCmdDescIndex(CMD_CHOOSE_BUILD_CUSTOM_UNIT_POS)
+---@diagnostic disable-next-line: param-type-mismatch
     local res=spSetActiveCommand(CmdDescIndex)
 end
 

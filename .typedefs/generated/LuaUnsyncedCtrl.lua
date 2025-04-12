@@ -495,7 +495,7 @@ function Spring.SetUnitNoSelect(unitID, unitNoSelect) end
 function Spring.SetUnitLeaveTracks(unitID, unitLeaveTracks) end
 
 ---@param unitID UnitId
----@param featureID integer
+-- ---@param featureID integer
 ---@param scaleX number
 ---@param scaleY number
 ---@param scaleZ number
@@ -506,7 +506,7 @@ function Spring.SetUnitLeaveTracks(unitID, unitLeaveTracks) end
 ---@param tType number
 ---@param Axis number
 ---@return nil
-function Spring.SetUnitSelectionVolumeData(unitID, featureID, scaleX, scaleY, scaleZ, offsetX, offsetY, offsetZ, vType, tType, Axis) end
+function Spring.SetUnitSelectionVolumeData(unitID,--[=[ featureID,]=] scaleX, scaleY, scaleZ, offsetX, offsetY, offsetZ, vType, tType, Axis) end
 
 ---Features
 ---

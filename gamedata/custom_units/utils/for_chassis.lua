@@ -82,7 +82,7 @@ utils.BasicChassisMutate = {
         if factor==nil then
             error("armor is needed")
         end
-        cud.health = cud.health + factor^utils.bias_factor * 30
+        cud.health = cud.health + factor^utils.bias_factor * 25
         cud.cost = cud.cost + factor
         return cud
     end,"number"),

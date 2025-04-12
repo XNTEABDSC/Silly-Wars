@@ -149,11 +149,11 @@ local function UpdateUnitCollisionData(unitID, unitDefID, scales)
 	if offsets[unitDefID] and ud then
 		mid = Spring.Utilities.CopyTable(offsets[unitDefID].mid)
 		aim = Spring.Utilities.CopyTable(offsets[unitDefID].aim)
-		mid[2] = Spring.GetUnitRulesParam(unitID, "midpos_override") or mid[2]
-		aim[2] = Spring.GetUnitRulesParam(unitID, "aimpos_override") or aim[2]
+		mid[2] = Spring.GetUnitRulesParam(unitID, "midpos_override")--[[@as number|nil]] or mid[2]
+		aim[2] = Spring.GetUnitRulesParam(unitID, "aimpos_override")--[[@as number|nil]] or aim[2]
 	else
-		mid = {0, Spring.GetUnitRulesParam(unitID, "midpos_override") or 0, 0}
-		aim = {0, Spring.GetUnitRulesParam(unitID, "aimpos_override") or 0, 0}
+		mid = {0, Spring.GetUnitRulesParam(unitID, "midpos_override")--[[@as number|nil]] or 0, 0}
+		aim = {0, Spring.GetUnitRulesParam(unitID, "aimpos_override")--[[@as number|nil]] or 0, 0}
 	end
 	
 	mid[1], mid[2], mid[3] = mid[1] + midTable.midx, mid[2] + midTable.midy, mid[3] + midTable.midz

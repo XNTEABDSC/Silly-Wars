@@ -3,58 +3,54 @@ if not GG.goodBurstSalvo then
     GG.goodBurstSalvo=goodBurstSalvo
     local ALLY_ACCESS = {allied = true}
 	local spGetGameFrame         = Spring.GetGameFrame
-    function goodBurstSalvo.newBurstWeapon(unitID,salvoCapacity,salvoReloadSecond)
+    local floor=math.floor
+    function goodBurstSalvo.newBurstWeapon(unitID,salvoCapacity,reloadTimePerSalvo)
         local o={}
+        --[=[
         local count=salvoCapacity
         local reloadingTime=0
+        ]=]
+        local charge=salvoCapacity
         local active=true
+        local reloadChargePerSecond=1/reloadTimePerSalvo
         
         function o.CanShot()
-            return count>0
+            return charge>=1
         end
         function o.DoShot()
-            count=count-1
+            charge=charge-1
         end
         function o.TryShot()
-            if count>0 then
-                count=count-1
+            if charge>=1 then
+                charge=charge-1
                 return true
             end
             return false
-        end
-        function o.count()
-            return count
-        end
-        function o.reloadingTime()
-            return reloadingTime
         end
         function o.salvoCapacity()
             return salvoCapacity
         end
         function o.salvoReloadSecond()
-            return salvoReloadSecond
+            return reloadTimePerSalvo
         end
         function o.FullReloadTimeLeft()
-            return salvoReloadSecond*(salvoCapacity-count)-reloadingTime
+            return reloadTimePerSalvo*(salvoCapacity-charge)
             --salvoReloadSecond*salvoCapacity - (salvoReloadSecond*count+reloadingTime)
         end
         function o.ReloadThread()
             while active do
-                if count<salvoCapacity then
-                    if reloadingTime>=salvoReloadSecond then
-                        reloadingTime=reloadingTime-salvoReloadSecond
-                        count=count+1
-                    end
+                if charge<salvoCapacity then
                     local stunnedOrInbuild = Spring.GetUnitIsStunned(unitID)
 		            local reloadMult = (stunnedOrInbuild and 0) or (Spring.GetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1)
-                    reloadingTime=reloadingTime+reloadMult*0.1
-                    local scriptReloadFrame=spGetGameFrame()+(salvoReloadSecond*(salvoCapacity-count)-reloadingTime)*30
-                    local scriptReloadPercentage=(count+reloadingTime/salvoReloadSecond)/salvoCapacity
-                    Spring.SetUnitRulesParam(unitID, "scriptLoaded", count, ALLY_ACCESS)
+                    charge=charge+reloadChargePerSecond*0.1*reloadMult
+                    local scriptReloadFrame=spGetGameFrame()+(reloadTimePerSalvo*(salvoCapacity-charge))*30
+                    local scriptReloadPercentage=(charge/reloadTimePerSalvo)/salvoCapacity
+                    Spring.SetUnitRulesParam(unitID, "scriptLoaded", floor(charge), ALLY_ACCESS)
                     Spring.SetUnitRulesParam(unitID, "scriptReloadFrame", scriptReloadFrame, ALLY_ACCESS)
                     --Spring.SetUnitRulesParam(unitID, "scriptReloadPercentage", scriptReloadPercentage, ALLY_ACCESS)
                 else
-                    Spring.SetUnitRulesParam(unitID, "scriptLoaded", count, ALLY_ACCESS)
+                    charge=salvoCapacity
+                    Spring.SetUnitRulesParam(unitID, "scriptLoaded", floor(charge), ALLY_ACCESS)
                     Spring.SetUnitRulesParam(unitID, "scriptReloadFrame", nil, ALLY_ACCESS)
                     --Spring.SetUnitRulesParam(unitID, "scriptReloadPercentage", nil, ALLY_ACCESS)
 

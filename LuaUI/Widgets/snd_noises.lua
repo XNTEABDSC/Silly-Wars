@@ -47,10 +47,13 @@ local toleranceTime = Spring.GetConfigInt('DoubleClickTime', 300) * 0.001 -- no 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+---@diagnostic disable-next-line: lowercase-global
 options_path = 'Settings/Audio'
+---@diagnostic disable-next-line: lowercase-global
 options_order = {
 'selectnoisevolume','ordernoisevolume','attacknoisevolume', 'commandSoundCooldown', 'selectSoundCooldown',
 }
+---@diagnostic disable-next-line: lowercase-global
 options = {
 	selectnoisevolume = {
 		name = 'Selection Volume',
@@ -115,11 +118,13 @@ local cooldown = {}
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
+---@diagnostic disable: undefined-global
 local widgetCMD = {
 	[CMD_EMBARK] = true,
 	[CMD_DISEMBARK] = true,
 	[CMD_TRANSPORTTO] = true,
 }
+---@diagnostic enable: undefined-global
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

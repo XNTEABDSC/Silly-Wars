@@ -4,6 +4,9 @@ local buildCmdFactory, buildCmdEconomy, buildCmdDefence, buildCmdSpecial, buildC
 --------------------------------------------------------------------------------
 -- Tooltips
 
+---@diagnostic disable: undefined-global
+
+---@diagnostic disable: need-check-nil
 local imageDir = 'LuaUI/Images/commands/'
 
 local tooltips = {

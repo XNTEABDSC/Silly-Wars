@@ -919,6 +919,7 @@ local behaviourConfig = {
 		fleeDistance = 120,
 		fleeLeeway = 150,
 		
+---@diagnostic disable-next-line: undefined-global
 		wardFireCmdID = CMD_FIRE_TOWARDS_ENEMY,
 		wardFireTargets = allGround,
 		wardFireRangeOverride = 150,
@@ -1657,6 +1658,7 @@ local behaviourConfig = {
 		skirmOrderDis = 200,
 		skirmOrderDisMin = 100, -- Make it turn around.
 		
+---@diagnostic disable-next-line: undefined-global
 		wardFireCmdID = CMD_FIRE_TOWARDS_ENEMY,
 		wardFireEverything = true,
 		wardFireUnboundedRange = true,
@@ -1719,6 +1721,7 @@ local behaviourConfig = {
 		minSwarmLeeway = 130,
 		skirmLeeway = 20,
 		
+---@diagnostic disable-next-line: undefined-global
 		wardFireCmdID = CMD_FIRE_TOWARDS_ENEMY,
 		wardFireEverything = true,
 		wardFireUnboundedRange = true,
@@ -2247,6 +2250,7 @@ local function GetBehaviourTable(behaviourData, ud)
 		behaviourData.wardFireLeeway          = behaviourData.wardFireLeeway or 10
 		behaviourData.wardFireEnableLeeway    = behaviourData.wardFireEnableLeeway or 3
 		behaviourData.wardFireHeight          = behaviourData.wardFireHeight or 0
+---@diagnostic disable-next-line: undefined-global
 		behaviourData.wardFireCmdID           = behaviourData.wardFireCmdID or CMD_FIRE_AT_SHIELD
 	end
 	

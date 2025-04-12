@@ -61,7 +61,8 @@ function Spring.GetGameSeconds() end
 ---@return number tidalStrength
 function Spring.GetTidal() end
 
----@return number windStrength
+-- ---@return number windStrength
+---@return number dirX, number dirY, number dirZ, number strength, number normDirX, number normDirY, number normDirZ
 function Spring.GetWind() end
 
 ---Rules/Params
@@ -94,7 +95,7 @@ function Spring.GetUnitRulesParams(unitID) end
 function Spring.GetFeatureRulesParams(featureID) end
 
 ---@param ruleRef number|string the rule index or name
----@return number?|string value
+---@return number|string|nil value
 function Spring.GetGameRulesParam(ruleRef) end
 
 ---@param teamID TeamId
@@ -223,12 +224,12 @@ function Spring.GetMapStartPositions() end
 function Spring.GetAllyTeamList() end
 
 ---@param allyTeamID AllyteamId? (Default: -1) to filter teams belonging to when >= 0
----@return number[]? list of teamIDs
+---@return number[] list of teamIDs
 function Spring.GetTeamList(allyTeamID) end
 
 ---@param teamID TeamId? (Default: -1) to filter by when >= 0
 ---@param active boolean? (Default: false) whether to filter only active teams
----@return number[]? list of playerIDs
+---@return number[] list of playerIDs
 function Spring.GetPlayerList(teamID, active) end
 
 ---@param teamID TeamId
@@ -772,6 +773,9 @@ function Spring.GetUnitDirection(unitID) end
 function Spring.GetUnitHeading(unitID, convertToRadians) end
 
 ---@param unitID UnitId
+---@return number? vx
+---@return number? vy
+---@return number? vz
 function Spring.GetUnitVelocity(unitID) end
 
 ---@param unitID UnitId
@@ -1034,11 +1038,45 @@ function Spring.GetCEGID() end
 ---@return boolean blockHeightChanges
 function Spring.GetUnitBlocking(unitID) end
 
+---@class MoveTypeData
+---@field maxSpeed number?
+---@field maxWantedSpeed number?
+---@field maneuverLeash number?
+---@field waterline  number?
+---@field useWantedSpeed {[integer]:boolean?}
+---
+---@field accRate number?
+---@field decRate  number?
+---@field turnRate number?
+---
+---@field atGoal boolean?
+---@field atEndOfPath boolean?
+---@field pushResistant boolean?
+---@field minScriptChangeHeading integer?
+---@field turnAccel number?
+---@field myGravity number?
+---@field maxReverseDist number?
+---@field minReverseAngle number?
+---@field maxReverseSpeed number?
+---@field sqSkidSpeedMult number?
+---
+---@field collide boolean?
+---@field dontLand boolean?
+---@field airStrafe boolean?
+---@field useSmoothMesh boolean?
+---@field bankingAllowed boolean?
+---@field wantedHeight boolean?
+---@field altitudeRate  number?
+---@field currentBank   number?
+---@field currentPitch   number?
+---@field maxDrift    number?
+
 ---@param unitID UnitId
+---@return MoveTypeData
 function Spring.GetUnitMoveTypeData(unitID) end
 
 ---@param unitID UnitId Unit id.
----@param cmdIndex integer Command index to get. If negative will count from the end of the queue,
+---@param cmdIndex integer? Command index to get. If negative will count from the end of the queue,
 ---for example -1 will be the last command.
 function Spring.GetUnitCurrentCommand(unitID, cmdIndex) end
 
@@ -1115,7 +1153,8 @@ function Spring.GetRealBuildQueue(unitID) end
 function Spring.GetUnitCmdDescs(unitID) end
 
 ---@param unitID UnitId
-function Spring.FindUnitCmdDesc(unitID) end
+---@param cmdID CMD
+function Spring.FindUnitCmdDesc(unitID,cmdID) end
 
 ---@param featureID integer
 ---@return boolean
@@ -1154,6 +1193,7 @@ function Spring.GetFeatureRadius(featureID) end
 function Spring.GetFeatureMass(featureID) end
 
 ---@param featureID integer
+---@return number x,number y,number z
 function Spring.GetFeaturePosition(featureID) end
 
 ---@param featureID1 number
@@ -1624,7 +1664,7 @@ function Spring.GetUnitPieceDirection(unitID, pieceIndex) end
 ---@return number m42
 ---@return number m43
 ---@return number m44
-function Spring.GetUnitPieceMatrix(unitID) end
+function Spring.GetUnitPieceMatrix(unitID,piece) end
 
 ---@param featureID integer
 ---@return number index of the root piece

@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 Spring.Echo("Loaded AutosizeLayoutPanel")
 AutosizeLayoutPanel=LayoutPanel:Inherit{
     resizeItems=false,

@@ -56,7 +56,7 @@ function math.mix(x, y, a) end
 ---numbers so max. precision is ~7 decimal digits.
 ---
 ---@param x number
----@param decimals number
+---@param decimals number?
 ---@return number rounded
 function math.round(x, decimals) end
 

@@ -65,6 +65,7 @@ for i = 1, #includes do
 end
 
 
+---@diagnostic disable: undefined-global
 local luaFiles=VFS.DirList(CHILI_DIRNAME or ((LUAUI_DIRNAME or LUA_DIRNAME) .. "Widgets/chili/") .. "includes_order", "*.lua") or {}
 for i = 1, #luaFiles do
     local res=VFS.Include(luaFiles[i])
@@ -79,6 +80,7 @@ local Chili = widget
 
 Chili.CHILI_DIRNAME = CHILI_DIRNAME or ((LUAUI_DIRNAME or LUA_DIRNAME) .. "Widgets/chili/")
 Chili.SKIN_DIRNAME  =  SKIN_DIRNAME or (CHILI_DIRNAME .. "skins/")
+---@diagnostic enable: undefined-global
 
 if (-1 > 0) then
 	Chili = {}
