@@ -1,7 +1,7 @@
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils = Spring.Utilities.wacky_utils
 
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 
 ---@class CustomChassisBaseParams
 ---@field name string
@@ -70,4 +70,4 @@ utils.GenCustomChassisBase=function (params)
 
 end
 
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

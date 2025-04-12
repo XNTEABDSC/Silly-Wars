@@ -3,7 +3,7 @@
 local utils=Spring.Utilities.CustomUnits.utils
 
 
-local GenCUD_mod=GameData.CustomUnits.utils.GenCustomUnitData
+local GenCUD_mod=Spring.GameData.CustomUnits.utils.GenCustomUnitData
 local GenCustomUnitDataFinal=utils.GenCustomUnitDataFinal
 
 local jsondecode=Spring.Utilities.json.decode

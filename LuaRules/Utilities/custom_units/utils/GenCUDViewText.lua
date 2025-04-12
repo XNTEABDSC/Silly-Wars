@@ -20,7 +20,7 @@ local function GenCustomUnitDefView(cud)
 			text=text .. TabStr() .. str .. "\n"
 		end
 		local cudm=cud.CustomUnitDataModify
-		local cudcd=GameData.CustomUnits.chassis_defs[cud.chassis_name]
+		local cudcd=Spring.GameData.CustomUnits.chassis_defs[cud.chassis_name]
 
 
 		local function PutKV(k,v)

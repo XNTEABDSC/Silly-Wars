@@ -1,7 +1,7 @@
 
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils=Spring.Utilities.wacky_utils
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 
 return utils.GenCustomChassisBase{
     name="custom_tank_plasma",

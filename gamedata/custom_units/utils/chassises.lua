@@ -1,6 +1,6 @@
 
-if not GameData.CustomUnits.chassis_defs then
-    ---Definition of a chassis, all in GameData.CustomUnits.chassis_defs
+if not Spring.GameData.CustomUnits.chassis_defs then
+    ---Definition of a chassis, all in Spring.GameData.CustomUnits.chassis_defs
     ---@class CustomChassisData
     ---@field speed_base number speed of the unitDef
     ---@field weapon_slots list<list<CustomUnitWeaponTargeter>> {[weapon_slot_num]:list<targeter_name>} for each weapon_slot, what targeter can be used
@@ -22,11 +22,11 @@ if not GameData.CustomUnits.chassis_defs then
         local result=VFS.Include(luaFiles[i])
         chassis_defs[result.name]=result
     end
-    GameData.CustomUnits.chassis_defs=chassis_defs
+    Spring.GameData.CustomUnits.chassis_defs=chassis_defs
     ---all chassises unit defs. no lowerkeys
     local chassis_unit_def_raw={}
     for key, value in pairs(chassis_defs) do
         Spring.Utilities.CopyTable(value.genUnitDefs(),true,chassis_unit_def_raw)
     end
-    GameData.CustomUnits.chassis_unit_def_raw=chassis_unit_def_raw
+    Spring.GameData.CustomUnits.chassis_unit_def_raw=chassis_unit_def_raw
 end

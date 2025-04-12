@@ -1,5 +1,5 @@
 local utils=Spring.Utilities.CustomUnits.utils
-local const=GameData.CustomUnits.utils.consts
+local const=Spring.GameData.CustomUnits.utils.consts
 local custom_targeter_proj_speed=500
 --local custom_targeter_damage=500
 local custom_targeter_reloadtime=2

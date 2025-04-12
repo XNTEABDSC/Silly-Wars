@@ -17,7 +17,7 @@ local spGetProjectileGravity=Spring.GetProjectileGravity
 --local spSpawnSFX=Spring.SpawnSFX
 --local spSetProjectileCEG=Spring.SetProjectileCEG
 
-local targeterweapons=GameData.CustomUnits.utils.targeterweapons
+local targeterweapons=Spring.GameData.CustomUnits.utils.targeterweapons
 local is_beam_targeter={}
 
 for _, targeter in pairs(targeterweapons) do

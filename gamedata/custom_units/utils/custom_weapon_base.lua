@@ -1,4 +1,4 @@
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 
 
 ---@class CustomWeaponBaseParams
@@ -64,4 +64,4 @@ utils.GenCustomWeaponBase=function (params)
     return res
 end
 
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

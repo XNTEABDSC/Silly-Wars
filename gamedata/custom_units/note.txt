@@ -1,5 +1,5 @@
 Custom Unit Def Design
-a table to be put in GameData.CustomUnits.utils.GenCustomUnitData
+a table to be put in Spring.GameData.CustomUnits.utils.GenCustomUnitData
 
 Custom Unit Def Design -> json encode net decode
 -> CustomUnitDataModify gamedata/custom_units/utils/genfn

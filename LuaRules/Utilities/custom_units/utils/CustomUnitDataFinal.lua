@@ -1,5 +1,5 @@
 local utils=Spring.Utilities.CustomUnits.utils
-local chassises=GameData.CustomUnits.chassis_defs
+local chassises=Spring.GameData.CustomUnits.chassis_defs
 ---@param CustomUnitDataModify CustomUnitDataModify
 ---@return CustomUnitDataFinal
 function utils.GenCustomUnitDataFinal(CustomUnitDataModify)

@@ -1,4 +1,4 @@
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 utils.bias_factor=0.9
 utils.consts={
     custom_health_const=1000,
@@ -21,4 +21,4 @@ utils.consts={
     
 }
 
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

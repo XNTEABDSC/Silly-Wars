@@ -1,16 +1,16 @@
 
 
 
-if not GameData then
-    GameData={}
+if not Spring.GameData then
+    Spring.GameData={}
 end
-if not GameData.CustomUnits then
-    GameData.CustomUnits={}
+if not Spring.GameData.CustomUnits then
+    Spring.GameData.CustomUnits={}
 end
-if not GameData.CustomUnits.utils then
+if not Spring.GameData.CustomUnits.utils then
     local utils_gamedata={
     }
-    GameData.CustomUnits.utils=utils_gamedata
+    Spring.GameData.CustomUnits.utils=utils_gamedata
     utils_gamedata.bias_factor=0.9
     local function TableMutate(mutate_table)
         return function (t,factor)
@@ -64,4 +64,4 @@ if not GameData.CustomUnits.utils then
     end
     
 end
-return GameData.CustomUnits.utils
+return Spring.GameData.CustomUnits.utils

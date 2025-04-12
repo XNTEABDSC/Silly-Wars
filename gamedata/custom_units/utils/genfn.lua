@@ -1,5 +1,5 @@
-local utils=GameData.CustomUnits.utils
-local chassis_defs=GameData.CustomUnits.chassis_defs
+local utils=Spring.GameData.CustomUnits.utils
+local chassis_defs=Spring.GameData.CustomUnits.chassis_defs
 
 
 ---chassis,param=cudTable[1],cudTable[2];  chassis.genfn(param)
@@ -12,4 +12,4 @@ local function GenCustomUnitData(cudTable)
     return chassis.genfn(param)
 end
 utils.GenCustomUnitData=GenCustomUnitData
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

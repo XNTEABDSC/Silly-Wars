@@ -1,7 +1,7 @@
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils = Spring.Utilities.wacky_utils
 
-local utils = GameData.CustomUnits.utils
+local utils = Spring.GameData.CustomUnits.utils
 local genCustomModify=utils.genCustomModify
 local lowerkeys=lowerkeys or wacky_utils.lowerkeys
 ---make a modify that can add a weapon at slot
@@ -21,13 +21,13 @@ local function add_weapon(custom_weapon_num,slot_name)
             error("unit already have weapon at " .. slot_name)
             return
         end
-        local weaponbase=GameData.CustomUnits.weapons_defs[weapon[1]]
+        local weaponbase=Spring.GameData.CustomUnits.weapons_defs[weapon[1]]
         if not weaponbase then
             error("weapon " .. weapon[1] .. " don't exist")
         end
         local customWeaponDataMod = weaponbase.genfn(weapon[2])
         local need_targeter = customWeaponDataMod.targeter_weapon .. custom_weapon_num
-        local chassis = GameData.CustomUnits.chassis_defs[cud.chassis_name]
+        local chassis = Spring.GameData.CustomUnits.chassis_defs[cud.chassis_name]
 
         if not chassis then
             error("chassis " .. cud.chassis_name .. " don't exist")
@@ -48,7 +48,7 @@ local function add_weapon(custom_weapon_num,slot_name)
         cud.cost=cud.cost+customWeaponDataMod.cost
     end
     ---@type ModifyUIgenfn
-    local uifn=utils.ui.UIPicThen(pic,name,desc, utils.ui.ChooseAndModify(GameData.CustomUnits.weapons_defs))
+    local uifn=utils.ui.UIPicThen(pic,name,desc, utils.ui.ChooseAndModify(Spring.GameData.CustomUnits.weapons_defs))
 
     --[=[
     local moddeffn=function (uds)
@@ -165,4 +165,4 @@ utils.BasicChassisMutate.hp_check={
         end
     end
 }
-GameData.CustomUnits.utils = utils
+Spring.GameData.CustomUnits.utils = utils

@@ -21,7 +21,7 @@ end
 ]=]
 --[=[
 local wacky_utils = Spring.Utilities.wacky_utils
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 
 local function Slot()
     return {
@@ -53,5 +53,5 @@ WeaponSlots.projectile=GenWeaponSlotForTargeter(utils.targeterweapons.projectile
 WeaponSlots.line=GenWeaponSlotForTargeter(utils.targeterweapons.line_targeter)
 WeaponSlots.aa=GenWeaponSlotForTargeter(utils.targeterweapons.aa_targeter)
 
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils
 ]=]

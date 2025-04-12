@@ -1,4 +1,4 @@
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 
 utils.ACustomWeaponData=function ()
     ---custom weapon data that be modified when modfn
@@ -67,4 +67,4 @@ utils.ACustomWeaponData=function ()
     }
     return o
 end
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

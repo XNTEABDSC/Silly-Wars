@@ -1,4 +1,4 @@
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local wacky_utils = Spring.Utilities.wacky_utils
@@ -91,4 +91,4 @@ function utils.GetChassisUnitDef_DifferentSize(unitDefBase,name,sizeMin,sizeMax,
     end
 end
 
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

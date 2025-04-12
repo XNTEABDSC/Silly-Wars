@@ -1,9 +1,9 @@
 ---targeters are weapons to be used to aim.
 ---they will be instantly changed to real projectile by unit_custom_units.lua
 
-local utils = GameData.CustomUnits.utils
+local utils = Spring.GameData.CustomUnits.utils
 
-local consts = GameData.CustomUnits.utils.consts
+local consts = Spring.GameData.CustomUnits.utils.consts
 ---@class CustomUnitWeaponTargeter
 ---@field weapon_defs {[integer]:string}
 ---@field name string
@@ -303,4 +303,4 @@ utils.GenChassisUnitWeapons = GenChassisUnitWeapons
 
 
 
-GameData.CustomUnits.utils = utils
+Spring.GameData.CustomUnits.utils = utils

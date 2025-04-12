@@ -1,4 +1,4 @@
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 local ui={}
 
 ---A picture and thenUI at right
@@ -346,4 +346,4 @@ function ui.ChooseOneToUse(id_to_name,id_to_humanName,name_to_id)
     end
 end
 utils.ui=ui
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

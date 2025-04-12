@@ -2,7 +2,7 @@
 
 local wacky_utils = Spring.Utilities.wacky_utils
 
-local utils=GameData.CustomUnits.utils
+local utils=Spring.GameData.CustomUnits.utils
 
 --[=[
 utils.BasicWeaponMutate={
@@ -131,7 +131,7 @@ weapon_modifies.weapon_def_finish=
     pic = "",
     ---@param tb CustomWeaponDataModify 
     modfn = function (tb)
-        local res=GameData.CustomUnits.custom_weapon_defs_raw[tb.weapon_def_name]
+        local res=Spring.GameData.CustomUnits.custom_weapon_defs_raw[tb.weapon_def_name]
         if not res then
             error("weapon def " .. tostring(tb.weapon_def_name) .. " dont exist")
         end
@@ -198,4 +198,4 @@ do
     )
 end
 
-GameData.CustomUnits.utils=utils
+Spring.GameData.CustomUnits.utils=utils

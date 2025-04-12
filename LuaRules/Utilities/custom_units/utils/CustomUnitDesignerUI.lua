@@ -8,7 +8,7 @@ local function GenCustomUnitDesignUI(WG,parent)
     ---@type {[integer]:CustomUnitDataFinal}
     --local CustomUnitDefs={}
 
-    local gdCustomUnits=GameData.CustomUnits
+    local gdCustomUnits=Spring.GameData.CustomUnits
     local GenCUD_mod=gdCustomUnits.utils.GenCustomUnitData
     local GenCustomUnitDataFinal=utils.GenCustomUnitDataFinal
     local spGetGameRulesParam=Spring.GetGameRulesParam
@@ -70,7 +70,7 @@ local function GenCustomUnitDesignUI(WG,parent)
         orientation="horizontal",
         columns=2,rows=2,
     }
-    local DesignerUI=GameData.CustomUnits.utils.ui.ChooseAndModify(GameData.CustomUnits.chassis_defs)(WG,WindowAutoPanel)
+    local DesignerUI=Spring.GameData.CustomUnits.utils.ui.ChooseAndModify(Spring.GameData.CustomUnits.chassis_defs)(WG,WindowAutoPanel)
     
     local CUDView=Chili.Panel:New{
         autosize=true,

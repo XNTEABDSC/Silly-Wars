@@ -1,7 +1,7 @@
 local utils_op=Spring.Utilities.to_make_op_things
 local wacky_utils=Spring.Utilities.wacky_utils
 
-local utils = GameData.CustomUnits.utils
+local utils = Spring.GameData.CustomUnits.utils
 
 ---use modifies.name to find value in modtable and modfn.
 ---modify.modfn(data,modtable[modify.name])
@@ -196,4 +196,4 @@ function utils.GenCustomUnitChassisUnitDef_custom_unit_proxy_use(def_piece_weapo
     end
 end
 
-GameData.CustomUnits.utils = utils
+Spring.GameData.CustomUnits.utils = utils
