@@ -9,9 +9,9 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 utils_op.MakeSetSillyBuildMorphSimple("striderarty","striderartypuppy")
 
-local ud=utils_op.GetUnitLua("striderarty")
+local ud=utils.GetUnitLua("striderarty")
 
-local puppyud=utils_op.GetUnitLua("jumpscout")
+local puppyud=utils.GetUnitLua("jumpscout")
 
 utils_op.set_free_unit(puppyud)
 puppyud.name="Puppys' Merlin's Puppy"

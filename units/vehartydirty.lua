@@ -16,7 +16,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("veharty","vehartydirty",function (
     ud.description="Artillery Dirtbag Thrower Rover. Costs 30 per shot"
     ud.customParams.def_scale=1.4
     local wd=ud.weaponDefs.MINE
-    local shieldscout=utils_op.GetUnitLua("shieldscout")
+    local shieldscout=utils.GetUnitLua("shieldscout")
     wd.name=shieldscout.name
     wd.metalPerShot=shieldscout.metalCost
     wd.energyPerShot=shieldscout.metalCost

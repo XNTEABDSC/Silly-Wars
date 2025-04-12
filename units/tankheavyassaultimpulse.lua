@@ -8,7 +8,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 local fname="tankheavyassault"
 local tname="tankheavyassaultimpulse"
-local ud=utils_op.GetUnitLua(fname)
+local ud=utils.GetUnitLua(fname)
 utils.table_replace({
 weaponDefs={COR_GOL={impulseFactor=-2.5}},
 metalcost=UnitDefs["tankheavyassault"].metalcost+200,

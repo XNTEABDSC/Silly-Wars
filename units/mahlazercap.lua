@@ -46,7 +46,7 @@ local function set_laser_capper(wd)
 
 end
 
-local ud=utils_op.GetUnitLua("mahlazer")
+local ud=utils.GetUnitLua("mahlazer")
 ud.name="Babel"
 ud.description="Only My Will"
 ud.metalCost=80*1000
@@ -54,7 +54,7 @@ ud.customParams.mahlazer_satellite="mahlazercap_satellite";
 set_laser_capper(ud.weaponDefs.RELAYLAZER)
 set_laser_capper(ud.weaponDefs.RELAYCUTTER)
 
-local satelliteud=utils_op.GetUnitLua("starlight_satellite")
+local satelliteud=utils.GetUnitLua("starlight_satellite")
 set_laser_capper(satelliteud.weaponDefs.LAZER)
 set_laser_capper(satelliteud.weaponDefs.CUTTER)
 set_laser_capper(satelliteud.weaponDefs.NON_CUTTER)

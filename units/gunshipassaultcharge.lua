@@ -9,14 +9,14 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 local none=utils.None
 
-return utils_op.CopyTweakSillyBuildMorphSimple("gunshipassault","gunshipassaultgbs",utils.table_replace({
+return utils_op.CopyTweakSillyBuildMorphSimple("gunshipassault","gunshipassaultcharge",utils.table_replace({
     name=[[Revenant Good Burst Salvo]],
     description=[[Heavy Raider/Assault Gunship, Can Both Burst And Keep Shotting]],
     metalCost=900,
     weaponDefs={
         VTOL_SALVO={
             customparams={
-                use_unit_good_burst_salvo="1",
+                use_unit_weapon_charge="1",
                 script_burst=9,
                 script_burst_rate=2/30,
                 script_reload=10,

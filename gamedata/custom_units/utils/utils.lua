@@ -153,7 +153,7 @@ end
 ---@param thenfn fun(ud:any) fn on ud
 ---@return any ud
 function utils.GenCustomUnitChassisUnitDef(name,desc,udname,thenfn)
-    local ud=utils_op.GetUnitLua(udname)
+    local ud=utils.GetUnitLua(udname)
     local ud_proxy=wacky_utils.may_lower_key_proxy(ud,wacky_utils.may_lower_key_proxy_ud_checkkeys)
     ud_proxy.name=name
     ud_proxy.desc=desc
