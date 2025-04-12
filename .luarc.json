@@ -19,7 +19,9 @@
         "DEFS",
         "LOG",
         "FeatureDefNames",
-        "SendToUnsynced"
+        "SendToUnsynced",
+        "lowerkeys",
+        "gadgetHandler"
         //,{ "name": "script", "include": "scripts/**.lua" }
     ],
     "runtime.version": "Lua 5.1",
@@ -29,6 +31,10 @@
     "runtime.special": {
         "include":"require",
         "VFS.Include":"require"
-    }
+    },
+    "Lua.workspace.library": [
+        "../_Zk Modders Dream.sdd"
+    ],
+    "Lua.workspace.checkThirdParty": false
     
 }
