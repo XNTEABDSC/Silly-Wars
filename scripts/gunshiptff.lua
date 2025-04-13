@@ -310,6 +310,7 @@ function script.AimWeapon(num, heading, pitch)
 
 	--StartThread(TiltBody, heading)
 	
+---@diagnostic disable-next-line: undefined-global
 	local theta, phi = getTheActuallyCorrectHeadingAndPitch(heading, pitch, gunpoints[num].normal, gunpoints[num].radial, gunpoints[num].right)
 	
 	Turn(gunpoints[num].rot, y_axis, theta, turretSpeed)

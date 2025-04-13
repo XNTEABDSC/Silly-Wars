@@ -418,17 +418,15 @@ local function UpdateMovementSpeed(unitID, unitDefID, speedFactor, turnAccelFact
 		
 		-- Set the units velocity to zero if it is attached to the ground.
 		local x, y, z = Spring.GetUnitPosition(unitID)
-		if x then
-			local h = Spring.GetGroundHeight(x, z)
-			if h and h >= y then
-				Spring.SetUnitVelocity(unitID, 0,0,0)
-				
-				-- Perhaps attributes should do this:
-				--local env = Spring.UnitScript.GetScriptEnv(unitID)
-				--if env and env.script.StopMoving then
-				--	Spring.UnitScript.CallAsUnit(unitID,env.script.StopMoving, hx, hy, hz)
-				--end
-			end
+		local h = Spring.GetGroundHeight(x, z)
+		if h and h >= y then
+			Spring.SetUnitVelocity(unitID, 0,0,0)
+			
+			-- Perhaps attributes should do this:
+			--local env = Spring.UnitScript.GetScriptEnv(unitID)
+			--if env and env.script.StopMoving then
+			--	Spring.UnitScript.CallAsUnit(unitID,env.script.StopMoving, hx, hy, hz)
+			--end
 		end
 	end
 	if turnAccelFactor <= 0 then
@@ -762,7 +760,8 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 	
 	local actualMassMult = 1
 	if healthChanges or (currentCost[unitID] or 1) ~= costMult or (currentMass[unitID] or 1) ~= massMult then
-		actualMassMult = UpdateHealthCostMass(unitID, unitDefID, healthAdd, healthMult, costMult, massMult)
+		--actualMassMult = 
+		UpdateHealthCostMass(unitID, unitDefID, healthAdd, healthMult, costMult, massMult)
 		currentHealthAdd[unitID] = healthAdd
 		currentHealthMult[unitID] = healthMult
 		currentCost[unitID] = costMult
@@ -810,9 +809,9 @@ local function UpdateUnitAttributes(unitID, attTypeMap)
 		end
 		if spGetUnitRulesParam(unitID, "comm_shield_max") ~= 0 then
 			if shieldDisabled then
-				Spring.SetUnitShieldState(unitID, spGetUnitRulesParam(unitID, "comm_shield_num") or -1, false)
+				Spring.SetUnitShieldState(unitID, spGetUnitRulesParam(unitID, "comm_shield_num")--[[@as integer]] or -1, false)
 			else
-				Spring.SetUnitShieldState(unitID, spGetUnitRulesParam(unitID, "comm_shield_num") or -1, true)
+				Spring.SetUnitShieldState(unitID, spGetUnitRulesParam(unitID, "comm_shield_num")--[[@as integer]] or -1, true)
 			end
 		end
 		currentShieldDisabled[unitID] = shieldDisabled

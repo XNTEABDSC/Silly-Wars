@@ -10,6 +10,12 @@
 		},
 		{
 			"path": "../_Zk Modders Dream.sdd"
+		},{
+			"name": "_Zk Modders Dream.sdd/scripts",
+			"path": "../_Zk Modders Dream.sdd/scripts"
+		},{
+			"name": "_Silly Wars dev.sdd/scripts",
+			"path": "../_Silly Wars dev.sdd/scripts"
 		}
 	],
 	"settings": {}

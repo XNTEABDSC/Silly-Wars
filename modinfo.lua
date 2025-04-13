@@ -8,6 +8,7 @@ return {
 	shortGame='ZK',
 	modtype=1,
 	depend = {
-		[[rapid://zk:stable]],
+		-- [[rapid://zk:stable]],
+		[[ZK Modders Dream v0.0.0.1]],
 	},
 }
