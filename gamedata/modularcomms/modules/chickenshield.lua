@@ -9,8 +9,10 @@ return {
     		description=description,order = 5,
             func = function(unitDef)
                 if unitDef.customparams.dynamic_comm then
+---@diagnostic disable-next-line: undefined-global
                   DynamicApplyWeapon(unitDef, "commweapon_chickenshield", #unitDef.weapons + 1)
                 else
+---@diagnostic disable-next-line: undefined-global
                   ApplyWeapon(unitDef, "commweapon_chickenshield", 4)
                 end
               end,

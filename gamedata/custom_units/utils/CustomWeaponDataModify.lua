@@ -17,7 +17,7 @@ utils.ACustomWeaponData=function ()
     ---@field reload_time_mut number
     -- -@field reload_time_base number
     ---
-    ---@field weapon_def_name WeaponDefName
+    ---@field weapon_def_name string 
     ---
     ---@field aoe nil|number
     ---@field edgeEffectiveness nil|number

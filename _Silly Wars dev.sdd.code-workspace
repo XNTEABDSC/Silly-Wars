@@ -5,17 +5,17 @@
 			"path": "../zk-stable"
 		},
 		{
-			"name": "_Silly Wars dev.sdd",
+			"name": "_Silly_Wars_dev.sdd",
 			"path": "."
 		},
 		{
-			"path": "../_Zk Modders Dream.sdd"
+			"path": "../_Zk_Modders_Dream_dev.sdd"
 		},{
-			"name": "_Zk Modders Dream.sdd/scripts",
-			"path": "../_Zk Modders Dream.sdd/scripts"
+			"name": "_Zk_Modders_Dream_dev.sdd/scripts",
+			"path": "../_Zk_Modders_Dream_dev.sdd/scripts"
 		},{
-			"name": "_Silly Wars dev.sdd/scripts",
-			"path": "../_Silly Wars dev.sdd/scripts"
+			"name": "_Silly_Wars_dev.sdd/scripts",
+			"path": "../_Silly_Wars_dev.sdd/scripts"
 		}
 	],
 	"settings": {}

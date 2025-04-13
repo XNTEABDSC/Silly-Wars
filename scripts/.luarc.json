@@ -63,8 +63,8 @@
     },
     "Lua.workspace.library": [
         "..",
-        "../../_Zk Modders Dream.sdd",
-        "../../_Zk Modders Dream.sdd/scripts"
+        "../../_Zk_Modders_Dream_dev.sdd",
+        "../../_Zk_Modders_Dream_dev.sdd/scripts"
     ],
     "Lua.workspace.checkThirdParty": false
     

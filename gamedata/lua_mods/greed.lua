@@ -14,7 +14,7 @@ return {
             param = param or {}
             local GreedFactor = param.GreedFactor or 4
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "greed_no_wreck",
                 v = function()
                     for name, ud in pairs(UnitDefs) do
@@ -31,7 +31,7 @@ return {
                 b = { "default_modify_cost_end" },
                 a = { "post_set_values" }
             })
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "greed_super_mult",
                 v = function()
                     local super_list = {
@@ -49,7 +49,7 @@ return {
 
 
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "greed_tech",
                 a = { "default_add_build_begin" },
                 v = function()
@@ -247,7 +247,7 @@ return {
                 end
             })
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "greed_comm_bp_x10",
                 b = { "default_modify_value_begin" },
                 a = { "default_modify_value_end" },
@@ -260,7 +260,7 @@ return {
                 end
             })
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "greed_modify",
                 b = {},
                 a = { "default_modify_cost_begin", "default_modify_value_begin" },
@@ -495,7 +495,7 @@ return {
             param = param or {}
             local GreedFactor = param.GreedFactor or 4
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "sillycon_integral_menu_be_in_tab",
                 v = function()
                     UnitDefs.sillycon.customparams.integral_menu_be_in_tab = [==[
@@ -507,7 +507,7 @@ return {
                 end
             })
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "greed_silly_tech",
                 b = { "default_add_build_begin" },
                 a = { "default_add_build_end" },
@@ -517,7 +517,7 @@ return {
                     UnitDefs["striderhub"].buildoptions[#UnitDefs["striderhub"].buildoptions + 1] = "sillyconveryvery"
                 end
             })
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "greed_silly_super_mult",
                 v = function()
                     local super_list = {

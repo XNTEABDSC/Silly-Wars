@@ -3,10 +3,10 @@ if not Spring.Utilities.to_make_op_things.MakeSetSillyBuildMorphSimple then
     local to_make_op_things=Spring.Utilities.to_make_op_things
 
     
-    VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
+    --VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
     VFS.Include("LuaRules/Utilities/to_make_op_things/set_morph.lua")
-
-    local AddFnToOptionalUnitDefsTweakFns=to_make_op_things.AddFnToOptionalUnitDefsTweakFns
+    local utils=Spring.Utilities.wacky_utils
+    local AddFnToOptionalUnitDefsTweakFns=utils.AddFnToOptionalUnitDefsTweakFns
     local MakeSetMorphMutValueWithOrder=to_make_op_things.MakeSetMorphMutValueWithOrder
     
     local function MakeSetSillyMorphSimple(srcname,toname,morphtime,morphprice)

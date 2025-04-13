@@ -11,7 +11,7 @@ return {
   custom_units={
     fn=function ()
       
-      utils_op.AddFnToUnitDefsTweakFns({
+      utils.AddFnToUnitDefsTweakFns({
         k="customunitcon_as_default",
         v=function ()
             UnitDefs.customunitcon.customparams.is_default_buildoption=1

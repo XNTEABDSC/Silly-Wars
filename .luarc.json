@@ -21,7 +21,10 @@
         "FeatureDefNames",
         "SendToUnsynced",
         "lowerkeys",
-        "gadgetHandler"
+        "gadgetHandler",
+        "WeaponDefs",
+        "CMDTYPE",
+        "CMD"
         //,{ "name": "script", "include": "scripts/**.lua" }
     ],
     "runtime.version": "Lua 5.1",
@@ -33,7 +36,7 @@
         "VFS.Include":"require"
     },
     "Lua.workspace.library": [
-        "../_Zk Modders Dream.sdd"
+        "../_Zk_Modders_Dream_dev.sdd"
     ],
     "Lua.workspace.checkThirdParty": false,
     "Lua.workspace.ignoreDir": [

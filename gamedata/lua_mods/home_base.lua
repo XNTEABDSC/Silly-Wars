@@ -14,7 +14,7 @@ return {
             -- from SmokeDragon
             local Factor = params.Factor or 4
             local myFactor = Factor / 4
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "home_base_set",
                 a = { "default_modify_cost_begin", "default_modify_value_begin" },
                 v = function()

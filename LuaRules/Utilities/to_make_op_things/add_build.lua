@@ -2,9 +2,9 @@ VFS.Include("LuaRules/Utilities/to_make_op_things/include.lua")
 if not Spring.Utilities.to_make_op_things.MakeAddBuildValueWithOrder then
     local to_make_op_things=Spring.Utilities.to_make_op_things
 
-    
-    VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
-    local AddFnToUnitDefsTweakFns=to_make_op_things.AddFnToUnitDefsTweakFns
+    local utils=Spring.Utilities.wacky_utils
+    --VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
+    local AddFnToUnitDefsTweakFns=utils.AddFnToUnitDefsTweakFns--to_make_op_things.AddFnToUnitDefsTweakFns
     
     
     local function MakeAddBuildValueWithOrder(builer,buildee)

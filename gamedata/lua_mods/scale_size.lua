@@ -12,7 +12,7 @@ return {
         params = params or {}
         local Scale = params.Scale or (1 / 2)
         --[==[
-utils_op.AddFnToUnitDefsTweakFnsMut({
+utils.AddFnToUnitDefsTweakFnsMut({
     k="scale",
     b={"default_modify_value_begin"},
     a={"default_modify_value_end"},
@@ -227,7 +227,7 @@ utils_op.AddFnToUnitDefsTweakFnsMut({
         local wdcpscale = utils.lowerkeys {
             area_damage_radius = 0.5,
         }
-        utils_op.AddFnToUnitDefsTweakFnsMut({
+        utils.AddFnToUnitDefsTweakFnsMut({
             k = "scale_units",
             b = { "default_modify_value_begin" },
             a = { "default_modify_value_end" },
