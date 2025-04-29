@@ -10,6 +10,6 @@ return {
 	depend = {
 		-- [[rapid://zk:stable]],
 		-- [[ZK Modders Dream v0.0.0.4]],
-		[[_ZK_Modders_Dream_dev v0.0.0.6]]
+		[[_ZK_Modders_Dream_dev v0.0.0.7]]
 	},
 }

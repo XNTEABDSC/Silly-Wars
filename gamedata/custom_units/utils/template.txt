@@ -1,2 +1,0 @@
-local utils=Spring.GameData.CustomUnits.utils
-Spring.GameData.CustomUnits.utils=utils
