@@ -10,7 +10,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 local none=utils.None
 
 return utils_op.CopyTweakSillyBuildMorphSimple("gunshipassault","gunshipassaultcharge",utils.table_replace({
-    name=[[Revenant Good Burst Salvo]],
+    name=[[Revenant + Charging Salvo]],
     description=[[Heavy Raider/Assault Gunship, Can Both Burst And Keep Shotting]],
     metalCost=900,
     weaponDefs={

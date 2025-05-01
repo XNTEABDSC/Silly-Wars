@@ -17,8 +17,11 @@ if not Spring.Utilities.to_make_op_things.MakeSetSillyBuildMorphSimple then
         AddFnToOptionalUnitDefsTweakFns("silly_morph_big",MakeSetMorphMutValueWithOrder(srcname,toname,morphtime,morphprice))
     end
 
-    local function MakeAddSillyBuild(name,con)
-        AddFnToOptionalUnitDefsTweakFns("silly_build",to_make_op_things.MakeAddSillyBuildValueWithOrder(name,con))
+    ---Optional fn "silly_build" for Add unitDef buildoption for silly con, or auto detect
+    ---@param unitDefName string
+    ---@param con string|nil
+    local function MakeAddSillyBuild(unitDefName,con)
+        AddFnToOptionalUnitDefsTweakFns("silly_build",to_make_op_things.MakeAddSillyBuildValueWithOrder(unitDefName,con))
     end
     to_make_op_things.MakeSetSillyMorphSimple=MakeSetSillyMorphSimple
     to_make_op_things.MakeSetSillyMorphBig=MakeSetSillyMorphBig
