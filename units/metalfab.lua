@@ -41,7 +41,7 @@ unitDef.customparams.def_scale=2
 
 unitDef.name="Big " .. unitDef.name
 
-unitDef.description="Successful Implementation of ancient tech... just bigger (+20 metal / s)"
+unitDef.description="Successful Implementation of ancient tech ... just bigger (+20 metal / s)"
 
 unitDef.buildPic="pw_metal.png"
 
