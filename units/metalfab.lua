@@ -37,7 +37,7 @@ end
 
 local unitDef=pw_metal(genericStructure)
 
-unitDef.customparams.def_scale=2
+unitDef.customparams.def_scale=20/12
 
 unitDef.name="Big " .. unitDef.name
 

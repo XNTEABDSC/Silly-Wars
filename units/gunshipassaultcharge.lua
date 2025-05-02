@@ -16,7 +16,7 @@ return utils_op.CopyTweakSillyBuildMorphSimple("gunshipassault","gunshipassaultc
     weaponDefs={
         VTOL_SALVO={
             customparams={
-                use_unit_weapon_charge="1",
+                use_unit_weapon_charging_salvo="1",
                 script_burst=9,
                 script_burst_rate=2/30,
                 script_reload=10,
