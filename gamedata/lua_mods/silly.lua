@@ -14,7 +14,7 @@ return {
     end,
     silly_tech=function ()
       
-      utils_op.AddFnToUnitDefsTweakFns({
+      utils.AddFnToUnitDefsTweakFns({
         k="sillycon_as_default",
         v=function ()
             UnitDefs.sillycon.customparams.is_default_buildoption=1
@@ -33,18 +33,18 @@ return {
     end,
     silly_build=function ()
         
-        utils_op.PushOptionalUnitDefsTweakFns("silly_build")
+        utils.PushOptionalUnitDefsTweakFns("silly_build")
 
         return {option_notes="Silly things can be built by silly cons"}
     end,
     silly_morph_simple=function ()
         
-        utils_op.PushOptionalUnitDefsTweakFns("silly_morph_simple")
+        utils.PushOptionalUnitDefsTweakFns("silly_morph_simple")
 
         return {option_notes="Units can morth into its mutate version"}
     end,
     silly_morph_big=function ()
-        utils_op.PushOptionalUnitDefsTweakFns("silly_morph_big")
+        utils.PushOptionalUnitDefsTweakFns("silly_morph_big")
         
         return {option_notes="Silly things can morph from other things"}
     end,
@@ -54,7 +54,7 @@ return {
             utils_op.MakeAddSillyBuild("chicken_leaper","sillyconvery")
             utils_op.MakeAddSillyBuild("dronefighter","sillyconvery")
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k="more_build",
                 b={"default_add_build_begin"},
                 a={"default_add_build_end"},

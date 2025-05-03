@@ -6,7 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-local ud=utils_op.GetUnitLua("shieldriot")
+local ud=utils.GetUnitLua("shieldriot")
 
 utils.table_replace({
     name="Flatty Outlaw",

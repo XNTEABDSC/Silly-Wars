@@ -81,7 +81,8 @@ function gadget:GameFrame(frame)
                 GiveAMoveOrderToUnit(unitID,unitInfo)
             else
                 local lastcmd=cmdlist[#cmdlist]
-                if lastcmd.id~=CMD_FIGHT then
+                ---@cast lastcmd Command
+                if lastcmd.cmdID~=CMD_FIGHT then
                     GiveAMoveOrderToUnit(unitID,unitInfo)
                 end
 

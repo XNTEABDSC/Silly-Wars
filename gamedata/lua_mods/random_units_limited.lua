@@ -14,7 +14,7 @@ return {
             local Variance = params.Variance or 4
             local Bias = params.Bias or 1
 
-            utils_op.AddFnToUnitDefsTweakFnsMut({
+            utils.AddFnToUnitDefsTweakFnsMut({
                 k = "random_units_limited",
                 b = { "default_modify_value_begin" },
                 a = { "default_modify_value_end" },
@@ -44,7 +44,7 @@ return {
         local Variance = params.Variance or 2
         local Bias = params.Bias or 1
 
-        utils_op.AddFnToUnitDefsTweakFnsMut({
+        utils.AddFnToUnitDefsTweakFnsMut({
             k="random_units_unlimited",
             b={"default_modify_value_begin"},
             a={"default_modify_value_end"},

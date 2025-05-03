@@ -39,13 +39,15 @@ local smokePiece = {base, lbarrel, rbarrel}
 
 local function UnitScalePiece(unitID, piece, scale)
     local pieceInfo = Spring.GetUnitPieceInfo(unitID, piece)
-    local pieceTable = {
-        scale, 0, 0, 0,
-        0, scale, 0, 0,
-        0, 0, scale, 0,
-        pieceInfo.offset[1], pieceInfo.offset[2], pieceInfo.offset[3], 1
-    }
-    Spring.SetUnitPieceMatrix(unitID, piece, pieceTable)
+	if pieceInfo then
+		local pieceTable = {
+			scale, 0, 0, 0,
+			0, scale, 0, 0,
+			0, 0, scale, 0,
+			pieceInfo.offset[1], pieceInfo.offset[2], pieceInfo.offset[3], 1
+		}
+		Spring.SetUnitPieceMatrix(unitID, piece, pieceTable)
+	end
 end
 
 function script.Create()

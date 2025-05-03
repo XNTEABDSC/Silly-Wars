@@ -17,7 +17,7 @@ local procUnits={
     "turretantiheavy",
 }
 
-local UDBase=utils_op.GetUnitLua("tacnuke")
+local UDBase=utils.GetUnitLua("tacnuke")
 local tbnil=utils.None
 
 
@@ -58,7 +58,7 @@ local function MakeDeployer(ud,udname)
 end
 
 for key, ToUdname in pairs(procUnits) do
-    local toud=utils_op.GetUnitLua(ToUdname)
+    local toud=utils.GetUnitLua(ToUdname)
     local res=MakeDeployer(toud,ToUdname)
     procUnitNewUDs["missiledeploy" .. ToUdname]=res
 end

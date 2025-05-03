@@ -9,7 +9,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 Scale=Scale or 0.25
 
-utils_op.AddFnToUnitDefsTweakFnsMut({
+utils.AddFnToUnitDefsTweakFnsMut({
     k="scale",
     b={"default_modify_value_begin"},
     a={"default_modify_value_end"},

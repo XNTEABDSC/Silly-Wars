@@ -1,5 +1,5 @@
 VFS.Include("gamedata/custom_units/utils.lua")
-local consts=GameData.CustomUnits.utils.consts
+local consts=Spring.GameData.CustomUnits.utils.consts
 
 local name="fake_projectile_targeter"
 local fake_projectile_targeter={

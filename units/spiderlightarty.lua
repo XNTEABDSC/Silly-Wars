@@ -6,10 +6,10 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-local fleaUD=utils_op.GetUnitLua("spiderscout")
+local fleaUD=utils.GetUnitLua("spiderscout")
 
 --UnitDefs["spiderlightarti"]=fleaUD
-local lanceUD=utils_op.GetUnitLua("hoverarty")
+local lanceUD=utils.GetUnitLua("hoverarty")
 local lanceWD=lanceUD.weaponDefs.ATA--Spring.Utilities.CopyTable(lanceUD.weapondefs.ata,true)
 
 fleaUD.weaponDefs.LASER=lanceWD

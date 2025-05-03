@@ -2,11 +2,12 @@ VFS.Include("LuaRules/Utilities/to_make_op_things/include.lua")
 if not Spring.Utilities.to_make_op_things.MakeAddSillyBuildValueWithOrder then
     local to_make_op_things=Spring.Utilities.to_make_op_things
 
-    VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
+    --VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
     VFS.Include("LuaRules/Utilities/to_make_op_things/set_morph.lua")
+    local utils=Spring.Utilities.wacky_utils
 
     local SetMorphMut=to_make_op_things.SetMorphMut
-    local AddFnToUnitDefsTweakFns=to_make_op_things.AddFnToUnitDefsTweakFns
+    local AddFnToUnitDefsTweakFns=utils.AddFnToUnitDefsTweakFns
 
     local maxBuildPer=18
     local silly_build_units={

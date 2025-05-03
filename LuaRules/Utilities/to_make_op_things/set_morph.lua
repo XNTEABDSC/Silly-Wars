@@ -2,8 +2,10 @@ VFS.Include("LuaRules/Utilities/to_make_op_things/include.lua")
 if not Spring.Utilities.to_make_op_things.SetMorphMut then
     local to_make_op_things=Spring.Utilities.to_make_op_things
 
-    VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
-    local AddFnToUnitDefsTweakFns=to_make_op_things.AddFnToUnitDefsTweakFns
+    --VFS.Include("LuaRules/Utilities/to_make_op_things/tweak_fns.lua")
+    
+    local utils=Spring.Utilities.wacky_utils
+    local AddFnToUnitDefsTweakFns=utils.AddFnToUnitDefsTweakFns
     local function SetMorphMut(srcname,copyedname,morphtime,morphprice)
         if not UnitDefs[srcname] then
             error("unit " .. srcname .. "do not exist")

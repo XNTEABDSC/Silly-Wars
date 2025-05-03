@@ -9,7 +9,7 @@ local to_make_very_op_things = Spring.Utilities.to_make_very_op_things
 return {
     add_chixs = {
         fn = function()
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "chix_add_build",
                 b = { "default_add_build_begin" },
                 a = { "default_add_build_end" },
@@ -38,7 +38,7 @@ return {
             })
             utils_op.MakeAddSillyBuild("chickenbroodqueen")
 
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "chix_set_cost",
                 a = { "default_modify_cost_begin" },
                 v = function()
@@ -89,7 +89,7 @@ return {
                     UnitDefs["chickenbroodqueen"].canbeassisted = nil
                 end
             })
-            utils_op.AddFnToUnitDefsTweakFns({
+            utils.AddFnToUnitDefsTweakFns({
                 k = "chix_set_morph",
                 b = { "default_set_morph_begin" },
                 a = { "default_set_morph_end" },

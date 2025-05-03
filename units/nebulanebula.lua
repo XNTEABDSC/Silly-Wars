@@ -44,7 +44,7 @@ local uds=utils_op.CopyTweakSillyBuildMorphAuto("nebula","nebulanebula",function
 	ud.sightDistance=ud.sightDistance*3
 	ud.cruiseAltitude=ud.cruiseAltitude+75
 end)
-local nebuladrone=utils_op.GetUnitLua("nebula")
+local nebuladrone=utils.GetUnitLua("nebula")
 uds.nebuladrone=nebuladrone
 utils_op.set_free_unit(nebuladrone)
 utils.table_replace({

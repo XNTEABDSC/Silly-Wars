@@ -4,7 +4,7 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-local ud=utils_op.GetUnitLua("bomberriot")
+local ud=utils.GetUnitLua("bomberriot")
 ud.metalCost=3000
 ud.health=6000
 ud.speed=ud.speed*0.9
@@ -25,7 +25,7 @@ udcp.def_scale=2
 
 wd.customParams.spawns_name = "cloakraid"
 --wd.customParams.spawns_expire = 10^5
-wd.model=utils_op.GetUnitLua("cloakraid").objectName
+wd.model=utils.GetUnitLua("cloakraid").objectName
 wd.explosionGenerator      = [[custom:dirt]]
 wd.damage={
     default=260

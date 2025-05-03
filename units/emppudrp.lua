@@ -59,7 +59,7 @@ local spamed_list={
 
 local function make_wd_spam(spamed,burst,expire,model)
     expire=expire or 60
-    model=model or utils_op.GetUnitLua(spamed).objectName
+    model=model or utils.GetUnitLua(spamed).objectName
     local wd=Spring.Utilities.CopyTable(drp_wd_base,true)
     wd.customParams.spawns_name = "emppudrp" .. spamed
     wd.customParams.spawns_expire = expire
@@ -77,7 +77,7 @@ end
 
 for i=1,6 do
     local newname="emppudrp" .. spamed_list[i][1]
-    local newud=utils_op.GetUnitLua(spamed_list[i][1])
+    local newud=utils.GetUnitLua(spamed_list[i][1])
     res[newname]=newud
     utils_op.set_free_unit(res[newname])
     newud.idleTime=0
@@ -88,7 +88,7 @@ for i=1,6 do
     --spamed_list[i][1]=newname
 end
 
-local ud=utils_op.GetUnitLua("pdrp")
+local ud=utils.GetUnitLua("pdrp")
 ud.name="Disco Rave Party Ex Max Plus Pro Ultra"
 ud.description=ud.description.." Ex Max Plus Pro Ultra"
 ud.metalCost=ud.metalCost*1.8

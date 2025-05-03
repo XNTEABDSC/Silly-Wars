@@ -4,7 +4,7 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
-local amphteleopud=utils_op.GetUnitLua("amphtele")
+local amphteleopud=utils.GetUnitLua("amphtele")
 do
     local ud=amphteleopud
     ud.name="OP " .. ud.name
@@ -19,7 +19,7 @@ do
     ud.customParams.def_scale=2
     utils_op.set_ded_ATOMIC_BLAST(ud)
 end
-local amphteleopbeaconud=utils_op.GetUnitLua("amphtele")
+local amphteleopbeaconud=utils.GetUnitLua("amphtele")
 do
     local ud=amphteleopbeaconud
     utils_op.set_free_unit(ud)

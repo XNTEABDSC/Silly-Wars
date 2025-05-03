@@ -12,7 +12,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("bombersingu","bombersinguheavy",fu
     ud.speed=200
     local wd=ud.weaponDefs.ARM_PIDR
     ud.fireState=0
-    Spring.Utilities.CopyTable(utils_op.GetUnitLua("energysingu").weaponDefs.SINGULARITY,true,wd)
+    Spring.Utilities.CopyTable(utils.GetUnitLua("energysingu").weaponDefs.SINGULARITY,true,wd)
     wd.stockpile               = true
     wd.stockpileTime           = 10^5
     wd.noSelfDamage=false

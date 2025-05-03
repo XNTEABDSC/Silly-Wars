@@ -1,11 +1,12 @@
 VFS.Include("LuaRules/Utilities/to_make_op_things/include.lua")
 if not Spring.Utilities.to_make_op_things.CopyTweak then
     local to_make_op_things=Spring.Utilities.to_make_op_things
-    to_make_op_things.to_make_op_things_include("get_unit_lua")
+    local utils=Spring.Utilities.wacky_utils
+    --to_make_op_things.to_make_op_things_include("get_unit_lua")
     to_make_op_things.to_make_op_things_include("silly_build_morph")
     local MakeSetSillyBuildMorphBig=to_make_op_things.MakeSetSillyBuildMorphBig
     local MakeSetSillyBuildMorphSimple=to_make_op_things.MakeSetSillyBuildMorphSimple
-    local GetUnitLua=to_make_op_things.GetUnitLua
+    local GetUnitLua=utils.GetUnitLua
 
 
     ---copy a unit, tweak it, and return {[toname]=ud}

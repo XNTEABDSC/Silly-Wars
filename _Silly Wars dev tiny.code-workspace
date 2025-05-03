@@ -1,10 +1,6 @@
 {
 	"folders": [
 		{
-			"name": "zk-stable",
-			"path": "../zk-stable"
-		},
-		{
 			"name": "_Silly_Wars_dev.sdd",
 			"path": "."
 		},

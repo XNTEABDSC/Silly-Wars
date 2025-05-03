@@ -1,0 +1,27 @@
+--not op enough
+
+VFS.Include("LuaRules/Utilities/wacky_utils.lua")
+local utils=Spring.Utilities.wacky_utils
+
+VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
+local utils_op=Spring.Utilities.to_make_op_things
+
+VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
+local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
+
+return utils_op.CopyTweakSillyBuildMorphAuto("striderdante","striderdantebrutalnapalm",function (ud)
+    ud.name=ud.name .. " Napalm Brutal"
+    ud.weapons[2].def=nil
+    ud.weapons[2].name="NOWEAPON"
+    ud.weapons[4].def=nil
+    ud.weapons[4].name="NOWEAPON"
+
+    --ud.weaponDefs.ATA.projectiles=2
+    ud.weaponDefs.NAPALM_ROCKETS.reloadtime=1
+    ud.weaponDefs.NAPALM_ROCKETS.sprayAngle              = 8000
+    ud.weaponDefs.NAPALM_ROCKETS.wobble                  = 8000
+    ud.weaponDefs.NAPALM_ROCKETS_SALVO.reloadtime=10
+    ud.weaponDefs.NAPALM_ROCKETS_SALVO.sprayAngle              = 16000
+    ud.weaponDefs.NAPALM_ROCKETS_SALVO.wobble                  = 16000
+
+end)
