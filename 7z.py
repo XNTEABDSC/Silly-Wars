@@ -45,8 +45,8 @@ def valueToLuaStrings(v):
 thisAbsPath=os.path.abspath(".")
 thisDirName=os.path.split(thisAbsPath)[1]
 
-thisModName="Silly Wars"# str.replace(thisDirName," dev.sdd","")
-thisModFileName="Silly_Wars"
+thisModName="Silly Wars Upload Test"# str.replace(thisDirName," dev.sdd","")
+thisModFileName="Silly_Wars Upload Test"
 
 dependReplace={
     "_ZK_Modders_Dream_dev":"ZK Modders Dream"
