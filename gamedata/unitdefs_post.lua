@@ -1,5 +1,4 @@
-
-error("DIE")
+DIE 
 
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local utils=Spring.Utilities.wacky_utils
