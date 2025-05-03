@@ -1,13 +1,13 @@
 return {
-	name="Silly Wars Upload Test",
 	game="Zero-K",
-	depend={
-		[1]="ZK Modders Dream v0.0.0.12",
-	},
-	description="https://github.com/XNTEABDSC/Silly-Wars/wiki",
-	version="v0.9.0.19",
-	shortname="ZKSW",
 	mutator="Silly War",
-	shortGame="ZK",
+	depend={
+		[1]="ZK Modders Dream v0.0.0.13",
+	},
 	modtype=1,
+	description="https://github.com/XNTEABDSC/Silly-Wars/wiki",
+	shortGame="ZK",
+	shortname="ZKSW",
+	name="Silly Wars Upload Test",
+	version="v0.9.0.20",
 }
