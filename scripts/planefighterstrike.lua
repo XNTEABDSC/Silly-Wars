@@ -29,8 +29,8 @@ local CMD_ONECLICK_WEAPON = Spring.Utilities.CMD.ONECLICK_WEAPON
 
 
 local wd1 = WeaponDefs[UnitDef.weapons[1].weaponDef ]
-include("goodBurstSalvo.lua")
-local gun1Salvo=GG.goodBurstSalvo.newBurstWeaponFromWD(unitID,wd1)
+include("script_weapon_charge_salvo.lua")
+local gun1Salvo=Spring.UnitScript.script_weapon_charge_salvo.newBurstWeaponFromWD(unitID,wd1)
 
 local function RetreatThread()
 	Sleep(800)
