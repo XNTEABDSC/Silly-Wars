@@ -12,6 +12,9 @@ local none=utils.None
 return utils_op.CopyTweakSillyBuildMorphSimple("gunshipassault","gunshipassaultcharge",utils.table_replace({
     name=[[Revenant + Charging Salvo]],
     description=[[Heavy Raider/Assault Gunship, Can Both Burst And Keep Shotting]],
+    customParams={
+        tactical_ai_defs_copy="gunshipassault",
+    },
     metalCost=900,
     weaponDefs={
         VTOL_SALVO={
@@ -20,6 +23,7 @@ return utils_op.CopyTweakSillyBuildMorphSimple("gunshipassault","gunshipassaultc
                 script_burst=9,
                 script_burst_rate=2/30,
                 script_reload=10,
+                
             },
             burst=none,
             burstrate=none,

@@ -1,5 +1,5 @@
 local ud=UnitDefs.statictele
-ud.metalcost=35000
+ud.metalcost=25000
 local udcp=ud.customparams
 udcp.stockpiletime="90"
 udcp.stockpilecost="2000"
@@ -10,7 +10,7 @@ ud.buildpic="pw_warpgatealt.png"
 ud.name = "Warp Gate"
 ud.description = "Transfer everything (units, structures, terra, regardless of the owner) between the gate and target position with 400 elmo radius. Each warp needs 4000m 90s stokepile"
 ud.customparams.statsname=nil
-
+ud.customparams.statictele_teleportfeatures=false
 
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things

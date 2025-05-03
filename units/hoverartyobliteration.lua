@@ -14,6 +14,10 @@ return utils_op.CopyTweakSillyBuildMorphAuto("hoverarty","hoverartyobliteration"
             return "Obliteration ".. name
         end,
         description="Obliteration Blaster Artillery Hovercraft",
+        customParams={
+            tactical_ai_defs_copy="hoverarty",
+        },
+        metalCost=1750,
     })(ud)
     ud.weapons[1].def="OBLITERATION_BLASTER"
     ud.weaponDefs.ATA=nil
@@ -26,6 +30,8 @@ return utils_op.CopyTweakSillyBuildMorphAuto("hoverarty","hoverartyobliteration"
         coreThickness           = 2.5,
         craterBoost             = 6,
         craterMult              = 14,
+        burst=3,
+        burstrate=0.2,
         customparams = {
           light_radius = 380,
           light_color = [[0.5 0.95 0]],
@@ -38,7 +44,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("hoverarty","hoverartyobliteration"
         },
         
         damage                  = {
-          default = 1800.1,
+          default = 1200.1,
         },
   
         duration                = 0.05,
@@ -66,6 +72,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("hoverarty","hoverartyobliteration"
         turret                  = true,
         weaponType              = [[LaserCannon]],
         weaponVelocity          = 1500,
+        sprayAngle              = 1200,
     }
 end
 )

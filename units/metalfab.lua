@@ -37,19 +37,20 @@ end
 
 local unitDef=pw_metal(genericStructure)
 
-unitDef.customparams.def_scale=20/12
+--unitDef.customparams.def_scale=15/12
 
-unitDef.name="Big " .. unitDef.name
-
-unitDef.description="Successful Implementation of ancient tech ... just bigger (+20 metal / s)"
 
 unitDef.buildPic="pw_metal.png"
 
-unitDef.metalmake=unitDef.metalmake*2
+--unitDef.metalmake=unitDef.metalmake*2
 
-unitDef.metalcost=unitDef.metalcost*2
+--unitDef.metalcost=unitDef.metalcost*2
 
-unitDef.health=4000
+unitDef.health=2000
+
+unitDef.name="Chispy " .. unitDef.name
+
+unitDef.description="Successful Implementation of ancient tech ... just chispy (and nukey) (+" .. unitDef.metalmake .." metal / s)"
 
 utils_op.MakeAddSillyBuild("metalfab")
 
