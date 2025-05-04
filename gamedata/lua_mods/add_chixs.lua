@@ -65,7 +65,7 @@ return {
                             chickens = 135, -- spiker
                             chickenwurm = 400, -- wurm
                             chicken_dodo = 100, -- dodo
-                            chickena = 440, -- cockatrice
+                            chickena = 400, -- cockatrice
                             chickenc = 600, -- basilisk,
                             chicken_roc = 900, -- roc
                             chickenf = 250, -- talon
