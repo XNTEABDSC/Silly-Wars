@@ -27,7 +27,7 @@ return {
             requireLevel = 3,
             slotType = "adv_weapon",
             applicationFunction = applicationFunctionApplyWeapon(function ()
-                return "commweapon_chickenflamethrower"
+                return "commweapon_chickengoo"
             end),
             --[=[
             function (modules, sharedData)

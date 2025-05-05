@@ -16,8 +16,8 @@ return "commweapon_chickenspike",{
     },
     
     damage                  = {
-      default = 180,
-      planes  = 180,
+      default = 225,
+      planes  = 225,
     },
 
     explosionGenerator      = [[custom:EMG_HIT]],

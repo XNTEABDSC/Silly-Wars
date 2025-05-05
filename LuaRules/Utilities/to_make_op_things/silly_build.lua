@@ -82,7 +82,7 @@ if not Spring.Utilities.to_make_op_things.MakeAddSillyBuildValueWithOrder then
             local firstudname=value.name
             if firstudname~=lastudname then
                 SetMorphMut(lastudname,firstudname,1)
-                
+                UnitDefs[lastudname].description=UnitDefs[lastudname].description .. ", can morph to switch build options"
             end
         end
     end
