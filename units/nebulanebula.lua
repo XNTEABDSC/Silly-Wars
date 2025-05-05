@@ -7,6 +7,10 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
+if true then
+	return {}
+end
+
 local uds=utils_op.CopyTweakSillyBuildMorphAuto("nebula","nebulanebula",function (ud)
     ud.name=ud.name .. "s' " .. ud.name
     ud.description = ud.description .. " of " .. ud.description
