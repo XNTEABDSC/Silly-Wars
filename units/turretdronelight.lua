@@ -18,7 +18,7 @@ return { turretdronelight = {
 
   customParams                  = {
     soundselect = "building_select1",
-    def_scale=0.4,
+    def_scale=2/8,
     drone_defs_carrier_def=[=[
       {
         spawnPieces = {"drone"},
