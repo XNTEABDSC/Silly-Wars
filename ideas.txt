@@ -1,5 +1,5 @@
 
-lateral move scorp
+lateral move scorp -done
 
 dante napalm brutal
 

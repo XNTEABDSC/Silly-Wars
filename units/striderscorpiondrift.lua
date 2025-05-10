@@ -5,14 +5,9 @@ VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
 local none=utils.None
-return utils_op.CopyTweakSillyBuildMorphAuto("striderscorpion","striderscorpionflexible",utils.table_replace({
-    name=function (name)
-        return "Flexible "..name
-    end,
-    description=function (desc)
-        return "Flexible "..desc
-    end,
-    script="striderscorpionflexible.lua",
+return utils_op.CopyTweakSillyBuildMorphAuto("striderscorpion","striderscorpiondrift",utils.table_replace({
+    name="Scorpio Drift",
+    script="striderscorpiondrift.lua",
     weapons={
         [4]={
             maxAngleDif=none
