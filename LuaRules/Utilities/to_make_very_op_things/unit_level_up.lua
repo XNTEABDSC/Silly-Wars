@@ -21,6 +21,7 @@ if not Spring.Utilities.to_make_very_op_things.units_level_up then
         damageMult = 1.025 ,
     }
     function to_make_very_op_things.units_level_up(ud,ulutable,lv)
+        ulutable=Spring.Utilities.CopyTable(ulutable,true)
         for key, value in pairs(ulutable) do
             ulutable[key]=value^lv
         end
