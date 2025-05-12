@@ -20,5 +20,8 @@ return {
 		{"strykerlights","strykerlightsfront","frontlights"},
 		{"strykerlights","strykerlightsback","backlights"},
 	},]=]
-	
+
+	spiderlightarty={
+		{"hoverarty","turret","turret"}
+	}
 }
