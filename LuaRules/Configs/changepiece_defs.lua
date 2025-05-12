@@ -22,6 +22,7 @@ return {
 	},]=]
 
 	spiderlightarty={
-		{"hoverarty","turret","turret"}
+		{"hoverarty","turret","turret"},
+		{"hoverarty","barrel1","barrel"}
 	}
 }
