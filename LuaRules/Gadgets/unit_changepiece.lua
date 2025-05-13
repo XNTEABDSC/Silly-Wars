@@ -104,7 +104,7 @@ function gadget:SetupUnit(unitID) --set the unit materials and displaylists
 	Spring.UnitRendering.SetMaterial(unitID,1,"alpha",{shader="s3o"})
 
 	--setup displaylists--
-	local pieces = Spring.GetUnitPieceList(unitID)	
+	local pieces = Spring.GetUnitPieceList(unitID)
 	
 	for pID,pName in pairs(pieces) do --set all piece displaylists to default
 		Spring.UnitRendering.SetPieceList(unitID,1,pID,nil)
