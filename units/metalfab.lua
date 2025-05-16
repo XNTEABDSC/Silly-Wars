@@ -42,11 +42,11 @@ local unitDef=pw_metal(genericStructure)
 
 unitDef.buildPic="pw_metal.png"
 
---unitDef.metalmake=unitDef.metalmake*2
+unitDef.metalmake=unitDef.metalmake*2
 
---unitDef.metalcost=unitDef.metalcost*2
+unitDef.metalcost=unitDef.metalcost*2
 
-unitDef.health=2000
+unitDef.health=4000
 
 unitDef.name="Chispy " .. unitDef.name
 

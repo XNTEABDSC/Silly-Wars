@@ -17,7 +17,9 @@ return {
       utils.AddFnToUnitDefsTweakFns({
         k="sillycon_as_default",
         v=function ()
+---@diagnostic disable-next-line: undefined-field
             UnitDefs.sillycon.customparams.is_default_buildoption=1
+---@diagnostic disable-next-line: undefined-field
             UnitDefs.sillycon.customparams.integral_menu_be_in_tab=[==[
                 {
                 tab="FACTORY",

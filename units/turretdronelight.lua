@@ -10,7 +10,7 @@ utils_op.MakeSetSillyBuildMorphBig("turretmissile","turretdronelight",1)
 
 return { turretdronelight = {
   name                          = [[Small Drone Maker]],
-  description                   = [[Make 1 Drones]],
+  description                   = [[Make 2 Drones]],
   activateWhenBuilt             = true,
   buildPic                      = [[pw_hq.png]],
   category                      = [[FLOAT UNARMED]],
@@ -25,11 +25,11 @@ return { turretdronelight = {
         {
           drone = UnitDefNames.dronelightslow.id,
           reloadTime = 1,
-          maxDrones = 1,
+          maxDrones = 2,
           spawnSize = 1,
           range = 1200,
           maxChaseRange = 1200,
-          buildTime = 18,
+          buildTime = 11,
           maxBuild = 1,
           offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
         },
@@ -44,7 +44,7 @@ return { turretdronelight = {
   health                        = 300,
   iconType                      = [[turretdronelight]],
   maxSlope                      = 18,
-  metalCost                     = 95,
+  metalCost                     = 150,
   objectName                    = [[pw_hq.s3o]],
   script                        = [[pw_hq.lua]],
   selfDestructAs                = [[BIG_UNIT]],
@@ -79,7 +79,7 @@ return { turretdronelight = {
 
       explosionGenerator      = [[custom:FLASHPLOSION]],
       noSelfDamage            = true,
-      range                   = 900,
+      range                   = 1200,
       reloadtime              = 1,
       tolerance               = 5000,
       turret                  = true,
