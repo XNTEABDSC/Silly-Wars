@@ -10,7 +10,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return {
     silly=function ()
-        return {mods="silly_tech() silly_build() silly_morph_simple() silly_morph_big() more_build() add_chixs()"}
+        return {mods="silly_tech() silly_build() silly_morph_simple() silly_morph_big() more_build() chickens()"}
     end,
     silly_tech=function ()
       

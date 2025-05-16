@@ -27,8 +27,8 @@ local SIG_SHOULDERSPIN=8
 
 local ud=UnitDefs[ Spring.GetUnitDefID(unitID) ]
 local wd1 = WeaponDefs[ud.weapons[1].weaponDef ]
-include("script_weapon_charge_salvo.lua")
-local gunSalvo=Spring.UnitScript.script_weapon_charge_salvo.newBurstWeaponFromWD(unitID,wd1)
+include("script_weapon_charging_salvo.lua")
+local gunSalvo=Spring.UnitScript.script_weapon_charging_salvo.newBurstWeaponFromWD(unitID,wd1)
 
 
 local reloadSlowdownTimeMax=3100

@@ -7,7 +7,7 @@ local utils_op = Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things = Spring.Utilities.to_make_very_op_things
 return {
-    add_chixs = {
+    chickens = {
         fn = function()
             utils.AddFnToUnitDefsTweakFns({
                 k = "chix_add_build",
@@ -73,9 +73,9 @@ return {
                             chicken_spidermonkey = 640, -- spidermonkey
                             chicken_sporeshooter = 700,
                             chickenr = 180, -- lobber
-                            chicken_shield = 900, -- blooper
-                            chicken_tiamat = 1200, -- tiamat
-                            chickenblobber = 1600, --blobber
+                            chicken_shield = 1000, -- blooper
+                            chicken_tiamat = 1300, -- tiamat
+                            chickenblobber = 1800, --blobber
                             chicken_dragon = 7000,
                             chickenlandqueen = 50000,
                             chickenflyerqueen = 50000,

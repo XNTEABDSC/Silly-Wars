@@ -28,7 +28,7 @@ return "commweapon_chickengoo",{
     noSelfDamage            = true,
     proximityPriority       = -4,
     range                   = 550,
-    reloadtime              = 30,
+    reloadtime              = 15,
     rgbColor                = [[0.2 0.6 0]],
     size                    = 8,
     sizeDecay               = 0,

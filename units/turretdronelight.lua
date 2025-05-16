@@ -6,7 +6,7 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-utils_op.MakeSetSillyBuildMorphBig("turretmissile","turretdronelight",5)
+utils_op.MakeSetSillyBuildMorphBig("turretmissile","turretdronelight",1)
 
 return { turretdronelight = {
   name                          = [[Small Drone Maker]],
@@ -44,7 +44,7 @@ return { turretdronelight = {
   health                        = 300,
   iconType                      = [[turretdronelight]],
   maxSlope                      = 18,
-  metalCost                     = 100,
+  metalCost                     = 95,
   objectName                    = [[pw_hq.s3o]],
   script                        = [[pw_hq.lua]],
   selfDestructAs                = [[BIG_UNIT]],

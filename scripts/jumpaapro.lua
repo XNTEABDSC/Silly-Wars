@@ -20,8 +20,8 @@ local smokePiece = {torso}
 local gun_1 = 0
 local ud=UnitDefs[ Spring.GetUnitDefID(unitID) ]
 local wd1 = WeaponDefs[ud.weapons[1].weaponDef ]
-include("script_weapon_charge_salvo.lua")
-local gun1Salvo=Spring.UnitScript.script_weapon_charge_salvo.newBurstWeaponFromWD(unitID,wd1)
+include("script_weapon_charging_salvo.lua")
+local gun1Salvo=Spring.UnitScript.script_weapon_charging_salvo.newBurstWeaponFromWD(unitID,wd1)
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 
