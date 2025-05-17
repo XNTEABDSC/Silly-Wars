@@ -35,6 +35,7 @@ if not Spring.Utilities.to_make_op_things.MakeSetSillyBuildMorphSimple then
     local function MakeSetSillyBuildMorphSimple(srcname,toname,morthtime,morthprice)
         
         MakeSetSillyMorphSimple(srcname,toname,morthtime,morthprice)
+        AddFnToOptionalUnitDefsTweakFns("silly_build_simple",to_make_op_things.MakeAddSillyBuildValueWithOrder(toname))
     end
     to_make_op_things.MakeSetSillyBuildMorphBig=MakeSetSillyBuildMorphBig
     to_make_op_things.MakeSetSillyBuildMorphSimple=MakeSetSillyBuildMorphSimple

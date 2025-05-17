@@ -10,7 +10,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return {
     silly=function ()
-        return {mods="silly_tech() silly_build() silly_morph_simple() silly_morph_big() more_build() chickens()"}
+        return {mods="silly_tech() silly_build() silly_build_simple() silly_morph_simple() silly_morph_big() more_build() chickens()"}
     end,
     silly_tech=function ()
       
@@ -38,6 +38,12 @@ return {
         utils.PushOptionalUnitDefsTweakFns("silly_build")
 
         return {option_notes="Silly things can be built by silly cons"}
+    end,
+    silly_build_simple=function ()
+        
+        utils.PushOptionalUnitDefsTweakFns("silly_build_simple")
+
+        return {option_notes="Simple silly things can be built by silly cons"}
     end,
     silly_morph_simple=function ()
         

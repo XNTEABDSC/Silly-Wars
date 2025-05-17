@@ -124,7 +124,7 @@ local function RestoreAfterDelay()
 				Turn(weaponPieces[i].pivot, y_axis, 0, math.rad(60))
 				Turn(weaponPieces[i].pitch, x_axis, 0, math.rad(45))
 			end
-			Turn(base,y_axis,0,bodyTurnSpeed)
+			Turn(body,y_axis,0,bodyTurnSpeed)
 		end
 		Sleep(1000)
 	end
@@ -134,7 +134,7 @@ function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(RestoreAfterDelay)
 	Move(flare1, z_axis, 7)
-	Spring.UnitScript.inertial_piece.new(unitID,base,0,1)
+	Spring.UnitScript.inertial_piece.new(unitID,body,0,1)
 --	Turn(armr1, z_axis, math.rad(30), 100)
 --	Turn(arml1, z_axis, math.rad(-30), 100)
 end
@@ -157,9 +157,6 @@ local wpnmaxangledif={
 	[5]=240/2/180*math.pi,
 }
 
-local function TurnSome(heading,turretangle,turretmaxangledif,curretheading)
-	
-end
 
 local spGetPieceRotation=Spring.UnitScript.GetPieceRotation
 
@@ -170,13 +167,13 @@ function script.AimWeapon(num, heading, pitch)
 	Signal(sig)
 	SetSignalMask(sig)
 	if num==1 then
-		Turn(base,y_axis,heading,bodyTurnSpeed)
+		Turn(body,y_axis,heading,bodyTurnSpeed)
 		resetRestore = true
 		
 	elseif num == 2 or num == 3 then
-		Turn(base,y_axis,heading,bodyTurnSpeed)
-		local unit_pitch,base_heading=spGetPieceRotation(base)
-		heading=heading-base_heading
+		Turn(body,y_axis,heading,bodyTurnSpeed)
+		local unit_pitch,body_heading=spGetPieceRotation(body)
+		heading=heading-body_heading
 		resetRestore = true
 		if heading > math.pi then heading = -(2 * math.pi - heading) end
 		for i=1, #tailPieces do
@@ -188,9 +185,9 @@ function script.AimWeapon(num, heading, pitch)
 		resetRestore = true
 	elseif num ~= 1 then
 		
-		local _,base_heading=spGetPieceRotation(base)
+		local _,body_heading=spGetPieceRotation(body)
 
-		local wpn_heading=angle_step_to(base_heading+wpnangle[num],wpnmaxangledif[num],heading)
+		local wpn_heading=angle_step_to(body_heading+wpnangle[num],wpnmaxangledif[num],heading)
 
 		local pivot=weaponPieces[num].pivot
 		
@@ -198,9 +195,9 @@ function script.AimWeapon(num, heading, pitch)
 		Turn(weaponPieces[num].pitch, x_axis, -pitch, math.rad(90))
 		WaitForTurn(weaponPieces[num].pitch, x_axis)
 		while true do
-			local _,w_base_heading=spGetPieceRotation(base)
+			local _,w_body_heading=spGetPieceRotation(body)
 			local _,w_wpn_heading=spGetPieceRotation(pivot)
-			local heading_dif=w_base_heading+w_wpn_heading-heading
+			local heading_dif=w_body_heading+w_wpn_heading-heading
 			if heading_dif>math.pi then
 				heading_dif=heading_dif-math.pi*2
 			end
