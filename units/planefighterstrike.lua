@@ -12,7 +12,6 @@ return utils_op.CopyTweakSillyBuildMorphAuto("planefighter","planefighterstrike"
         name=[[Good Swift]],
         description            = [[Fighter, can vs ground]],
         metalCost=300,
-        speed=250,
         customParams={
             tactical_ai_defs_copy="planefighter",
             oneclick_weapon_defs_copy="planefighter",
