@@ -48,8 +48,8 @@ local raketa026 = piece 'raketa026'
 local raketa026_l = piece 'raketa026_l'
 local raketa027 = piece 'raketa027'
 local raketa027_l = piece 'raketa027_l'
-local flare = {piece 'flare_r',piece 'flare_l'}
-local raket_count=14
+local flare = {piece 'flare_l',piece 'flare_r'}
+local raketa_total_count=14
 --- len=14
 local raketa_r_pieces={
 	raketa,raketa002,raketa004,
@@ -117,56 +117,110 @@ do
 	end
 end
 
-local shot_lr=1
-local spam_lr=1
 
-local pos_empty={{},{}}
+local pos_state={{},{}}
+local pos_state_exist=1
+local pos_state_empty=0
+--local pos_state_moving_in=2
+local pos_state_moving_out=2
+
+local function check(lr,pos)
+	Spring.Echo("lr: " .. tostring(lr) .. "pos: " .. tostring(pos) )
+	local v=pos_state[lr][pos]
+	--Spring.Echo(bit_and(v,pos_state_exist) .. ", " .. bit_and(v,pos_state_moving_in) .. ", " .. bit_and(v,pos_state_moving_out))
+end
+
 for lr=1,2 do
-	local pos_empty_=pos_empty[lr]
-	for i=1,raket_count do
-		pos_empty_[i]=false
+	local pos_state_=pos_state[lr]
+	for i=1,raketa_total_count do
+		pos_state_[i]=pos_state_exist
 	end
 end
 
+local reloadMult=1
+local function setReloadMultThread()
+	while true do
+		local stunnedOrInbuild = Spring.GetUnitIsStunned(unitID)
+		reloadMult = (stunnedOrInbuild and 0) or (Spring.GetUnitRulesParam(unitID, "totalReloadSpeedChange")--[[@as number]] or 1)
+		Sleep(100)
+	end
+end
+local IsInMove=Spring.UnitScript.IsInMove
 local function raketa_try_move1(lr,pos)
-	if pos>=raket_count or pos<1 then
+	if pos>=raketa_total_count or pos<1 then
 		return
 	end
 
 	local newPos=pos+1
 
-	local pos_empty_=pos_empty[lr]
+	local pos_state_=pos_state[lr]
 
-	if pos_empty_[pos] then
+
+	--check(lr,pos)
+	--check(lr,newPos)
+
+	if pos_state_[pos]~=pos_state_exist then
+		--Spring.Echo("A")
 		return
 	end
 	
-	if not pos_empty_[newPos] then
+	if pos_state_[newPos]==pos_state_exist then
+		--Spring.Echo("C")
 		return
 	end
 
+	
+	local piece=raketa_pieces[lr][pos]
+	local nextPiece=raketa_pieces[lr][newPos]
+
+	local moves=raketa_trail[lr][pos]
+	local move_vel_factor=raketa_trail_vel_factor[lr][pos]
+	--[=[
+	pstate=bit_xor(pstate,pos_state_exist)--pos_state_moving_out
+	pstate=bit_or(pstate,pos_state_moving_out)--pos_state_moving_out
+	--]=]
+
+	pos_state_[pos]=pos_state_moving_out
+	
+	raketa_try_move1(lr,pos-1)
+	raketa_try_move1(lr,newPos)
+
 	StartThread(
 		function ()
-			local piece=raketa_pieces[lr][pos]
-			local nextPiece=raketa_pieces[lr][newPos]
-
-			local moves=raketa_trail[lr][pos]
-			local move_vel_factor=raketa_trail_vel_factor[lr][pos]
+			Move(piece, x_axis, moves[1], moves[1]*move_vel_factor*reloadMult)
+			Move(piece, y_axis, moves[2], moves[2]*move_vel_factor*reloadMult)
+			Move(piece, z_axis, moves[3], moves[3]*move_vel_factor*reloadMult)
+			Sleep(33)
+			while true do
+				if not IsInMove(piece,x_axis) and not IsInMove(piece,y_axis) and not IsInMove(piece,z_axis) then
+					break
+				else
+					Move(piece, x_axis, moves[1], moves[1]*move_vel_factor*reloadMult)
+					Move(piece, y_axis, moves[2], moves[2]*move_vel_factor*reloadMult)
+					Move(piece, z_axis, moves[3], moves[3]*move_vel_factor*reloadMult)
+				end
+				Sleep(33)
+			end
+			--Sleep(1000)
 			
-			
-			pos_empty_[newPos]=nil
-
-			Move(piece, x_axis, moves[1], moves[1]*move_vel_factor)
-			Move(piece, y_axis, moves[2], moves[2]*move_vel_factor)
-			Move(piece, z_axis, moves[3], moves[3]*move_vel_factor)
-
-			WaitForMove(piece,x_axis)
-			WaitForMove(piece,y_axis)
-			WaitForMove(piece,z_axis)
-
+	
+			while true do
+				if pos_state_[newPos]==pos_state_empty then
+					break
+				else
+					Sleep(33)
+				end
+			end
 			Hide(piece)
+			Move(piece, x_axis, 0)
+			Move(piece, y_axis, 0)
+			Move(piece, z_axis, 0)
 			Show(nextPiece)
-			pos_empty_[pos]=true
+
+			
+			pos_state_[pos]=pos_state_empty
+			pos_state_[newPos]=pos_state_exist
+
 			raketa_try_move1(lr,pos-1)
 			raketa_try_move1(lr,newPos)
 		end
@@ -175,56 +229,82 @@ end
 
 local function tryMoveAll()
 	for lr=1,2 do
-		local pos_empty_=pos_empty[lr]
-		for pos_empty_pos, value in pairs(pos_empty_) do
-			if value then
-				if pos_empty_pos>1 then
-					local prevPos=pos_empty_pos-1
-					if not pos_empty_[prevPos] then
-						StartThread(raketa_try_move1,lr,prevPos)
-					end
-				end
-			end
+		local pos_state_=pos_state[lr]
+		for pos_state_pos, value in pairs(pos_state_) do
+			raketa_try_move1(lr,pos_state_pos)
 		end
 	end
 end
 
-local function createRocket(lr,pos)
+local raketa_count={raketa_total_count,raketa_total_count}
+
+local function createRaketa(lr,pos)
 	
-	if pos_empty[lr][pos] then
+	if pos_state[lr][pos]==pos_state_empty then
 		Show(raketa_pieces[lr][pos])
-		pos_empty[lr][pos]=nil
+		pos_state[lr][pos]=pos_state_exist
 		raketa_try_move1(lr,pos)
+		raketa_count[lr]=raketa_count[lr]+1
 		return true
 	else
 		return false
 	end
 end
 
-local function createRocketThread()
-	StartThread(
-		function ()
-			while true do
-				if createRocket(spam_lr,1) then
-					spam_lr=3-spam_lr
-					break
-				end
-				Sleep(33)
-			end
-		end
-	)
-end
-
-local function useRocket(lr,pos)
-	Hide(raketa_pieces[lr][pos])
-	pos_empty[lr][pos]=true
-	raketa_try_move1(lr,pos-1)
-end
 
 local ud=UnitDefs[ Spring.GetUnitDefID(unitID) ]
 local wd1 = WeaponDefs[ud.weapons[1].weaponDef ]
-include("script_weapon_charging_salvo.lua")
-local salvo=Spring.UnitScript.script_weapon_charging_salvo.newBurstWeaponFromWD(unitID,wd1,createRocketThread)
+local reload1
+do
+	local cp=wd1.customParams
+	local salvoCap=tonumber(cp.script_burst)
+	local fullreload=tonumber(cp.script_reload)
+	reload1=fullreload/salvoCap/2
+
+end
+local sleep_time=1/30
+local sleep_mili=1000*sleep_time
+local toCreateRaketaReload=0
+local function createRaketaThread()
+	while true do
+		if toCreateRaketaReload<1 then
+			toCreateRaketaReload=toCreateRaketaReload+1/reload1*sleep_time*reloadMult
+		else
+			local lr=1
+			if raketa_count[2]<raketa_count[1] then
+				lr=2
+			end
+			if createRaketa(lr,1) then
+				toCreateRaketaReload=toCreateRaketaReload-1
+			else
+				lr=3-lr
+				if createRaketa(lr,1) then
+					toCreateRaketaReload=toCreateRaketaReload-1
+				end
+			end
+
+		end
+		Sleep(sleep_mili)
+	end
+end
+
+local function useRocket(lr,pos)
+	if pos_state[lr][pos]==pos_state_moving_out then
+		Hide(raketa_pieces[lr][pos])
+		pos_state[lr][pos]=0
+		raketa_try_move1(lr,pos-1)
+		raketa_count[lr]=raketa_count[lr]-1
+		return true
+	else
+		return false
+	end
+end
+
+
+--[=[
+local salvo1=Spring.UnitScript.script_weapon_charging_salvo.newBurstWeaponFromWD(unitID,wd1,addToCreateRaketaCount(1))
+local salvo2=Spring.UnitScript.script_weapon_charging_salvo.newBurstWeaponFromWD(unitID,wd2,addToCreateRaketaCount(2))
+local salvos={salvo1,salvo2}]=]
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -241,9 +321,6 @@ local TURN_SPEED = math.rad(145)
 local GEAR_SPEED = TURN_SPEED * 5
 local MOV_DEL = 50
 
-local doingRotation = false
-local gun = true
-local loaded = true
 local lastHeading = 0
 local rotateWise = 1
 --------------------------------------------------------------------------------
@@ -253,8 +330,8 @@ local rotateWise = 1
 --------------------------------------------------------------------------------
 -- signals
 --------------------------------------------------------------------------------
-local SIG_AIM = 1
-local SIG_IDLE = 2
+local SIG_IDLE = 1
+local SIG_AIMs={2^1,2^2}
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -276,9 +353,6 @@ local function IdleAnim()
 		end
 		lastHeading = heading
 
-		if(gun and not loaded) then
-			StartThread(DoAmmoRotate)
-		end
 		
 		Spin(gear, y_axis, GEAR_SPEED * rotateWise)
 		Spin(gear001, y_axis, GEAR_SPEED * rotateWise)
@@ -328,6 +402,13 @@ function script.Create()
 	end
 	
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	--[=[
+	for lr=1,2 do
+		StartThread(salvos[lr].ReloadThread)
+		StartThread(createRaketaThread(lr))
+	end]=]
+	StartThread(setReloadMultThread)
+	StartThread(createRaketaThread)
 end
 --[=[
 function DoAmmoRotate()
@@ -516,8 +597,8 @@ end
 ]=]
 
 function script.AimWeapon(num, heading, pitch)
-	Signal(SIG_AIM)
-	SetSignalMask(SIG_AIM)
+	Signal(SIG_AIMs[num])
+	SetSignalMask(SIG_AIMs[num])
 	EmitSfx(cervena, 1024)
 	if(lastHeading > heading) then
 		rotateWise = 1
@@ -525,6 +606,8 @@ function script.AimWeapon(num, heading, pitch)
 		rotateWise = -1
 	end
 	lastHeading = heading
+
+	
 	
 	Turn(rotating_bas, y_axis, heading, TURN_SPEED)
 	
@@ -540,23 +623,27 @@ function script.AimWeapon(num, heading, pitch)
 	StopSpin(gear001, y_axis)
 	StopSpin(gear002, y_axis)
 	
-	salvo.WaitUntilReady()
+	
 	while true do
-		if pos_empty[shot_lr][14] then
-			Sleep(33)
-		else
+		if pos_state[num][14]==pos_state_exist then
 			break
+		else
+			--Spring.Echo("Aim: " .. tostring(pos_state[num][14]))
+			Sleep(33)
+			
 		end
 	end
 	StartThread(RestoreAfterDelay)
 	return true
 end
+function script.FireWeapon(num)
+	pos_state[num][14]=pos_state_moving_out
+end
 
 function script.EndBurst(num)
 	--flare, flare2 = flare2, flare
-    salvo.DoShot()
-	useRocket(shot_lr,14)
-	shot_lr=3-shot_lr
+    --salvos[num].DoShot()
+	useRocket(num,14)
 
 	--StartThread(Bum)
 end
@@ -580,8 +667,8 @@ function Bum()
 	end
 end
 ]=]
-function script.QueryWeapon()
-	return flare[shot_lr]
+function script.QueryWeapon(num)
+	return flare[num]
 end
 
 function script.AimFromWeapon()
@@ -589,6 +676,9 @@ function script.AimFromWeapon()
 end
 
 function script.BlockShot(num, targetID)
+	if pos_state[num][14]~=pos_state_exist then
+		return true
+	end
 	return GG.Script.OverkillPreventionCheck(unitID, targetID, OKP_DAMAGE, 1800, 70, 0.1, true)
 end
 
