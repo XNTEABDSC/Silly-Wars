@@ -48,9 +48,8 @@ local raketa026 = piece 'raketa026'
 local raketa026_l = piece 'raketa026_l'
 local raketa027 = piece 'raketa027'
 local raketa027_l = piece 'raketa027_l'
-local flare = piece 'flare_r'
-local flare2 = piece 'flare_l'
-
+local flare = {piece 'flare_r',piece 'flare_l'}
+local raket_count=14
 --- len=14
 local raketa_r_pieces={
 	raketa,raketa002,raketa004,
@@ -66,21 +65,166 @@ local raketa_l_pieces={
 local raketa_pieces={raketa_r_pieces,raketa_l_pieces}
 
 --- len= 13
-local raketa_l_trail={}
-local raketa_r_trail={}
+--- 
 
+local RELOAD_SPEED = 20
+
+local raketa_r_trail={
+		{0, 4.8, 0},          -- raketa (step14)
+		{0.2, 5, 0},          -- raketa002 (step12)
+		{0.2, 5.2, 0},        -- raketa004 (step11)
+		{1.2, 4, 0},          -- raketa027 (step10)
+		{3.6, 3, 0},          -- raketa006 (step9)
+		{4.6, 1.6, -1.8},     -- raketa007 (step8)
+		{5.2, -1, -0.4},      -- raketa008 (step7)
+		{4.2, -2.8, 0.4},     -- raketa009 (step6)
+		{2.2, -4.2, 0.2},     -- raketa010 (step5)
+		{1.6, -4.6, 1.9},     -- raketa011 (step4)
+		{-0.3, -4.1, 2.5},    -- raketa012 (step3)
+		{-1.5, -3.6, 3.3},    -- raketa013 (step2)
+		{-2.5, -3.9, 4},      -- raketa014 (step1)
+}
+
+local raketa_l_trail={
+	{0.2, 4.5, 0},        -- raketa_l (step14)
+	{-0.2, 4.9, 0},       -- raketa002_l (step12)
+	{-0.8, 4.2, 0},       -- raketa004_l (step11)
+	{-1.6, 4.1, 0},       -- raketa027_l (step10)
+	{-3.6, 3, 0},         -- raketa006_l (step9)
+	{-4.6, 1.6, -1.8},    -- raketa007_l (step8)
+	{-5.2, -1, -0.4},     -- raketa008_l (step7)
+	{-4.2, -2.8, 0.4},    -- raketa009_l (step6)
+	{-2.2, -4.2, 0.2},    -- raketa010_l (step5)
+	{-1.6, -4.6, 1.9},    -- raketa011_l (step4)
+	{0.3, -4.1, 2.5},     -- raketa012_l (step3)
+	{1.5, -3.6, 3.3},     -- raketa013_l (step2)
+	{2.5, -3.9, 4},       -- raketa014_l (step1)
+}
+
+local raketa_trail={raketa_r_trail,raketa_l_trail}
+
+local raketa_trail_vel_factor={{},{}}
 do
-	local spGetUnitPieceMatrix=Spring.GetUnitPieceMatrix
-	local function getPieceMove(pieces)
-		local result={}
-		local curOffset
+	for i=1,2 do
+		local raketa_trail_=raketa_trail[i]
+		local raketa_trail_vel_factor_=raketa_trail_vel_factor[i]
+		for key, value in pairs(raketa_trail_) do
+			local move_len_sq=value[1]*value[1]+value[2]*value[2]+value[3]*value[3]
+			local move_len=math.sqrt(move_len_sq)
+			local factor=RELOAD_SPEED/move_len
+			raketa_trail_vel_factor_[key]=factor
+		end
 	end
+end
+
+local shot_lr=1
+local spam_lr=1
+
+local pos_empty={{},{}}
+for lr=1,2 do
+	local pos_empty_=pos_empty[lr]
+	for i=1,raket_count do
+		pos_empty_[i]=false
+	end
+end
+
+local function raketa_try_move1(lr,pos)
+	if pos>=raket_count or pos<1 then
+		return
+	end
+
+	local newPos=pos+1
+
+	local pos_empty_=pos_empty[lr]
+
+	if pos_empty_[pos] then
+		return
+	end
+	
+	if not pos_empty_[newPos] then
+		return
+	end
+
+	StartThread(
+		function ()
+			local piece=raketa_pieces[lr][pos]
+			local nextPiece=raketa_pieces[lr][newPos]
+
+			local moves=raketa_trail[lr][pos]
+			local move_vel_factor=raketa_trail_vel_factor[lr][pos]
+			
+			
+			pos_empty_[newPos]=nil
+
+			Move(piece, x_axis, moves[1], moves[1]*move_vel_factor)
+			Move(piece, y_axis, moves[2], moves[2]*move_vel_factor)
+			Move(piece, z_axis, moves[3], moves[3]*move_vel_factor)
+
+			WaitForMove(piece,x_axis)
+			WaitForMove(piece,y_axis)
+			WaitForMove(piece,z_axis)
+
+			Hide(piece)
+			Show(nextPiece)
+			pos_empty_[pos]=true
+			raketa_try_move1(lr,pos-1)
+			raketa_try_move1(lr,newPos)
+		end
+	)
+end
+
+local function tryMoveAll()
+	for lr=1,2 do
+		local pos_empty_=pos_empty[lr]
+		for pos_empty_pos, value in pairs(pos_empty_) do
+			if value then
+				if pos_empty_pos>1 then
+					local prevPos=pos_empty_pos-1
+					if not pos_empty_[prevPos] then
+						StartThread(raketa_try_move1,lr,prevPos)
+					end
+				end
+			end
+		end
+	end
+end
+
+local function createRocket(lr,pos)
+	
+	if pos_empty[lr][pos] then
+		Show(raketa_pieces[lr][pos])
+		pos_empty[lr][pos]=nil
+		raketa_try_move1(lr,pos)
+		return true
+	else
+		return false
+	end
+end
+
+local function createRocketThread()
+	StartThread(
+		function ()
+			while true do
+				if createRocket(spam_lr,1) then
+					spam_lr=3-spam_lr
+					break
+				end
+				Sleep(33)
+			end
+		end
+	)
+end
+
+local function useRocket(lr,pos)
+	Hide(raketa_pieces[lr][pos])
+	pos_empty[lr][pos]=true
+	raketa_try_move1(lr,pos-1)
 end
 
 local ud=UnitDefs[ Spring.GetUnitDefID(unitID) ]
 local wd1 = WeaponDefs[ud.weapons[1].weaponDef ]
 include("script_weapon_charging_salvo.lua")
-local salvo=Spring.UnitScript.script_weapon_charging_salvo.newBurstWeaponFromWD(unitID,wd1)
+local salvo=Spring.UnitScript.script_weapon_charging_salvo.newBurstWeaponFromWD(unitID,wd1,createRocketThread)
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -95,7 +239,6 @@ local OKP_DAMAGE = tonumber(UnitDefs[unitDefID].customParams.okp_damage)
 
 local TURN_SPEED = math.rad(145)
 local GEAR_SPEED = TURN_SPEED * 5
-local RELOAD_SPEED = 20
 local MOV_DEL = 50
 
 local doingRotation = false
@@ -186,7 +329,7 @@ function script.Create()
 	
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
-
+--[=[
 function DoAmmoRotate()
 	if doingRotation then
 		return
@@ -370,7 +513,7 @@ function setZero(piece)
 	Move(piece, z_axis, 0)
 end
 
-
+]=]
 
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
@@ -382,13 +525,6 @@ function script.AimWeapon(num, heading, pitch)
 		rotateWise = -1
 	end
 	lastHeading = heading
-
-	if(gun and not loaded) then
-		StartThread(DoAmmoRotate)
-		while doingRotation do
-			Sleep(100)
-		end
-	end
 	
 	Turn(rotating_bas, y_axis, heading, TURN_SPEED)
 	
@@ -404,14 +540,27 @@ function script.AimWeapon(num, heading, pitch)
 	StopSpin(gear001, y_axis)
 	StopSpin(gear002, y_axis)
 	
+	salvo.WaitUntilReady()
+	while true do
+		if pos_empty[shot_lr][14] then
+			Sleep(33)
+		else
+			break
+		end
+	end
 	StartThread(RestoreAfterDelay)
 	return true
 end
 
-function script.Shot(num)
-	StartThread(Bum)
-end
+function script.EndBurst(num)
+	--flare, flare2 = flare2, flare
+    salvo.DoShot()
+	useRocket(shot_lr,14)
+	shot_lr=3-shot_lr
 
+	--StartThread(Bum)
+end
+--[=[
 function Bum()
 	flare, flare2 = flare2, flare
 
@@ -430,9 +579,9 @@ function Bum()
 		setZero(raketa014_l)
 	end
 end
-
+]=]
 function script.QueryWeapon()
-	return flare
+	return flare[shot_lr]
 end
 
 function script.AimFromWeapon()
