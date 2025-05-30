@@ -51,7 +51,7 @@ local res={}
 local spamed_list={
     {"turretriot",10},
     {"turretaaflak",4},
-    {"energyfusion",2},
+    {"energyfusiontanky",1},
     {"turretheavy",1},
     {"turretantiheavy",1},
     {"staticarty",1}

@@ -11,21 +11,20 @@ local tbnil=utils.None
 return utils_op.CopyTweakSillyBuildMorphAuto("planescout","planescouthover",function (ud)
     utils.table_replace({
         name="Not Flying Owl",
-        description="Flying is too danger",
-        metalCost=650,
-        health=2250,
+        description="Flying is too danger, just jump",
+        metalCost=500,
+        health=1000,
         acceleration        = 0.288,
         canFly=tbnil,
         category            = [[UNARMED HOVER]],
         customParams={
-            def_scale=1.2,
             refuelturnradius=tbnil,
             turnatfullspeed_hover = [[1]],
             
             canjump            = 1,
             jump_range         = 600,
             jump_speed         = 6,
-            jump_reload        = 15,
+            jump_reload        = 5,
             sonar_can_be_disabled = tbnil,
             disable_radar_preview = tbnil,
             
@@ -51,5 +50,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("planescout","planescouthover",func
         iconType="planescouthover",
         workerTime          = tbnil,
         collide             = tbnil,
+        --radarEmitHeight=-500, sed nouse
+        --losEmitHeight=-500,
     })(ud)
 end)

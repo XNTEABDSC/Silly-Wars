@@ -13,8 +13,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("shipheavyarty","shipveryheavyarty"
     ud.description=[[Very Heavy Artillery Battleship (charging salvo)]]
     ud.health=ud.health*2
     ud.metalCost=25000
-    ud.customParams.def_scale=2
-    ud.highTrajectory         = nil
+    ud.customParams.def_scale=1.5
     ud.weaponDefs.PLASMA={
       name                    = [[Very Heavy Plasma Cannon]],
       accuracy                = 500,
@@ -56,6 +55,6 @@ return utils_op.CopyTweakSillyBuildMorphAuto("shipheavyarty","shipveryheavyarty"
       soundStart              = [[weapon/cannon/big_begrtha_gun_fire]],
       turret                  = true,
       weaponType              = [[Cannon]],
-      weaponVelocity          = 1050,
+      weaponVelocity          = 1050/1.5,
     }
 end)
