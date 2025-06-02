@@ -10,7 +10,11 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return {
     silly=function ()
-        return {mods="silly_tech() silly_build() silly_build_simple() silly_morph_simple() silly_morph_big() more_build() chickens()"}
+        return {
+            mods="silly_tech() silly_build() silly_build_simple() silly_morph_simple() silly_morph_big() more_build() chickens()",
+            option_notes=[=[SILLY WARS!
+            WARNING:SILLY IS NOT OP!]=]
+        }
     end,
     silly_tech=function ()
       
