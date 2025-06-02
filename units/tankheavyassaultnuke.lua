@@ -9,7 +9,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 return utils_op.CopyTweakSillyBuildMorphAuto("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
     name="Nuclear Cyclops",
     description="Shoot Nuclear Warhead (175 stockpile)",
-    metalCost=6000,
+    metalCost=6660,
     health=36000,
     speed=45,
     weaponDefs={

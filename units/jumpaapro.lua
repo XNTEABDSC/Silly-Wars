@@ -11,11 +11,20 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 return utils_op.CopyTweakSillyBuildMorphAuto("jumpaa","jumpaapro",function (ud)
     ud.name="Pro Toad"
     ud.description="AA Strider, with burst slow beam and flak"
-    ud.metalCost=3000
-    ud.health=15000
+    ud.metalCost=4000
+    ud.health=16000
     ud.speed=48
     ud.sightDistance=1200
     ud.customParams.def_scale=2.5
+    ud.customParams.translations_copy_from="jumpaa"
+    ud.customParams.translations=[==[
+    {
+        en={
+            name=function(v) return "Pro" .. v end,
+            description = "Advanced Toad, an AA Strider, with burst slow beam and flak",
+        }
+    }
+    ]==]
     utils.table_replace({
         beamttl                 = 10,
         customParams={
