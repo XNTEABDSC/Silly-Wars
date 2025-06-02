@@ -10,8 +10,19 @@ utils_op.MakeSetSillyBuildMorphBig("turretsunlance","turretnexus")
 return {turretnexus={
     name = [[Nexus Turret]],
     description = [[Nexus Turret, from Zero Wars]],
+    customParams={
+        translations=[=[
+        {
+            en={
+                name="Nexus Turret",
+                description = [[Nexus Turret, from Zero Wars]],
+                helptext = "A tanky turret"
+            }
+        }
+        ]=]
+    },
     activateWhenBuilt = true,
-    metalCost = 5000,
+    metalCost = 4000,
     builder = false,
     buildingGroundDecalDecaySpeed = 30,
     buildingGroundDecalSizeX = 5,

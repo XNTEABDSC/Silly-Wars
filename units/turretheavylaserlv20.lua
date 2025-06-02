@@ -16,4 +16,11 @@ return utils_op.CopyTweak("turretheavylaser","turretheavylaserlv20",function (ud
     ud.description = "Lv 20 " .. ud.description
     ud.metalCost=4250
     ud.iconType="turretheavylaserlv20"
+    ud.customParams.translations=[=[{
+        en={
+            name=function(n) return n.." Lv 20" end,
+            description=function(n) return "Lv 20 " .. n end,
+            
+        }
+    }]=]
 end)

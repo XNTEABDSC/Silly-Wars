@@ -21,6 +21,14 @@ return utils_op.CopyTweakSillyBuildMorphBig("vehheavyartyplus","vehtacmissile",f
     --ud.objectName="impalerWithEOS"
     ud.customParams.def_scale=2
     ud.fireState =0
+    ud.customParams.translations=[=[
+    {
+        en={
+            name="Eos Impaler",
+            description="Throws Eos (600 stokepile)",
+            helptext="Mobile Missile silo! "
+        }
+    }]=]
     --[==[
     utils.set_scale(ud,1.8)
     ud.collisionVolumeScales  = [[80 40 80]]

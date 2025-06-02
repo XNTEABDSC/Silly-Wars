@@ -12,6 +12,13 @@ return utils_op.CopyTweakSillyBuildMorphAuto("veharty","vehartydirty",function (
     ud.health=ud.health*2.5
     local udcp=ud.customParams
     udcp.tactical_ai_defs_copy="veharty"
+    udcp.translations=[=[{
+        en={
+            name="Dirtbag's Badger",
+            description="Throw DIRTBAGS!",
+            helptext="Mobile dirtbags maker and artillery deployer. To help dirtbags to conquer then world",
+        }
+    }]=]
     ud.name="Dirtbag's Badger"
     ud.description="Artillery Dirtbag Thrower Rover. Costs 30 per shot"
     ud.customParams.def_scale=1.4

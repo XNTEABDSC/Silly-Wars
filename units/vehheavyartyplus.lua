@@ -22,9 +22,9 @@ return utils_op.CopyTweakSillyBuildMorphSimple("vehheavyarty","vehheavyartyplus"
         craterBoost             = 800,
         craterMult              = 1.0,
         damage={
-            default=2500
+            default=1500.1*(1+0.15*5)
         },
-        range=1200,
+        range=900*(1+0.075*5),
         edgeEffectiveness       = 1,
         explosionGenerator      = [[custom:slam]],
         flightTime              = 16,
@@ -47,5 +47,16 @@ return utils_op.CopyTweakSillyBuildMorphSimple("vehheavyarty","vehheavyartyplus"
     })(wd)
     ud.speed=50
     ud.customParams.def_scale=1.4
+
+    ud.customParams.translations=[=[
+    {
+        en={
+            name="S.L.A.M Impaler",
+            description="Throws S.L.A.M",
+            helptext="This car can shot S.L.A.M, a missile with decent damage and aoe, but reloads slow"
+        }
+    }
+    ]=]
+    
     --utils.set_scale(ud,1.4)
 end)
