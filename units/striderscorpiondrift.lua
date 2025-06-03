@@ -23,5 +23,15 @@ return utils_op.CopyTweakSillyBuildMorphAuto("striderscorpion","striderscorpiond
     },
     metalCost=function (mc)
         return mc*1.05
-    end
+    end,
+    customParams={
+        translations_copy_from="striderscorpion",
+        translations=[=[{
+            en={
+                name="Scorpio Drift",
+                description=function(desc) return desc .. ", can move at all direction" end,
+                helptext="Scorpio Drift is Scorpion with more flexible legs, which allows it to move in different direction from its own."
+            }
+        }]=]
+    }
 }))

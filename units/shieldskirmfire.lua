@@ -15,6 +15,14 @@ return utils_op.CopyTweakSillyBuildMorphAuto("shieldskirm","shieldskirmfire",fun
         customParams={
             tactical_ai_defs_copy="shieldskirm",
             def_scale=1.3,
+            translations_copy_from="shieldskirm",
+            translations=[=[{
+                en={
+                    name=function(name) return "Napalm " .. name end,
+                    description = function(desc) return desc .. "(Napalm)" end,
+                    helptext="Napalm skirmisher that is good to against other skirmisher"
+                }
+            }]=]
         },
         
     })(ud)

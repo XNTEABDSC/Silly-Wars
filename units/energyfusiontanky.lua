@@ -9,11 +9,18 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return utils_op.CopyTweakSillyBuildMorphSimple("energyfusion","energyfusiontanky",utils.table_replace({
     name="Tanky Fusion Reactor",
-    description="Stable Energy Grid",
+    description="Stable Energy and Grid",
     customParams={
-        pylonrange=600
+        pylonrange=600,
+        translations=[=[{
+            en={
+                name = "Tanky Fusion Reactor",
+                description="Stable Energy and Grid",
+                helptext="Tanky Fusion Reactor is a stable energy source which can provides enough energy and grid for heavy defenses to work, and as efficiency as solar collectors"
+            }
+        }]=]
     },
     energyMake=50,
-    metalCost=2000,
-    health=10000,
+    metalCost=1750,
+    health=8750,
 }))

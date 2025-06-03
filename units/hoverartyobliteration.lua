@@ -16,6 +16,13 @@ return utils_op.CopyTweakSillyBuildMorphAuto("hoverarty","hoverartyobliteration"
         description="Obliteration Blaster Artillery Hovercraft",
         customParams={
             tactical_ai_defs_copy="hoverarty",
+            translations=[=[{
+                en={
+                    name="Obliteration Lance",
+                    description="Obliteration Blaster Artillery Hovercraft",
+                    helptext="Obliteration Lance is a experimental attemp of using Obliteration Blaster, a fast, accurate, aoe, and good range weapon."
+                }
+            }]=]
         },
         metalCost=1200,
     })(ud)

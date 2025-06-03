@@ -8,7 +8,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 return utils_op.CopyTweakSillyBuildMorphAuto("tankheavyassault","tankheavyassaultnuke",utils.table_replace({
     name="Nuclear Cyclops",
-    description="Shoot Nuclear Warhead (175 stockpile)",
+    description="Shoot Nuclear Warhead (150 stockpile)",
     metalCost=6660,
     health=36000,
     speed=45,
@@ -38,7 +38,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("tankheavyassault","tankheavyassaul
     },
     customParams={
         stockpiletime  = [[15]],
-        stockpilecost  = [[175]],
+        stockpilecost  = [[150]],
         priority_misc  = 2,
         def_scale=1.7,
         bait_level_default=3,
@@ -54,6 +54,14 @@ return utils_op.CopyTweakSillyBuildMorphAuto("tankheavyassault","tankheavyassaul
             skirmBlockedApproachFrames = 60,
 	    }]=],
         tactical_ai_defs_belongs_to_copy="tankheavyassault",
+        translations=[=[{
+            en={
+                name="Nuclear Cyclops",
+                description="Shoot Nuclear Warhead (150 stockpile)",
+                helptext="Nuclear Cyclops shots costy but deadly nuclear warhead to destroy almost anything, While itself is slow, its advnaced slow beam can prevent its target from escaping."
+            }
+        }
+        ]=]
     },
     explodeAs="ATOMIC_BLAST",
     selfDestructAs="ATOMIC_BLAST"

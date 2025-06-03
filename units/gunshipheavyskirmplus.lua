@@ -14,6 +14,15 @@ return utils_op.CopyTweakSillyBuildMorphAuto("gunshipheavyskirm","gunshipheavysk
         metalCost=2500,
         health=5000,
         speed=80,
+        customParams={
+            translations=[=[{
+                en={
+                    name="Flak Nimbus",
+                    description="Flying Flak",
+                    helptext="Let the ground to suffer pain which air does. Flak Nimbus uses flak to hit ground. Its aoe can hit target even if aiming radar dots."
+                }
+            }]=]
+        }
     })(ud)
     local wd=ud.weaponDefs.EMG
     utils.table_replace({

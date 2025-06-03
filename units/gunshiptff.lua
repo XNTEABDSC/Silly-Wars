@@ -34,8 +34,16 @@ return utils_op.CopyTweakSillyBuildMorphAuto("gunshipkrow","gunshiptff",function
     ud.speed=80
     ud.name="The Flying Fortress"
     ud.description="The Flying Fortress"
-    ud.customParams={
-        def_scale=2
-    }
+    ud.customParams=ud.customParams or {}
+    ud.customParams.def_scale=2
+        
+    ud.customParams.translations=[=[{
+        en={
+            name="The Flying Fortress",
+            description="The Flying Fortress",
+            helptext="Flying 3 desolators"
+        }
+    }]=]
+    
     ud.sightDistance=800
 end)

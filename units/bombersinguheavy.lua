@@ -26,5 +26,12 @@ return utils_op.CopyTweakSillyBuildMorphAuto("bombersingu","bombersinguheavy",fu
     ud.customParams.stockpilecost  = [[3000]]
     ud.customParams.priority_misc  = 1
     ud.customParams.def_scale=2
+    ud.customParams.translations=[=[{
+        en={
+            name = "Singu Likho",
+            description = "Throw SINGULARITY, need both rearm and 3000 stockpile cost",
+            helptext="Singu Likho can drop a big singularity to its enemy. It needs both stockpile ( remember to set stockpile count to 1 ) and rearm ( remember to make airpad )"
+        }
+    }]=]
 end)
 

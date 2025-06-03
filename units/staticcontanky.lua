@@ -10,7 +10,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 return utils_op.CopyTweakSillyBuildMorphAuto("staticcon","staticcontanky",utils.table_replace({
     name                          = [[Tanky Caretaker]],
     description                   = [[Tanky Construction Assistant]],
-    health=1750,
+    health=2000,
     metalCost=250,
     explodeAs                     = [[NOWEAPON]],
     selfDestructAs=[[NOWEAPON]],
@@ -53,6 +53,15 @@ return utils_op.CopyTweakSillyBuildMorphAuto("staticcon","staticcontanky",utils.
             tab="ECON",
             pos={order = 9, row = 3, col = 3}
         }
-        ]==]
+        ]==],
+        translations=[=[
+        {
+            en={
+                name="Tanky Caretaker",
+                description="Tanky Construction Assistant",
+                helptext="Tanky Caretaker has good hp and blueprints of everything you need to proc",
+            }
+        }
+        ]=]
     }
 }))

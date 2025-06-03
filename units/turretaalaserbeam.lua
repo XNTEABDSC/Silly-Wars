@@ -9,7 +9,7 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return utils_op.CopyTweakSillyBuildMorphSimple("turretaalaser","turretaalaserbeam",function (ud)
     utils.table_replace({
-        name="Razor Beam",
+        name="Beam Razor",
         weaponDefs={
             AAGUN={
 				beamTime                = 1/30,
@@ -20,5 +20,14 @@ return utils_op.CopyTweakSillyBuildMorphSimple("turretaalaser","turretaalaserbea
             }
         },
         metalCost=300,
+        customParams={
+            translations=[=[{
+                en={
+                    name="Beam Razor",
+                    description="Hardened Anti-Air Beam",
+                    helptext="A beam anti-air which has good dps and hp and can hit things accurately"
+                }
+            }]=]
+        }
     })(ud)
 end)

@@ -50,4 +50,12 @@ fleaUD.moveState=nil
 
 utils_op.MakeSetSillyBuildMorphSimple("spiderscout","spiderlightarty",1)
 
+fleaUD.customParams.translations=[=[{
+    en={
+        name="Lancing Flea",
+        description="Ultralight beam artillery spider",
+        helptext="We are now mounting a lance on flea. "
+    }
+}]=]
+
 return {["spiderlightarty"]=fleaUD}

@@ -22,7 +22,16 @@ return utils_op.CopyTweakSillyBuildMorphSimple("turretaafar","turretaafarcharge"
             }
         },
         script                        = [[turretaafarcharge.lua]],
-        metalCost=1450,
+        metalCost=1600,
+        customParams={
+            translations=[=[{
+                en={
+                    name="Hailstorm",
+                    description="Heavy SAM Battery (from Future Wars but better)",
+                    helptext="Hailstorm"
+                }
+            }]=]
+        }
     })(ud)
     ud.
         weapons                       = {

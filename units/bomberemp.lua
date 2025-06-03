@@ -4,6 +4,11 @@ local utils=Spring.Utilities.wacky_utils
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
+--- Thunderbird's damage is not balanced
+if true then
+    return {}
+
+end
 
 return utils_op.CopyTweakSillyBuildMorphAuto("bomberdisarm","bomberemp",function (ud)
     utils.table_replace({

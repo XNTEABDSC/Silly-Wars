@@ -9,8 +9,8 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 
 return utils_op.CopyTweakSillyBuildMorphAuto("spiderantiheavy","spidercapture",function (ud)
-    ud.metalCost=1000
-    ud.health=3000
+    ud.metalCost=800
+    ud.health=2800
     ud.speed=40
     ud.minCloakDistance=100
     ud.cloakCost              = 10
@@ -29,7 +29,14 @@ return utils_op.CopyTweakSillyBuildMorphAuto("spiderantiheavy","spidercapture",f
     wd.paralyzeTime=nil
     ud.customParams.def_scale=1.5
     ud.name="Hacker Widow"
-    ud.description="Hack enemy. WARNING: You need deal unitHealth+1000 capture damage to capture it e.g. 1040 cap dmg to capture 40hp flea"
+    ud.description="Hack enemies"
     ud.minCloakDistance=100
     ud.sightDistance=300
+    ud.customParams.translations=[=[{
+        en={
+            name="Hacker Widow",
+            description="Hack enemies",
+            helptext="Hacker Widow can deals 5000 capture damage instantly to make victim yours. Itself is slow but tanky, to make sure the controling. It is good at hacking extra thing at chaotic field. WARNING: You need deal unitHealth+1000 capture damage to capture it e.g. 1040 cap dmg to capture 40hp flea"
+        }
+    }]=]
 end)

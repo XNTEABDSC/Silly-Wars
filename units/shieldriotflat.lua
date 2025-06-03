@@ -9,15 +9,23 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 local ud=utils.GetUnitLua("shieldriot")
 
 utils.table_replace({
-    name="Flatty Outlaw",
-    description=UnitDefs["shieldriot"].description .. ", and Flat Land",
-    metalcost=UnitDefs["shieldriot"].metalcost+20,
+    name=function (name)return "Flatting " .. name end,
+    description=function (description)return description .. ", and Flat Land"end,
+    metalCost=ud.metalCost+20,
     weaponDefs={BLAST={customParams={
         smoothradius     = [[140]],
         smoothmult       = [[0.1]],
     }}},
     customParams={
-        tactical_ai_defs_copy="shieldriot"
+        tactical_ai_defs_copy="shieldriot",
+        translations_copy_from="shieldriot",
+        translations=[=[{
+            en={
+                name=function (name)return "Flatting " .. name end,
+                description=function (description)return description .. ", and Flat Land"end,
+                helptext=function(helptext) return helptext .. " It can also flat terran around it." end
+            }
+        }]=]
     }
 })(ud)
 

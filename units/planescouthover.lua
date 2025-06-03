@@ -35,6 +35,13 @@ return utils_op.CopyTweakSillyBuildMorphAuto("planescout","planescouthover",func
                 minFleeRange = 600, -- Avoid enemies standing in front of Pickets
                 fleeLeeway = 600,
                 fleeDistance = 600,
+            }]=],
+            translations=[=[{
+                en={
+                    name="Not Flying Owl",
+                    description="Flying is too danger, just jump",
+                    helptext="Flying is too danger, just jump"
+                }
             }]=]
         },
         movementClass       = [[HOVER3]],

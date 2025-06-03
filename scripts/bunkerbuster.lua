@@ -166,9 +166,14 @@ local function OnDetonate()
 		Sleep(time_delta_raw)
 		
 	end
-
+	
+    EmitSfx(base, GG.Script.DETO_W2)
 	Spring.DestroyUnit(unitID,true)
 	--spDestroyUnit(toDestroy[i], true)
+end
+
+function script.BlockShot(num)
+	if num==2 then return true end
 end
 
 function Detonate()

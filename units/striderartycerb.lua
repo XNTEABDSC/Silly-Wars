@@ -58,6 +58,13 @@ return utils_op.CopyTweakSillyBuildMorphAuto("striderarty","striderartycerb",fun
         }
     })(ud)
     ud.speed=ud.speed*0.8
+    ud.customParams.translations=[=[{
+        en={
+            name="Cerberus' Merlin",
+            description="Heavy Saturation Plasma Artillery Strider",
+            helptext="Cerberus' Merlin can fill target area with plasma",
+        }
+    }]=]
     local wd=ud.weaponDefs.ROCKET
     wd.model=nil
     wd.flightTime=nil

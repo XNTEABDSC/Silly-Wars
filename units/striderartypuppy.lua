@@ -1,6 +1,6 @@
 VFS.Include("LuaRules/Utilities/wacky_utils.lua")
 local utils=Spring.Utilities.wacky_utils
-
+local None=utils.None
 VFS.Include("LuaRules/Utilities/to_make_op_things.lua")
 local utils_op=Spring.Utilities.to_make_op_things
 
@@ -15,6 +15,14 @@ local puppyud=utils.GetUnitLua("jumpscout")
 
 utils_op.set_free_unit(puppyud)
 puppyud.name="Puppys' Merlin's Puppy"
+utils.table_replace({
+    grey_goo = None,
+    grey_goo_spawn = None,
+    grey_goo_drain = None,
+    grey_goo_cost = None,
+    grey_goo_range = None,
+})(puppyud.customParams)
+
 local puppyudname="striderartypuppypuppy"
 
 ud.name="Puppys' Merlin"
@@ -42,6 +50,13 @@ utils.table_replace({
     nofriendlyfire=1,
 })(wd.customParams)
 ud.speed=ud.speed*0.9
+ud.customParams.translations=[=[{
+    en={
+        name="Puppies' Merlin",
+        description="Heavy Puppies Artillery Strider",
+        helptext="Puppys' Merlin can shot 40 puppies which can destroy target accurately. Shot puppies cant goo",
+    }
+}]=]
 
 return{
     ["striderartypuppy"]=ud,

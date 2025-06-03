@@ -14,6 +14,7 @@ return
             health=12000,
             workertime=80,
             name="Very Very Silly Con",
+            description="To Make Very Very Silly things",
             customParams={
                 def_scale=2
             }

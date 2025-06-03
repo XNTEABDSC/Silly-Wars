@@ -20,8 +20,9 @@ return utils_op.CopyTweakSillyBuildMorphAuto("jumpaa","jumpaapro",function (ud)
     ud.customParams.translations=[==[
     {
         en={
-            name=function(v) return "Pro" .. v end,
+            name="Pro Toad",
             description = "Advanced Toad, an AA Strider, with burst slow beam and flak",
+            helptext= "Pro Toad uses a burst slow beam to slow enemy air instantly then uses flak to kill it. Itself is slow but tanky."
         }
     }
     ]==]

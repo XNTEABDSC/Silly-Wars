@@ -39,5 +39,14 @@ utils_op.MakeSetSillyBuildMorphBig("bomberriot","bomberspam")
 ud.name="Glaives' " .. ud.name
 ud.description="Drop 18 Glaives, " .. 65*19 .. " stockpile"
 ud.fireState=0
+ud.customParams.reammoseconds=3*19
+
+ud.customParams.translations=[=[{
+    en={
+        name="Glaives' Phoenix",
+        description="Drop 18 Glaives, " .. 65*19 .. " stockpile",
+        helptext="Glaives' Phoenix can bring 18 real glaives to enemy's backline and wipe them out. It needs both stockpile ( remember to set stockpile count to 1 ) and rearm ( remember to make airpad )"
+    }
+}]=]
 
 return {bomberspam=ud}

@@ -23,8 +23,8 @@ return utils_op.CopyTweakSillyBuildMorphAuto("cloakskirm","cloakskirmguide",func
                     default = 90.01,
                 },
                 customParams        = {
-                light_camera_height = 2000,
-                light_radius = 200,
+                    light_camera_height = 2000,
+                    light_radius = 200,
                 },
                 explosionGenerator      = [[custom:FLASH2]],
                 fireStarter             = 70,
@@ -45,6 +45,14 @@ return utils_op.CopyTweakSillyBuildMorphAuto("cloakskirm","cloakskirmguide",func
         },
         customParams={
             tactical_ai_defs_copy="cloakskirm",
+            
+            translations=[=[{
+                en={
+                    name="Guided Ronin",
+                    description=[[Skirmisher Bot (Homing Missile)]],
+                    helptext="Guided Ronin can shot guided missile, with lower damage."
+                }
+            }]=]
             --[====[
             tactical_ai_defs_behaviour_config=
             [===[{

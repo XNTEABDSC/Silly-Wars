@@ -8,8 +8,8 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return utils_op.CopyTweakSillyBuildMorphAuto("staticconarty","staticconsuper",utils.table_replace({
-    name                          = [[Nanoframe Projector]],
-    description                   = [[Throw BP. Can't reclaim]],
+    name                          = [[Invisible big hand]],
+    description                   = [[Long-Range Nanoframe Projector. Can't reclaim]],
     health=8000,
     metalCost=30000,
     buildDistance=10000,
@@ -18,4 +18,13 @@ return utils_op.CopyTweakSillyBuildMorphAuto("staticconarty","staticconsuper",ut
         def_scale=5
     },
     canReclaim=false,
+    translations=[=[
+    {
+        en={
+            name="Invisible big hand",
+            description="Long-Range Nanoframe Projector. Can't reclaim",
+            helptext="Invisible big hand is a superweapon about buildpower. It can build and repair at a long distance.",
+        }
+    }
+    ]=]
 }))

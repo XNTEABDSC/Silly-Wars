@@ -10,7 +10,7 @@ utils_op.MakeSetSillyBuildMorphBig("turretdronelight","staticbase")
 
 return { staticbase = {
   name                          = [[Frontline Base]],
-  description                   = [[Provides hp, bp, radar, los, radar jam, cloak, drones, shield, pylon, and disruptor pulse. Make it at front]],
+  description                   = [[Stable frontline support center]],
   activateWhenBuilt             = true,
   buildPic                      = [[pw_hq.png]],
   category                      = [[FLOAT UNARMED]],
@@ -47,6 +47,13 @@ return { staticbase = {
     area_cloak_shift_range = 300,
     area_cloak_recloak_rate = 1200,
     pylonrange = 1000,
+    translations=[=[{
+      en={
+        name="Frontline Base",
+        description="Stable frontline support center",
+        helptext="Provides hp, bp, radar, los, radar jam, cloak, drones, shield, pylon, and disruptor pulse.",
+      }
+    }]=]
   },
 
   explodeAs                     = [[ATOMIC_BLAST]],

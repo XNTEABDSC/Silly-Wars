@@ -18,4 +18,11 @@ return utils_op.CopyTweakSillyBuildMorphAuto("shieldshield","shieldshieldpro",fu
     wd.shieldPowerRegen=wd.shieldPowerRegen*3
     wd.shieldPowerRegenEnergy=wd.shieldPowerRegenEnergy*3
     wd.shieldRadius=wd.shieldRadius*1.5
+    ud.customParams.translations=[=[{
+        en={
+            name=function(name) return "Greater " .. name end,
+            description= "Tougher shield",
+            helptext="Greater Shield to counter greater silly"
+        }
+    }]=]
 end)

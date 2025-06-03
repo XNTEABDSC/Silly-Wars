@@ -16,6 +16,13 @@ return utils_op.CopyTweak("dronelight","dronelightslow",utils.table_replace(
         acceleration        = 0.6,
         customParams={
             drone_defs_is_drone=1,
+            translations=[=[{
+                en={
+                    name="Disruptor Firefly",
+                    description="Disruptor Drone",
+                    helptext="A small drone with disruptor beam."
+                }
+            }]=]
         },
         weaponDefs={
             LASER={

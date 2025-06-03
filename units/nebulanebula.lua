@@ -7,9 +7,6 @@ local utils_op=Spring.Utilities.to_make_op_things
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
-if true then
-	return {}
-end
 
 local uds=utils_op.CopyTweakSillyBuildMorphAuto("nebula","nebulanebula",function (ud)
     ud.name=ud.name .. "s' " .. ud.name
@@ -31,6 +28,14 @@ local uds=utils_op.CopyTweakSillyBuildMorphAuto("nebula","nebulanebula",function
 		},
 	}
     ]==]
+	ud.customParams.translations_copy_from="nebula"
+	ud.customParams.translations=[=[
+		en={
+			name=function(name) return name .. 's' ' .. name end,
+			description = function(desc) return desc .. " of " .. desc end,
+			helptext= "Nebula's Nebula can build 8 nebulas whose can build 8 spiculas. Notes that it needs 2 min to make all 8 nebulas"
+		}
+	]=]
     ud.health=ud.health*3
     ud.speed=ud.speed*0.6
     ud.customParams.def_scale=3

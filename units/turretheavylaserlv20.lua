@@ -20,7 +20,7 @@ return utils_op.CopyTweak("turretheavylaser","turretheavylaserlv20",function (ud
         en={
             name=function(n) return n.." Lv 20" end,
             description=function(n) return "Lv 20 " .. n end,
-            
+            helptext="Stinger with level 20 in unit level ups. It has deadly firepower and good range to melt everything in its range."
         }
     }]=]
 end)

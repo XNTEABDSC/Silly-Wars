@@ -15,7 +15,14 @@ metalcost=UnitDefs["tankheavyassault"].metalcost+200,
 name="Impulse Cyclops",
 description="Very Heavy Tank Buster With Impulse",
 customParams={
-    tactical_ai_defs_copy="tankheavyassault"
+    tactical_ai_defs_copy="tankheavyassault",
+    translations=[=[{
+        en={
+            name="Impulse Cyclops",
+            description="Very Heavy Tank Buster With Impulse",
+            helptext="Cyclops but its bullet can make victims fly into it."
+        }
+    }]=],
 },
 })(ud)
 

@@ -20,6 +20,13 @@ return utils_op.CopyTweakSillyBuildMorphSimple("jumpskirm","jumpskirmburst",util
         customParams={
             def_scale=1.2,
             tactical_ai_defs_copy="jumpskirm",
+            translations=[=[{
+                en={
+                    name="Moderator Bag",
+                    description="4x Disruptor Skirmisher Walker",
+                    helptext="Moderator Bag can shot 4 Disruptor beam at once"
+                }
+            }]=]
         },
         weaponDefs          = {
             DISRUPTOR_BEAM = {

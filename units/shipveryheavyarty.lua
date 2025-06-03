@@ -57,4 +57,11 @@ return utils_op.CopyTweakSillyBuildMorphAuto("shipheavyarty","shipveryheavyarty"
       weaponType              = [[Cannon]],
       weaponVelocity          = 1050/1.5,
     }
+    ud.customParams.translations=[=[{
+      en={
+        name="Big Bertha Shogun",
+        description="Very Heavy Artillery Battleship (charging salvo)",
+        helptext="3 Swiming Big Bertha! Big Bertha Shogun can shot as if 3 big bertha. It can also shot 9 in a burst."
+      }
+    }]=]
 end)

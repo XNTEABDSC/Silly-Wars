@@ -6,7 +6,10 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-
+--not op enough, i have more op one
+if true then
+    return {}
+end
 local ud=utils.GetUnitLua("tacnuke")
 ud.metalCost=200
 ud.health=600

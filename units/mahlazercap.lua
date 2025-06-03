@@ -49,6 +49,13 @@ end
 local ud=utils.GetUnitLua("mahlazer")
 ud.name="Babel"
 ud.description="Only My Will"
+ud.customParams.translations=[=[{
+    en={
+        name="Babel",
+        description="Only My Will",
+        helptext="Babel makes everything listen to you, by shotting capture ray to them. Has no capture reload."
+    }
+}]=]
 ud.metalCost=80*1000
 ud.customParams.mahlazer_satellite="mahlazercap_satellite";
 set_laser_capper(ud.weaponDefs.RELAYLAZER)

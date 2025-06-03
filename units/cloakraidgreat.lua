@@ -14,4 +14,11 @@ return utils_op.CopyTweakSillyBuildMorphAuto("cloakraid","cloakraidgreat",functi
     ud.iconType="cloakraidgreat"
     ud.customParams.tactical_ai_defs_belongs_to_copy="cloakraid"
     ud.customParams.tactical_ai_defs_behaviour_config_copy="cloakraid"
+    ud.customParams.translations=[=[{
+        en={
+            name="Greater Glaive",
+            description="Greater Raider Bot",
+            helptext="10x glaive"
+        }
+    }]=]
 end)

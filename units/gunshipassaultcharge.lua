@@ -14,6 +14,13 @@ return utils_op.CopyTweakSillyBuildMorphSimple("gunshipassault","gunshipassaultc
     description=[[Heavy Raider/Assault Gunship, Can Both Burst And Keep Shotting]],
     customParams={
         tactical_ai_defs_copy="gunshipassault",
+        translations=[=[{
+            en={
+                name="Revenant + Charging Salvo",
+                description="Heavy Raider/Assault Gunship, Can Both Burst And Keep Shotting",
+                helptext="Charging Salvo solves a big problem of Revenant: bad at taking out low hp targets. Charging Salvo allows Revenant to both shot and store ammo, so it can both keep shoting and burst shoting."
+            }
+        }]=]
     },
     metalCost=900,
     weaponDefs={

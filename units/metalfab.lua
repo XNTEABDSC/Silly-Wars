@@ -16,7 +16,7 @@ local pw_metal = function(unitDef)
 
     unitDef.customparams = unitDef.customparams or {}
     unitDef.customparams.removewait = 1
-    unitDef.metalmake = 10
+    unitDef.metalmake = 20
 
     unitDef.footprintx = 12
     unitDef.footprintz = 12
@@ -31,6 +31,7 @@ local pw_metal = function(unitDef)
 
     unitDef.featuredefs.dead.object = "pw_mine3_dead.dae"
 
+    
 
     return unitDef
 end
@@ -50,7 +51,17 @@ unitDef.health=4000
 
 unitDef.name="Chispy " .. unitDef.name
 
-unitDef.description="Successful Implementation of ancient tech ... just chispy (and nukey) (+" .. unitDef.metalmake .." metal / s)"
+unitDef.description="Produces Metal out of thin air (+40)"
+
+unitDef.customparams.translations=[=[
+{
+    en={
+        name="Chispy Ancient Fabricator",
+        description = "Produces Metal out of thin air (+40)",
+        helptext="Just Produces Metal. Explode as nuke"
+    }
+}
+]=]
 
 utils_op.MakeAddSillyBuild("metalfab")
 

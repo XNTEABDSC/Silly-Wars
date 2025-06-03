@@ -9,7 +9,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 ud.name="Very Silly Con"
-ud.description="Make Very Silly things"
+ud.description="To Make Very Silly things"
 ud.metalCost=1000
 ud.health=3000
 ud.weapondefs={}

@@ -8,7 +8,7 @@ VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 
 return utils_op.CopyTweakSillyBuildMorphAuto("striderdetriment","striderdetrimentbrutalobliteration",function (ud)
-    ud.name=ud.name .. " Obliteration Brutal"
+    ud.name="Detriment Obliteration Brutal"
     local wd=ud.weaponDefs.OBLITERATION_BLASTER
 
     ud.weaponDefs.GAUSS=nil
@@ -18,7 +18,7 @@ return utils_op.CopyTweakSillyBuildMorphAuto("striderdetriment","striderdetrimen
     wd.commandFire=nil
     wd.burst=3
     wd.burstrate=0.2
-    wd.reloadtime=7
+    wd.reloadtime=6
     wd.sprayAngle=wd.sprayAngle/2
     wd.waterweapon= true
 
@@ -29,4 +29,12 @@ return utils_op.CopyTweakSillyBuildMorphAuto("striderdetriment","striderdetrimen
     ud.weapons[4]=utils_op.noweapon_weapon
     ud.weapons[5]=utils_op.noweapon_weapon
     ud.canManualFire=nil
+    ud.customParams.translations_copy_from="striderdetriment"
+    ud.customParams.translations={
+        en={
+            name="Detriment Obliteration Brutal",
+            description="Obliteration blaster strider",
+            helptext="Take good use of obliteration blaster, Detriment uses obliteration blaster as the only weapon, which is fast, accurate, aoe, and good range."
+        }
+    }
 end)

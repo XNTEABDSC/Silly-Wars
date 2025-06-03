@@ -52,6 +52,15 @@ local function MakeDeployer(ud,udname)
                 weaponVelocity=600,
                 weaponTimer=4.5,
             }
+        },
+        customParams={
+            translations=[=[{
+                en={
+                    name = "Long-Range ]=] .. ud.name .. [=[ Deployer",
+                    description = "Missile to deploy ]=] .. ud.name .. [=[",
+                    helptext = "To deploy ]=].. ud.name ..[=[ at distance",
+                }
+            }]=]
         }
     })(newUd)
     return newUd

@@ -10,16 +10,25 @@ local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
 return utils_op.CopyTweakSillyBuildMorphAuto("staticcontanky","staticconarty",utils.table_replace({
     name                          = [[Long-Range Caretaker]],
     description                   = [[Long-Range Construction Assistant]],
-    health=1500,
-    metalCost=3000,
-    buildDistance=1500,
-    workerTime                    = 60,
+    health=1000,
+    metalCost=1000,
+    buildDistance=1200,
+    workerTime                    = 20,
 
     explodeAs                     = [[ATOMIC_BLAST]],
     selfDestructAs                = [[ATOMIC_BLAST]],
     customParams={
-        def_scale=3,
+        def_scale=2,
         integral_menu_be_in_tab=utils.None
     },
-    buildoptions=utils.None
+    buildoptions=utils.None,
+    translations=[=[
+    {
+        en={
+            name="Long-Range Caretaker",
+            description="Long-Range Construction Assistant",
+            helptext="Long-Range Caretaker",
+        }
+    }
+    ]=]
 }))

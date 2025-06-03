@@ -6,8 +6,10 @@ local utils_op=Spring.Utilities.to_make_op_things
 
 VFS.Include("LuaRules/Utilities/to_make_very_op_things.lua")
 local to_make_very_op_things=Spring.Utilities.to_make_very_op_things
-
-
+-- not silly enough
+if true then
+    return {}
+end
 
 return utils_op.CopyTweakSillyBuildMorphAuto("spiderskirm","spiderskirmarty",function (ud)
     ud.name="Ranged " .. ud.name
@@ -23,4 +25,5 @@ return utils_op.CopyTweakSillyBuildMorphAuto("spiderskirm","spiderskirmarty",fun
     ud.footprintZ=4
     ud.iconType="spiderskirmarty"
     utils_op.set_ded_BIG_UNIT(ud)
+
 end)

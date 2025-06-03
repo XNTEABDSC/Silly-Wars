@@ -10,7 +10,7 @@ return { bunkerbuster = {
     description            = [[All Terrain Assault Bomb. Need 5 sec to prepare. From robot survival]],
     acceleration           = 2.1,
     brakeRate              = 12.6,
-    metalCost              = 1000,
+    metalCost              = 600,
     buildPic               = [[spiderassault.png]],
     canGuard               = true,
     canMove                = true,
@@ -32,6 +32,13 @@ return { bunkerbuster = {
         { functionToCall = "Detonate", name = "Detonate", tooltip = "Detonate: Kill selected bomb units. Need 5s. Slowdown and decloak.", texture = "LuaUI/Images/Commands/Bold/detonate.png",},
       }
       ]=],
+      translations=[=[{
+        en={
+          name="Bunker Buster",
+          description="All Terrain Assault Bomb. Need 5 sec to prepare. From robot survival",
+          helptext="Bunker Buster is a tanky bomb, when it decided to bomb, it needs 5 seconds to activate a 8000 damage explosion. At the moment it will slow down and decloak. If it is killed, it only deals a little damage"
+        }
+      }]=]
     },
 
     explodeAs              = [[CRAWL_BLASTSML]],
@@ -46,7 +53,7 @@ return { bunkerbuster = {
     movementClass          = [[TKBOT3]],
     noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB DRONE]],
     objectName             = [[hermit.s3o]],
-    selfDestructAs         = [[bunkerbuster_SELFD]],
+    selfDestructAs         = [[CRAWL_BLASTSML]],
     script                 = [[bunkerbuster.lua]],
 
     sfxtypes               = {
@@ -71,7 +78,12 @@ return { bunkerbuster = {
         def                = "BOGUS_FAKE_TARGETER",
         badTargetCategory  = "FIXEDWING",
         onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
-      },
+      },{
+        def                = "bunkerbuster_SELFD",
+        badTargetCategory  = "FIXEDWING",
+        onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
+
+      }
   
     },
 

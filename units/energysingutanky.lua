@@ -12,6 +12,13 @@ return utils_op.CopyTweakSillyBuildMorphSimple("energysingu","energysingutanky",
     description="Large Powerplant - SAFE",
     customParams={
         --pylonrange=600
+        translations=[=[{
+            en={
+                name="Tanky Singularity Reactor",
+                description="Large Powerplant - SAFE",
+                helptext="Tanky Singularity Reactor has good hp and wont destroy everything when died."
+            }
+        }]=]
     },
     --energyMake=50,
     metalCost=6000,

@@ -20,5 +20,12 @@ return utils_op.CopyTweakSillyBuildMorphSimple("bomberheavy","bombersingu",funct
     wd.explosionSpeed=280*4
     wd.edgeEffectiveness=0.5
     ud.fireState=0
+    ud.customParams.translations=[=[{
+        en={
+            name="Impulse Likho",
+            description="Impulse Bomber",
+            helptext="Singu Likho can drop a small singularity to its enemy and throw then into air."
+        }
+    }]=]
 end)
 

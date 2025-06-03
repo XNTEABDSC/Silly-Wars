@@ -34,8 +34,15 @@ return { turretdronelight = {
           offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
         },
       }
-    ]=]
-    
+    ]=],
+    translations=[=[
+    {
+      en={
+        name="Small Drone Maker",
+        description="Make 2 Drones",
+        helptext="This maker can make 2 drones to cover a large area to solve annoying raiders. But drones can be countered by both anti-airs and riots"
+      }
+    }]=]
   },
 
   explodeAs                     = [[BIG_UNIT]],
